@@ -172,6 +172,61 @@ export default async function WritingLessonPage({
                           </div>
                         )}
 
+                        {section.examples && section.examples.length > 0 && (
+                          <div className="mt-7 space-y-5">
+                            {section.examples.map((example) => (
+                              <div
+                                key={example.title}
+                                className="rounded-2xl border border-white/10 bg-white/[0.02] p-6"
+                              >
+                                <h3 className="text-base font-medium text-white">
+                                  {example.title}
+                                </h3>
+                                <p className="mt-3 text-sm leading-7 text-white/50">
+                                  {example.explanation}
+                                </p>
+
+                                {example.code && (
+                                  <div className="mt-5 overflow-hidden rounded-2xl border border-white/10 bg-[#050505]">
+                                    <div className="border-b border-white/10 px-5 py-3">
+                                      <span className="text-[10px] uppercase tracking-[0.2em] text-white/25">
+                                        {example.code.language}
+                                      </span>
+                                    </div>
+                                    <pre className="overflow-x-auto p-5 text-sm leading-7 text-white/60">
+                                      <code>{example.code.code}</code>
+                                    </pre>
+                                  </div>
+                                )}
+
+                                {example.output && (
+                                  <div className="mt-5 border-l border-orange-300/50 pl-4">
+                                    <p className="text-[10px] uppercase tracking-[0.2em] text-orange-300/70">
+                                      Output
+                                    </p>
+                                    <pre className="mt-2 overflow-x-auto text-sm leading-7 text-white/50">
+                                      <code>{example.output}</code>
+                                    </pre>
+                                  </div>
+                                )}
+
+                                {example.dryRun && example.dryRun.length > 0 && (
+                                  <div className="mt-5">
+                                    <p className="text-[10px] uppercase tracking-[0.2em] text-orange-300/70">
+                                      Dry Run
+                                    </p>
+                                    <ol className="mt-3 list-decimal space-y-2 pl-5 text-sm leading-6 text-white/50">
+                                      {example.dryRun.map((step) => (
+                                        <li key={step}>{step}</li>
+                                      ))}
+                                    </ol>
+                                  </div>
+                                )}
+                              </div>
+                            ))}
+                          </div>
+                        )}
+
                         {section.keyPoints &&
                           section.keyPoints.length > 0 && (
                             <div className="mt-7 rounded-2xl border border-white/10 bg-white/[0.02] p-6">
@@ -193,6 +248,62 @@ export default async function WritingLessonPage({
                             </div>
                           )}
 
+                        {section.importantPoints &&
+                          section.importantPoints.length > 0 && (
+                            <div className="mt-7 rounded-2xl border border-orange-300/20 bg-orange-300/[0.03] p-6">
+                              <p className="text-[10px] uppercase tracking-[0.2em] text-orange-300/70">
+                                Important Points
+                              </p>
+                              <ul className="mt-4 space-y-3 text-sm leading-6 text-white/50">
+                                {section.importantPoints.map((point) => (
+                                  <li key={point} className="flex gap-3">
+                                    <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-orange-300/70" />
+                                    <span>{point}</span>
+                                  </li>
+                                ))}
+                              </ul>
+                            </div>
+                          )}
+
+                        {section.commonMistakes &&
+                          section.commonMistakes.length > 0 && (
+                            <div className="mt-7">
+                              <p className="text-[10px] uppercase tracking-[0.2em] text-white/30">
+                                Common Mistakes
+                              </p>
+                              <ul className="mt-4 space-y-3 text-sm leading-6 text-white/50">
+                                {section.commonMistakes.map((mistake) => (
+                                  <li key={mistake} className="flex gap-3">
+                                    <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-white/30" />
+                                    <span>{mistake}</span>
+                                  </li>
+                                ))}
+                              </ul>
+                            </div>
+                          )}
+
+                        {section.interviewQuestions &&
+                          section.interviewQuestions.length > 0 && (
+                            <div className="mt-7 space-y-4">
+                              <p className="text-[10px] uppercase tracking-[0.2em] text-orange-300/70">
+                                Interview Questions
+                              </p>
+                              {section.interviewQuestions.map((item) => (
+                                <div
+                                  key={item.question}
+                                  className="rounded-2xl border border-white/10 bg-white/[0.02] p-5"
+                                >
+                                  <p className="text-sm font-medium leading-6 text-white/75">
+                                    Q. {item.question}
+                                  </p>
+                                  <p className="mt-3 text-sm leading-7 text-white/50">
+                                    {item.answer}
+                                  </p>
+                                </div>
+                              ))}
+                            </div>
+                          )}
+
                         {section.code && (
                           <div className="mt-7 overflow-hidden rounded-2xl border border-white/10 bg-[#050505]">
                             <div className="flex items-center justify-between border-b border-white/10 px-5 py-3">
@@ -210,6 +321,44 @@ export default async function WritingLessonPage({
                             </pre>
                           </div>
                         )}
+
+                        {section.output && (
+                          <div className="mt-7 border-l border-orange-300/50 pl-4">
+                            <p className="text-[10px] uppercase tracking-[0.2em] text-orange-300/70">
+                              Output
+                            </p>
+                            <pre className="mt-2 overflow-x-auto text-sm leading-7 text-white/50">
+                              <code>{section.output}</code>
+                            </pre>
+                          </div>
+                        )}
+
+                        {section.dryRun && section.dryRun.length > 0 && (
+                          <div className="mt-7">
+                            <p className="text-[10px] uppercase tracking-[0.2em] text-orange-300/70">
+                              Dry Run
+                            </p>
+                            <ol className="mt-4 list-decimal space-y-2 pl-5 text-sm leading-6 text-white/50">
+                              {section.dryRun.map((step) => (
+                                <li key={step}>{step}</li>
+                              ))}
+                            </ol>
+                          </div>
+                        )}
+
+                        {section.practiceQuestions &&
+                          section.practiceQuestions.length > 0 && (
+                            <div className="mt-7 rounded-2xl border border-white/10 bg-white/[0.02] p-6">
+                              <p className="text-[10px] uppercase tracking-[0.2em] text-orange-300/70">
+                                Practice Questions
+                              </p>
+                              <ol className="mt-4 list-decimal space-y-3 pl-5 text-sm leading-6 text-white/50">
+                                {section.practiceQuestions.map((question) => (
+                                  <li key={question}>{question}</li>
+                                ))}
+                              </ol>
+                            </div>
+                          )}
                       </div>
                     </div>
                   </section>
