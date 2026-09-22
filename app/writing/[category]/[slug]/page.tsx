@@ -2,26 +2,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ArrowLeft, ArrowUpRight } from "lucide-react";
 import { articles, type Article } from "@/data/writing";
-
-type LessonSection = {
-  number: string;
-  title: string;
-  paragraphs?: string[];
-  keyPoints?: string[];
-  code?: {
-    language: string;
-    code: string;
-  };
-};
-
-type LessonContent = {
-  title: string;
-  lesson: string;
-  category: string;
-  description: string;
-  tags: string[];
-  sections: LessonSection[];
-};
+import { javaLessons, type JavaLessonContent } from "@/content/writing/java";
 
 type LessonPageProps = {
   params: Promise<{
@@ -42,31 +23,14 @@ function getArticleHref(article: Article) {
   return `/writing/${normalizeSegment(article.category)}/${article.slug}`;
 }
 
-async function loadLesson(category: string, slug: string) {
-  const normalizedCategory = normalizeSegment(category);
-  const normalizedSlug = normalizeSegment(slug);
+function loadLesson(article: Article): JavaLessonContent {
+  const lesson = javaLessons[article.slug];
 
-  if (
-    !/^[a-z0-9-]+$/.test(normalizedCategory) ||
-    !/^[a-z0-9-]+$/.test(normalizedSlug)
-  ) {
+  if (!lesson) {
     notFound();
   }
 
-  try {
-    const lessonModule = await import(
-      `@/content/writing/${normalizedCategory}/${normalizedSlug}`
-    );
-    const lesson = Object.values(lessonModule)[0] as LessonContent | undefined;
-
-    if (!lesson) {
-      notFound();
-    }
-
-    return lesson;
-  } catch {
-    notFound();
-  }
+  return lesson;
 }
 
 export function generateStaticParams() {
@@ -95,7 +59,7 @@ export default async function WritingLessonPage({
   const articleIndex = articles.indexOf(article);
   const previousArticle = articles[articleIndex - 1];
   const nextArticle = articles[articleIndex + 1];
-  const lesson = await loadLesson(category, slug);
+  const lesson = loadLesson(article);
 
   return (
     <main className="min-h-screen bg-[#080808] text-white">
