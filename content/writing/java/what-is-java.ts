@@ -1,12 +1,34 @@
+export interface LessonCode {
+  language: string;
+  code: string;
+}
+
+export interface LessonExample {
+  title: string;
+  explanation: string;
+  code?: LessonCode;
+  output?: string;
+  dryRun?: string[];
+}
+
+export interface InterviewQuestion {
+  question: string;
+  answer: string;
+}
+
 export interface LessonSection {
   number: string;
   title: string;
   paragraphs?: string[];
   keyPoints?: string[];
-  code?: {
-    language: string;
-    code: string;
-  };
+  examples?: LessonExample[];
+  code?: LessonCode;
+  output?: string;
+  dryRun?: string[];
+  importantPoints?: string[];
+  commonMistakes?: string[];
+  interviewQuestions?: InterviewQuestion[];
+  practiceQuestions?: string[];
 }
 
 export const whatIsJava = {
