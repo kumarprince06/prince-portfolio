@@ -1,0 +1,18 @@
+<svg width="760" height="620" viewBox="0 0 760 620" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="760" height="620" rx="40" fill="#101010"/>
+  <rect x="24" y="24" width="712" height="572" rx="28" stroke="#FFFFFF" stroke-opacity="0.1"/>
+  <path d="M64 144H696M64 240H696M64 336H696M64 432H696M64 528H696M160 64V556M288 64V556M416 64V556M544 64V556" stroke="#FFFFFF" stroke-opacity="0.055"/>
+  <circle cx="380" cy="304" r="156" stroke="#FB923C" stroke-opacity="0.12" stroke-width="2"/>
+  <circle cx="380" cy="304" r="104" stroke="#FB923C" stroke-opacity="0.2" stroke-width="2" stroke-dasharray="5 12"/>
+  <path d="M380 148V460M224 304H536" stroke="#FB923C" stroke-opacity="0.16" stroke-width="2"/>
+  <path d="M380 304L488 216" stroke="#FB923C" stroke-width="5" stroke-linecap="round"/>
+  <path d="M380 304L300 406" stroke="#FFFFFF" stroke-opacity="0.45" stroke-width="3" stroke-linecap="round" stroke-dasharray="9 13"/>
+  <circle cx="380" cy="304" r="15" fill="#FB923C"/>
+  <circle cx="380" cy="304" r="29" stroke="#FB923C" stroke-opacity="0.4" stroke-width="2"/>
+  <circle cx="488" cy="216" r="9" fill="#FFFFFF"/>
+  <circle cx="300" cy="406" r="8" fill="#FB923C" fill-opacity="0.45"/>
+  <path d="M380 244L394 289L380 304L366 289L380 244Z" fill="#111111" stroke="#FB923C" stroke-width="3"/>
+  <text x="64" y="96" fill="#FB923C" fill-opacity="0.85" font-family="Arial, sans-serif" font-size="13" letter-spacing="4">NAVIGATION CORE / OFFLINE</text>
+  <text x="64" y="570" fill="#FFFFFF" fill-opacity="0.34" font-family="Arial, sans-serif" font-size="12" letter-spacing="3">COORDINATES UNKNOWN</text>
+  <text x="606" y="570" fill="#FFFFFF" fill-opacity="0.2" font-family="Arial, sans-serif" font-size="12" letter-spacing="3">ERR_404</text>
+</svg>
