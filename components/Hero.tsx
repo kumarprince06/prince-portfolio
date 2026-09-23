@@ -5,6 +5,13 @@ import { ArrowUpRight } from "lucide-react";
 import { motion } from "motion/react";
 import Reveal from "./Reveal";
 
+const headlineLines = [
+    [{ text: "I build ", className: "text-white" }],
+    [{ text: "Software", className: "text-white/35" }],
+    [{ text: "and keep", className: "text-white" }],
+    [{ text: "Exploring", className: "text-orange-300" }],
+];
+
 export default function Hero() {
     return (
         <section className="relative min-h-screen overflow-hidden px-5 pt-32 md:px-8 md:pt-40">
@@ -30,37 +37,44 @@ export default function Hero() {
                                 Software Engineer · Builder · Explorer
                             </p>
 
-                            <h1 className="max-w-5xl text-[clamp(3.4rem,8vw,8rem)] font-semibold leading-[0.86] tracking-[-0.075em] text-white md:leading-[0.84]">
-                                <motion.span
-                                    className="inline-block"
-                                    animate={{ y: [0, -5, 0] }}
-                                    transition={{ duration: 4.8, repeat: Infinity, ease: "easeInOut" }}
-                                >
-                                    I build
-                                </motion.span>
-                                <br />
-                                <motion.span
-                                    className="inline-block text-white/35"
-                                    animate={{ y: [0, 6, 0] }}
-                                    transition={{ duration: 5.6, repeat: Infinity, ease: "easeInOut", delay: 0.4 }}
-                                >
-                                    software,
-                                </motion.span>
-                                <br />
-                                <motion.span
-                                    className="inline-block text-white"
-                                    animate={{ y: [0, -4, 0] }}
-                                    transition={{ duration: 5.2, repeat: Infinity, ease: "easeInOut", delay: 0.8 }}
-                                >
-                                    and keep{" "}
-                                    <motion.span
-                                        className="inline-block text-orange-300"
-                                        animate={{ opacity: [0.7, 1, 0.7] }}
-                                        transition={{ duration: 3.2, repeat: Infinity, ease: "easeInOut", delay: 1.2 }}
-                                    >
-                                        exploring.
-                                    </motion.span>
-                                </motion.span>
+                            <h1
+                                className="max-w-5xl text-[clamp(3.4rem,8vw,8rem)] font-semibold leading-[0.86] tracking-[-0.075em] text-white md:leading-[0.84]"
+                            >
+                                {headlineLines.map((segments, lineIndex) => (
+                                    <span key={lineIndex} className="block whitespace-nowrap">
+                                        {segments.map((segment) => (
+                                            <span key={segment.text} className={segment.className}>
+                                                {segment.text.split("").map((character, characterIndex) => {
+                                                    const index = headlineLines
+                                                        .slice(0, lineIndex)
+                                                        .flat()
+                                                        .reduce((total, item) => total + item.text.length, 0) +
+                                                        segments
+                                                            .slice(0, segments.indexOf(segment))
+                                                            .reduce((total, item) => total + item.text.length, 0) +
+                                                        characterIndex;
+
+                                                    return (
+                                                        <motion.span
+                                                            key={`${segment.text}-${characterIndex}`}
+                                                            className={`inline-block ${character === " " ? "w-[0.28em]" : ""}`}
+                                                            animate={{ opacity: [0, 1, 1, 0], y: [5, 0, 0, -3] }}
+                                                            transition={{
+                                                                duration: 4.2,
+                                                                delay: index * 0.06,
+                                                                repeat: Infinity,
+                                                                ease: [0.4, 0, 0.2, 1],
+                                                            }}
+                                                        >
+                                                            {character === " " ? "\u00a0" : character}
+                                                        </motion.span>
+                                                    );
+                                                })}
+                                            </span>
+                                        ))}
+                                        {lineIndex < headlineLines.length - 1 && <br />}
+                                    </span>
+                                ))}
                             </h1>
 
                             <p className="mt-8 max-w-2xl text-base leading-7 text-white/55 md:text-lg">
