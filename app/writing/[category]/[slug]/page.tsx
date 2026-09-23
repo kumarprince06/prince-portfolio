@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { notFound } from "next/navigation";
 import { ArrowLeft, ArrowUpRight } from "lucide-react";
 import { articles, type Article } from "@/data/writing";
@@ -170,6 +171,21 @@ export default async function WritingLessonPage({
                               </p>
                             ))}
                           </div>
+                        )}
+
+                        {section.visual && (
+                          <figure className="mt-8 overflow-hidden rounded-2xl border border-white/10 bg-[#050505]">
+                            <Image
+                              src={section.visual.src}
+                              alt={section.visual.alt}
+                              width={1200}
+                              height={620}
+                              className="h-auto w-full"
+                            />
+                            <figcaption className="border-t border-white/10 px-5 py-4 text-sm leading-6 text-white/45">
+                              {section.visual.caption}
+                            </figcaption>
+                          </figure>
                         )}
 
                         {section.examples && section.examples.length > 0 && (

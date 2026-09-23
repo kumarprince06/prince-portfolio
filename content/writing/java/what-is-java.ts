@@ -11,6 +11,12 @@ export interface LessonExample {
   dryRun?: string[];
 }
 
+export interface LessonVisual {
+  src: string;
+  alt: string;
+  caption: string;
+}
+
 export interface InterviewQuestion {
   question: string;
   answer: string;
@@ -29,6 +35,7 @@ export interface LessonSection {
   commonMistakes?: string[];
   interviewQuestions?: InterviewQuestion[];
   practiceQuestions?: string[];
+  visual?: LessonVisual;
 }
 
 export const whatIsJava = {
@@ -60,6 +67,13 @@ export const whatIsJava = {
         "Statically typed",
       ],
 
+      visual: {
+        src: "/images/java/java-execution-flow.svg",
+        alt: "Diagram showing Java source code becoming bytecode and running inside the JVM",
+        caption:
+          "Think of the JVM as the common runtime that gives Java bytecode a place to run on different operating systems.",
+      },
+
       examples: [
         {
           title: "A language for giving instructions",
@@ -75,6 +89,24 @@ export const whatIsJava = {
           title: "Java in a backend service",
           explanation:
             "A delivery application might use Java to validate orders, calculate routes, store data, and respond to requests. Java is the language used to express those rules, while libraries and frameworks provide reusable building blocks.",
+        },
+        {
+          title: "Real life: an online checkout",
+          explanation:
+            "When a student buys a course online, a Java backend can validate the cart, check payment status, reserve access, and send a confirmation. Each business rule is written as code, tested, and run by the JVM.",
+        },
+        {
+          title: "Real life: a student result system",
+          explanation:
+            "A college result system can receive marks, calculate grades, apply pass rules, and generate a report. Java classes can model Student, Subject, and Result so the code matches the problem people already understand.",
+          code: {
+            language: "java",
+            code: `int total = marksInJava + marksInMaths;
+double percentage = total / 2.0;
+
+System.out.println("Percentage: " + percentage);`,
+          },
+          output: "Percentage: 82.5",
         },
       ],
 
