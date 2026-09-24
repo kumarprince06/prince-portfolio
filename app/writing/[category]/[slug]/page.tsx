@@ -3,6 +3,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { notFound } from "next/navigation";
 import { ArrowLeft, ArrowUpRight } from "lucide-react";
+import ReadingProgress from "@/components/ReadingProgress";
 import {
   getCategory,
   getEntries,
@@ -64,6 +65,8 @@ export default async function WritingLessonPage({
 
   return (
     <main className="min-h-screen bg-[#080808] text-white">
+      <ReadingProgress />
+
       {/* Header */}
       <header className="border-b border-white/10">
         <div className="mx-auto max-w-7xl px-5 py-6 md:px-8">
