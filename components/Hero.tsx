@@ -4,6 +4,7 @@ import Image from "next/image";
 import { ArrowUpRight } from "lucide-react";
 import { motion } from "motion/react";
 import Reveal from "./Reveal";
+import { social } from "@/data/social";
 
 const headlineLines = [
     [{ text: "I build ", className: "text-white" }],
@@ -84,7 +85,42 @@ export default function Hero() {
                                 the way.
                             </p>
 
-                            {/* keep your existing buttons + social links here */}
+                            <div className="mt-10 flex flex-wrap items-center gap-3">
+                                <a
+                                    href="#work"
+                                    className="group inline-flex items-center gap-2 rounded-full bg-white px-6 py-3 text-sm font-medium text-black transition-transform hover:-translate-y-0.5"
+                                >
+                                    View work
+                                    <ArrowUpRight
+                                        size={16}
+                                        className="transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+                                    />
+                                </a>
+                                <a
+                                    href="/resume.pdf"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="rounded-full border border-white/15 px-6 py-3 text-sm text-white/70 transition-colors hover:border-white/30 hover:text-white"
+                                >
+                                    Résumé
+                                </a>
+                                <a
+                                    href={social.github}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="px-3 py-3 text-sm text-white/45 transition-colors hover:text-white"
+                                >
+                                    GitHub
+                                </a>
+                                <a
+                                    href={social.linkedin}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="px-3 py-3 text-sm text-white/45 transition-colors hover:text-white"
+                                >
+                                    LinkedIn
+                                </a>
+                            </div>
                         </div>
                     </Reveal>
 
