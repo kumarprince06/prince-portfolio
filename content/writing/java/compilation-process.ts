@@ -2,6 +2,7 @@ import type { Lesson } from "../types";
 
 export const compilationProcess: Lesson = {
   slug: "compilation-process",
+  date: "2026-08-08",
   title: "Compilation Process",
   description:
     "What `javac` actually does between a `.java` file and a `.class` file: tokens, the syntax tree, type checking, flow analysis, desugaring and bytecode, with the real error message each stage produces.",

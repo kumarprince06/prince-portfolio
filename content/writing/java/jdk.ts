@@ -2,6 +2,7 @@ import type { Lesson } from "../types";
 
 export const jdk: Lesson = {
   slug: "jdk",
+  date: "2026-08-08",
   title: "JDK (Java Development Kit)",
   description:
     "What the JDK adds on top of the runtime, the tools I actually use from it (javac, jar, javap, jshell, jdb, jlink, jcmd and friends), and how vendors, versions and licensing fit together.",

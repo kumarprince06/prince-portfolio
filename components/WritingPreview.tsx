@@ -2,7 +2,7 @@ import { ArrowUpRight } from "lucide-react";
 import Link from "next/link";
 import Reveal from "./Reveal";
 import { Inline } from "./LessonBlocks";
-import { allEntries, type LessonEntry } from "@/content/writing";
+import { allEntries, formatDate, type LessonEntry } from "@/content/writing";
 
 const PREVIEW_COUNT = 4;
 
@@ -78,9 +78,14 @@ export function ArticleList({
                     {number}
                   </div>
 
-                  <span className="text-xs uppercase tracking-[0.15em] text-white/30">
-                    {category.title}
-                  </span>
+                  <div className="flex flex-col gap-1">
+                    <span className="text-xs uppercase tracking-[0.15em] text-white/30">
+                      {category.title}
+                    </span>
+                    <time dateTime={lesson.date} className="text-xs text-white/25">
+                      {formatDate(lesson.date)}
+                    </time>
+                  </div>
                 </div>
 
                 {/* Article */}

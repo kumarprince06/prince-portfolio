@@ -2,6 +2,7 @@ import type { Lesson } from "../types";
 
 export const jre: Lesson = {
   slug: "jre",
+  date: "2026-08-08",
   title: "JRE (Java Runtime Environment)",
   description:
     "What the JRE really is (the JVM plus the class libraries it needs), why the standalone JRE download disappeared after Java 10, and how I built a 57 MB runtime with `jlink` that still runs a Java 21 program.",

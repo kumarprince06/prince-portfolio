@@ -28,6 +28,8 @@ export interface LessonSection {
 
 export interface Lesson {
   slug: string;
+  // When I wrote the notes, as YYYY-MM-DD
+  date: string;
   title: string;
   description: string;
   tags: string[];

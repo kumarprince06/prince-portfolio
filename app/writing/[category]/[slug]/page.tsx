@@ -5,6 +5,7 @@ import { ArrowLeft, ArrowUpRight } from "lucide-react";
 import LessonBlocks, { Inline } from "@/components/LessonBlocks";
 import ReadingProgress from "@/components/ReadingProgress";
 import {
+  formatDate,
   getCategory,
   getEntries,
   publishedCategories,
@@ -129,6 +130,10 @@ export default async function WritingLessonPage({
 
           <p className="mt-7 max-w-2xl text-base leading-7 text-white/45 md:text-lg">
             <Inline text={lesson.description} />
+          </p>
+
+          <p className="mt-5 text-xs uppercase tracking-[0.15em] text-white/30">
+            Written <time dateTime={lesson.date}>{formatDate(lesson.date)}</time>
           </p>
 
           <div className="mt-8 flex flex-wrap gap-2">

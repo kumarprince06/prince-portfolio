@@ -57,6 +57,7 @@ import type { Lesson } from "../types";
 
 export const twoSum: Lesson = {
   slug: "two-sum",
+  date: "2026-10-01", // when I wrote it
   title: "Two Sum",
   description: "Find two indices whose values add up to a target.",
   tags: ["Array", "Hashing"],

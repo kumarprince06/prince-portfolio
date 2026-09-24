@@ -2,6 +2,7 @@ import type { Lesson } from "../types";
 
 export const historyOfJava: Lesson = {
   slug: "history-of-java",
+  date: "2026-07-17",
   title: "History of Java",
   description:
     "How Java went from a failed set-top-box project to the default language for enterprise backends, why generics, lambdas and virtual threads arrived when they did, and what the LTS train from 8 to 25 means for the code I ship.",

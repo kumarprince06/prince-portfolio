@@ -2,6 +2,7 @@ import type { Lesson } from "../types";
 
 export const javaFeatures: Lesson = {
   slug: "java-features",
+  date: "2026-08-16",
   title: "Features of Java",
   description:
     "The ten classic features of Java, what problem each one solves, and what each looks like when you actually run code: bytecode versions, bounds checks, fixed-size types, threads, virtual threads, the JIT and runtime class loading.",

@@ -91,3 +91,11 @@ export const allEntries = publishedCategories.flatMap(getEntries);
 export function getCategory(slug: string) {
   return publishedCategories.find((category) => category.slug === slug);
 }
+
+const MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+
+// "2026-07-17" -> "17 Jul 2026"
+export function formatDate(date: string) {
+  const [year, month, day] = date.split("-").map(Number);
+  return `${day} ${MONTHS[month - 1]} ${year}`;
+}

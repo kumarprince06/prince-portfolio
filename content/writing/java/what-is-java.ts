@@ -2,6 +2,7 @@ import type { Lesson } from "../types";
 
 export const whatIsJava: Lesson = {
   slug: "what-is-java",
+  date: "2026-09-16",
   title: "What is Java?",
   description:
     "What Java actually is, why it was built, and what really happens between typing `java HelloWorld` and seeing output: bytecode, the JVM, class loading, the interpreter and the JIT.",

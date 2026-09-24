@@ -2,6 +2,7 @@ import type { Lesson } from "../types";
 
 export const classLoading: Lesson = {
   slug: "class-loading",
+  date: "2026-09-02",
   title: "Class Loading",
   description:
     "How the JVM turns a class name into a usable class: loading, linking and initialization, the bootstrap, platform and application loaders, parent delegation, and the errors you get when any of it goes wrong.",

@@ -2,6 +2,7 @@ import type { Lesson } from "../types";
 
 export const jvm: Lesson = {
   slug: "jvm",
+  date: "2026-07-27",
   title: "JVM (Java Virtual Machine)",
   description:
     "Inside the JVM: the class loader subsystem, the runtime data areas and where things really live in HotSpot, and the execution engine with its interpreter, JIT compilers and garbage collector, all checked against real JDK 21 runs.",
