@@ -1,50 +1,10 @@
-export interface LessonCode {
-  language: string;
-  code: string;
-}
+import type { Lesson } from "../types";
 
-export interface LessonExample {
-  title: string;
-  explanation: string;
-  code?: LessonCode;
-  output?: string;
-  dryRun?: string[];
-}
-
-export interface LessonVisual {
-  src: string;
-  alt: string;
-  caption: string;
-}
-
-export interface InterviewQuestion {
-  question: string;
-  answer: string;
-}
-
-export interface LessonSection {
-  number: string;
-  title: string;
-  paragraphs?: string[];
-  keyPoints?: string[];
-  examples?: LessonExample[];
-  code?: LessonCode;
-  output?: string;
-  dryRun?: string[];
-  importantPoints?: string[];
-  commonMistakes?: string[];
-  interviewQuestions?: InterviewQuestion[];
-  practiceQuestions?: string[];
-  visual?: LessonVisual;
-}
-
-export const whatIsJava = {
+export const whatIsJava: Lesson = {
+  slug: "what-is-java",
   title: "What is Java?",
-  lesson: "Lesson 01",
-  category: "Java",
-
   description:
-    "A complete introduction to Java, covering its history, philosophy, features, platform independence, JVM, JDK, JRE, bytecode and execution model.",
+    "Understanding Java from the ground up — its history, features, platform independence, JVM, JDK, JRE, bytecode and how a Java program actually runs.",
 
   tags: ["Core Java", "JVM", "JDK", "JRE"],
 

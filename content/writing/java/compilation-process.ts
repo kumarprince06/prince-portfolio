@@ -1,11 +1,10 @@
-import type { LessonSection } from "./what-is-java";
+import type { Lesson, LessonSection } from "../types";
 
-export const compilationProcess = {
+export const compilationProcess: Lesson = {
+  slug: "compilation-process",
   title: "Compilation Process",
-  lesson: "Lesson 07",
-  category: "Java",
   description:
-    "Understanding how javac transforms Java source through lexical analysis, syntax analysis, semantic analysis, and bytecode generation.",
+    "Understanding how javac transforms Java source code through lexical analysis, parsing, semantic analysis, and bytecode generation.",
   tags: ["javac", "Bytecode", "Compiler", "AST"],
   sections: [
     {

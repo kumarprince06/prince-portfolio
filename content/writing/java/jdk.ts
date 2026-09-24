@@ -1,11 +1,10 @@
-import type { LessonSection } from "./what-is-java";
+import type { Lesson, LessonSection } from "../types";
 
-export const jdk = {
+export const jdk: Lesson = {
+  slug: "jdk",
   title: "JDK (Java Development Kit)",
-  lesson: "Lesson 06",
-  category: "Java",
   description:
-    "Understanding the complete toolkit used to write, compile, debug, document, package, and run Java applications.",
+    "Understanding the tools and runtime layers developers use to compile, debug, document, package, and run Java applications.",
   tags: ["JDK", "javac", "Tools", "OpenJDK"],
   sections: [
     {

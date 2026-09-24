@@ -1,4 +1,4 @@
-import type { LessonSection } from "./what-is-java";
+import type { Lesson } from "../types";
 import { classLoading } from "./class-loading";
 import { compilationProcess } from "./compilation-process";
 import { historyOfJava } from "./history-of-java";
@@ -8,22 +8,14 @@ import { jre } from "./jre";
 import { jvm } from "./jvm";
 import { whatIsJava } from "./what-is-java";
 
-export interface JavaLessonContent {
-  title: string;
-  lesson: string;
-  category: string;
-  description: string;
-  tags: string[];
-  sections: LessonSection[];
-}
-
-export const javaLessons: Record<string, JavaLessonContent> = {
-  "what-is-java": whatIsJava,
-  "history-of-java": historyOfJava,
-  "java-features": javaFeatures,
+// Reading order — the position here is the lesson number.
+export const javaLessons: Lesson[] = [
+  whatIsJava,
+  historyOfJava,
+  javaFeatures,
   jvm,
   jre,
   jdk,
-  "compilation-process": compilationProcess,
-  "class-loading": classLoading,
-};
+  compilationProcess,
+  classLoading,
+];

@@ -1,12 +1,10 @@
-import type { LessonSection } from "./what-is-java";
+import type { Lesson, LessonSection } from "../types";
 
-export const javaFeatures = {
+export const javaFeatures: Lesson = {
+  slug: "java-features",
   title: "Java Features",
-  lesson: "Lesson 03",
-  category: "Java",
-
   description:
-    "A practical explanation of the features that define Java, the problems they solve, and why they matter when building reliable backend systems.",
+    "Understanding the major features of Java and how they influence the way Java applications are designed and executed.",
 
   tags: ["Core Java", "OOP", "Platform Independence"],
 

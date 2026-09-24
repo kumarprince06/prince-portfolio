@@ -1,11 +1,10 @@
-import type { LessonSection } from "./what-is-java";
+import type { Lesson, LessonSection } from "../types";
 
-export const jre = {
+export const jre: Lesson = {
+  slug: "jre",
   title: "JRE (Java Runtime Environment)",
-  lesson: "Lesson 05",
-  category: "Java",
   description:
-    "Understanding the runtime package that combines a JVM, core Java libraries, and supporting files needed to execute Java applications.",
+    "Understanding how the JRE combines the JVM, core Java libraries, and runtime support needed to execute Java applications.",
   tags: ["JRE", "Runtime", "Java Libraries", "JPMS"],
   sections: [
     {

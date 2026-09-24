@@ -1,9 +1,13 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import Image from "next/image";
 import { notFound } from "next/navigation";
 import { ArrowLeft, ArrowUpRight } from "lucide-react";
-import { articles, type Article } from "@/data/writing";
-import { javaLessons, type JavaLessonContent } from "@/content/writing/java";
+import {
+  getCategory,
+  getEntries,
+  publishedCategories,
+} from "@/content/writing";
 
 type LessonPageProps = {
   params: Promise<{
@@ -12,55 +16,51 @@ type LessonPageProps = {
   }>;
 };
 
-function normalizeSegment(segment: string) {
-  return segment
-    .trim()
-    .toLowerCase()
-    .replace(/[^a-z0-9]+/g, "-")
-    .replace(/^-+|-+$/g, "");
-}
+async function findEntry(params: LessonPageProps["params"]) {
+  const { category: categorySlug, slug } = await params;
+  const category = getCategory(categorySlug);
+  const entries = category ? getEntries(category) : [];
+  const index = entries.findIndex((entry) => entry.lesson.slug === slug);
 
-function getArticleHref(article: Article) {
-  return `/writing/${normalizeSegment(article.category)}/${article.slug}`;
-}
-
-function loadLesson(article: Article): JavaLessonContent {
-  const lesson = javaLessons[article.slug];
-
-  if (!lesson) {
-    notFound();
-  }
-
-  return lesson;
+  return {
+    entry: entries[index],
+    previousEntry: entries[index - 1],
+    nextEntry: index === -1 ? undefined : entries[index + 1],
+  };
 }
 
 export function generateStaticParams() {
-  return articles.map((article) => ({
-    category: normalizeSegment(article.category),
-    slug: article.slug,
-  }));
+  return publishedCategories.flatMap((category) =>
+    category.lessons.map((lesson) => ({
+      category: category.slug,
+      slug: lesson.slug,
+    })),
+  );
+}
+
+export async function generateMetadata({
+  params,
+}: LessonPageProps): Promise<Metadata> {
+  const { entry } = await findEntry(params);
+
+  return entry
+    ? {
+        title: `${entry.lesson.title} — Prince Kumar Sharma`,
+        description: entry.lesson.description,
+      }
+    : {};
 }
 
 export default async function WritingLessonPage({
   params,
 }: LessonPageProps) {
-  const { category, slug } = await params;
-  const normalizedCategory = normalizeSegment(category);
-  const normalizedSlug = normalizeSegment(slug);
-  const article = articles.find(
-    (candidate) =>
-      normalizeSegment(candidate.category) === normalizedCategory &&
-      normalizeSegment(candidate.slug) === normalizedSlug,
-  );
+  const { entry, previousEntry, nextEntry } = await findEntry(params);
 
-  if (!article) {
+  if (!entry) {
     notFound();
   }
 
-  const articleIndex = articles.indexOf(article);
-  const previousArticle = articles[articleIndex - 1];
-  const nextArticle = articles[articleIndex + 1];
-  const lesson = loadLesson(article);
+  const { category, lesson, number } = entry;
 
   return (
     <main className="min-h-screen bg-[#080808] text-white">
@@ -68,14 +68,14 @@ export default async function WritingLessonPage({
       <header className="border-b border-white/10">
         <div className="mx-auto max-w-5xl px-5 py-6 md:px-8">
           <Link
-            href="/#writing"
+            href={`/writing/${category.slug}`}
             className="group inline-flex items-center gap-2 text-sm text-white/40 transition-colors hover:text-white"
           >
             <ArrowLeft
               size={15}
               className="transition-transform group-hover:-translate-x-1"
             />
-            Back to writing
+            All {category.title}
           </Link>
         </div>
       </header>
@@ -85,26 +85,35 @@ export default async function WritingLessonPage({
         <div className="mx-auto max-w-5xl">
           <div className="flex flex-wrap items-center gap-3">
             <span className="text-xs uppercase tracking-[0.2em] text-orange-300">
-              {article.category}
+              {category.title}
             </span>
 
             <span className="text-white/20">/</span>
 
             <span className="text-xs uppercase tracking-[0.2em] text-white/30">
-              Lesson {article.number}
+              {category.unit} {number}
             </span>
+
+            {lesson.difficulty && (
+              <>
+                <span className="text-white/20">/</span>
+                <span className="text-xs uppercase tracking-[0.2em] text-white/50">
+                  {lesson.difficulty}
+                </span>
+              </>
+            )}
           </div>
 
           <h1 className="mt-6 max-w-4xl text-5xl font-semibold leading-[0.95] tracking-[-0.06em] md:text-7xl">
-            {article.title}
+            {lesson.title}
           </h1>
 
           <p className="mt-7 max-w-2xl text-base leading-7 text-white/45 md:text-lg">
-            {article.description}
+            {lesson.description}
           </p>
 
           <div className="mt-8 flex flex-wrap gap-2">
-            {article.tags.map((tag) => (
+            {lesson.tags.map((tag) => (
               <span
                 key={tag}
                 className="rounded-full border border-white/10 px-3 py-1.5 text-xs text-white/40"
@@ -113,6 +122,21 @@ export default async function WritingLessonPage({
               </span>
             ))}
           </div>
+
+          {lesson.problemUrl && (
+            <a
+              href={lesson.problemUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group mt-8 inline-flex items-center gap-2 text-sm text-orange-300 transition-colors hover:text-orange-200"
+            >
+              Solve the problem
+              <ArrowUpRight
+                size={15}
+                className="transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+              />
+            </a>
+          )}
         </div>
       </section>
 
@@ -362,6 +386,24 @@ export default async function WritingLessonPage({
                           </div>
                         )}
 
+                        {section.complexity && (
+                          <div className="mt-7 grid gap-px overflow-hidden rounded-2xl border border-white/10 bg-white/10 sm:grid-cols-2">
+                            {[
+                              ["Time", section.complexity.time],
+                              ["Space", section.complexity.space],
+                            ].map(([label, value]) => (
+                              <div key={label} className="bg-[#080808] p-5">
+                                <p className="text-[10px] uppercase tracking-[0.2em] text-orange-300/70">
+                                  {label} Complexity
+                                </p>
+                                <p className="mt-2 font-mono text-sm text-white/70">
+                                  {value}
+                                </p>
+                              </div>
+                            ))}
+                          </div>
+                        )}
+
                         {section.practiceQuestions &&
                           section.practiceQuestions.length > 0 && (
                             <div className="mt-7 rounded-2xl border border-white/10 bg-white/[0.02] p-6">
@@ -388,9 +430,9 @@ export default async function WritingLessonPage({
       {/* Bottom Navigation */}
       <section className="border-t border-white/10 px-5 py-16 md:px-8">
         <div className="mx-auto grid max-w-5xl gap-6 sm:grid-cols-2">
-          {previousArticle ? (
+          {previousEntry ? (
             <Link
-              href={getArticleHref(previousArticle)}
+              href={previousEntry.href}
               className="group flex flex-col gap-2 text-sm text-white/40 transition-colors hover:text-white"
             >
               <span className="flex items-center gap-2 text-xs uppercase tracking-[0.15em] text-white/25">
@@ -398,36 +440,36 @@ export default async function WritingLessonPage({
                   size={15}
                   className="transition-transform group-hover:-translate-x-1"
                 />
-                Previous Lesson
+                Previous
               </span>
               <span className="text-base text-white/70">
-                {previousArticle.title}
+                {previousEntry.lesson.title}
               </span>
               <span className="text-xs text-white/25">
-                Lesson {previousArticle.number}
+                {category.unit} {previousEntry.number}
               </span>
             </Link>
           ) : (
             <div />
           )}
 
-          {nextArticle ? (
+          {nextEntry ? (
             <Link
-              href={getArticleHref(nextArticle)}
+              href={nextEntry.href}
               className="group flex flex-col items-start gap-2 text-sm text-white/40 transition-colors hover:text-white sm:items-end sm:text-right"
             >
               <span className="flex items-center gap-2 text-xs uppercase tracking-[0.15em] text-white/25">
-                Next Lesson
+                Next
                 <ArrowUpRight
                   size={15}
                   className="transition-transform group-hover:translate-x-1 group-hover:-translate-y-1"
                 />
               </span>
               <span className="text-base text-white/70">
-                {nextArticle.title}
+                {nextEntry.lesson.title}
               </span>
               <span className="text-xs text-white/25">
-                Lesson {nextArticle.number}
+                {category.unit} {nextEntry.number}
               </span>
             </Link>
           ) : null}

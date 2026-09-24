@@ -1,11 +1,10 @@
-import type { LessonSection } from "./what-is-java";
+import type { Lesson, LessonSection } from "../types";
 
-export const classLoading = {
+export const classLoading: Lesson = {
+  slug: "class-loading",
   title: "Class Loading",
-  lesson: "Lesson 08",
-  category: "Java",
   description:
-    "Understanding lazy class loading, parent delegation, class-loader caching, custom loaders, and how frameworks discover and isolate classes.",
+    "Understanding lazy class loading, parent delegation, class-loader caching, custom loaders, and how frameworks isolate and discover classes.",
   tags: ["Class Loader", "JVM", "Reflection", "Plugins"],
   sections: [
     {

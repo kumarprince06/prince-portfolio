@@ -1,11 +1,10 @@
-import type { LessonSection } from "./what-is-java";
+import type { Lesson, LessonSection } from "../types";
 
-export const jvm = {
+export const jvm: Lesson = {
+  slug: "jvm",
   title: "JVM (Java Virtual Machine)",
-  lesson: "Lesson 04",
-  category: "Java",
   description:
-    "A practical deep dive into the virtual machine that loads, verifies, manages, and executes Java bytecode.",
+    "Understanding the JVM specification, class loading, runtime memory areas, bytecode verification, interpretation, JIT compilation, and garbage collection.",
   tags: ["JVM", "Class Loader", "Memory", "JIT"],
   sections: [
     {

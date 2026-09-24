@@ -1,7 +1,9 @@
 import { ArrowUpRight } from "lucide-react";
 import Link from "next/link";
 import Reveal from "./Reveal";
-import { articles } from "@/data/writing";
+import { allEntries, type LessonEntry } from "@/content/writing";
+
+const PREVIEW_COUNT = 4;
 
 export default function WritingPreview() {
   return (
@@ -31,90 +33,83 @@ export default function WritingPreview() {
         </div>
 
         {/* Articles */}
-        <div className="mt-20">
-          {articles.map((article, index) => {
-            const categorySlug = article.category
-              .trim()
-              .toLowerCase()
-              .replace(/[^a-z0-9]+/g, "-")
-              .replace(/^-+|-+$/g, "");
-            const articleHref = `/writing/${categorySlug}/${article.slug}`;
-
-            return (
-              <Reveal
-                key={article.number}
-                delay={index * 0.08}
-                y={20}
-              >
-                <article
-                  className="group border-t border-white/10 py-9 last:border-b"
-                >
-                  <div className="grid gap-7 md:grid-cols-[70px_1fr_1.2fr_50px] md:items-center">
-                    {/* Number */}
-                    <span className="text-xs tracking-[0.2em] text-white/20">
-                      {article.number}
-                    </span>
-
-                    {/* Category */}
-                    <div className="flex items-center gap-3">
-                      <div className="flex h-9 w-9 items-center justify-center rounded-lg border border-white/10 text-white/35 transition-colors group-hover:border-orange-300/30 group-hover:text-orange-300">
-                        {article.number}
-                      </div>
-
-                      <span className="text-xs uppercase tracking-[0.15em] text-white/30">
-                        {article.category}
-                      </span>
-                    </div>
-
-                    {/* Article */}
-                    <div>
-                      <Link
-                        href={articleHref}
-                        className="text-xl font-medium tracking-tight text-white transition-transform duration-300 group-hover:translate-x-1 md:text-2xl"
-                      >
-                        {article.title}
-                      </Link>
-
-                      <p className="mt-3 max-w-xl text-sm leading-6 text-white/35">
-                        {article.description}
-                      </p>
-                    </div>
-
-                    {/* Arrow */}
-                    <div className="hidden md:block">
-                      <Link
-                        href={articleHref}
-                        aria-label={`Read ${article.title}`}
-                        className="flex h-10 w-10 items-center justify-center rounded-full border border-white/10 text-white/30 transition-all duration-300 group-hover:-translate-y-1 group-hover:border-white/30 group-hover:bg-white group-hover:text-black"
-                      >
-                        <ArrowUpRight size={16} />
-                      </Link>
-                    </div>
-                  </div>
-                </article>
-              </Reveal>
-            );
-          })}
-        </div>
+        <ArticleList entries={allEntries.slice(0, PREVIEW_COUNT)} />
 
         {/* Blog CTA */}
         <div className="mt-12 flex flex-col gap-5 sm:flex-row sm:items-center sm:justify-between">
           <p className="text-xs uppercase tracking-[0.15em] text-white/20">
-            More notes coming soon
+            {allEntries.length} notes so far
           </p>
 
-          <button
-            type="button"
+          <Link
+            href="/writing"
             className="group flex w-fit items-center gap-2 rounded-full border border-white/10 px-5 py-2.5 text-sm text-white/50 transition-all hover:border-white/25 hover:text-white"
           >
-            Explore all writing
+            View all writing
             <ArrowUpRight
               size={15}
               className="transition-transform group-hover:translate-x-1 group-hover:-translate-y-1"
             />
-          </button>
+          </Link>
         </div>
       </div>
     </section>
+  );
+}
+
+export function ArticleList({ entries }: { entries: LessonEntry[] }) {
+  return (
+    <div className="mt-20">
+      {entries.map(({ category, lesson, number, href }, index) => {
+        return (
+          <Reveal key={href} delay={index * 0.08} y={20}>
+            <article className="group border-t border-white/10 py-9 last:border-b">
+              <div className="grid gap-7 md:grid-cols-[70px_1fr_1.2fr_50px] md:items-center">
+                {/* Number */}
+                <span className="text-xs tracking-[0.2em] text-white/20">
+                  {number}
+                </span>
+
+                {/* Category */}
+                <div className="flex items-center gap-3">
+                  <div className="flex h-9 w-9 items-center justify-center rounded-lg border border-white/10 text-white/35 transition-colors group-hover:border-orange-300/30 group-hover:text-orange-300">
+                    {number}
+                  </div>
+
+                  <span className="text-xs uppercase tracking-[0.15em] text-white/30">
+                    {category.title}
+                  </span>
+                </div>
+
+                {/* Article */}
+                <div>
+                  <Link
+                    href={href}
+                    className="text-xl font-medium tracking-tight text-white transition-transform duration-300 group-hover:translate-x-1 md:text-2xl"
+                  >
+                    {lesson.title}
+                  </Link>
+
+                  <p className="mt-3 max-w-xl text-sm leading-6 text-white/35">
+                    {lesson.description}
+                  </p>
+                </div>
+
+                {/* Arrow */}
+                <div className="hidden md:block">
+                  <Link
+                    href={href}
+                    aria-label={`Read ${lesson.title}`}
+                    className="flex h-10 w-10 items-center justify-center rounded-full border border-white/10 text-white/30 transition-all duration-300 group-hover:-translate-y-1 group-hover:border-white/30 group-hover:bg-white group-hover:text-black"
+                  >
+                    <ArrowUpRight size={16} />
+                  </Link>
+                </div>
+              </div>
+            </article>
+          </Reveal>
+        );
+      })}
+    </div>
   );
 }

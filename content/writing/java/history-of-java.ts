@@ -1,12 +1,10 @@
-import type { LessonSection } from "./what-is-java";
+import type { Lesson, LessonSection } from "../types";
 
-export const historyOfJava = {
+export const historyOfJava: Lesson = {
+  slug: "history-of-java",
   title: "History of Java",
-  lesson: "Lesson 02",
-  category: "Java",
-
   description:
-    "A timeline of Java's evolution from the Green Project and Oak to the modern LTS releases that power enterprise and backend systems.",
+    "How Java evolved from the Green Project and Oak into a platform for enterprise systems, modern language features, and long-term backend development.",
 
   tags: ["Java History", "OpenJDK", "LTS", "JCP"],
 
