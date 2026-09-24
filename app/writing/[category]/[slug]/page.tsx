@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import { ArrowLeft, ArrowUpRight } from "lucide-react";
 import LessonBlocks, { Inline } from "@/components/LessonBlocks";
 import ReadingProgress from "@/components/ReadingProgress";
+import { social } from "@/data/social";
 import {
   formatDate,
   getCategory,
@@ -45,12 +46,23 @@ export async function generateMetadata({
 }: LessonPageProps): Promise<Metadata> {
   const { entry } = await findEntry(params);
 
-  return entry
-    ? {
-        title: `${entry.lesson.title} — Prince Kumar Sharma`,
-        description: entry.lesson.description.replace(/[`*]/g, ""),
-      }
-    : {};
+  if (!entry) return {};
+
+  const description = entry.lesson.description.replace(/[`*]/g, "");
+  return {
+    title: entry.lesson.title,
+    description,
+    alternates: { canonical: entry.href },
+    openGraph: {
+      type: "article",
+      url: entry.href,
+      title: `${entry.lesson.title} — Prince Kumar Sharma`,
+      description,
+      publishedTime: entry.lesson.date,
+      authors: ["Prince Kumar Sharma"],
+      tags: entry.lesson.tags,
+    },
+  };
 }
 
 export default async function WritingLessonPage({
@@ -71,6 +83,22 @@ export default async function WritingLessonPage({
   return (
     <main className="min-h-screen bg-[#080808] text-white">
       <ReadingProgress />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "TechArticle",
+            headline: lesson.title,
+            description: lesson.description.replace(/[`*]/g, ""),
+            datePublished: lesson.date,
+            keywords: lesson.tags.join(", "),
+            inLanguage: "en",
+            url: new URL(entry.href, social.website).toString(),
+            author: { "@type": "Person", name: "Prince Kumar Sharma", url: social.website },
+          }).replace(/</g, "\\u003c"),
+        }}
+      />
 
       {/* Header */}
       <header className="border-b border-white/10">
