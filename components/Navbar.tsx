@@ -1,18 +1,40 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Menu, X, ArrowUpRight } from "lucide-react";
 
 const navItems = [
   { label: "Work", href: "#work" },
   { label: "Engineering", href: "#engineering" },
   { label: "Journey", href: "#journey" },
-  { label: "About", href: "#about" },
   { label: "Writing", href: "#writing" },
+  { label: "About", href: "#about" },
 ];
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
+  const [active, setActive] = useState("");
+
+  // Highlight the section currently crossing the middle of the viewport.
+  useEffect(() => {
+    const sections = navItems
+      .map((item) => document.querySelector(item.href))
+      .filter((section) => section !== null);
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          const id = `#${entry.target.id}`;
+          if (entry.isIntersecting) setActive(id);
+          else setActive((current) => (current === id ? "" : current));
+        });
+      },
+      { rootMargin: "-45% 0px -55% 0px" },
+    );
+
+    sections.forEach((section) => observer.observe(section));
+    return () => observer.disconnect();
+  }, []);
 
   return (
     <header className="fixed left-0 top-0 z-50 w-full">
@@ -37,19 +59,23 @@ export default function Navbar() {
         </a>
 
         {/* Desktop Navigation */}
-        <div className="hidden items-center gap-8 md:flex">
+        <div className="hidden items-center gap-2 md:flex">
           {navItems.map((item) => (
             <a
               key={item.label}
               href={item.href}
-              className="relative text-sm text-white/50 transition-colors duration-300 hover:text-white"            >
+              aria-current={active === item.href ? "true" : undefined}
+              className={`rounded-full px-3 py-1.5 text-sm transition-colors duration-300 hover:text-white ${
+                active === item.href ? "bg-white/[0.07] text-white" : "text-white/50"
+              }`}
+            >
               {item.label}
             </a>
           ))}
 
           <a
             href="#contact"
-            className="group flex items-center gap-2 rounded-full bg-white px-4 py-2 text-sm font-medium text-black transition-all hover:bg-white/90"
+            className="group ml-4 flex items-center gap-2 rounded-full bg-white px-4 py-2 text-sm font-medium text-black transition-all hover:bg-white/90"
           >
             Let&apos;s talk
             <ArrowUpRight
@@ -78,7 +104,10 @@ export default function Navbar() {
                 key={item.label}
                 href={item.href}
                 onClick={() => setOpen(false)}
-                className="rounded-xl px-4 py-3 text-white/70 transition-colors hover:bg-white/5 hover:text-white"
+                aria-current={active === item.href ? "true" : undefined}
+                className={`rounded-xl px-4 py-3 transition-colors hover:bg-white/5 hover:text-white ${
+                  active === item.href ? "bg-white/[0.07] text-white" : "text-white/70"
+                }`}
               >
                 {item.label}
               </a>
