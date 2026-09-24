@@ -1,36 +1,63 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Prince Kumar Sharma — Portfolio
 
-## Getting Started
-
-First, run the development server:
+Personal portfolio and engineering notes. Built with Next.js, Tailwind CSS and Motion.
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm install
+npm run dev   # http://localhost:3000 (Node 20.9+)
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+- `data/` — projects, journey, social links
+- `content/writing/` — all lessons and notes
+- `public/resume.pdf` — résumé linked from the hero and About section
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Adding writing
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Every topic is a category in `content/writing/index.ts`: Java, DSA, Spring & Spring Boot,
+System Design, MySQL, Operating Systems and Computer Networks. A category stays hidden until it
+has its first lesson.
 
-## Learn More
+1. Create the lesson file in the category's folder, e.g. `content/writing/dsa/two-sum.ts`.
+2. Export it from that folder's `index.ts` array. Its position there is its number.
+3. For a new folder, point the category's `lessons` at that array in `content/writing/index.ts`.
 
-To learn more about Next.js, take a look at the following resources:
+Pages, numbering, previous/next links and the homepage preview update on their own.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### DSA problem template
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Each approach is a section, so the page's contents sidebar reads
+Problem → Brute Force → Better → Optimal.
 
-## Deploy on Vercel
+```ts
+import type { Lesson } from "../types";
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+export const twoSum: Lesson = {
+  slug: "two-sum",
+  title: "Two Sum",
+  description: "Find two indices whose values add up to a target.",
+  tags: ["Array", "Hashing"],
+  difficulty: "Easy",
+  problemUrl: "https://leetcode.com/problems/two-sum/",
+  sections: [
+    {
+      number: "01",
+      title: "Problem",
+      paragraphs: ["Given an array nums and an integer target, ..."],
+      examples: [{ title: "Example 1", explanation: "nums = [2,7,11,15], target = 9", output: "[0, 1]" }],
+    },
+    {
+      number: "02",
+      title: "Brute Force",
+      paragraphs: ["Intuition: try every pair ..."],
+      code: { language: "java", code: "..." },
+      dryRun: ["i = 0, j = 1 → 2 + 7 = 9 ✓"],
+      complexity: { time: "O(n²)", space: "O(1)" },
+    },
+    { number: "03", title: "Better", /* ... */ complexity: { time: "O(n log n)", space: "O(n)" } },
+    { number: "04", title: "Optimal", /* ... */ complexity: { time: "O(n)", space: "O(n)" } },
+  ],
+};
+```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Every other lesson uses the same `Lesson` shape without `difficulty` and `problemUrl`.
+All section fields are listed in `content/writing/types.ts`.
