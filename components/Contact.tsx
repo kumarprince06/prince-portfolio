@@ -1,5 +1,6 @@
 import { ArrowUpRight, Mail } from "lucide-react";
 import Reveal from "./Reveal";
+import { social } from "@/data/social";
 
 export default function Contact() {
   return (
@@ -32,7 +33,7 @@ export default function Contact() {
               </p>
 
               <a
-                href="mailto:your-email@example.com"
+                href={`mailto:${social.email}`}
                 className="group mt-9 inline-flex items-center gap-3 rounded-full bg-white px-7 py-4 text-sm font-medium text-black shadow-[0_10px_40px_rgba(255,255,255,0.05)] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_15px_50px_rgba(255,255,255,0.08)]"              >
                 <Mail size={16} />
 
@@ -52,20 +53,20 @@ export default function Contact() {
               <div className="border-t border-white/10">
                 <ContactItem
                   label="Email"
-                  value="kumarprince.s0611@gmail.com"
-                  href="mailto:kumarprince.s0611@gmail.com"
+                  value={social.email}
+                  href={`mailto:${social.email}`}
                 />
 
                 <ContactItem
                   label="GitHub"
-                  value="github.com/kumarprince06"
-                  href="https://github.com/kumarprince06"
+                  value={social.github.replace("https://", "")}
+                  href={social.github}
                 />
 
                 <ContactItem
                   label="LinkedIn"
-                  value="linkedin.com/in/kumarprince06"
-                  href="https://linkedin.com/in/kumarprince06"
+                  value={social.linkedin.replace("https://", "")}
+                  href={social.linkedin}
                 />
 
                 <div className="border-b border-white/10 py-6">
