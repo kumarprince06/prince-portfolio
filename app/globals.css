@@ -38,20 +38,33 @@ body {
 }
 
 ::-webkit-scrollbar {
-  width: 8px;
+  width: 10px;
+  height: 10px;
 }
 
 ::-webkit-scrollbar-track {
   background: #080808;
 }
 
+/* The transparent border insets the thumb so it reads as a slim pill. */
 ::-webkit-scrollbar-thumb {
-  background: #2a2a2a;
+  background: rgba(255, 255, 255, 0.14);
+  background-clip: padding-box;
+  border: 3px solid transparent;
   border-radius: 999px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #444;
+  background: rgba(251, 146, 60, 0.8);
+  background-clip: padding-box;
+}
+
+/* Firefox has no ::-webkit-scrollbar; setting these in Chrome would disable the rules above. */
+@supports not selector(::-webkit-scrollbar) {
+  html {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(255, 255, 255, 0.14) #080808;
+  }
 }
 
 a {
