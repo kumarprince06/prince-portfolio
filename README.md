@@ -23,6 +23,10 @@ has its first lesson.
 
 Pages, numbering, previous/next links and the homepage preview update on their own.
 
+Java is split into learning phases in `content/writing/java/index.ts`. Add a lesson to its phase's
+`lessons` array; a phase with no lessons yet shows as "Coming soon", and lesson numbers run straight
+through the phases.
+
 ### Lesson format
 
 A lesson is a list of sections; each section is a title plus ordered blocks — `paragraph`,
