@@ -27,7 +27,7 @@ export default function Hero() {
                 {/* Top metadata */}
                 <div className="mb-10 flex items-center gap-3 text-xs uppercase tracking-[0.25em] text-white/40">
                     <span className="h-2 w-2 rounded-full bg-orange-400 shadow-[0_0_15px_rgba(251,146,60,0.8)]" />
-                    Available for interesting projects
+                    Open to Java backend roles
                 </div>
 
                 <div className="grid items-center gap-14 lg:grid-cols-[1.25fr_0.75fr]">

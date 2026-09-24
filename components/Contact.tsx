@@ -75,7 +75,7 @@ export default function Contact() {
                   </p>
 
                   <p className="mt-2 text-sm text-white/55">
-                    Kolkata, India
+                    Kolkata, India · Open to relocation
                   </p>
                 </div>
               </div>
@@ -88,7 +88,7 @@ export default function Contact() {
                 </span>
 
                 <span className="text-xs text-white/35">
-                  Open to interesting conversations
+                  Open to Java backend roles
                 </span>
               </div>
             </div>
