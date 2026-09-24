@@ -101,9 +101,10 @@ export default function Engineering() {
                 key={area.number}
                 delay={index * 0.07}
                 y={25}
+                className="h-full"
               >
                 <article
-                  className="group relative border-b border-r border-white/10 p-7 transition-all duration-500 hover:-translate-y-1 hover:bg-white/[0.025] hover:shadow-[0_20px_50px_rgba(0,0,0,0.25)] md:p-9"                >
+                  className="group relative flex h-full flex-col border-b border-r border-white/10 p-7 transition-all duration-500 hover:-translate-y-1 hover:bg-white/[0.025] hover:shadow-[0_20px_50px_rgba(0,0,0,0.25)] md:p-9"                >
                   {/* Top row */}
                   <div className="flex items-start justify-between">
                     <div className="flex h-11 w-11 items-center justify-center rounded-xl border border-white/10 bg-white/[0.03] text-white/50 transition-all duration-300 group-hover:border-orange-300/30 group-hover:bg-orange-300/5 group-hover:text-orange-300">
@@ -120,16 +121,16 @@ export default function Engineering() {
                     {area.title}
                   </h3>
 
-                  <p className="mt-4 text-sm leading-6 text-white/40">
+                  <p className="mb-7 mt-4 text-sm leading-6 text-white/40">
                     {area.description}
                   </p>
 
                   {/* Technologies */}
-                  <p className="mt-7 border-t border-white/10 pt-5 text-[11px] uppercase leading-5 tracking-[0.12em] text-white/25">
+                  <p className="mt-auto min-h-15 border-t border-white/10 pt-5 text-[11px] uppercase leading-5 tracking-[0.12em] text-white/25">
                     {area.technologies}
                   </p>
                 </article>
-              </Reveal >
+              </Reveal>
             );
           })}
         </div>
