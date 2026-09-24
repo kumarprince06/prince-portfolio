@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import Image from "next/image";
 import { notFound } from "next/navigation";
 import { ArrowLeft, ArrowUpRight } from "lucide-react";
+import LessonBlocks from "@/components/LessonBlocks";
 import ReadingProgress from "@/components/ReadingProgress";
 import {
   getCategory,
@@ -62,6 +62,10 @@ export default async function WritingLessonPage({
   }
 
   const { category, lesson, number } = entry;
+  const sections = lesson.sections.map((section, index) => ({
+    ...section,
+    number: String(index + 1).padStart(2, "0"),
+  }));
 
   return (
     <main className="min-h-screen bg-[#080808] text-white">
@@ -155,11 +159,11 @@ export default async function WritingLessonPage({
                 </p>
 
                 <nav className="mt-5 space-y-3">
-                  {lesson.sections.map((section) => (
+                  {sections.map((section) => (
                     <a
                       key={section.number}
                       href={`#section-${section.number}`}
-                      className="block text-xs text-white/30 transition-colors hover:text-white"
+                      className="block text-xs leading-5 text-white/30 transition-colors hover:text-white"
                     >
                       {section.number}. {section.title}
                     </a>
@@ -171,7 +175,7 @@ export default async function WritingLessonPage({
             {/* Main Content */}
             <article className="min-w-0">
               <div className="space-y-16">
-                {lesson.sections.map((section) => (
+                {sections.map((section) => (
                   <section
                     key={section.number}
                     id={`section-${section.number}`}
@@ -187,239 +191,7 @@ export default async function WritingLessonPage({
                           {section.title}
                         </h2>
 
-                        {section.paragraphs && (
-                          <div className="mt-6 space-y-5">
-                            {section.paragraphs.map((paragraph, index) => (
-                              <p
-                                key={index}
-                                className="text-[15px] leading-8 text-white/50 md:text-base"
-                              >
-                                {paragraph}
-                              </p>
-                            ))}
-                          </div>
-                        )}
-
-                        {section.visual && (
-                          <figure className="mt-8 overflow-hidden rounded-2xl border border-white/10 bg-[#050505]">
-                            <Image
-                              src={section.visual.src}
-                              alt={section.visual.alt}
-                              width={1200}
-                              height={620}
-                              className="h-auto w-full"
-                            />
-                            <figcaption className="border-t border-white/10 px-5 py-4 text-sm leading-6 text-white/45">
-                              {section.visual.caption}
-                            </figcaption>
-                          </figure>
-                        )}
-
-                        {section.examples && section.examples.length > 0 && (
-                          <div className="mt-7 space-y-5">
-                            {section.examples.map((example) => (
-                              <div
-                                key={example.title}
-                                className="rounded-2xl border border-white/10 bg-white/[0.02] p-6"
-                              >
-                                <h3 className="text-base font-medium text-white">
-                                  {example.title}
-                                </h3>
-                                <p className="mt-3 text-sm leading-7 text-white/50">
-                                  {example.explanation}
-                                </p>
-
-                                {example.code && (
-                                  <div className="mt-5 overflow-hidden rounded-2xl border border-white/10 bg-[#050505]">
-                                    <div className="border-b border-white/10 px-5 py-3">
-                                      <span className="text-[10px] uppercase tracking-[0.2em] text-white/25">
-                                        {example.code.language}
-                                      </span>
-                                    </div>
-                                    <pre className="overflow-x-auto p-5 text-sm leading-7 text-white/60">
-                                      <code>{example.code.code}</code>
-                                    </pre>
-                                  </div>
-                                )}
-
-                                {example.output && (
-                                  <div className="mt-5 border-l border-orange-300/50 pl-4">
-                                    <p className="text-[10px] uppercase tracking-[0.2em] text-orange-300/70">
-                                      Output
-                                    </p>
-                                    <pre className="mt-2 overflow-x-auto text-sm leading-7 text-white/50">
-                                      <code>{example.output}</code>
-                                    </pre>
-                                  </div>
-                                )}
-
-                                {example.dryRun && example.dryRun.length > 0 && (
-                                  <div className="mt-5">
-                                    <p className="text-[10px] uppercase tracking-[0.2em] text-orange-300/70">
-                                      Dry Run
-                                    </p>
-                                    <ol className="mt-3 list-decimal space-y-2 pl-5 text-sm leading-6 text-white/50">
-                                      {example.dryRun.map((step) => (
-                                        <li key={step}>{step}</li>
-                                      ))}
-                                    </ol>
-                                  </div>
-                                )}
-                              </div>
-                            ))}
-                          </div>
-                        )}
-
-                        {section.keyPoints &&
-                          section.keyPoints.length > 0 && (
-                            <div className="mt-7 rounded-2xl border border-white/10 bg-white/[0.02] p-6">
-                              <p className="text-[10px] uppercase tracking-[0.2em] text-orange-300/70">
-                                Key Points
-                              </p>
-
-                              <ul className="mt-4 space-y-3">
-                                {section.keyPoints.map((point) => (
-                                  <li
-                                    key={point}
-                                    className="flex gap-3 text-sm leading-6 text-white/50"
-                                  >
-                                    <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-orange-300/70" />
-                                    <span>{point}</span>
-                                  </li>
-                                ))}
-                              </ul>
-                            </div>
-                          )}
-
-                        {section.importantPoints &&
-                          section.importantPoints.length > 0 && (
-                            <div className="mt-7 rounded-2xl border border-orange-300/20 bg-orange-300/[0.03] p-6">
-                              <p className="text-[10px] uppercase tracking-[0.2em] text-orange-300/70">
-                                Important Points
-                              </p>
-                              <ul className="mt-4 space-y-3 text-sm leading-6 text-white/50">
-                                {section.importantPoints.map((point) => (
-                                  <li key={point} className="flex gap-3">
-                                    <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-orange-300/70" />
-                                    <span>{point}</span>
-                                  </li>
-                                ))}
-                              </ul>
-                            </div>
-                          )}
-
-                        {section.commonMistakes &&
-                          section.commonMistakes.length > 0 && (
-                            <div className="mt-7">
-                              <p className="text-[10px] uppercase tracking-[0.2em] text-white/30">
-                                Common Mistakes
-                              </p>
-                              <ul className="mt-4 space-y-3 text-sm leading-6 text-white/50">
-                                {section.commonMistakes.map((mistake) => (
-                                  <li key={mistake} className="flex gap-3">
-                                    <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-white/30" />
-                                    <span>{mistake}</span>
-                                  </li>
-                                ))}
-                              </ul>
-                            </div>
-                          )}
-
-                        {section.interviewQuestions &&
-                          section.interviewQuestions.length > 0 && (
-                            <div className="mt-7 space-y-4">
-                              <p className="text-[10px] uppercase tracking-[0.2em] text-orange-300/70">
-                                Interview Questions
-                              </p>
-                              {section.interviewQuestions.map((item) => (
-                                <div
-                                  key={item.question}
-                                  className="rounded-2xl border border-white/10 bg-white/[0.02] p-5"
-                                >
-                                  <p className="text-sm font-medium leading-6 text-white/75">
-                                    Q. {item.question}
-                                  </p>
-                                  <p className="mt-3 text-sm leading-7 text-white/50">
-                                    {item.answer}
-                                  </p>
-                                </div>
-                              ))}
-                            </div>
-                          )}
-
-                        {section.code && (
-                          <div className="mt-7 overflow-hidden rounded-2xl border border-white/10 bg-[#050505]">
-                            <div className="flex items-center justify-between border-b border-white/10 px-5 py-3">
-                              <span className="text-[10px] uppercase tracking-[0.2em] text-white/25">
-                                {section.code.language}
-                              </span>
-
-                              <span className="text-[10px] uppercase tracking-[0.15em] text-white/20">
-                                Example
-                              </span>
-                            </div>
-
-                            <pre className="overflow-x-auto p-5 text-sm leading-7 text-white/60">
-                              <code>{section.code.code}</code>
-                            </pre>
-                          </div>
-                        )}
-
-                        {section.output && (
-                          <div className="mt-7 border-l border-orange-300/50 pl-4">
-                            <p className="text-[10px] uppercase tracking-[0.2em] text-orange-300/70">
-                              Output
-                            </p>
-                            <pre className="mt-2 overflow-x-auto text-sm leading-7 text-white/50">
-                              <code>{section.output}</code>
-                            </pre>
-                          </div>
-                        )}
-
-                        {section.dryRun && section.dryRun.length > 0 && (
-                          <div className="mt-7">
-                            <p className="text-[10px] uppercase tracking-[0.2em] text-orange-300/70">
-                              Dry Run
-                            </p>
-                            <ol className="mt-4 list-decimal space-y-2 pl-5 text-sm leading-6 text-white/50">
-                              {section.dryRun.map((step) => (
-                                <li key={step}>{step}</li>
-                              ))}
-                            </ol>
-                          </div>
-                        )}
-
-                        {section.complexity && (
-                          <div className="mt-7 grid gap-px overflow-hidden rounded-2xl border border-white/10 bg-white/10 sm:grid-cols-2">
-                            {[
-                              ["Time", section.complexity.time],
-                              ["Space", section.complexity.space],
-                            ].map(([label, value]) => (
-                              <div key={label} className="bg-[#080808] p-5">
-                                <p className="text-[10px] uppercase tracking-[0.2em] text-orange-300/70">
-                                  {label} Complexity
-                                </p>
-                                <p className="mt-2 font-mono text-sm text-white/70">
-                                  {value}
-                                </p>
-                              </div>
-                            ))}
-                          </div>
-                        )}
-
-                        {section.practiceQuestions &&
-                          section.practiceQuestions.length > 0 && (
-                            <div className="mt-7 rounded-2xl border border-white/10 bg-white/[0.02] p-6">
-                              <p className="text-[10px] uppercase tracking-[0.2em] text-orange-300/70">
-                                Practice Questions
-                              </p>
-                              <ol className="mt-4 list-decimal space-y-3 pl-5 text-sm leading-6 text-white/50">
-                                {section.practiceQuestions.map((question) => (
-                                  <li key={question}>{question}</li>
-                                ))}
-                              </ol>
-                            </div>
-                          )}
+                        <LessonBlocks blocks={section.blocks} />
                       </div>
                     </div>
                   </section>

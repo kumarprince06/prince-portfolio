@@ -1,44 +1,30 @@
-export interface LessonCode {
-  language: string;
-  code: string;
-}
-
-export interface LessonExample {
-  title: string;
-  explanation: string;
-  code?: LessonCode;
-  output?: string;
-  dryRun?: string[];
-}
-
-export interface LessonVisual {
-  src: string;
-  alt: string;
-  caption: string;
-}
+// Text fields support inline `code` and **bold**.
 
 export interface InterviewQuestion {
   question: string;
   answer: string;
 }
 
-export interface LessonSection {
-  number: string;
-  title: string;
-  paragraphs?: string[];
-  keyPoints?: string[];
-  examples?: LessonExample[];
-  code?: LessonCode;
-  output?: string;
-  dryRun?: string[];
-  importantPoints?: string[];
-  commonMistakes?: string[];
-  interviewQuestions?: InterviewQuestion[];
-  practiceQuestions?: string[];
-  visual?: LessonVisual;
-  complexity?: { time: string; space: string };
-}
+export type LessonBlock =
+  | { type: "paragraph"; text: string }
+  | { type: "heading"; text: string }
+  | { type: "list"; items: string[]; ordered?: boolean }
+  | { type: "code"; language: string; code: string; title?: string }
+  | { type: "output"; text: string }
+  // ASCII diagrams and cheat sheets: monospace, no syntax label
+  | { type: "diagram"; text: string; caption?: string }
+  | { type: "table"; headers: string[]; rows: string[][] }
+  | { type: "callout"; tone: "note" | "tip" | "warning"; title?: string; text: string }
+  | { type: "image"; src: string; alt: string; caption?: string }
+  | { type: "qa"; items: InterviewQuestion[] }
+  // DSA approaches
+  | { type: "complexity"; time: string; space: string };
 
+// A section's number is its position in the lesson.
+export interface LessonSection {
+  title: string;
+  blocks: LessonBlock[];
+}
 
 export interface Lesson {
   slug: string;

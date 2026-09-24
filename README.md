@@ -23,6 +23,14 @@ has its first lesson.
 
 Pages, numbering, previous/next links and the homepage preview update on their own.
 
+### Lesson format
+
+A lesson is a list of sections; each section is a title plus ordered blocks — `paragraph`,
+`heading`, `list`, `code`, `output`, `diagram`, `table`, `callout`, `image`, `qa` (interview
+questions with collapsible answers) and `complexity`. Text supports inline `` `code` `` and
+`**bold**`. Section numbers come from their order. All block types are in
+`content/writing/types.ts`.
+
 ### DSA problem template
 
 Each approach is a section, so the page's contents sidebar reads
@@ -40,24 +48,24 @@ export const twoSum: Lesson = {
   problemUrl: "https://leetcode.com/problems/two-sum/",
   sections: [
     {
-      number: "01",
       title: "Problem",
-      paragraphs: ["Given an array nums and an integer target, ..."],
-      examples: [{ title: "Example 1", explanation: "nums = [2,7,11,15], target = 9", output: "[0, 1]" }],
+      blocks: [
+        { type: "paragraph", text: "Given an array `nums` and an integer `target`, ..." },
+        { type: "code", language: "text", code: "nums = [2, 7, 11, 15], target = 9" },
+        { type: "output", text: "[0, 1]" },
+      ],
     },
     {
-      number: "02",
       title: "Brute Force",
-      paragraphs: ["Intuition: try every pair ..."],
-      code: { language: "java", code: "..." },
-      dryRun: ["i = 0, j = 1 → 2 + 7 = 9 ✓"],
-      complexity: { time: "O(n²)", space: "O(1)" },
+      blocks: [
+        { type: "paragraph", text: "**Intuition:** try every pair ..." },
+        { type: "code", language: "java", code: "..." },
+        { type: "list", ordered: true, items: ["i = 0, j = 1 → 2 + 7 = 9 ✓"] },
+        { type: "complexity", time: "O(n²)", space: "O(1)" },
+      ],
     },
-    { number: "03", title: "Better", /* ... */ complexity: { time: "O(n log n)", space: "O(n)" } },
-    { number: "04", title: "Optimal", /* ... */ complexity: { time: "O(n)", space: "O(n)" } },
+    { title: "Better", blocks: [/* ... */] },
+    { title: "Optimal", blocks: [/* ... */] },
   ],
 };
 ```
-
-Every other lesson uses the same `Lesson` shape without `difficulty` and `problemUrl`.
-All section fields are listed in `content/writing/types.ts`.
