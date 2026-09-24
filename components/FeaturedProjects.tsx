@@ -89,10 +89,27 @@ export default function FeaturedProjects() {
                   </div>
 
                   {/* Arrow */}
-                  <div className="flex items-start justify-start md:justify-end">
-                    <div className="flex h-12 w-12 items-center justify-center rounded-full border border-white/10 text-white/40 transition-all duration-300 group-hover:-translate-y-1 group-hover:translate-x-1 group-hover:border-white/30 group-hover:bg-white group-hover:text-black group-hover:shadow-[0_10px_30px_rgba(255,255,255,0.08)]">
+                  <div className="flex items-start justify-start gap-4 md:flex-col md:items-end">
+                    <a
+                      href={project.github}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label={`${project.title} on GitHub`}
+                      className="flex h-12 w-12 items-center justify-center rounded-full border border-white/10 text-white/40 transition-all duration-300 group-hover:-translate-y-1 group-hover:translate-x-1 group-hover:border-white/30 group-hover:bg-white group-hover:text-black group-hover:shadow-[0_10px_30px_rgba(255,255,255,0.08)]"
+                    >
                       <ArrowUpRight size={19} />
-                    </div>
+                    </a>
+
+                    {project.live && (
+                      <a
+                        href={project.live}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="self-center text-xs uppercase tracking-[0.15em] text-white/35 transition-colors hover:text-white md:self-end"
+                      >
+                        Live demo
+                      </a>
+                    )}
                   </div>
                 </div>
               </article>
