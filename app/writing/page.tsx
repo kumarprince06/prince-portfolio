@@ -4,9 +4,18 @@ import { ArrowLeft, ArrowUpRight } from "lucide-react";
 import { publishedCategories } from "@/content/writing";
 
 export const metadata: Metadata = {
-  title: "Writing — Prince Kumar Sharma",
+  title: "Writing",
   description:
     "Lessons and notes on Java, DSA, Spring Boot, system design, databases, operating systems and networking.",
+  alternates: { canonical: "/writing" },
+  openGraph: {
+    type: "website",
+    images: ["/opengraph-image.jpg"],
+    url: "/writing",
+    title: "Writing — Prince Kumar Sharma",
+    description:
+      "Lessons and notes on Java, DSA, Spring Boot, system design, databases, operating systems and networking.",
+  },
 };
 
 export default function WritingPage() {

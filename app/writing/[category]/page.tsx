@@ -26,8 +26,16 @@ export async function generateMetadata({
 
   return category
     ? {
-        title: `${category.title} — Prince Kumar Sharma`,
+        title: `${category.title} Notes`,
         description: category.description,
+        alternates: { canonical: `/writing/${category.slug}` },
+        openGraph: {
+          type: "website",
+          images: ["/opengraph-image.jpg"],
+          url: `/writing/${category.slug}`,
+          title: `${category.title} Notes — Prince Kumar Sharma`,
+          description: category.description,
+        },
       }
     : {};
 }
