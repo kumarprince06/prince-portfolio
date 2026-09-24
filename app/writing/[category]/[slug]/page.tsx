@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ArrowLeft, ArrowUpRight } from "lucide-react";
-import LessonBlocks from "@/components/LessonBlocks";
+import LessonBlocks, { Inline } from "@/components/LessonBlocks";
 import ReadingProgress from "@/components/ReadingProgress";
 import {
   getCategory,
@@ -47,7 +47,7 @@ export async function generateMetadata({
   return entry
     ? {
         title: `${entry.lesson.title} — Prince Kumar Sharma`,
-        description: entry.lesson.description,
+        description: entry.lesson.description.replace(/[`*]/g, ""),
       }
     : {};
 }
@@ -61,7 +61,7 @@ export default async function WritingLessonPage({
     notFound();
   }
 
-  const { category, lesson, number } = entry;
+  const { category, lesson, number, phase } = entry;
   const sections = lesson.sections.map((section, index) => ({
     ...section,
     number: String(index + 1).padStart(2, "0"),
@@ -95,6 +95,18 @@ export default async function WritingLessonPage({
               {category.title}
             </span>
 
+            {phase && (
+              <>
+                <span className="text-white/20">/</span>
+                <Link
+                  href={`/writing/${category.slug}#phase-${phase.number}`}
+                  className="text-xs uppercase tracking-[0.2em] text-white/45 transition-colors hover:text-white"
+                >
+                  Phase {phase.number} · {phase.title}
+                </Link>
+              </>
+            )}
+
             <span className="text-white/20">/</span>
 
             <span className="text-xs uppercase tracking-[0.2em] text-white/30">
@@ -116,7 +128,7 @@ export default async function WritingLessonPage({
           </h1>
 
           <p className="mt-7 max-w-2xl text-base leading-7 text-white/45 md:text-lg">
-            {lesson.description}
+            <Inline text={lesson.description} />
           </p>
 
           <div className="mt-8 flex flex-wrap gap-2">
