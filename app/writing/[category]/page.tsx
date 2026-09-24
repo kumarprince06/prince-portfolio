@@ -3,6 +3,8 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ArrowLeft } from "lucide-react";
 import { ArticleList } from "@/components/WritingPreview";
+import type { Phase } from "@/content/writing/types";
+import type { LessonEntry } from "@/content/writing";
 import {
   getCategory,
   getEntries,
@@ -69,9 +71,102 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
             {category.description}
           </p>
 
-          <ArticleList entries={getEntries(category)} />
+          {category.phases ? (
+            <PhaseList phases={category.phases} entries={getEntries(category)} />
+          ) : (
+            <ArticleList entries={getEntries(category)} />
+          )}
         </div>
       </section>
     </main>
+  );
+}
+
+function PhaseList({
+  phases,
+  entries,
+}: {
+  phases: Phase[];
+  entries: LessonEntry[];
+}) {
+  const numbered = phases.map((phase, index) => ({
+    ...phase,
+    number: String(index + 1).padStart(2, "0"),
+    entries: entries.filter((entry) => phase.lessons.includes(entry.lesson)),
+  }));
+
+  return (
+    <>
+      {/* Learning path overview */}
+      <nav
+        aria-label="Learning path"
+        className="mt-16 grid gap-px overflow-hidden rounded-2xl border border-white/10 bg-white/10 md:grid-cols-3"
+      >
+        {numbered.map((phase) => (
+          <a
+            key={phase.number}
+            href={`#phase-${phase.number}`}
+            className="group bg-[#080808] p-6 transition-colors hover:bg-white/[0.03]"
+          >
+            <p className="text-[10px] uppercase tracking-[0.2em] text-orange-300/70">
+              Phase {phase.number}
+            </p>
+            <p
+              className={`mt-3 text-base font-medium leading-6 ${phase.entries.length ? "text-white" : "text-white/40"}`}
+            >
+              {phase.title}
+            </p>
+            <p className="mt-3 text-xs text-white/30">
+              {phase.entries.length
+                ? `${phase.entries.length} lessons`
+                : "Coming soon"}
+            </p>
+          </a>
+        ))}
+      </nav>
+
+      {/* Phases */}
+      <div className="mt-24 space-y-24">
+        {numbered.map((phase) => (
+          <section
+            key={phase.number}
+            id={`phase-${phase.number}`}
+            className="scroll-mt-10"
+          >
+            <div className="flex flex-col justify-between gap-4 md:flex-row md:items-end">
+              <div>
+                <p className="text-xs uppercase tracking-[0.25em] text-orange-300">
+                  Phase {phase.number}
+                </p>
+                <h2
+                  className={`mt-4 text-3xl font-semibold tracking-[-0.04em] md:text-5xl ${phase.entries.length ? "text-white" : "text-white/35"}`}
+                >
+                  {phase.title}
+                </h2>
+                <p className="mt-4 max-w-2xl text-sm leading-6 text-white/45 md:text-base">
+                  {phase.description}
+                </p>
+              </div>
+
+              <span
+                className={`w-fit shrink-0 rounded-full border px-3 py-1.5 text-[10px] uppercase tracking-[0.15em] ${
+                  phase.entries.length
+                    ? "border-orange-300/20 bg-orange-300/5 text-orange-300"
+                    : "border-white/10 text-white/35"
+                }`}
+              >
+                {phase.entries.length
+                  ? `${phase.entries.length} lessons`
+                  : "Coming soon"}
+              </span>
+            </div>
+
+            {phase.entries.length > 0 && (
+              <ArticleList entries={phase.entries} className="mt-10" />
+            )}
+          </section>
+        ))}
+      </div>
+    </>
   );
 }

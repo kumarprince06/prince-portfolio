@@ -1,5 +1,5 @@
 import type { Category, Lesson } from "./types";
-import { javaLessons } from "./java";
+import { javaPhases } from "./java";
 
 // Add a lesson: create the file in its category folder and list it in that
 // folder's index.ts. Empty categories stay hidden until they get a lesson.
@@ -9,7 +9,8 @@ export const categories: Category[] = [
     title: "Java",
     description: "Core Java from the ground up — the language, the JVM and how programs run.",
     unit: "Lesson",
-    lessons: javaLessons,
+    phases: javaPhases,
+    lessons: javaPhases.flatMap((phase) => phase.lessons),
   },
   {
     slug: "dsa",
@@ -60,18 +61,28 @@ export interface LessonEntry {
   lesson: Lesson;
   number: string;
   href: string;
+  phase?: { number: string; title: string };
 }
+
+const pad = (n: number) => String(n).padStart(2, "0");
 
 export const publishedCategories = categories.filter(
   (category) => category.lessons.length > 0,
 );
 
 export function getEntries(category: Category): LessonEntry[] {
+  const phaseOf = new Map(
+    (category.phases ?? []).flatMap((phase, index) =>
+      phase.lessons.map((lesson) => [lesson, { number: pad(index + 1), title: phase.title }] as const),
+    ),
+  );
+
   return category.lessons.map((lesson, index) => ({
     category,
     lesson,
-    number: String(index + 1).padStart(2, "0"),
+    number: pad(index + 1),
     href: `/writing/${category.slug}/${lesson.slug}`,
+    phase: phaseOf.get(lesson),
   }));
 }
 

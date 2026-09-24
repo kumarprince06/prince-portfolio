@@ -37,6 +37,13 @@ export interface Lesson {
   sections: LessonSection[];
 }
 
+// A step in a learning path. A phase with no lessons yet shows as "Coming soon".
+export interface Phase {
+  title: string;
+  description: string;
+  lessons: Lesson[];
+}
+
 export interface Category {
   slug: string;
   title: string;
@@ -44,4 +51,5 @@ export interface Category {
   // Label shown before the number, e.g. "Lesson 04" or "Problem 12"
   unit: string;
   lessons: Lesson[];
+  phases?: Phase[];
 }

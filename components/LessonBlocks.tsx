@@ -5,7 +5,7 @@ import type { LessonBlock } from "@/content/writing/types";
 const label = "text-[10px] uppercase tracking-[0.2em]";
 
 // Renders inline `code` and **bold** inside lesson text.
-function Inline({ text }: { text: string }) {
+export function Inline({ text }: { text: string }) {
   return text.split(/(`[^`]+`|\*\*[^*]+\*\*)/).map((part, index): ReactNode => {
     if (part.startsWith("`") && part.endsWith("`") && part.length > 1) {
       return (

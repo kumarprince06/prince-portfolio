@@ -1,6 +1,7 @@
 import { ArrowUpRight } from "lucide-react";
 import Link from "next/link";
 import Reveal from "./Reveal";
+import { Inline } from "./LessonBlocks";
 import { allEntries, type LessonEntry } from "@/content/writing";
 
 const PREVIEW_COUNT = 4;
@@ -57,9 +58,15 @@ export default function WritingPreview() {
   );
 }
 
-export function ArticleList({ entries }: { entries: LessonEntry[] }) {
+export function ArticleList({
+  entries,
+  className = "mt-20",
+}: {
+  entries: LessonEntry[];
+  className?: string;
+}) {
   return (
-    <div className="mt-20">
+    <div className={className}>
       {entries.map(({ category, lesson, number, href }, index) => {
         return (
           <Reveal key={href} delay={index * 0.08} y={20}>
@@ -86,7 +93,7 @@ export function ArticleList({ entries }: { entries: LessonEntry[] }) {
                   </Link>
 
                   <p className="mt-3 max-w-xl text-sm leading-6 text-white/35">
-                    {lesson.description}
+                    <Inline text={lesson.description} />
                   </p>
                 </div>
 
