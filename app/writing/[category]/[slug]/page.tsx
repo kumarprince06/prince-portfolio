@@ -66,7 +66,7 @@ export default async function WritingLessonPage({
     <main className="min-h-screen bg-[#080808] text-white">
       {/* Header */}
       <header className="border-b border-white/10">
-        <div className="mx-auto max-w-5xl px-5 py-6 md:px-8">
+        <div className="mx-auto max-w-7xl px-5 py-6 md:px-8">
           <Link
             href={`/writing/${category.slug}`}
             className="group inline-flex items-center gap-2 text-sm text-white/40 transition-colors hover:text-white"
