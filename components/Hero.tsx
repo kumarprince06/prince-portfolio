@@ -104,22 +104,24 @@ export default function Hero() {
                                 >
                                     Résumé
                                 </a>
-                                <a
-                                    href={social.github}
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    className="px-3 py-3 text-sm text-white/45 transition-colors hover:text-white"
-                                >
-                                    GitHub
-                                </a>
-                                <a
-                                    href={social.linkedin}
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    className="px-3 py-3 text-sm text-white/45 transition-colors hover:text-white"
-                                >
-                                    LinkedIn
-                                </a>
+                                <div className="-ml-3 flex items-center sm:ml-0">
+                                    <a
+                                        href={social.github}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="px-3 py-3 text-sm text-white/45 transition-colors hover:text-white"
+                                    >
+                                        GitHub
+                                    </a>
+                                    <a
+                                        href={social.linkedin}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="px-3 py-3 text-sm text-white/45 transition-colors hover:text-white"
+                                    >
+                                        LinkedIn
+                                    </a>
+                                </div>
                             </div>
                         </div>
                     </Reveal>
@@ -161,7 +163,7 @@ export default function Hero() {
                             </div>
 
                             {/* Floating label */}
-                            <div className="absolute -bottom-5 -left-5 rounded-2xl border border-white/10 bg-[#111]/90 px-4 py-3 shadow-2xl backdrop-blur-xl">
+                            <div className="absolute -left-2 -top-5 rounded-2xl md:-left-5 border border-white/10 bg-[#111]/90 px-4 py-3 shadow-2xl backdrop-blur-xl">
                                 <p className="text-[10px] uppercase tracking-[0.2em] text-white/35">
                                     Focus
                                 </p>

@@ -53,7 +53,7 @@ export default function About() {
                 <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent" />
               </div>
 
-              <div className="absolute -bottom-5 -right-5 rounded-2xl border border-white/10 bg-[#111]/90 px-5 py-4 backdrop-blur-xl">
+              <div className="absolute -bottom-5 -right-2 rounded-2xl md:-right-5 border border-white/10 bg-[#111]/90 px-5 py-4 backdrop-blur-xl">
                 <p className="text-[10px] uppercase tracking-[0.2em] text-white/25">
                   Based in
                 </p>
