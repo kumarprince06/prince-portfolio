@@ -23,7 +23,7 @@ const engineeringAreas = [
     title: "Data & Persistence",
     description:
       "Working with relational databases, entity relationships, transactions, queries and persistence layers.",
-    technologies: "PostgreSQL · MySQL · JPA · Hibernate",
+    technologies: "PostgreSQL · MySQL · JPA · Hibernate · Flyway",
   },
   {
     icon: Workflow,
@@ -31,7 +31,7 @@ const engineeringAreas = [
     title: "Distributed Workflows",
     description:
       "Exploring asynchronous processing, event-driven architecture and the challenges of building systems that scale.",
-    technologies: "Kafka · Redis · Microservices",
+    technologies: "Kafka · Redis · WebSockets · Outbox Pattern",
   },
   {
     icon: LockKeyhole,
@@ -39,7 +39,7 @@ const engineeringAreas = [
     title: "Security & APIs",
     description:
       "Building authenticated and authorized applications with secure API boundaries and role-based access control.",
-    technologies: "Spring Security · JWT · OAuth · REST APIs",
+    technologies: "Spring Security · JWT · RBAC · REST APIs",
   },
   {
     icon: Boxes,
@@ -47,7 +47,7 @@ const engineeringAreas = [
     title: "Infrastructure",
     description:
       "Containerizing applications and understanding the infrastructure required to develop, deploy and operate modern systems.",
-    technologies: "Docker · Kubernetes · Linux · AWS",
+    technologies: "Docker · Linux · AWS · Azure",
   },
   {
     icon: GitBranch,
@@ -55,7 +55,7 @@ const engineeringAreas = [
     title: "Engineering Workflow",
     description:
       "Using version control, automation and testing to make software development more consistent and dependable.",
-    technologies: "Git · CI/CD · Selenium · Automation",
+    technologies: "Git · GitHub Actions · JUnit 5 · Mockito",
   },
 ];
 
