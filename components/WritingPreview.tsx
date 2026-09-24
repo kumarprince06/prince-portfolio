@@ -64,12 +64,7 @@ export function ArticleList({ entries }: { entries: LessonEntry[] }) {
         return (
           <Reveal key={href} delay={index * 0.08} y={20}>
             <article className="group border-t border-white/10 py-9 last:border-b">
-              <div className="grid gap-7 md:grid-cols-[70px_1fr_1.2fr_50px] md:items-center">
-                {/* Number */}
-                <span className="text-xs tracking-[0.2em] text-white/20">
-                  {number}
-                </span>
-
+              <div className="grid gap-7 md:grid-cols-[1fr_1.2fr_50px] md:items-center">
                 {/* Category */}
                 <div className="flex items-center gap-3">
                   <div className="flex h-9 w-9 items-center justify-center rounded-lg border border-white/10 text-white/35 transition-colors group-hover:border-orange-300/30 group-hover:text-orange-300">
