@@ -11,6 +11,18 @@ npm run dev   # http://localhost:3000 (Node 20.9+)
 - `content/writing/` — all lessons and notes
 - `public/resume.pdf` — résumé linked from the hero and About section
 
+## Visitor alerts
+
+`proxy.ts` emails a short alert (page, city, referrer, device) when a new visitor lands on the site
+(once per browser per day) and when someone opens the résumé. Bots and link previews are ignored.
+
+| Variable | Required | Meaning |
+|---|---|---|
+| `RESEND_API_KEY` | yes | Resend API key. Without it, alerts are only logged to the console. |
+| `ALERT_EMAIL` | no | Where alerts go. Defaults to the contact email; on Resend's free plan it must be the address the Resend account was created with. |
+
+Put them in `.env.local` for local runs and in Vercel → Settings → Environment Variables for production.
+
 ## Adding writing
 
 Every topic is a category in `content/writing/index.ts`: Java, DSA, Spring & Spring Boot,
