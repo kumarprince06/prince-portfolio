@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { ArrowLeft } from "lucide-react";
+import { ArrowLeft, ChevronDown } from "lucide-react";
 import { ArticleList } from "@/components/WritingPreview";
 import type { Phase } from "@/content/writing/types";
 import type { LessonEntry } from "@/content/writing";
@@ -89,84 +89,77 @@ function PhaseList({
   phases: Phase[];
   entries: LessonEntry[];
 }) {
-  const numbered = phases.map((phase, index) => ({
-    ...phase,
-    number: String(index + 1).padStart(2, "0"),
-    entries: entries.filter((entry) => phase.lessons.includes(entry.lesson)),
-  }));
-
   return (
-    <>
-      {/* Learning path overview */}
-      <nav
-        aria-label="Learning path"
-        className="mt-16 grid gap-px overflow-hidden rounded-2xl border border-white/10 bg-white/10 md:grid-cols-3"
-      >
-        {numbered.map((phase) => (
-          <a
-            key={phase.number}
-            href={`#phase-${phase.number}`}
-            className="group bg-[#080808] p-6 transition-colors hover:bg-white/[0.03]"
-          >
-            <p className="text-[10px] uppercase tracking-[0.2em] text-orange-300/70">
-              Phase {phase.number}
-            </p>
-            <p
-              className={`mt-3 text-base font-medium leading-6 ${phase.entries.length ? "text-white" : "text-white/40"}`}
-            >
-              {phase.title}
-            </p>
-            <p className="mt-3 text-xs text-white/30">
-              {phase.entries.length
-                ? `${phase.entries.length} lessons`
-                : "Coming soon"}
-            </p>
-          </a>
-        ))}
-      </nav>
+    <div className="mt-16 space-y-4">
+      {phases.map((phase, index) => {
+        const number = String(index + 1).padStart(2, "0");
+        const phaseEntries = entries.filter((entry) =>
+          phase.lessons.includes(entry.lesson),
+        );
+        const ready = phaseEntries.length > 0;
 
-      {/* Phases */}
-      <div className="mt-24 space-y-24">
-        {numbered.map((phase) => (
-          <section
-            key={phase.number}
-            id={`phase-${phase.number}`}
-            className="scroll-mt-10"
-          >
-            <div className="flex flex-col justify-between gap-4 md:flex-row md:items-end">
-              <div>
-                <p className="text-xs uppercase tracking-[0.25em] text-orange-300">
-                  Phase {phase.number}
-                </p>
-                <h2
-                  className={`mt-4 text-3xl font-semibold tracking-[-0.04em] md:text-5xl ${phase.entries.length ? "text-white" : "text-white/35"}`}
-                >
-                  {phase.title}
-                </h2>
-                <p className="mt-4 max-w-2xl text-sm leading-6 text-white/45 md:text-base">
-                  {phase.description}
-                </p>
-              </div>
-
-              <span
-                className={`w-fit shrink-0 rounded-full border px-3 py-1.5 text-[10px] uppercase tracking-[0.15em] ${
-                  phase.entries.length
-                    ? "border-orange-300/20 bg-orange-300/5 text-orange-300"
-                    : "border-white/10 text-white/35"
-                }`}
+        const header = (
+          <div className="flex min-w-0 flex-1 flex-col gap-4 md:flex-row md:items-center md:justify-between">
+            <div className="min-w-0">
+              <p className="text-[10px] uppercase tracking-[0.25em] text-orange-300">
+                Phase {number}
+              </p>
+              <h2
+                className={`mt-3 text-2xl font-semibold tracking-[-0.03em] md:text-3xl ${ready ? "text-white" : "text-white/40"}`}
               >
-                {phase.entries.length
-                  ? `${phase.entries.length} lessons`
-                  : "Coming soon"}
-              </span>
+                {phase.title}
+              </h2>
+              <p className="mt-3 max-w-2xl text-sm leading-6 text-white/45">
+                {phase.description}
+              </p>
             </div>
 
-            {phase.entries.length > 0 && (
-              <ArticleList entries={phase.entries} className="mt-10" />
-            )}
-          </section>
-        ))}
-      </div>
-    </>
+            <span
+              className={`w-fit shrink-0 rounded-full border px-3 py-1.5 text-[10px] uppercase tracking-[0.15em] ${
+                ready
+                  ? "border-orange-300/20 bg-orange-300/5 text-orange-300"
+                  : "border-white/10 text-white/35"
+              }`}
+            >
+              {ready ? `${phaseEntries.length} lessons` : "Coming soon"}
+            </span>
+          </div>
+        );
+
+        if (!ready) {
+          return (
+            <div
+              key={number}
+              id={`phase-${number}`}
+              className="rounded-3xl border border-dashed border-white/10 p-6 md:p-8"
+            >
+              {header}
+            </div>
+          );
+        }
+
+        return (
+          <details
+            key={number}
+            id={`phase-${number}`}
+            open={index === 0}
+            className="group scroll-mt-10 rounded-3xl border border-white/10 bg-white/[0.015] transition-colors open:border-white/15"
+          >
+            <summary className="flex cursor-pointer list-none items-start gap-6 p-6 md:p-8 [&::-webkit-details-marker]:hidden">
+              {header}
+              <ChevronDown
+                size={20}
+                aria-hidden="true"
+                className="mt-1 shrink-0 text-white/40 transition-transform duration-300 group-open:rotate-180 md:mt-10"
+              />
+            </summary>
+
+            <div className="px-6 pb-2 md:px-8">
+              <ArticleList entries={phaseEntries} className="" />
+            </div>
+          </details>
+        );
+      })}
+    </div>
   );
 }
