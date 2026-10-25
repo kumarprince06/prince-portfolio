@@ -18,7 +18,7 @@ import { whatIsJava } from "./what-is-java";
 // Reading order — phases run in sequence, lessons are numbered straight through them.
 export const javaPhases: Phase[] = [
   {
-    title: "Java Fundamentals",
+    title: "Introduction to Java",
     description: "What Java is, how it evolved, and what really happens between javac and a running program.",
     lessons: [
       whatIsJava,
