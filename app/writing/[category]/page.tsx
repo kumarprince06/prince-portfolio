@@ -129,7 +129,9 @@ function PhaseList({
                   : "border-white/10 text-white/35"
               }`}
             >
-              {ready ? `${phaseEntries.length} lessons` : "Coming soon"}
+              {ready
+                ? `${phaseEntries.length} lesson${phaseEntries.length === 1 ? "" : "s"}`
+                : "Coming soon"}
             </span>
           </div>
         );
