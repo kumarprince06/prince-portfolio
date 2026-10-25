@@ -10,6 +10,7 @@ import {
   getCategory,
   getEntries,
   publishedCategories,
+  type LessonEntry,
 } from "@/content/writing";
 
 type LessonPageProps = {
@@ -48,21 +49,35 @@ export async function generateMetadata({
 
   if (!entry) return {};
 
+  const title = searchTitle(entry);
   const description = entry.lesson.description.replace(/[`*]/g, "");
   return {
-    title: entry.lesson.title,
+    title,
     description,
     alternates: { canonical: entry.href },
     openGraph: {
       type: "article",
       url: entry.href,
-      title: `${entry.lesson.title} — Prince Kumar Sharma`,
+      title: `${title} — Prince Kumar Sharma`,
       description,
       publishedTime: entry.lesson.date,
       authors: ["Prince Kumar Sharma"],
       tags: entry.lesson.tags,
     },
+    // Replaces the layout's twitter block, so the card type has to be repeated
+    twitter: {
+      card: "summary_large_image",
+      title: `${title} — Prince Kumar Sharma`,
+      description,
+    },
   };
+}
+
+// "Variables" alone is too vague to rank; search for it as "Java Variables"
+function searchTitle({ category, lesson }: LessonEntry) {
+  return lesson.title.toLowerCase().includes(category.title.toLowerCase())
+    ? lesson.title
+    : `${category.title} ${lesson.title}`;
 }
 
 export default async function WritingLessonPage({
@@ -86,17 +101,33 @@ export default async function WritingLessonPage({
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
-          __html: JSON.stringify({
-            "@context": "https://schema.org",
-            "@type": "TechArticle",
-            headline: lesson.title,
-            description: lesson.description.replace(/[`*]/g, ""),
-            datePublished: lesson.date,
-            keywords: lesson.tags.join(", "),
-            inLanguage: "en",
-            url: new URL(entry.href, social.website).toString(),
-            author: { "@type": "Person", name: "Prince Kumar Sharma", url: social.website },
-          }).replace(/</g, "\\u003c"),
+          __html: JSON.stringify([
+            {
+              "@context": "https://schema.org",
+              "@type": "TechArticle",
+              headline: searchTitle(entry),
+              description: lesson.description.replace(/[`*]/g, ""),
+              datePublished: lesson.date,
+              keywords: lesson.tags.join(", "),
+              inLanguage: "en",
+              url: new URL(entry.href, social.website).toString(),
+              author: { "@type": "Person", name: "Prince Kumar Sharma", url: social.website },
+            },
+            {
+              "@context": "https://schema.org",
+              "@type": "BreadcrumbList",
+              itemListElement: [
+                ["Writing", "/writing"],
+                [category.title, `/writing/${category.slug}`],
+                [lesson.title, entry.href],
+              ].map(([name, href], index) => ({
+                "@type": "ListItem",
+                position: index + 1,
+                name,
+                item: new URL(href, social.website).toString(),
+              })),
+            },
+          ]).replace(/</g, "\\u003c"),
         }}
       />
 
