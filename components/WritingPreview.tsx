@@ -6,6 +6,11 @@ import { allEntries, formatDate, type LessonEntry } from "@/content/writing";
 
 const PREVIEW_COUNT = 4;
 
+// Newest first, so new lessons show up on the homepage (dates are YYYY-MM-DD)
+const latestEntries = [...allEntries]
+  .sort((a, b) => b.lesson.date.localeCompare(a.lesson.date))
+  .slice(0, PREVIEW_COUNT);
+
 export default function WritingPreview() {
   return (
     <section
@@ -34,7 +39,7 @@ export default function WritingPreview() {
         </div>
 
         {/* Articles */}
-        <ArticleList entries={allEntries.slice(0, PREVIEW_COUNT)} />
+        <ArticleList entries={latestEntries} />
 
         {/* Blog CTA */}
         <div className="mt-12 flex flex-col gap-5 sm:flex-row sm:items-center sm:justify-between">
