@@ -1,0 +1,49 @@
+<svg width="1200" height="620" viewBox="0 0 1200 620" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="620" rx="28" fill="#0D0D0D"/>
+  <path d="M80 130H1120" stroke="#2B2B2B" stroke-width="2"/>
+  <text x="80" y="82" fill="#FB923C" font-family="Arial, sans-serif" font-size="18" letter-spacing="4">FAN OUT, THEN JOIN</text>
+  <text x="80" y="112" fill="#777777" font-family="Arial, sans-serif" font-size="16">One quote request starts three calls in parallel on your executor.</text>
+  <rect x="80" y="285" width="180" height="110" rx="16" fill="#171717" stroke="#555555" stroke-width="2"/>
+  <text x="104" y="325" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="21">Quote</text>
+  <text x="104" y="355" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="21">request</text>
+  <rect x="305" y="160" width="340" height="398" rx="20" stroke="#3A3A3A" stroke-width="2" stroke-dasharray="6 6"/>
+  <text x="325" y="150" fill="#888888" font-family="Arial, sans-serif" font-size="14" letter-spacing="2">EXECUTOR (YOUR POOL)</text>
+  <rect x="325" y="178" width="300" height="108" rx="16" fill="#171717" stroke="#555555" stroke-width="2"/>
+  <text x="349" y="212" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="20">Maps ETA</text>
+  <text x="349" y="242" fill="#888888" font-family="Arial, sans-serif" font-size="15">supplyAsync(eta, pool)</text>
+  <text x="349" y="266" fill="#888888" font-family="Arial, sans-serif" font-size="15">~120 ms</text>
+  <path d="M262 340 L290 340 L290 232 L321 232" stroke="#FB923C" stroke-width="3" stroke-linejoin="round"/>
+  <path d="M312.2 223.8L321 232L312.2 240.2" stroke="#FB923C" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M627 232 L660 232 L660 340 L686 340" stroke="#FB923C" stroke-width="3" stroke-linejoin="round"/>
+  <path d="M677.2 331.8L686 340L677.2 348.2" stroke="#FB923C" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="325" y="303" width="300" height="108" rx="16" fill="#171717" stroke="#555555" stroke-width="2"/>
+  <text x="349" y="337" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="20">Base fare</text>
+  <text x="349" y="367" fill="#888888" font-family="Arial, sans-serif" font-size="15">supplyAsync(fare, pool)</text>
+  <text x="349" y="391" fill="#888888" font-family="Arial, sans-serif" font-size="15">~200 ms</text>
+  <path d="M262 340 L290 340 L290 357 L321 357" stroke="#FB923C" stroke-width="3" stroke-linejoin="round"/>
+  <path d="M312.2 348.8L321 357L312.2 365.2" stroke="#FB923C" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M627 357 L660 357 L660 340 L686 340" stroke="#FB923C" stroke-width="3" stroke-linejoin="round"/>
+  <path d="M677.2 331.8L686 340L677.2 348.2" stroke="#FB923C" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="325" y="428" width="300" height="108" rx="16" fill="#21180F" stroke="#FB923C" stroke-width="2"/>
+  <text x="349" y="462" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="20">Surge</text>
+  <text x="349" y="492" fill="#C6A17A" font-family="Arial, sans-serif" font-size="15">completeOnTimeout(1.0, 300ms)</text>
+  <text x="349" y="516" fill="#C6A17A" font-family="Arial, sans-serif" font-size="15">slow? fall back to 1.0x</text>
+  <path d="M262 340 L290 340 L290 482 L321 482" stroke="#FB923C" stroke-width="3" stroke-linejoin="round"/>
+  <path d="M312.2 473.8L321 482L312.2 490.2" stroke="#FB923C" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M627 482 L660 482 L660 340 L686 340" stroke="#FB923C" stroke-width="3" stroke-linejoin="round"/>
+  <path d="M677.2 331.8L686 340L677.2 348.2" stroke="#FB923C" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="690" y="260" width="200" height="160" rx="16" fill="#21180F" stroke="#FB923C" stroke-width="2"/>
+  <text x="714" y="298" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="21">Join</text>
+  <text x="714" y="330" fill="#C6A17A" font-family="Arial, sans-serif" font-size="15">fare.thenCombine(</text>
+  <text x="714" y="354" fill="#C6A17A" font-family="Arial, sans-serif" font-size="15">surge, (f, s) -&gt; f*s)</text>
+  <text x="714" y="386" fill="#C6A17A" font-family="Arial, sans-serif" font-size="15">allOf(...) waits for all</text>
+  <path d="M892 340 L926 340" stroke="#FB923C" stroke-width="3" stroke-linejoin="round"/>
+  <path d="M917.2 331.8L926 340L917.2 348.2" stroke="#FB923C" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="930" y="260" width="190" height="160" rx="16" fill="#171717" stroke="#555555" stroke-width="2"/>
+  <text x="954" y="298" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="21">Quote</text>
+  <text x="954" y="322" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="21">response</text>
+  <text x="954" y="356" fill="#888888" font-family="Arial, sans-serif" font-size="15">.orTimeout(2s)</text>
+  <text x="954" y="380" fill="#888888" font-family="Arial, sans-serif" font-size="15">else fails with</text>
+  <text x="954" y="404" fill="#888888" font-family="Arial, sans-serif" font-size="15">TimeoutException</text>
+  <text x="80" y="594" fill="#888888" font-family="Arial, sans-serif" font-size="16">Total wait is about the slowest call, not the sum of all three.</text>
+</svg>

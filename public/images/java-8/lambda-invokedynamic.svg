@@ -1,0 +1,44 @@
+<svg width="1200" height="620" viewBox="0 0 1200 620" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="620" rx="28" fill="#0D0D0D"/>
+  <path d="M80 130H1120" stroke="#2B2B2B" stroke-width="2"/>
+  <text x="80" y="82" fill="#FB923C" font-family="Arial, sans-serif" font-size="18" letter-spacing="4">HOW A LAMBDA RUNS</text>
+  <text x="80" y="112" fill="#777777" font-family="Arial, sans-serif" font-size="16">javac does not create a class. The JVM builds one on the first call.</text>
+  <rect x="80" y="155" width="224" height="200" rx="16" fill="#171717" stroke="#555555" stroke-width="2"/>
+  <text x="104" y="195" fill="#FB923C" font-family="Arial, sans-serif" font-size="14" letter-spacing="2">01  SOURCE</text>
+  <text x="104" y="229" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="22">Main.java</text>
+  <text x="104" y="261" fill="#888888" font-family="Arial, sans-serif" font-size="16">Runnable r =</text>
+  <text x="104" y="289" fill="#888888" font-family="Arial, sans-serif" font-size="16">  () -&gt; work();</text>
+  <rect x="352" y="155" width="224" height="200" rx="16" fill="#171717" stroke="#555555" stroke-width="2"/>
+  <text x="376" y="195" fill="#FB923C" font-family="Arial, sans-serif" font-size="14" letter-spacing="2">02  JAVAC</text>
+  <text x="376" y="229" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="22">Main.class</text>
+  <text x="376" y="261" fill="#888888" font-family="Arial, sans-serif" font-size="16">private static</text>
+  <text x="376" y="289" fill="#888888" font-family="Arial, sans-serif" font-size="16">lambda$main$0()</text>
+  <text x="376" y="317" fill="#888888" font-family="Arial, sans-serif" font-size="16">+ invokedynamic</text>
+  <rect x="624" y="155" width="224" height="200" rx="16" fill="#21180F" stroke="#FB923C" stroke-width="2"/>
+  <text x="648" y="195" fill="#FB923C" font-family="Arial, sans-serif" font-size="14" letter-spacing="2">03  FIRST CALL ONLY</text>
+  <text x="648" y="229" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="22">Bootstrap</text>
+  <text x="648" y="261" fill="#C6A17A" font-family="Arial, sans-serif" font-size="16">LambdaMetafactory</text>
+  <text x="648" y="289" fill="#C6A17A" font-family="Arial, sans-serif" font-size="16">.metafactory()</text>
+  <text x="648" y="317" fill="#C6A17A" font-family="Arial, sans-serif" font-size="16">links the call site</text>
+  <rect x="896" y="155" width="224" height="200" rx="16" fill="#171717" stroke="#555555" stroke-width="2"/>
+  <text x="920" y="195" fill="#FB923C" font-family="Arial, sans-serif" font-size="14" letter-spacing="2">04  RUNTIME</text>
+  <text x="920" y="229" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="22">Hidden class</text>
+  <text x="920" y="261" fill="#888888" font-family="Arial, sans-serif" font-size="16">implements Runnable</text>
+  <text x="920" y="289" fill="#888888" font-family="Arial, sans-serif" font-size="16">run() calls</text>
+  <text x="920" y="317" fill="#888888" font-family="Arial, sans-serif" font-size="16">lambda$main$0()</text>
+  <path d="M306 255 L348 255" stroke="#FB923C" stroke-width="3" stroke-linejoin="round"/>
+  <path d="M339.2 246.8L348 255L339.2 263.2" stroke="#FB923C" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M578 255 L620 255" stroke="#FB923C" stroke-width="3" stroke-linejoin="round"/>
+  <path d="M611.2 246.8L620 255L611.2 263.2" stroke="#FB923C" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M850 255 L892 255" stroke="#FB923C" stroke-width="3" stroke-linejoin="round"/>
+  <path d="M883.2 246.8L892 255L883.2 263.2" stroke="#FB923C" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="80" y="400" fill="#FB923C" font-family="Arial, sans-serif" font-size="14" letter-spacing="2">THE INSTANCE invokedynamic HANDS BACK</text>
+  <rect x="80" y="420" width="505" height="120" rx="16" fill="#171717" stroke="#555555" stroke-width="2"/>
+  <text x="104" y="460" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="19">Non-capturing:  () -&gt; work()</text>
+  <text x="104" y="492" fill="#888888" font-family="Arial, sans-serif" font-size="16">One instance, created once and reused every time.</text>
+  <rect x="615" y="420" width="505" height="120" rx="16" fill="#21180F" stroke="#FB923C" stroke-width="2"/>
+  <text x="639" y="460" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="19">Capturing:  () -&gt; charge(fare)</text>
+  <text x="639" y="490" fill="#C6A17A" font-family="Arial, sans-serif" font-size="16">New instance per evaluation; fare is stored in</text>
+  <text x="639" y="516" fill="#C6A17A" font-family="Arial, sans-serif" font-size="16">a field such as arg$1.</text>
+  <text x="80" y="580" fill="#888888" font-family="Arial, sans-serif" font-size="16">After linking, later calls skip the bootstrap and go straight to the cached factory.</text>
+</svg>

@@ -1,0 +1,43 @@
+<svg width="1200" height="620" viewBox="0 0 1200 620" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="620" rx="28" fill="#0D0D0D"/>
+  <path d="M80 130H1120" stroke="#2B2B2B" stroke-width="2"/>
+  <text x="80" y="82" fill="#FB923C" font-family="Arial, sans-serif" font-size="18" letter-spacing="4">WHICH THREAD RUNS THE CALLBACK?</text>
+  <text x="80" y="112" fill="#777777" font-family="Arial, sans-serif" font-size="16">It depends on when you attach it, and whether you use an *Async method.</text>
+  <rect x="420" y="150" width="360" height="80" rx="16" fill="#21180F" stroke="#FB923C" stroke-width="2"/>
+  <text x="600" y="185" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="20" text-anchor="middle">cf.thenApply(fn)</text>
+  <text x="600" y="212" fill="#C6A17A" font-family="Arial, sans-serif" font-size="15" text-anchor="middle">or thenApplyAsync(fn)</text>
+  <rect x="80" y="290" width="320" height="90" rx="16" fill="#171717" stroke="#555555" stroke-width="2"/>
+  <text x="104" y="327" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="19">cf NOT done yet</text>
+  <text x="104" y="357" fill="#888888" font-family="Arial, sans-serif" font-size="15">thenApply(fn)</text>
+  <rect x="80" y="430" width="320" height="120" rx="16" fill="#171717" stroke="#555555" stroke-width="2"/>
+  <text x="104" y="468" fill="#FB923C" font-family="Arial, sans-serif" font-size="18">The thread that completes cf</text>
+  <text x="104" y="500" fill="#888888" font-family="Arial, sans-serif" font-size="15">e.g. the pool thread that</text>
+  <text x="104" y="526" fill="#888888" font-family="Arial, sans-serif" font-size="15">finishes supplyAsync</text>
+  <path d="M600 232 L600 260 L240 260 L240 286" stroke="#FB923C" stroke-width="3" stroke-linejoin="round"/>
+  <path d="M248.2 277.2L240 286L231.8 277.2" stroke="#FB923C" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M240 382 L240 426" stroke="#FB923C" stroke-width="3" stroke-linejoin="round"/>
+  <path d="M248.2 417.2L240 426L231.8 417.2" stroke="#FB923C" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="440" y="290" width="320" height="90" rx="16" fill="#171717" stroke="#555555" stroke-width="2"/>
+  <text x="464" y="327" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="19">cf ALREADY done</text>
+  <text x="464" y="357" fill="#888888" font-family="Arial, sans-serif" font-size="15">thenApply(fn)</text>
+  <rect x="440" y="430" width="320" height="120" rx="16" fill="#171717" stroke="#555555" stroke-width="2"/>
+  <text x="464" y="468" fill="#FB923C" font-family="Arial, sans-serif" font-size="18">The caller thread</text>
+  <text x="464" y="500" fill="#888888" font-family="Arial, sans-serif" font-size="15">fn runs right inside</text>
+  <text x="464" y="526" fill="#888888" font-family="Arial, sans-serif" font-size="15">the thenApply() call</text>
+  <path d="M600 232 L600 260 L600 260 L600 286" stroke="#FB923C" stroke-width="3" stroke-linejoin="round"/>
+  <path d="M608.2 277.2L600 286L591.8 277.2" stroke="#FB923C" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M600 382 L600 426" stroke="#FB923C" stroke-width="3" stroke-linejoin="round"/>
+  <path d="M608.2 417.2L600 426L591.8 417.2" stroke="#FB923C" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="800" y="290" width="320" height="90" rx="16" fill="#171717" stroke="#555555" stroke-width="2"/>
+  <text x="824" y="327" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="19">Any time</text>
+  <text x="824" y="357" fill="#888888" font-family="Arial, sans-serif" font-size="15">thenApplyAsync(fn)</text>
+  <rect x="800" y="430" width="320" height="120" rx="16" fill="#21180F" stroke="#FB923C" stroke-width="2"/>
+  <text x="824" y="468" fill="#FB923C" font-family="Arial, sans-serif" font-size="18">An executor thread</text>
+  <text x="824" y="500" fill="#C6A17A" font-family="Arial, sans-serif" font-size="15">the one you pass, or</text>
+  <text x="824" y="526" fill="#C6A17A" font-family="Arial, sans-serif" font-size="15">ForkJoinPool.commonPool()</text>
+  <path d="M600 232 L600 260 L960 260 L960 286" stroke="#FB923C" stroke-width="3" stroke-linejoin="round"/>
+  <path d="M968.2 277.2L960 286L951.8 277.2" stroke="#FB923C" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M960 382 L960 426" stroke="#FB923C" stroke-width="3" stroke-linejoin="round"/>
+  <path d="M968.2 417.2L960 426L951.8 417.2" stroke="#FB923C" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="80" y="594" fill="#888888" font-family="Arial, sans-serif" font-size="15">So slow work in a plain thenApply can land on any of these threads. Pass your own executor to *Async.</text>
+</svg>

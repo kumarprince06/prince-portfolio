@@ -1,0 +1,36 @@
+<svg width="1200" height="620" viewBox="0 0 1200 620" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="620" rx="28" fill="#0D0D0D"/>
+  <path d="M80 130H1120" stroke="#2B2B2B" stroke-width="2"/>
+  <text x="80" y="82" fill="#FB923C" font-family="Arial, sans-serif" font-size="18" letter-spacing="4">MAP.MERGE, STEP BY STEP</text>
+  <text x="80" y="112" fill="#777777" font-family="Arial, sans-serif" font-size="16">Counting orders per city with one call.</text>
+  <rect x="80" y="150" width="560" height="72" rx="16" fill="#21180F" stroke="#FB923C" stroke-width="2"/>
+  <text x="104" y="194" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="20">counts.merge(city, 1, Integer::sum)</text>
+  <path d="M360 224 L360 262" stroke="#FB923C" stroke-width="3" stroke-linejoin="round"/>
+  <path d="M368.2 253.2L360 262L351.8 253.2" stroke="#FB923C" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="80" y="266" width="560" height="80" rx="16" fill="#171717" stroke="#555555" stroke-width="2"/>
+  <text x="360" y="300" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="19" text-anchor="middle">Is city already in the map?</text>
+  <text x="360" y="328" fill="#888888" font-family="Arial, sans-serif" font-size="15" text-anchor="middle">(with a non-null value)</text>
+  <path d="M210 348 L210 396" stroke="#FB923C" stroke-width="3" stroke-linejoin="round"/>
+  <path d="M218.2 387.2L210 396L201.8 387.2" stroke="#FB923C" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M510 348 L510 396" stroke="#FB923C" stroke-width="3" stroke-linejoin="round"/>
+  <path d="M518.2 387.2L510 396L501.8 387.2" stroke="#FB923C" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="222" y="378" fill="#FB923C" font-family="Arial, sans-serif" font-size="15">no</text>
+  <text x="522" y="378" fill="#FB923C" font-family="Arial, sans-serif" font-size="15">yes</text>
+  <rect x="80" y="400" width="260" height="120" rx="16" fill="#171717" stroke="#555555" stroke-width="2"/>
+  <text x="104" y="438" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="19">put(city, 1)</text>
+  <text x="104" y="470" fill="#888888" font-family="Arial, sans-serif" font-size="15">uses the given value;</text>
+  <text x="104" y="494" fill="#888888" font-family="Arial, sans-serif" font-size="15">the function is not called</text>
+  <rect x="380" y="400" width="260" height="120" rx="16" fill="#171717" stroke="#555555" stroke-width="2"/>
+  <text x="404" y="438" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="19">put(city, old + 1)</text>
+  <text x="404" y="470" fill="#888888" font-family="Arial, sans-serif" font-size="15">Integer.sum(old, 1)</text>
+  <text x="404" y="494" fill="#888888" font-family="Arial, sans-serif" font-size="15">replaces the old count</text>
+  <rect x="680" y="150" width="440" height="370" rx="16" fill="#171717" stroke="#555555" stroke-width="2"/>
+  <text x="704" y="188" fill="#FB923C" font-family="Arial, sans-serif" font-size="14" letter-spacing="2">ORDERS: PUNE, DELHI, PUNE</text>
+  <text x="704" y="240" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="17">merge(&quot;Pune&quot;, 1, ...)</text>
+  <text x="704" y="270" fill="#888888" font-family="Arial, sans-serif" font-size="16">missing  →  {Pune=1}</text>
+  <text x="704" y="332" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="17">merge(&quot;Delhi&quot;, 1, ...)</text>
+  <text x="704" y="362" fill="#888888" font-family="Arial, sans-serif" font-size="16">missing  →  {Pune=1, Delhi=1}</text>
+  <text x="704" y="424" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="17">merge(&quot;Pune&quot;, 1, ...)</text>
+  <text x="704" y="454" fill="#C6A17A" font-family="Arial, sans-serif" font-size="16">present  →  {Pune=2, Delhi=1}</text>
+  <text x="80" y="580" fill="#888888" font-family="Arial, sans-serif" font-size="15">If the function returns null (Integer::sum never does), merge removes the key instead of storing null.</text>
+</svg>

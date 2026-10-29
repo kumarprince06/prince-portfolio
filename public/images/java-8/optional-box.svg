@@ -1,0 +1,49 @@
+<svg width="1200" height="620" viewBox="0 0 1200 620" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="620" rx="28" fill="#0D0D0D"/>
+  <path d="M80 130H1120" stroke="#2B2B2B" stroke-width="2"/>
+  <text x="80" y="82" fill="#FB923C" font-family="Arial, sans-serif" font-size="18" letter-spacing="4">OPTIONAL IS A BOX</text>
+  <text x="80" y="112" fill="#777777" font-family="Arial, sans-serif" font-size="16">A full box runs each step. An empty box skips them all.</text>
+  <rect x="80" y="160" width="224" height="135" rx="16" fill="#21180F" stroke="#FB923C" stroke-width="2"/>
+  <text x="104" y="195" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="17">Optional.of(&quot;Ravi&quot;)</text>
+  <rect x="104" y="215" width="120" height="52" rx="10" fill="#2E2113" stroke="#FB923C" stroke-width="2"/>
+  <text x="164" y="248" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="18" text-anchor="middle">Ravi</text>
+  <rect x="80" y="330" width="224" height="135" rx="16" fill="#171717" stroke="#555555" stroke-width="2"/>
+  <text x="104" y="365" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="17">Optional.empty()</text>
+  <rect x="104" y="385" width="120" height="52" rx="10" stroke="#555555" stroke-width="2" stroke-dasharray="6 5"/>
+  <text x="164" y="418" fill="#888888" font-family="Arial, sans-serif" font-size="16" text-anchor="middle">empty</text>
+  <rect x="352" y="160" width="224" height="135" rx="16" fill="#171717" stroke="#555555" stroke-width="2"/>
+  <text x="372" y="200" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="15">.map(String::toUpperCase)</text>
+  <text x="372" y="245" fill="#C6A17A" font-family="Arial, sans-serif" font-size="18">runs  →  &quot;RAVI&quot;</text>
+  <path d="M306 227 L348 227" stroke="#FB923C" stroke-width="3" stroke-linejoin="round"/>
+  <path d="M339.2 218.8L348 227L339.2 235.2" stroke="#FB923C" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="352" y="330" width="224" height="135" rx="16" fill="#171717" stroke="#555555" stroke-width="2"/>
+  <text x="372" y="370" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="15">.map(String::toUpperCase)</text>
+  <text x="372" y="415" fill="#888888" font-family="Arial, sans-serif" font-size="18">skipped</text>
+  <path d="M306 397 L348 397" stroke="#FB923C" stroke-width="3" stroke-linejoin="round"/>
+  <path d="M339.2 388.8L348 397L339.2 405.2" stroke="#FB923C" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="624" y="160" width="224" height="135" rx="16" fill="#171717" stroke="#555555" stroke-width="2"/>
+  <text x="644" y="200" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="15">.filter(n -&gt; n.length() &gt; 2)</text>
+  <text x="644" y="245" fill="#C6A17A" font-family="Arial, sans-serif" font-size="18">keeps it</text>
+  <path d="M578 227 L620 227" stroke="#FB923C" stroke-width="3" stroke-linejoin="round"/>
+  <path d="M611.2 218.8L620 227L611.2 235.2" stroke="#FB923C" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="624" y="330" width="224" height="135" rx="16" fill="#171717" stroke="#555555" stroke-width="2"/>
+  <text x="644" y="370" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="15">.filter(n -&gt; n.length() &gt; 2)</text>
+  <text x="644" y="415" fill="#888888" font-family="Arial, sans-serif" font-size="18">skipped</text>
+  <path d="M578 397 L620 397" stroke="#FB923C" stroke-width="3" stroke-linejoin="round"/>
+  <path d="M611.2 388.8L620 397L611.2 405.2" stroke="#FB923C" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="896" y="160" width="224" height="135" rx="16" fill="#171717" stroke="#555555" stroke-width="2"/>
+  <text x="916" y="200" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="15">.orElse(&quot;No driver&quot;)</text>
+  <text x="916" y="245" fill="#C6A17A" font-family="Arial, sans-serif" font-size="18">gives &quot;RAVI&quot;</text>
+  <path d="M850 227 L892 227" stroke="#FB923C" stroke-width="3" stroke-linejoin="round"/>
+  <path d="M883.2 218.8L892 227L883.2 235.2" stroke="#FB923C" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="896" y="330" width="224" height="135" rx="16" fill="#171717" stroke="#555555" stroke-width="2"/>
+  <text x="916" y="370" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="15">.orElse(&quot;No driver&quot;)</text>
+  <text x="916" y="415" fill="#888888" font-family="Arial, sans-serif" font-size="18">gives &quot;No driver&quot;</text>
+  <path d="M850 397 L892 397" stroke="#FB923C" stroke-width="3" stroke-linejoin="round"/>
+  <path d="M883.2 388.8L892 397L883.2 405.2" stroke="#FB923C" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="80" y="492" width="1040" height="92" rx="16" fill="#171717" stroke="#555555" stroke-width="2"/>
+  <text x="104" y="528" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="17">orElse(makeFallback())</text>
+  <text x="420" y="528" fill="#888888" font-family="Arial, sans-serif" font-size="16">always calls makeFallback(), even when the box is full.</text>
+  <text x="104" y="562" fill="#FB923C" font-family="Arial, sans-serif" font-size="17">orElseGet(() -&gt; makeFallback())</text>
+  <text x="420" y="562" fill="#C6A17A" font-family="Arial, sans-serif" font-size="16">calls it only when the box is empty.</text>
+</svg>

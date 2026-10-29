@@ -1,0 +1,52 @@
+<svg width="1200" height="620" viewBox="0 0 1200 620" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="620" rx="28" fill="#0D0D0D"/>
+  <path d="M80 130H1120" stroke="#2B2B2B" stroke-width="2"/>
+  <text x="80" y="82" fill="#FB923C" font-family="Arial, sans-serif" font-size="18" letter-spacing="4">GROUPINGBY WITH A DOWNSTREAM COLLECTOR</text>
+  <text x="80" y="112" fill="#777777" font-family="Arial, sans-serif" font-size="16">Split trips into buckets by city, then sum each bucket&#x27;s fares.</text>
+  <rect x="80" y="175" width="200" height="320" rx="16" fill="#171717" stroke="#555555" stroke-width="2"/>
+  <text x="104" y="213" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="21">trips</text>
+  <text x="104" y="258" fill="#888888" font-family="Arial, sans-serif" font-size="16">T1  Pune  220</text>
+  <text x="104" y="306" fill="#888888" font-family="Arial, sans-serif" font-size="16">T2  Delhi  310</text>
+  <text x="104" y="354" fill="#888888" font-family="Arial, sans-serif" font-size="16">T3  Kolkata  250</text>
+  <text x="104" y="402" fill="#888888" font-family="Arial, sans-serif" font-size="16">T4  Pune  300</text>
+  <text x="104" y="450" fill="#888888" font-family="Arial, sans-serif" font-size="16">T5  Kolkata  350</text>
+  <path d="M282 335 L326 335" stroke="#FB923C" stroke-width="3" stroke-linejoin="round"/>
+  <path d="M317.2 326.8L326 335L317.2 343.2" stroke="#FB923C" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="330" y="255" width="220" height="160" rx="16" fill="#21180F" stroke="#FB923C" stroke-width="2"/>
+  <text x="354" y="293" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="19">groupingBy(</text>
+  <text x="354" y="321" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="19">Trip::city, ...)</text>
+  <text x="354" y="356" fill="#C6A17A" font-family="Arial, sans-serif" font-size="15">key = city</text>
+  <text x="354" y="382" fill="#C6A17A" font-family="Arial, sans-serif" font-size="15">value = a bucket</text>
+  <rect x="610" y="175" width="250" height="100" rx="16" fill="#171717" stroke="#555555" stroke-width="2"/>
+  <text x="634" y="211" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="20">Pune</text>
+  <text x="744" y="211" fill="#888888" font-family="Arial, sans-serif" font-size="15">T1, T4</text>
+  <text x="634" y="249" fill="#C6A17A" font-family="Arial, sans-serif" font-size="16">220 + 300 = 520.0</text>
+  <path d="M552 335 L580 335 L580 227 L606 227" stroke="#FB923C" stroke-width="3" stroke-linejoin="round"/>
+  <path d="M597.2 218.8L606 227L597.2 235.2" stroke="#FB923C" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M862 227 L890 227 L890 335 L916 335" stroke="#FB923C" stroke-width="3" stroke-linejoin="round"/>
+  <path d="M907.2 326.8L916 335L907.2 343.2" stroke="#FB923C" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="610" y="295" width="250" height="100" rx="16" fill="#171717" stroke="#555555" stroke-width="2"/>
+  <text x="634" y="331" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="20">Delhi</text>
+  <text x="744" y="331" fill="#888888" font-family="Arial, sans-serif" font-size="15">T2</text>
+  <text x="634" y="369" fill="#C6A17A" font-family="Arial, sans-serif" font-size="16">310 = 310.0</text>
+  <path d="M552 335 L580 335 L580 347 L606 347" stroke="#FB923C" stroke-width="3" stroke-linejoin="round"/>
+  <path d="M597.2 338.8L606 347L597.2 355.2" stroke="#FB923C" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M862 347 L890 347 L890 335 L916 335" stroke="#FB923C" stroke-width="3" stroke-linejoin="round"/>
+  <path d="M907.2 326.8L916 335L907.2 343.2" stroke="#FB923C" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="610" y="415" width="250" height="100" rx="16" fill="#171717" stroke="#555555" stroke-width="2"/>
+  <text x="634" y="451" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="20">Kolkata</text>
+  <text x="744" y="451" fill="#888888" font-family="Arial, sans-serif" font-size="15">T3, T5</text>
+  <text x="634" y="489" fill="#C6A17A" font-family="Arial, sans-serif" font-size="16">250 + 350 = 600.0</text>
+  <path d="M552 335 L580 335 L580 467 L606 467" stroke="#FB923C" stroke-width="3" stroke-linejoin="round"/>
+  <path d="M597.2 458.8L606 467L597.2 475.2" stroke="#FB923C" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M862 467 L890 467 L890 335 L916 335" stroke="#FB923C" stroke-width="3" stroke-linejoin="round"/>
+  <path d="M907.2 326.8L916 335L907.2 343.2" stroke="#FB923C" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="610" y="160" fill="#FB923C" font-family="Arial, sans-serif" font-size="14">downstream: summingDouble(Trip::fare)</text>
+  <rect x="920" y="255" width="200" height="160" rx="16" fill="#171717" stroke="#555555" stroke-width="2"/>
+  <text x="944" y="293" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="19">Map&lt;String,</text>
+  <text x="944" y="319" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="19">Double&gt;</text>
+  <text x="944" y="352" fill="#888888" font-family="Arial, sans-serif" font-size="15">Pune=520.0</text>
+  <text x="944" y="376" fill="#888888" font-family="Arial, sans-serif" font-size="15">Delhi=310.0</text>
+  <text x="944" y="400" fill="#888888" font-family="Arial, sans-serif" font-size="15">Kolkata=600.0</text>
+  <text x="80" y="580" fill="#888888" font-family="Arial, sans-serif" font-size="16">trips.stream().collect(groupingBy(Trip::city, summingDouble(Trip::fare)))</text>
+</svg>

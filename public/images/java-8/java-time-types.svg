@@ -1,0 +1,36 @@
+<svg width="1200" height="620" viewBox="0 0 1200 620" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="620" rx="28" fill="#0D0D0D"/>
+  <path d="M80 130H1120" stroke="#2B2B2B" stroke-width="2"/>
+  <text x="80" y="82" fill="#FB923C" font-family="Arial, sans-serif" font-size="18" letter-spacing="4">WHICH JAVA.TIME TYPE?</text>
+  <text x="80" y="112" fill="#777777" font-family="Arial, sans-serif" font-size="16">Pick by what the value means, not by what it looks like.</text>
+  <rect x="80" y="150" width="330" height="118" rx="16" fill="#171717" stroke="#555555" stroke-width="2"/>
+  <text x="104" y="185" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="20">LocalDate</text>
+  <text x="104" y="216" fill="#FB923C" font-family="Arial, sans-serif" font-size="17">2026-03-14</text>
+  <text x="104" y="247" fill="#888888" font-family="Arial, sans-serif" font-size="15">a birthday: no time, no zone</text>
+  <rect x="435" y="150" width="330" height="118" rx="16" fill="#171717" stroke="#555555" stroke-width="2"/>
+  <text x="459" y="185" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="20">LocalTime</text>
+  <text x="459" y="216" fill="#FB923C" font-family="Arial, sans-serif" font-size="17">09:00</text>
+  <text x="459" y="247" fill="#888888" font-family="Arial, sans-serif" font-size="15">shop opens: no date, no zone</text>
+  <rect x="790" y="150" width="330" height="118" rx="16" fill="#171717" stroke="#555555" stroke-width="2"/>
+  <text x="814" y="185" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="20">LocalDateTime</text>
+  <text x="814" y="216" fill="#FB923C" font-family="Arial, sans-serif" font-size="17">2026-03-14T09:00</text>
+  <text x="814" y="247" fill="#888888" font-family="Arial, sans-serif" font-size="15">a wall-clock reading, no zone</text>
+  <rect x="80" y="288" width="505" height="118" rx="16" fill="#171717" stroke="#555555" stroke-width="2"/>
+  <text x="104" y="323" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="20">ZonedDateTime</text>
+  <text x="104" y="354" fill="#FB923C" font-family="Arial, sans-serif" font-size="17">2026-03-14T09:00+05:30[Asia/Kolkata]</text>
+  <text x="104" y="385" fill="#888888" font-family="Arial, sans-serif" font-size="15">date-time plus zone rules; handles DST</text>
+  <rect x="615" y="288" width="505" height="118" rx="16" fill="#21180F" stroke="#FB923C" stroke-width="2"/>
+  <text x="639" y="323" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="20">Instant</text>
+  <text x="639" y="354" fill="#FB923C" font-family="Arial, sans-serif" font-size="17">2026-03-14T03:30:00Z</text>
+  <text x="639" y="385" fill="#C6A17A" font-family="Arial, sans-serif" font-size="15">one moment on the UTC timeline: store this</text>
+  <text x="80" y="445" fill="#FB923C" font-family="Arial, sans-serif" font-size="14" letter-spacing="2">AMOUNTS OF TIME</text>
+  <rect x="80" y="460" width="505" height="100" rx="16" fill="#171717" stroke="#555555" stroke-width="2"/>
+  <text x="104" y="496" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="20">Duration</text>
+  <text x="230" y="496" fill="#FB923C" font-family="Arial, sans-serif" font-size="17">PT2H30M</text>
+  <text x="104" y="532" fill="#888888" font-family="Arial, sans-serif" font-size="15">seconds + nanos: the cab ride took 2h 30m</text>
+  <rect x="615" y="460" width="505" height="100" rx="16" fill="#171717" stroke="#555555" stroke-width="2"/>
+  <text x="639" y="496" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="20">Period</text>
+  <text x="765" y="496" fill="#FB923C" font-family="Arial, sans-serif" font-size="17">P1Y2M3D</text>
+  <text x="639" y="532" fill="#888888" font-family="Arial, sans-serif" font-size="15">years, months, days: a 1-month pass</text>
+  <text x="80" y="594" fill="#888888" font-family="Arial, sans-serif" font-size="15">Across a DST change, plus(Period.ofDays(1)) keeps the wall time; plus(Duration.ofHours(24)) keeps exact hours.</text>
+</svg>

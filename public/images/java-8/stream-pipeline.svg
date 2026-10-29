@@ -1,0 +1,49 @@
+<svg width="1200" height="620" viewBox="0 0 1200 620" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="620" rx="28" fill="#0D0D0D"/>
+  <path d="M80 130H1120" stroke="#2B2B2B" stroke-width="2"/>
+  <text x="80" y="82" fill="#FB923C" font-family="Arial, sans-serif" font-size="18" letter-spacing="4">A STREAM PIPELINE</text>
+  <text x="80" y="112" fill="#777777" font-family="Arial, sans-serif" font-size="16">Intermediate calls only build stages. Nothing runs until the terminal op.</text>
+  <rect x="80" y="155" width="176" height="125" rx="16" fill="#171717" stroke="#555555" stroke-width="2"/>
+  <text x="100" y="190" fill="#FB923C" font-family="Arial, sans-serif" font-size="14" letter-spacing="2">SOURCE</text>
+  <text x="100" y="226" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="21">orders</text>
+  <text x="100" y="256" fill="#888888" font-family="Arial, sans-serif" font-size="15">list.stream()</text>
+  <rect x="296" y="155" width="176" height="125" rx="16" fill="#171717" stroke="#555555" stroke-width="2"/>
+  <text x="316" y="190" fill="#FB923C" font-family="Arial, sans-serif" font-size="14" letter-spacing="2">FILTER</text>
+  <text x="316" y="226" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="21">paid only</text>
+  <text x="316" y="256" fill="#888888" font-family="Arial, sans-serif" font-size="15">o -&gt; o.isPaid()</text>
+  <rect x="512" y="155" width="176" height="125" rx="16" fill="#171717" stroke="#555555" stroke-width="2"/>
+  <text x="532" y="190" fill="#FB923C" font-family="Arial, sans-serif" font-size="14" letter-spacing="2">MAP</text>
+  <text x="532" y="226" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="21">to fare</text>
+  <text x="532" y="256" fill="#888888" font-family="Arial, sans-serif" font-size="15">Order::fare</text>
+  <rect x="728" y="155" width="176" height="125" rx="16" fill="#21180F" stroke="#FB923C" stroke-width="2"/>
+  <text x="748" y="190" fill="#FB923C" font-family="Arial, sans-serif" font-size="14" letter-spacing="2">SORTED</text>
+  <text x="748" y="226" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="21">barrier</text>
+  <text x="748" y="256" fill="#C6A17A" font-family="Arial, sans-serif" font-size="15">buffers all</text>
+  <rect x="944" y="155" width="176" height="125" rx="16" fill="#171717" stroke="#555555" stroke-width="2"/>
+  <text x="964" y="190" fill="#FB923C" font-family="Arial, sans-serif" font-size="14" letter-spacing="2">COLLECT</text>
+  <text x="964" y="226" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="21">terminal</text>
+  <text x="964" y="256" fill="#888888" font-family="Arial, sans-serif" font-size="15">toList()</text>
+  <path d="M258 218 L292 218" stroke="#FB923C" stroke-width="3" stroke-linejoin="round"/>
+  <path d="M283.2 209.8L292 218L283.2 226.2" stroke="#FB923C" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M474 218 L508 218" stroke="#FB923C" stroke-width="3" stroke-linejoin="round"/>
+  <path d="M499.2 209.8L508 218L499.2 226.2" stroke="#FB923C" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M690 218 L724 218" stroke="#FB923C" stroke-width="3" stroke-linejoin="round"/>
+  <path d="M715.2 209.8L724 218L715.2 226.2" stroke="#FB923C" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M906 218 L940 218" stroke="#FB923C" stroke-width="3" stroke-linejoin="round"/>
+  <path d="M931.2 209.8L940 218L931.2 226.2" stroke="#FB923C" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M80 305L904 305" stroke="#555555" stroke-width="2"/>
+  <text x="80" y="330" fill="#888888" font-family="Arial, sans-serif" font-size="15">lazy: each call just adds a stage</text>
+  <path d="M944 305L1120 305" stroke="#FB923C" stroke-width="2"/>
+  <text x="944" y="330" fill="#FB923C" font-family="Arial, sans-serif" font-size="15">starts the work</text>
+  <rect x="80" y="360" width="1040" height="175" rx="16" fill="#171717" stroke="#555555" stroke-width="2"/>
+  <text x="110" y="395" fill="#FB923C" font-family="Arial, sans-serif" font-size="14" letter-spacing="2">WHEN toList() RUNS: ONE ORDER AT A TIME THROUGH THE SINK CHAIN</text>
+  <text x="110" y="430" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="16">#1  paid</text>
+  <text x="260" y="430" fill="#888888" font-family="Arial, sans-serif" font-size="16">filter keeps it  →  map gives 420  →  sorted stores it</text>
+  <text x="110" y="458" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="16">#2  unpaid</text>
+  <text x="260" y="458" fill="#888888" font-family="Arial, sans-serif" font-size="16">filter drops it  →  map never sees it</text>
+  <text x="110" y="486" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="16">#3  paid</text>
+  <text x="260" y="486" fill="#888888" font-family="Arial, sans-serif" font-size="16">filter keeps it  →  map gives 180  →  sorted stores it</text>
+  <text x="110" y="514" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="16">end of input</text>
+  <text x="260" y="514" fill="#C6A17A" font-family="Arial, sans-serif" font-size="16">sorted sorts [420, 180] to [180, 420], then pushes both to collect</text>
+  <text x="80" y="580" fill="#888888" font-family="Arial, sans-serif" font-size="15">filter and map pass items along immediately; sorted must see everything before it can emit anything.</text>
+</svg>

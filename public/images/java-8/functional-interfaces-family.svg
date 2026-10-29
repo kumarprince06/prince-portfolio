@@ -1,0 +1,40 @@
+<svg width="1200" height="620" viewBox="0 0 1200 620" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="620" rx="28" fill="#0D0D0D"/>
+  <path d="M80 130H1120" stroke="#2B2B2B" stroke-width="2"/>
+  <text x="80" y="82" fill="#FB923C" font-family="Arial, sans-serif" font-size="18" letter-spacing="4">THE CORE FUNCTIONAL INTERFACES</text>
+  <text x="80" y="112" fill="#777777" font-family="Arial, sans-serif" font-size="16">Four shapes cover most lambdas. Read each as input → output.</text>
+  <rect x="80" y="155" width="224" height="190" rx="16" fill="#171717" stroke="#555555" stroke-width="2"/>
+  <text x="104" y="195" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="21">Supplier&lt;T&gt;</text>
+  <text x="104" y="240" fill="#FB923C" font-family="Arial, sans-serif" font-size="24">() → T</text>
+  <text x="104" y="280" fill="#888888" font-family="Arial, sans-serif" font-size="16">get()</text>
+  <text x="104" y="312" fill="#888888" font-family="Arial, sans-serif" font-size="16">e.g. a new order id</text>
+  <rect x="352" y="155" width="224" height="190" rx="16" fill="#171717" stroke="#555555" stroke-width="2"/>
+  <text x="376" y="195" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="21">Consumer&lt;T&gt;</text>
+  <text x="376" y="240" fill="#FB923C" font-family="Arial, sans-serif" font-size="24">T → void</text>
+  <text x="376" y="280" fill="#888888" font-family="Arial, sans-serif" font-size="16">accept(t)</text>
+  <text x="376" y="312" fill="#888888" font-family="Arial, sans-serif" font-size="16">e.g. print a receipt</text>
+  <rect x="624" y="155" width="224" height="190" rx="16" fill="#21180F" stroke="#FB923C" stroke-width="2"/>
+  <text x="648" y="195" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="21">Function&lt;T,R&gt;</text>
+  <text x="648" y="240" fill="#FB923C" font-family="Arial, sans-serif" font-size="24">T → R</text>
+  <text x="648" y="280" fill="#C6A17A" font-family="Arial, sans-serif" font-size="16">apply(t)</text>
+  <text x="648" y="312" fill="#C6A17A" font-family="Arial, sans-serif" font-size="16">e.g. km → cab fare</text>
+  <rect x="896" y="155" width="224" height="190" rx="16" fill="#171717" stroke="#555555" stroke-width="2"/>
+  <text x="920" y="195" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="21">Predicate&lt;T&gt;</text>
+  <text x="920" y="240" fill="#FB923C" font-family="Arial, sans-serif" font-size="24">T → boolean</text>
+  <text x="920" y="280" fill="#888888" font-family="Arial, sans-serif" font-size="16">test(t)</text>
+  <text x="920" y="312" fill="#888888" font-family="Arial, sans-serif" font-size="16">e.g. is fare &gt; 500?</text>
+  <text x="80" y="390" fill="#FB923C" font-family="Arial, sans-serif" font-size="14" letter-spacing="2">TWO INPUTS, OR SAME TYPE IN AND OUT</text>
+  <rect x="80" y="410" width="330" height="120" rx="16" fill="#171717" stroke="#555555" stroke-width="2"/>
+  <text x="104" y="448" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="20">BiFunction&lt;T,U,R&gt;</text>
+  <text x="104" y="480" fill="#FB923C" font-family="Arial, sans-serif" font-size="18">(T, U) → R</text>
+  <text x="104" y="510" fill="#888888" font-family="Arial, sans-serif" font-size="15">distance, minutes → fare</text>
+  <rect x="435" y="410" width="330" height="120" rx="16" fill="#171717" stroke="#555555" stroke-width="2"/>
+  <text x="459" y="448" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="20">UnaryOperator&lt;T&gt;</text>
+  <text x="459" y="480" fill="#FB923C" font-family="Arial, sans-serif" font-size="18">T → T</text>
+  <text x="459" y="510" fill="#888888" font-family="Arial, sans-serif" font-size="15">a Function&lt;T,T&gt;: add tax</text>
+  <rect x="790" y="410" width="330" height="120" rx="16" fill="#171717" stroke="#555555" stroke-width="2"/>
+  <text x="814" y="448" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="20">BinaryOperator&lt;T&gt;</text>
+  <text x="814" y="480" fill="#FB923C" font-family="Arial, sans-serif" font-size="18">(T, T) → T</text>
+  <text x="814" y="510" fill="#888888" font-family="Arial, sans-serif" font-size="15">a BiFunction&lt;T,T,T&gt;: sum fares</text>
+  <text x="80" y="575" fill="#888888" font-family="Arial, sans-serif" font-size="15">Primitive versions skip boxing: IntPredicate, IntFunction&lt;R&gt;, ToIntFunction&lt;T&gt;, IntUnaryOperator, DoubleSupplier …</text>
+</svg>
