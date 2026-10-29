@@ -1,0 +1,81 @@
+<svg width="1200" height="620" viewBox="0 0 1200 620" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="620" rx="28" fill="#0D0D0D"/>
+  <path d="M80 130H1120" stroke="#2B2B2B" stroke-width="2"/>
+  <text xml:space="preserve" x="80" y="82" fill="#FB923C" font-family="Arial, sans-serif" font-size="18" letter-spacing="4">ARRAYDEQUE IS A CIRCULAR ARRAY</text>
+  <text xml:space="preserve" x="80" y="112" fill="#777777" font-family="Arial, sans-serif" font-size="16">head and tail are indexes that wrap around; nothing is ever shifted.</text>
+  <rect x="80" y="175" width="70" height="48" rx="4" fill="#21180F" stroke="#FB923C" stroke-width="2"/>
+  <text xml:space="preserve" x="115.0" y="206" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="18" text-anchor="middle">A</text>
+  <text xml:space="preserve" x="115.0" y="167" fill="#888888" font-family="Arial, sans-serif" font-size="14" text-anchor="middle">0</text>
+  <rect x="150" y="175" width="70" height="48" rx="4" fill="#171717" stroke="#555555" stroke-width="2"/>
+  <text xml:space="preserve" x="185.0" y="206" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="18" text-anchor="middle">B</text>
+  <text xml:space="preserve" x="185.0" y="167" fill="#888888" font-family="Arial, sans-serif" font-size="14" text-anchor="middle">1</text>
+  <rect x="220" y="175" width="70" height="48" rx="4" fill="#171717" stroke="#555555" stroke-width="2"/>
+  <text xml:space="preserve" x="255.0" y="206" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="18" text-anchor="middle">C</text>
+  <text xml:space="preserve" x="255.0" y="167" fill="#888888" font-family="Arial, sans-serif" font-size="14" text-anchor="middle">2</text>
+  <rect x="290" y="175" width="70" height="48" rx="4" fill="#171717" stroke="#555555" stroke-width="2" stroke-dasharray="6 6"/>
+  <text xml:space="preserve" x="325.0" y="167" fill="#888888" font-family="Arial, sans-serif" font-size="14" text-anchor="middle">3</text>
+  <rect x="360" y="175" width="70" height="48" rx="4" fill="#171717" stroke="#555555" stroke-width="2" stroke-dasharray="6 6"/>
+  <text xml:space="preserve" x="395.0" y="167" fill="#888888" font-family="Arial, sans-serif" font-size="14" text-anchor="middle">4</text>
+  <rect x="430" y="175" width="70" height="48" rx="4" fill="#171717" stroke="#555555" stroke-width="2" stroke-dasharray="6 6"/>
+  <text xml:space="preserve" x="465.0" y="167" fill="#888888" font-family="Arial, sans-serif" font-size="14" text-anchor="middle">5</text>
+  <rect x="500" y="175" width="70" height="48" rx="4" fill="#171717" stroke="#555555" stroke-width="2" stroke-dasharray="6 6"/>
+  <text xml:space="preserve" x="535.0" y="167" fill="#888888" font-family="Arial, sans-serif" font-size="14" text-anchor="middle">6</text>
+  <rect x="570" y="175" width="70" height="48" rx="4" fill="#171717" stroke="#555555" stroke-width="2" stroke-dasharray="6 6"/>
+  <text xml:space="preserve" x="605.0" y="167" fill="#888888" font-family="Arial, sans-serif" font-size="14" text-anchor="middle">7</text>
+  <text xml:space="preserve" x="115.0" y="247" fill="#FB923C" font-family="Arial, sans-serif" font-size="14" text-anchor="middle">head</text>
+  <text xml:space="preserve" x="325.0" y="247" fill="#C6A17A" font-family="Arial, sans-serif" font-size="14" text-anchor="middle">tail</text>
+  <text xml:space="preserve" x="660" y="193" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="16">addLast(A), addLast(B), addLast(C)</text>
+  <text xml:space="preserve" x="660" y="219" fill="#888888" font-family="Arial, sans-serif" font-size="15">tail = next free slot, now 3</text>
+  <rect x="80" y="325" width="70" height="48" rx="4" fill="#171717" stroke="#555555" stroke-width="2"/>
+  <text xml:space="preserve" x="115.0" y="356" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="18" text-anchor="middle">A</text>
+  <text xml:space="preserve" x="115.0" y="317" fill="#888888" font-family="Arial, sans-serif" font-size="14" text-anchor="middle">0</text>
+  <rect x="150" y="325" width="70" height="48" rx="4" fill="#171717" stroke="#555555" stroke-width="2"/>
+  <text xml:space="preserve" x="185.0" y="356" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="18" text-anchor="middle">B</text>
+  <text xml:space="preserve" x="185.0" y="317" fill="#888888" font-family="Arial, sans-serif" font-size="14" text-anchor="middle">1</text>
+  <rect x="220" y="325" width="70" height="48" rx="4" fill="#171717" stroke="#555555" stroke-width="2"/>
+  <text xml:space="preserve" x="255.0" y="356" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="18" text-anchor="middle">C</text>
+  <text xml:space="preserve" x="255.0" y="317" fill="#888888" font-family="Arial, sans-serif" font-size="14" text-anchor="middle">2</text>
+  <rect x="290" y="325" width="70" height="48" rx="4" fill="#171717" stroke="#555555" stroke-width="2" stroke-dasharray="6 6"/>
+  <text xml:space="preserve" x="325.0" y="317" fill="#888888" font-family="Arial, sans-serif" font-size="14" text-anchor="middle">3</text>
+  <rect x="360" y="325" width="70" height="48" rx="4" fill="#171717" stroke="#555555" stroke-width="2" stroke-dasharray="6 6"/>
+  <text xml:space="preserve" x="395.0" y="317" fill="#888888" font-family="Arial, sans-serif" font-size="14" text-anchor="middle">4</text>
+  <rect x="430" y="325" width="70" height="48" rx="4" fill="#171717" stroke="#555555" stroke-width="2" stroke-dasharray="6 6"/>
+  <text xml:space="preserve" x="465.0" y="317" fill="#888888" font-family="Arial, sans-serif" font-size="14" text-anchor="middle">5</text>
+  <rect x="500" y="325" width="70" height="48" rx="4" fill="#171717" stroke="#555555" stroke-width="2" stroke-dasharray="6 6"/>
+  <text xml:space="preserve" x="535.0" y="317" fill="#888888" font-family="Arial, sans-serif" font-size="14" text-anchor="middle">6</text>
+  <rect x="570" y="325" width="70" height="48" rx="4" fill="#21180F" stroke="#FB923C" stroke-width="2"/>
+  <text xml:space="preserve" x="605.0" y="356" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="18" text-anchor="middle">Z</text>
+  <text xml:space="preserve" x="605.0" y="317" fill="#888888" font-family="Arial, sans-serif" font-size="14" text-anchor="middle">7</text>
+  <text xml:space="preserve" x="605.0" y="397" fill="#FB923C" font-family="Arial, sans-serif" font-size="14" text-anchor="middle">head</text>
+  <text xml:space="preserve" x="325.0" y="397" fill="#C6A17A" font-family="Arial, sans-serif" font-size="14" text-anchor="middle">tail</text>
+  <text xml:space="preserve" x="660" y="343" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="16">addFirst(Z): head = (0 − 1) mod 8 = 7</text>
+  <text xml:space="preserve" x="660" y="369" fill="#888888" font-family="Arial, sans-serif" font-size="15">wraps to the end of the array</text>
+  <path d="M105.0 303Q345 255 603.0 303" stroke="#FB923C" stroke-width="2" stroke-dasharray="6 6"/>
+  <path d="M593.6 306.3L603.0 303L595.4 296.5" stroke="#FB923C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <text xml:space="preserve" x="345" y="268" fill="#FB923C" font-family="Arial, sans-serif" font-size="14" text-anchor="middle">wraps</text>
+  <rect x="80" y="455" width="70" height="48" rx="4" fill="#21180F" stroke="#FB923C" stroke-width="2"/>
+  <text xml:space="preserve" x="115.0" y="486" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="18" text-anchor="middle">A</text>
+  <text xml:space="preserve" x="115.0" y="447" fill="#888888" font-family="Arial, sans-serif" font-size="14" text-anchor="middle">0</text>
+  <rect x="150" y="455" width="70" height="48" rx="4" fill="#171717" stroke="#555555" stroke-width="2"/>
+  <text xml:space="preserve" x="185.0" y="486" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="18" text-anchor="middle">B</text>
+  <text xml:space="preserve" x="185.0" y="447" fill="#888888" font-family="Arial, sans-serif" font-size="14" text-anchor="middle">1</text>
+  <rect x="220" y="455" width="70" height="48" rx="4" fill="#171717" stroke="#555555" stroke-width="2"/>
+  <text xml:space="preserve" x="255.0" y="486" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="18" text-anchor="middle">C</text>
+  <text xml:space="preserve" x="255.0" y="447" fill="#888888" font-family="Arial, sans-serif" font-size="14" text-anchor="middle">2</text>
+  <rect x="290" y="455" width="70" height="48" rx="4" fill="#171717" stroke="#555555" stroke-width="2" stroke-dasharray="6 6"/>
+  <text xml:space="preserve" x="325.0" y="447" fill="#888888" font-family="Arial, sans-serif" font-size="14" text-anchor="middle">3</text>
+  <rect x="360" y="455" width="70" height="48" rx="4" fill="#171717" stroke="#555555" stroke-width="2" stroke-dasharray="6 6"/>
+  <text xml:space="preserve" x="395.0" y="447" fill="#888888" font-family="Arial, sans-serif" font-size="14" text-anchor="middle">4</text>
+  <rect x="430" y="455" width="70" height="48" rx="4" fill="#171717" stroke="#555555" stroke-width="2" stroke-dasharray="6 6"/>
+  <text xml:space="preserve" x="465.0" y="447" fill="#888888" font-family="Arial, sans-serif" font-size="14" text-anchor="middle">5</text>
+  <rect x="500" y="455" width="70" height="48" rx="4" fill="#171717" stroke="#555555" stroke-width="2" stroke-dasharray="6 6"/>
+  <text xml:space="preserve" x="535.0" y="447" fill="#888888" font-family="Arial, sans-serif" font-size="14" text-anchor="middle">6</text>
+  <rect x="570" y="455" width="70" height="48" rx="4" fill="#171717" stroke="#555555" stroke-width="2" stroke-dasharray="6 6"/>
+  <text xml:space="preserve" x="605.0" y="447" fill="#888888" font-family="Arial, sans-serif" font-size="14" text-anchor="middle">7</text>
+  <text xml:space="preserve" x="115.0" y="527" fill="#FB923C" font-family="Arial, sans-serif" font-size="14" text-anchor="middle">head</text>
+  <text xml:space="preserve" x="325.0" y="527" fill="#C6A17A" font-family="Arial, sans-serif" font-size="14" text-anchor="middle">tail</text>
+  <text xml:space="preserve" x="660" y="473" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="16">pollFirst() returns Z</text>
+  <text xml:space="preserve" x="660" y="499" fill="#888888" font-family="Arial, sans-serif" font-size="15">head = (7 + 1) mod 8 = 0</text>
+  <path d="M80 550H1120" stroke="#2B2B2B" stroke-width="2"/>
+  <text xml:space="preserve" x="80" y="585" fill="#C6A17A" font-family="Arial, sans-serif" font-size="15">Stack: push = addFirst, pop = removeFirst.   Queue: offer = addLast, poll = pollFirst.   Full → grows and copies.</text>
+</svg>

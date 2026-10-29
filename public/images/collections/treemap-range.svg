@@ -1,0 +1,44 @@
+<svg width="1200" height="620" viewBox="0 0 1200 620" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="620" rx="28" fill="#0D0D0D"/>
+  <path d="M80 130H1120" stroke="#2B2B2B" stroke-width="2"/>
+  <text xml:space="preserve" x="80" y="82" fill="#FB923C" font-family="Arial, sans-serif" font-size="18" letter-spacing="4">TREEMAP FOR FARE SLABS</text>
+  <text xml:space="preserve" x="80" y="112" fill="#777777" font-family="Arial, sans-serif" font-size="16">Keys stay sorted, so "the slab at or below this distance" is one floorKey() call.</text>
+  <rect x="80" y="155" width="1040" height="50" rx="10" fill="#171717" stroke="#555555" stroke-width="2"/>
+  <text xml:space="preserve" x="105" y="186" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="16">TreeMap&lt;Integer, Integer&gt; slabs = { 0=50, 5=90, 10=150, 20=250 }   // km → base fare ₹</text>
+  <rect x="123" y="260" width="184" height="60" rx="8" fill="#171717" stroke="#555555" stroke-width="2"/>
+  <text xml:space="preserve" x="215.0" y="288" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="18" text-anchor="middle">₹50</text>
+  <text xml:space="preserve" x="215.0" y="308" fill="#888888" font-family="Arial, sans-serif" font-size="14" text-anchor="middle">from 0 km</text>
+  <rect x="313" y="260" width="184" height="60" rx="8" fill="#21180F" stroke="#FB923C" stroke-width="2"/>
+  <text xml:space="preserve" x="405.0" y="288" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="18" text-anchor="middle">₹90</text>
+  <text xml:space="preserve" x="405.0" y="308" fill="#C6A17A" font-family="Arial, sans-serif" font-size="14" text-anchor="middle">from 5 km</text>
+  <rect x="503" y="260" width="374" height="60" rx="8" fill="#171717" stroke="#555555" stroke-width="2"/>
+  <text xml:space="preserve" x="690.0" y="288" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="18" text-anchor="middle">₹150</text>
+  <text xml:space="preserve" x="690.0" y="308" fill="#888888" font-family="Arial, sans-serif" font-size="14" text-anchor="middle">from 10 km</text>
+  <rect x="883" y="260" width="184" height="60" rx="8" fill="#171717" stroke="#555555" stroke-width="2"/>
+  <text xml:space="preserve" x="975.0" y="288" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="18" text-anchor="middle">₹250 +</text>
+  <text xml:space="preserve" x="975.0" y="308" fill="#888888" font-family="Arial, sans-serif" font-size="14" text-anchor="middle">from 20 km</text>
+  <path d="M120 360L1070 360" stroke="#888888" stroke-width="2"/>
+  <path d="M120 352L120 368" stroke="#888888" stroke-width="2"/>
+  <text xml:space="preserve" x="120" y="392" fill="#888888" font-family="Arial, sans-serif" font-size="15" text-anchor="middle">0</text>
+  <path d="M310 352L310 368" stroke="#888888" stroke-width="2"/>
+  <text xml:space="preserve" x="310" y="392" fill="#888888" font-family="Arial, sans-serif" font-size="15" text-anchor="middle">5</text>
+  <path d="M500 352L500 368" stroke="#888888" stroke-width="2"/>
+  <text xml:space="preserve" x="500" y="392" fill="#888888" font-family="Arial, sans-serif" font-size="15" text-anchor="middle">10</text>
+  <path d="M690 352L690 368" stroke="#888888" stroke-width="2"/>
+  <text xml:space="preserve" x="690" y="392" fill="#888888" font-family="Arial, sans-serif" font-size="15" text-anchor="middle">15</text>
+  <path d="M880 352L880 368" stroke="#888888" stroke-width="2"/>
+  <text xml:space="preserve" x="880" y="392" fill="#888888" font-family="Arial, sans-serif" font-size="15" text-anchor="middle">20</text>
+  <path d="M1070 352L1070 368" stroke="#888888" stroke-width="2"/>
+  <text xml:space="preserve" x="1070" y="392" fill="#888888" font-family="Arial, sans-serif" font-size="15" text-anchor="middle">25</text>
+  <text xml:space="preserve" x="1084" y="366" fill="#888888" font-family="Arial, sans-serif" font-size="14">km</text>
+  <path d="M386 440L386 372" stroke="#FB923C" stroke-width="3"/>
+  <path d="M391.0 380.7L386 372L381.0 380.7" stroke="#FB923C" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+  <text xml:space="preserve" x="386" y="462" fill="#FB923C" font-family="Arial, sans-serif" font-size="15" text-anchor="middle">trip of 7 km</text>
+  <path d="M386 352L386 324" stroke="#FB923C" stroke-width="2" stroke-dasharray="6 6"/>
+  <rect x="80" y="495" width="520" height="90" rx="14" fill="#21180F" stroke="#FB923C" stroke-width="2"/>
+  <text xml:space="preserve" x="105" y="528" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="17">slabs.floorKey(7)  = 5</text>
+  <text xml:space="preserve" x="105" y="558" fill="#C6A17A" font-family="Arial, sans-serif" font-size="17">slabs.floorEntry(7).getValue() = ₹90</text>
+  <rect x="640" y="495" width="480" height="90" rx="14" fill="#171717" stroke="#555555" stroke-width="2"/>
+  <text xml:space="preserve" x="665" y="528" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="16">ceilingKey(7) = 10,  floorKey(25) = 20</text>
+  <text xml:space="preserve" x="665" y="558" fill="#888888" font-family="Arial, sans-serif" font-size="15">red-black tree underneath: O(log n)</text>
+</svg>

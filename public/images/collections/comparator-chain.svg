@@ -1,0 +1,49 @@
+<svg width="1200" height="620" viewBox="0 0 1200 620" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="620" rx="28" fill="#0D0D0D"/>
+  <path d="M80 130H1120" stroke="#2B2B2B" stroke-width="2"/>
+  <text xml:space="preserve" x="80" y="82" fill="#FB923C" font-family="Arial, sans-serif" font-size="18" letter-spacing="4">CHAINING COMPARATORS</text>
+  <text xml:space="preserve" x="80" y="112" fill="#777777" font-family="Arial, sans-serif" font-size="16">First compare by city; only when cities tie, compare by fare, highest first.</text>
+  <rect x="80" y="155" width="1040" height="56" rx="12" fill="#21180F" stroke="#FB923C" stroke-width="2"/>
+  <text xml:space="preserve" x="105" y="190" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="17">trips.sort(comparing(Trip::city).thenComparing(Trip::fare, reverseOrder()));</text>
+  <text xml:space="preserve" x="80" y="255" fill="#888888" font-family="Arial, sans-serif" font-size="14" letter-spacing="2">BEFORE</text>
+  <text xml:space="preserve" x="100" y="290" fill="#888888" font-family="Arial, sans-serif" font-size="14">city</text>
+  <text xml:space="preserve" x="300" y="290" fill="#888888" font-family="Arial, sans-serif" font-size="14">fare</text>
+  <rect x="80" y="302" width="380" height="40" rx="8" fill="#171717" stroke="#555555" stroke-width="2"/>
+  <text xml:space="preserve" x="100" y="328" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="17">Pune</text>
+  <text xml:space="preserve" x="300" y="328" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="17">₹320</text>
+  <rect x="80" y="350" width="380" height="40" rx="8" fill="#171717" stroke="#555555" stroke-width="2"/>
+  <text xml:space="preserve" x="100" y="376" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="17">Delhi</text>
+  <text xml:space="preserve" x="300" y="376" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="17">₹450</text>
+  <rect x="80" y="398" width="380" height="40" rx="8" fill="#171717" stroke="#555555" stroke-width="2"/>
+  <text xml:space="preserve" x="100" y="424" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="17">Pune</text>
+  <text xml:space="preserve" x="300" y="424" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="17">₹510</text>
+  <rect x="80" y="446" width="380" height="40" rx="8" fill="#171717" stroke="#555555" stroke-width="2"/>
+  <text xml:space="preserve" x="100" y="472" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="17">Agra</text>
+  <text xml:space="preserve" x="300" y="472" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="17">₹280</text>
+  <rect x="80" y="494" width="380" height="40" rx="8" fill="#171717" stroke="#555555" stroke-width="2"/>
+  <text xml:space="preserve" x="100" y="520" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="17">Delhi</text>
+  <text xml:space="preserve" x="300" y="520" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="17">₹190</text>
+  <text xml:space="preserve" x="740" y="255" fill="#888888" font-family="Arial, sans-serif" font-size="14" letter-spacing="2">AFTER</text>
+  <text xml:space="preserve" x="760" y="290" fill="#888888" font-family="Arial, sans-serif" font-size="14">city</text>
+  <text xml:space="preserve" x="960" y="290" fill="#888888" font-family="Arial, sans-serif" font-size="14">fare</text>
+  <rect x="740" y="302" width="380" height="40" rx="8" fill="#171717" stroke="#555555" stroke-width="2"/>
+  <text xml:space="preserve" x="760" y="328" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="17">Agra</text>
+  <text xml:space="preserve" x="960" y="328" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="17">₹280</text>
+  <rect x="740" y="350" width="380" height="40" rx="8" fill="#21180F" stroke="#FB923C" stroke-width="2"/>
+  <text xml:space="preserve" x="760" y="376" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="17">Delhi</text>
+  <text xml:space="preserve" x="960" y="376" fill="#C6A17A" font-family="Arial, sans-serif" font-size="17">₹450</text>
+  <rect x="740" y="398" width="380" height="40" rx="8" fill="#21180F" stroke="#FB923C" stroke-width="2"/>
+  <text xml:space="preserve" x="760" y="424" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="17">Delhi</text>
+  <text xml:space="preserve" x="960" y="424" fill="#C6A17A" font-family="Arial, sans-serif" font-size="17">₹190</text>
+  <rect x="740" y="446" width="380" height="40" rx="8" fill="#21180F" stroke="#FB923C" stroke-width="2"/>
+  <text xml:space="preserve" x="760" y="472" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="17">Pune</text>
+  <text xml:space="preserve" x="960" y="472" fill="#C6A17A" font-family="Arial, sans-serif" font-size="17">₹510</text>
+  <rect x="740" y="494" width="380" height="40" rx="8" fill="#21180F" stroke="#FB923C" stroke-width="2"/>
+  <text xml:space="preserve" x="760" y="520" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="17">Pune</text>
+  <text xml:space="preserve" x="960" y="520" fill="#C6A17A" font-family="Arial, sans-serif" font-size="17">₹320</text>
+  <path d="M500 420L720 420" stroke="#FB923C" stroke-width="3"/>
+  <path d="M711.3 425.0L720 420L711.3 415.0" stroke="#FB923C" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+  <text xml:space="preserve" x="610" y="395" fill="#FB923C" font-family="Arial, sans-serif" font-size="15" text-anchor="middle">sort</text>
+  <text xml:space="preserve" x="610" y="455" fill="#888888" font-family="Arial, sans-serif" font-size="14" text-anchor="middle">stable, O(n log n)</text>
+  <text xml:space="preserve" x="80" y="575" fill="#888888" font-family="Arial, sans-serif" font-size="15">Agra &lt; Delhi &lt; Pune alphabetically; inside Delhi and Pune the bigger fare comes first.</text>
+</svg>

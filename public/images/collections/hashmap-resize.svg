@@ -1,0 +1,79 @@
+<svg width="1200" height="620" viewBox="0 0 1200 620" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="620" rx="28" fill="#0D0D0D"/>
+  <path d="M80 130H1120" stroke="#2B2B2B" stroke-width="2"/>
+  <text xml:space="preserve" x="80" y="82" fill="#FB923C" font-family="Arial, sans-serif" font-size="18" letter-spacing="4">HASHMAP RESIZE: 16 → 32</text>
+  <text xml:space="preserve" x="80" y="112" fill="#777777" font-family="Arial, sans-serif" font-size="16">threshold = 16 × 0.75 = 12, so the 13th entry makes resize() double the table.</text>
+  <text xml:space="preserve" x="80" y="165" fill="#888888" font-family="Arial, sans-serif" font-size="14" letter-spacing="2">OLD TABLE, n = 16</text>
+  <text xml:space="preserve" x="110" y="195" fill="#FB923C" font-family="Arial, sans-serif" font-size="15">bucket 5</text>
+  <rect x="110" y="209" width="110" height="44" rx="8" fill="#21180F" stroke="#FB923C" stroke-width="2"/>
+  <text xml:space="preserve" x="165" y="237" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="15" text-anchor="middle">table[5]</text>
+  <path d="M165 255L165 275" stroke="#FB923C" stroke-width="2"/>
+  <path d="M160.0 266.3L165 275L170.0 266.3" stroke="#FB923C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="120" y="277" width="90" height="42" rx="8" fill="#171717" stroke="#555555" stroke-width="2"/>
+  <text xml:space="preserve" x="165" y="304" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="17" text-anchor="middle">5</text>
+  <path d="M165 321L165 333" stroke="#FB923C" stroke-width="2"/>
+  <path d="M160.0 324.3L165 333L170.0 324.3" stroke="#FB923C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="120" y="335" width="90" height="42" rx="8" fill="#171717" stroke="#555555" stroke-width="2"/>
+  <text xml:space="preserve" x="165" y="362" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="17" text-anchor="middle">21</text>
+  <path d="M165 379L165 391" stroke="#FB923C" stroke-width="2"/>
+  <path d="M160.0 382.3L165 391L170.0 382.3" stroke="#FB923C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="120" y="393" width="90" height="42" rx="8" fill="#171717" stroke="#555555" stroke-width="2"/>
+  <text xml:space="preserve" x="165" y="420" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="17" text-anchor="middle">37</text>
+  <path d="M165 437L165 449" stroke="#FB923C" stroke-width="2"/>
+  <path d="M160.0 440.3L165 449L170.0 440.3" stroke="#FB923C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="120" y="451" width="90" height="42" rx="8" fill="#171717" stroke="#555555" stroke-width="2"/>
+  <text xml:space="preserve" x="165" y="478" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="17" text-anchor="middle">53</text>
+  <rect x="330" y="165" width="470" height="360" rx="16" fill="#171717" stroke="#555555" stroke-width="2"/>
+  <text xml:space="preserve" x="355" y="200" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="17">No rehash: test one bit,  hash &amp; 16</text>
+  <text xml:space="preserve" x="355" y="238" fill="#888888" font-family="Arial, sans-serif" font-size="14">key</text>
+  <text xml:space="preserve" x="430" y="238" fill="#888888" font-family="Arial, sans-serif" font-size="14">binary</text>
+  <text xml:space="preserve" x="560" y="238" fill="#888888" font-family="Arial, sans-serif" font-size="14">&amp; 16</text>
+  <text xml:space="preserve" x="640" y="238" fill="#888888" font-family="Arial, sans-serif" font-size="14">new index</text>
+  <text xml:space="preserve" x="355" y="275" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="17">5</text>
+  <text xml:space="preserve" x="430" y="275" fill="#C6A17A" font-family="Arial, sans-serif" font-size="17">000101</text>
+  <text xml:space="preserve" x="575" y="275" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="17" text-anchor="middle">0</text>
+  <text xml:space="preserve" x="640" y="275" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="16">5  (stays)</text>
+  <text xml:space="preserve" x="355" y="323" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="17">21</text>
+  <text xml:space="preserve" x="430" y="323" fill="#C6A17A" font-family="Arial, sans-serif" font-size="17">010101</text>
+  <text xml:space="preserve" x="575" y="323" fill="#FB923C" font-family="Arial, sans-serif" font-size="17" text-anchor="middle">16</text>
+  <text xml:space="preserve" x="640" y="323" fill="#FB923C" font-family="Arial, sans-serif" font-size="16">21 (5 + 16)</text>
+  <text xml:space="preserve" x="355" y="371" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="17">37</text>
+  <text xml:space="preserve" x="430" y="371" fill="#C6A17A" font-family="Arial, sans-serif" font-size="17">100101</text>
+  <text xml:space="preserve" x="575" y="371" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="17" text-anchor="middle">0</text>
+  <text xml:space="preserve" x="640" y="371" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="16">5  (stays)</text>
+  <text xml:space="preserve" x="355" y="419" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="17">53</text>
+  <text xml:space="preserve" x="430" y="419" fill="#C6A17A" font-family="Arial, sans-serif" font-size="17">110101</text>
+  <text xml:space="preserve" x="575" y="419" fill="#FB923C" font-family="Arial, sans-serif" font-size="17" text-anchor="middle">16</text>
+  <text xml:space="preserve" x="640" y="419" fill="#FB923C" font-family="Arial, sans-serif" font-size="16">21 (5 + 16)</text>
+  <text xml:space="preserve" x="355" y="480" fill="#888888" font-family="Arial, sans-serif" font-size="15">0 → lo list, same index</text>
+  <text xml:space="preserve" x="355" y="505" fill="#FB923C" font-family="Arial, sans-serif" font-size="15">16 → hi list, index + oldCap</text>
+  <path d="M800 340L850 340" stroke="#FB923C" stroke-width="3"/>
+  <path d="M841.3 345.0L850 340L841.3 335.0" stroke="#FB923C" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+  <text xml:space="preserve" x="860" y="165" fill="#888888" font-family="Arial, sans-serif" font-size="14" letter-spacing="2">NEW TABLE, n = 32</text>
+  <text xml:space="preserve" x="860" y="195" fill="#888888" font-family="Arial, sans-serif" font-size="15">bucket 5</text>
+  <rect x="860" y="209" width="110" height="44" rx="8" fill="#171717" stroke="#555555" stroke-width="2"/>
+  <text xml:space="preserve" x="915" y="237" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="15" text-anchor="middle">table[5]</text>
+  <path d="M915 255L915 275" stroke="#FB923C" stroke-width="2"/>
+  <path d="M910.0 266.3L915 275L920.0 266.3" stroke="#FB923C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="870" y="277" width="90" height="42" rx="8" fill="#171717" stroke="#555555" stroke-width="2"/>
+  <text xml:space="preserve" x="915" y="304" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="17" text-anchor="middle">5</text>
+  <path d="M915 321L915 333" stroke="#FB923C" stroke-width="2"/>
+  <path d="M910.0 324.3L915 333L920.0 324.3" stroke="#FB923C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="870" y="335" width="90" height="42" rx="8" fill="#171717" stroke="#555555" stroke-width="2"/>
+  <text xml:space="preserve" x="915" y="362" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="17" text-anchor="middle">37</text>
+  <text xml:space="preserve" x="1000" y="195" fill="#FB923C" font-family="Arial, sans-serif" font-size="15">bucket 21</text>
+  <rect x="1000" y="209" width="110" height="44" rx="8" fill="#21180F" stroke="#FB923C" stroke-width="2"/>
+  <text xml:space="preserve" x="1055" y="237" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="15" text-anchor="middle">table[21]</text>
+  <path d="M1055 255L1055 275" stroke="#FB923C" stroke-width="2"/>
+  <path d="M1050.0 266.3L1055 275L1060.0 266.3" stroke="#FB923C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="1010" y="277" width="90" height="42" rx="8" fill="#171717" stroke="#555555" stroke-width="2"/>
+  <text xml:space="preserve" x="1055" y="304" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="17" text-anchor="middle">21</text>
+  <path d="M1055 321L1055 333" stroke="#FB923C" stroke-width="2"/>
+  <path d="M1050.0 324.3L1055 333L1060.0 324.3" stroke="#FB923C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="1010" y="335" width="90" height="42" rx="8" fill="#171717" stroke="#555555" stroke-width="2"/>
+  <text xml:space="preserve" x="1055" y="362" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="17" text-anchor="middle">53</text>
+  <text xml:space="preserve" x="860" y="440" fill="#888888" font-family="Arial, sans-serif" font-size="15">Each list keeps its</text>
+  <text xml:space="preserve" x="860" y="462" fill="#888888" font-family="Arial, sans-serif" font-size="15">original order (Java 8+).</text>
+  <path d="M80 550H1120" stroke="#2B2B2B" stroke-width="2"/>
+  <text xml:space="preserve" x="80" y="585" fill="#C6A17A" font-family="Arial, sans-serif" font-size="15">5 &amp; 31 = 5,  21 &amp; 31 = 21,  37 &amp; 31 = 5,  53 &amp; 31 = 21  — the same answer the one-bit test gives.</text>
+</svg>

@@ -1,0 +1,43 @@
+<svg width="1200" height="620" viewBox="0 0 1200 620" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="620" rx="28" fill="#0D0D0D"/>
+  <path d="M80 130H1120" stroke="#2B2B2B" stroke-width="2"/>
+  <text xml:space="preserve" x="80" y="82" fill="#FB923C" font-family="Arial, sans-serif" font-size="18" letter-spacing="4">VIEW OR COPY?</text>
+  <text xml:space="preserve" x="80" y="112" fill="#777777" font-family="Arial, sans-serif" font-size="16">Read-only is not the same as unchanging. A view still sees the original list change.</text>
+  <rect x="80" y="150" width="470" height="70" rx="12" fill="#171717" stroke="#555555" stroke-width="2"/>
+  <text xml:space="preserve" x="105" y="180" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="15">List&lt;String&gt; cities = new ArrayList&lt;&gt;(...)</text>
+  <text xml:space="preserve" x="105" y="205" fill="#C6A17A" font-family="Arial, sans-serif" font-size="15">[Pune, Goa], later cities.add("Agra")</text>
+  <rect x="650" y="150" width="470" height="70" rx="12" fill="#171717" stroke="#555555" stroke-width="2"/>
+  <text xml:space="preserve" x="675" y="180" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="15">String[] arr = {"Pune", "Goa"}</text>
+  <text xml:space="preserve" x="675" y="205" fill="#888888" font-family="Arial, sans-serif" font-size="15">a plain array</text>
+  <path d="M200 220L200 262" stroke="#FB923C" stroke-width="3"/>
+  <path d="M195.0 253.3L200 262L205.0 253.3" stroke="#FB923C" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M430 220L530 262" stroke="#FB923C" stroke-width="3"/>
+  <path d="M520.1 263.3L530 262L524.0 254.0" stroke="#FB923C" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M885 220L885 262" stroke="#FB923C" stroke-width="3"/>
+  <path d="M880.0 253.3L885 262L890.0 253.3" stroke="#FB923C" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="80" y="270" width="320" height="300" rx="16" fill="#171717" stroke="#555555" stroke-width="2"/>
+  <text xml:space="preserve" x="102" y="305" fill="#FB923C" font-family="Arial, sans-serif" font-size="14" letter-spacing="2">READ-ONLY VIEW</text>
+  <text xml:space="preserve" x="102" y="337" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="14">Collections.unmodifiableList(cities)</text>
+  <path d="M102 355L378 355" stroke="#2B2B2B" stroke-width="2"/>
+  <text xml:space="preserve" x="102" y="392" fill="#888888" font-family="Arial, sans-serif" font-size="15">shows [Pune, Goa, Agra]</text>
+  <text xml:space="preserve" x="102" y="426" fill="#888888" font-family="Arial, sans-serif" font-size="15">sees the later add</text>
+  <text xml:space="preserve" x="102" y="460" fill="#888888" font-family="Arial, sans-serif" font-size="15">view.add() → Unsupported-</text>
+  <text xml:space="preserve" x="102" y="494" fill="#888888" font-family="Arial, sans-serif" font-size="15">OperationException</text>
+  <rect x="440" y="270" width="320" height="300" rx="16" fill="#21180F" stroke="#FB923C" stroke-width="2"/>
+  <text xml:space="preserve" x="462" y="305" fill="#FB923C" font-family="Arial, sans-serif" font-size="14" letter-spacing="2">INDEPENDENT COPY</text>
+  <text xml:space="preserve" x="462" y="337" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="14">List.copyOf(cities) / List.of(...)</text>
+  <path d="M462 355L738 355" stroke="#2B2B2B" stroke-width="2"/>
+  <text xml:space="preserve" x="462" y="392" fill="#C6A17A" font-family="Arial, sans-serif" font-size="15">still [Pune, Goa]</text>
+  <text xml:space="preserve" x="462" y="426" fill="#C6A17A" font-family="Arial, sans-serif" font-size="15">never changes after creation</text>
+  <text xml:space="preserve" x="462" y="460" fill="#C6A17A" font-family="Arial, sans-serif" font-size="15">add() / set() → UOE</text>
+  <text xml:space="preserve" x="462" y="494" fill="#C6A17A" font-family="Arial, sans-serif" font-size="15">null elements rejected</text>
+  <rect x="800" y="270" width="320" height="300" rx="16" fill="#171717" stroke="#555555" stroke-width="2"/>
+  <text xml:space="preserve" x="822" y="305" fill="#FB923C" font-family="Arial, sans-serif" font-size="14" letter-spacing="2">FIXED-SIZE VIEW</text>
+  <text xml:space="preserve" x="822" y="337" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="16">Arrays.asList(arr)</text>
+  <path d="M822 355L1098 355" stroke="#2B2B2B" stroke-width="2"/>
+  <text xml:space="preserve" x="822" y="392" fill="#888888" font-family="Arial, sans-serif" font-size="15">set(0, "Ooty") writes into arr</text>
+  <text xml:space="preserve" x="822" y="426" fill="#888888" font-family="Arial, sans-serif" font-size="15">arr changes show up too</text>
+  <text xml:space="preserve" x="822" y="460" fill="#888888" font-family="Arial, sans-serif" font-size="15">add() / remove() → UOE</text>
+  <text xml:space="preserve" x="822" y="494" fill="#888888" font-family="Arial, sans-serif" font-size="15">size stays 2</text>
+  <text xml:space="preserve" x="80" y="600" fill="#888888" font-family="Arial, sans-serif" font-size="15">Need a snapshot that nobody can change? Copy it. Need to hide a list you still update? Wrap it.</text>
+</svg>

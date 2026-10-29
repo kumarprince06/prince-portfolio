@@ -1,0 +1,47 @@
+<svg width="1200" height="620" viewBox="0 0 1200 620" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="620" rx="28" fill="#0D0D0D"/>
+  <path d="M80 130H1120" stroke="#2B2B2B" stroke-width="2"/>
+  <text xml:space="preserve" x="80" y="82" fill="#FB923C" font-family="Arial, sans-serif" font-size="18" letter-spacing="4">TREESET IS A RED-BLACK TREE</text>
+  <text xml:space="preserve" x="80" y="112" fill="#777777" font-family="Arial, sans-serif" font-size="16">add(10), add(20) ... add(70) in order: rotations keep the tree short, not a 7-long chain.</text>
+  <path d="M380 190L220 290" stroke="#555555" stroke-width="2"/>
+  <path d="M380 190L540 290" stroke="#FB923C" stroke-width="3"/>
+  <path d="M540 290L450 390" stroke="#555555" stroke-width="2"/>
+  <path d="M540 290L630 390" stroke="#FB923C" stroke-width="3"/>
+  <path d="M630 390L560 490" stroke="#FB923C" stroke-width="3"/>
+  <path d="M630 390L700 490" stroke="#555555" stroke-width="2"/>
+  <circle cx="380" cy="190" r="30" fill="#2A2A2A" stroke="#888888" stroke-width="2"/>
+  <text xml:space="preserve" x="380" y="197" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="19" text-anchor="middle">20</text>
+  <circle cx="220" cy="290" r="30" fill="#2A2A2A" stroke="#888888" stroke-width="2"/>
+  <text xml:space="preserve" x="220" y="297" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="19" text-anchor="middle">10</text>
+  <circle cx="540" cy="290" r="30" fill="#21180F" stroke="#FB923C" stroke-width="2"/>
+  <text xml:space="preserve" x="540" y="297" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="19" text-anchor="middle">40</text>
+  <circle cx="450" cy="390" r="30" fill="#2A2A2A" stroke="#888888" stroke-width="2"/>
+  <text xml:space="preserve" x="450" y="397" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="19" text-anchor="middle">30</text>
+  <circle cx="630" cy="390" r="30" fill="#2A2A2A" stroke="#888888" stroke-width="2"/>
+  <text xml:space="preserve" x="630" y="397" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="19" text-anchor="middle">60</text>
+  <circle cx="560" cy="490" r="30" fill="#21180F" stroke="#FB923C" stroke-width="2"/>
+  <text xml:space="preserve" x="560" y="497" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="19" text-anchor="middle">50</text>
+  <circle cx="700" cy="490" r="30" fill="#21180F" stroke="#FB923C" stroke-width="2"/>
+  <text xml:space="preserve" x="700" y="497" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="19" text-anchor="middle">70</text>
+  <circle cx="100" cy="556" r="12" fill="#21180F" stroke="#FB923C" stroke-width="2"/>
+  <text xml:space="preserve" x="122" y="562" fill="#888888" font-family="Arial, sans-serif" font-size="15">red node</text>
+  <circle cx="230" cy="556" r="12" fill="#2A2A2A" stroke="#888888" stroke-width="2"/>
+  <text xml:space="preserve" x="252" y="562" fill="#888888" font-family="Arial, sans-serif" font-size="15">black node</text>
+  <text xml:space="preserve" x="80" y="600" fill="#888888" font-family="Arial, sans-serif" font-size="15">Every root-to-leaf path has 2 black nodes, so height stays O(log n).</text>
+  <rect x="790" y="165" width="330" height="410" rx="16" fill="#171717" stroke="#555555" stroke-width="2"/>
+  <text xml:space="preserve" x="815" y="200" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="17">floor(45)  and  ceiling(45)</text>
+  <text xml:space="preserve" x="815" y="228" fill="#888888" font-family="Arial, sans-serif" font-size="15">walk down from the root:</text>
+  <text xml:space="preserve" x="815" y="265" fill="#FB923C" font-family="Arial, sans-serif" font-size="15">45 &gt; 20</text>
+  <text xml:space="preserve" x="890" y="265" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="15">go right, floor so far 20</text>
+  <text xml:space="preserve" x="815" y="305" fill="#FB923C" font-family="Arial, sans-serif" font-size="15">45 &gt; 40</text>
+  <text xml:space="preserve" x="890" y="305" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="15">go right, floor so far 40</text>
+  <text xml:space="preserve" x="815" y="345" fill="#FB923C" font-family="Arial, sans-serif" font-size="15">45 &lt; 60</text>
+  <text xml:space="preserve" x="890" y="345" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="15">go left, ceiling so far 60</text>
+  <text xml:space="preserve" x="815" y="385" fill="#FB923C" font-family="Arial, sans-serif" font-size="15">45 &lt; 50</text>
+  <text xml:space="preserve" x="890" y="385" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="15">go left, ceiling so far 50</text>
+  <text xml:space="preserve" x="815" y="425" fill="#FB923C" font-family="Arial, sans-serif" font-size="15">null</text>
+  <text xml:space="preserve" x="890" y="425" fill="#888888" font-family="Arial, sans-serif" font-size="15">stop</text>
+  <rect x="815" y="470" width="280" height="80" rx="12" fill="#21180F" stroke="#FB923C" stroke-width="2"/>
+  <text xml:space="preserve" x="840" y="503" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="17">floor(45)   = 40</text>
+  <text xml:space="preserve" x="840" y="533" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="17">ceiling(45) = 50</text>
+</svg>

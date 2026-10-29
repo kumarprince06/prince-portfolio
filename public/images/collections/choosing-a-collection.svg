@@ -1,0 +1,65 @@
+<svg width="1200" height="620" viewBox="0 0 1200 620" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="620" rx="28" fill="#0D0D0D"/>
+  <path d="M80 130H1120" stroke="#2B2B2B" stroke-width="2"/>
+  <text xml:space="preserve" x="80" y="82" fill="#FB923C" font-family="Arial, sans-serif" font-size="18" letter-spacing="4">PICKING A COLLECTION</text>
+  <text xml:space="preserve" x="80" y="112" fill="#777777" font-family="Arial, sans-serif" font-size="16">Ask the questions top to bottom; stop at the first yes. Orange = the usual default.</text>
+  <rect x="80" y="155" width="330" height="76" rx="12" fill="#171717" stroke="#555555" stroke-width="2"/>
+  <text xml:space="preserve" x="102" y="188" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="17">Need key → value lookups?</text>
+  <text xml:space="preserve" x="102" y="212" fill="#888888" font-family="Arial, sans-serif" font-size="14">e.g. city → fare</text>
+  <path d="M410 193L494 193" stroke="#FB923C" stroke-width="3"/>
+  <path d="M485.3 198.0L494 193L485.3 188.0" stroke="#FB923C" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+  <text xml:space="preserve" x="455" y="183" fill="#FB923C" font-family="Arial, sans-serif" font-size="14" text-anchor="middle">yes</text>
+  <path d="M160 231L160 265" stroke="#888888" stroke-width="2"/>
+  <path d="M155.0 256.3L160 265L165.0 256.3" stroke="#888888" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <text xml:space="preserve" x="172" y="253" fill="#888888" font-family="Arial, sans-serif" font-size="14">no</text>
+  <rect x="500.0" y="155" width="196.66666666666666" height="76" rx="12" fill="#171717" stroke="#555555" stroke-width="2"/>
+  <text xml:space="preserve" x="598.3333333333334" y="188" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="17" text-anchor="middle">LinkedHashMap</text>
+  <text xml:space="preserve" x="598.3333333333334" y="212" fill="#888888" font-family="Arial, sans-serif" font-size="14" text-anchor="middle">insertion order</text>
+  <rect x="711.6666666666666" y="155" width="196.66666666666666" height="76" rx="12" fill="#171717" stroke="#555555" stroke-width="2"/>
+  <text xml:space="preserve" x="810.0" y="188" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="17" text-anchor="middle">TreeMap</text>
+  <text xml:space="preserve" x="810.0" y="212" fill="#888888" font-family="Arial, sans-serif" font-size="14" text-anchor="middle">sorted keys</text>
+  <rect x="923.3333333333333" y="155" width="196.66666666666666" height="76" rx="12" fill="#21180F" stroke="#FB923C" stroke-width="2"/>
+  <text xml:space="preserve" x="1021.6666666666666" y="188" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="17" text-anchor="middle">HashMap</text>
+  <text xml:space="preserve" x="1021.6666666666666" y="212" fill="#C6A17A" font-family="Arial, sans-serif" font-size="14" text-anchor="middle">otherwise</text>
+  <rect x="80" y="267" width="330" height="76" rx="12" fill="#171717" stroke="#555555" stroke-width="2"/>
+  <text xml:space="preserve" x="102" y="300" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="17">Only unique items?</text>
+  <text xml:space="preserve" x="102" y="324" fill="#888888" font-family="Arial, sans-serif" font-size="14">e.g. visited cities</text>
+  <path d="M410 305L494 305" stroke="#FB923C" stroke-width="3"/>
+  <path d="M485.3 310.0L494 305L485.3 300.0" stroke="#FB923C" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+  <text xml:space="preserve" x="455" y="295" fill="#FB923C" font-family="Arial, sans-serif" font-size="14" text-anchor="middle">yes</text>
+  <path d="M160 343L160 377" stroke="#888888" stroke-width="2"/>
+  <path d="M155.0 368.3L160 377L165.0 368.3" stroke="#888888" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <text xml:space="preserve" x="172" y="365" fill="#888888" font-family="Arial, sans-serif" font-size="14">no</text>
+  <rect x="500.0" y="267" width="196.66666666666666" height="76" rx="12" fill="#171717" stroke="#555555" stroke-width="2"/>
+  <text xml:space="preserve" x="598.3333333333334" y="300" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="17" text-anchor="middle">LinkedHashSet</text>
+  <text xml:space="preserve" x="598.3333333333334" y="324" fill="#888888" font-family="Arial, sans-serif" font-size="14" text-anchor="middle">insertion order</text>
+  <rect x="711.6666666666666" y="267" width="196.66666666666666" height="76" rx="12" fill="#171717" stroke="#555555" stroke-width="2"/>
+  <text xml:space="preserve" x="810.0" y="300" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="17" text-anchor="middle">TreeSet</text>
+  <text xml:space="preserve" x="810.0" y="324" fill="#888888" font-family="Arial, sans-serif" font-size="14" text-anchor="middle">sorted</text>
+  <rect x="923.3333333333333" y="267" width="196.66666666666666" height="76" rx="12" fill="#21180F" stroke="#FB923C" stroke-width="2"/>
+  <text xml:space="preserve" x="1021.6666666666666" y="300" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="17" text-anchor="middle">HashSet</text>
+  <text xml:space="preserve" x="1021.6666666666666" y="324" fill="#C6A17A" font-family="Arial, sans-serif" font-size="14" text-anchor="middle">otherwise</text>
+  <rect x="80" y="379" width="330" height="76" rx="12" fill="#171717" stroke="#555555" stroke-width="2"/>
+  <text xml:space="preserve" x="102" y="412" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="17">FIFO, stack or priority?</text>
+  <text xml:space="preserve" x="102" y="436" fill="#888888" font-family="Arial, sans-serif" font-size="14">e.g. ticket queue</text>
+  <path d="M410 417L494 417" stroke="#FB923C" stroke-width="3"/>
+  <path d="M485.3 422.0L494 417L485.3 412.0" stroke="#FB923C" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+  <text xml:space="preserve" x="455" y="407" fill="#FB923C" font-family="Arial, sans-serif" font-size="14" text-anchor="middle">yes</text>
+  <path d="M160 455L160 489" stroke="#888888" stroke-width="2"/>
+  <path d="M155.0 480.3L160 489L165.0 480.3" stroke="#888888" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <text xml:space="preserve" x="172" y="477" fill="#888888" font-family="Arial, sans-serif" font-size="14">no</text>
+  <rect x="500.0" y="379" width="302.5" height="76" rx="12" fill="#21180F" stroke="#FB923C" stroke-width="2"/>
+  <text xml:space="preserve" x="651.25" y="412" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="17" text-anchor="middle">ArrayDeque</text>
+  <text xml:space="preserve" x="651.25" y="436" fill="#C6A17A" font-family="Arial, sans-serif" font-size="14" text-anchor="middle">queue or stack</text>
+  <rect x="817.5" y="379" width="302.5" height="76" rx="12" fill="#171717" stroke="#555555" stroke-width="2"/>
+  <text xml:space="preserve" x="968.75" y="412" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="17" text-anchor="middle">PriorityQueue</text>
+  <text xml:space="preserve" x="968.75" y="436" fill="#888888" font-family="Arial, sans-serif" font-size="14" text-anchor="middle">smallest first</text>
+  <rect x="80" y="491" width="330" height="76" rx="12" fill="#171717" stroke="#555555" stroke-width="2" stroke-dasharray="6 6"/>
+  <text xml:space="preserve" x="102" y="524" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="17">Just a list of items</text>
+  <text xml:space="preserve" x="102" y="548" fill="#888888" font-family="Arial, sans-serif" font-size="14">index access, duplicates ok</text>
+  <path d="M410 529L494 529" stroke="#FB923C" stroke-width="3"/>
+  <path d="M485.3 534.0L494 529L485.3 524.0" stroke="#FB923C" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="500.0" y="491" width="620.0" height="76" rx="12" fill="#21180F" stroke="#FB923C" stroke-width="2"/>
+  <text xml:space="preserve" x="810.0" y="524" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="17" text-anchor="middle">ArrayList</text>
+  <text xml:space="preserve" x="810.0" y="548" fill="#C6A17A" font-family="Arial, sans-serif" font-size="14" text-anchor="middle">the default list</text>
+</svg>

@@ -1,0 +1,70 @@
+<svg width="1200" height="620" viewBox="0 0 1200 620" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="620" rx="28" fill="#0D0D0D"/>
+  <path d="M80 130H1120" stroke="#2B2B2B" stroke-width="2"/>
+  <text xml:space="preserve" x="80" y="82" fill="#FB923C" font-family="Arial, sans-serif" font-size="18" letter-spacing="4">LINKEDLIST IS A CHAIN OF NODES</text>
+  <text xml:space="preserve" x="80" y="112" fill="#777777" font-family="Arial, sans-serif" font-size="16">Each Node holds prev, item and next; the list keeps first and last.</text>
+  <rect x="80" y="250" width="200" height="84" rx="10" fill="#171717" stroke="#555555" stroke-width="2"/>
+  <path d="M136 250L136 334" stroke="#555555" stroke-width="2"/>
+  <path d="M224 250L224 334" stroke="#555555" stroke-width="2"/>
+  <text xml:space="preserve" x="108" y="280" fill="#888888" font-family="Arial, sans-serif" font-size="14" text-anchor="middle">prev</text>
+  <text xml:space="preserve" x="252" y="280" fill="#888888" font-family="Arial, sans-serif" font-size="14" text-anchor="middle">next</text>
+  <text xml:space="preserve" x="108" y="308" fill="#888888" font-family="Arial, sans-serif" font-size="14" text-anchor="middle">null</text>
+  <text xml:space="preserve" x="252" y="308" fill="#FB923C" font-family="Arial, sans-serif" font-size="22" text-anchor="middle">•</text>
+  <text xml:space="preserve" x="180" y="300" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="20" text-anchor="middle">Pune</text>
+  <text xml:space="preserve" x="180" y="236" fill="#888888" font-family="Arial, sans-serif" font-size="14" text-anchor="middle">index 0</text>
+  <rect x="360" y="250" width="200" height="84" rx="10" fill="#171717" stroke="#555555" stroke-width="2"/>
+  <path d="M416 250L416 334" stroke="#555555" stroke-width="2"/>
+  <path d="M504 250L504 334" stroke="#555555" stroke-width="2"/>
+  <text xml:space="preserve" x="388" y="280" fill="#888888" font-family="Arial, sans-serif" font-size="14" text-anchor="middle">prev</text>
+  <text xml:space="preserve" x="532" y="280" fill="#888888" font-family="Arial, sans-serif" font-size="14" text-anchor="middle">next</text>
+  <text xml:space="preserve" x="388" y="308" fill="#FB923C" font-family="Arial, sans-serif" font-size="22" text-anchor="middle">•</text>
+  <text xml:space="preserve" x="532" y="308" fill="#FB923C" font-family="Arial, sans-serif" font-size="22" text-anchor="middle">•</text>
+  <text xml:space="preserve" x="460" y="300" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="20" text-anchor="middle">Goa</text>
+  <text xml:space="preserve" x="460" y="236" fill="#888888" font-family="Arial, sans-serif" font-size="14" text-anchor="middle">index 1</text>
+  <rect x="640" y="250" width="200" height="84" rx="10" fill="#171717" stroke="#555555" stroke-width="2"/>
+  <path d="M696 250L696 334" stroke="#555555" stroke-width="2"/>
+  <path d="M784 250L784 334" stroke="#555555" stroke-width="2"/>
+  <text xml:space="preserve" x="668" y="280" fill="#888888" font-family="Arial, sans-serif" font-size="14" text-anchor="middle">prev</text>
+  <text xml:space="preserve" x="812" y="280" fill="#888888" font-family="Arial, sans-serif" font-size="14" text-anchor="middle">next</text>
+  <text xml:space="preserve" x="668" y="308" fill="#FB923C" font-family="Arial, sans-serif" font-size="22" text-anchor="middle">•</text>
+  <text xml:space="preserve" x="812" y="308" fill="#FB923C" font-family="Arial, sans-serif" font-size="22" text-anchor="middle">•</text>
+  <text xml:space="preserve" x="740" y="300" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="20" text-anchor="middle">Agra</text>
+  <text xml:space="preserve" x="740" y="236" fill="#888888" font-family="Arial, sans-serif" font-size="14" text-anchor="middle">index 2</text>
+  <rect x="920" y="250" width="200" height="84" rx="10" fill="#171717" stroke="#555555" stroke-width="2"/>
+  <path d="M976 250L976 334" stroke="#555555" stroke-width="2"/>
+  <path d="M1064 250L1064 334" stroke="#555555" stroke-width="2"/>
+  <text xml:space="preserve" x="948" y="280" fill="#888888" font-family="Arial, sans-serif" font-size="14" text-anchor="middle">prev</text>
+  <text xml:space="preserve" x="1092" y="280" fill="#888888" font-family="Arial, sans-serif" font-size="14" text-anchor="middle">next</text>
+  <text xml:space="preserve" x="948" y="308" fill="#FB923C" font-family="Arial, sans-serif" font-size="22" text-anchor="middle">•</text>
+  <text xml:space="preserve" x="1092" y="308" fill="#888888" font-family="Arial, sans-serif" font-size="14" text-anchor="middle">null</text>
+  <text xml:space="preserve" x="1020" y="300" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="20" text-anchor="middle">Delhi</text>
+  <text xml:space="preserve" x="1020" y="236" fill="#888888" font-family="Arial, sans-serif" font-size="14" text-anchor="middle">index 3</text>
+  <path d="M280 275L356 275" stroke="#FB923C" stroke-width="2"/>
+  <path d="M347.3 280.0L356 275L347.3 270.0" stroke="#FB923C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M360 310L284 310" stroke="#C6A17A" stroke-width="2"/>
+  <path d="M292.7 305.0L284 310L292.7 315.0" stroke="#C6A17A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M560 275L636 275" stroke="#FB923C" stroke-width="2"/>
+  <path d="M627.3 280.0L636 275L627.3 270.0" stroke="#FB923C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M640 310L564 310" stroke="#C6A17A" stroke-width="2"/>
+  <path d="M572.7 305.0L564 310L572.7 315.0" stroke="#C6A17A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M840 275L916 275" stroke="#FB923C" stroke-width="2"/>
+  <path d="M907.3 280.0L916 275L907.3 270.0" stroke="#FB923C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M920 310L844 310" stroke="#C6A17A" stroke-width="2"/>
+  <path d="M852.7 305.0L844 310L852.7 315.0" stroke="#C6A17A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <text xml:space="preserve" x="80" y="190" fill="#FB923C" font-family="Arial, sans-serif" font-size="16">first</text>
+  <path d="M100 198L100 232" stroke="#FB923C" stroke-width="2"/>
+  <path d="M95.0 223.3L100 232L105.0 223.3" stroke="#FB923C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <text xml:space="preserve" x="1120" y="190" fill="#FB923C" font-family="Arial, sans-serif" font-size="16" text-anchor="end">last</text>
+  <path d="M1100 198L1100 232" stroke="#FB923C" stroke-width="2"/>
+  <path d="M1095.0 223.3L1100 232L1105.0 223.3" stroke="#FB923C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <text xml:space="preserve" x="600" y="370" fill="#888888" font-family="Arial, sans-serif" font-size="14" text-anchor="middle">orange = next link   ·   tan = prev link</text>
+  <path d="M80 400H1120" stroke="#2B2B2B" stroke-width="2"/>
+  <text xml:space="preserve" x="80" y="435" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="16">get(i) walks from the nearer end  (size = 4, size &gt;&gt; 1 = 2)</text>
+  <rect x="80" y="460" width="500" height="90" rx="12" fill="#171717" stroke="#555555" stroke-width="2"/>
+  <text xml:space="preserve" x="105" y="492" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="16">get(1):  1 &lt; 2  →  start at first</text>
+  <text xml:space="preserve" x="105" y="522" fill="#C6A17A" font-family="Arial, sans-serif" font-size="15">first → Pune → Goa   (1 hop forward)</text>
+  <rect x="620" y="460" width="500" height="90" rx="12" fill="#21180F" stroke="#FB923C" stroke-width="2"/>
+  <text xml:space="preserve" x="645" y="492" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="16">get(2):  2 ≥ 2  →  start at last</text>
+  <text xml:space="preserve" x="645" y="522" fill="#C6A17A" font-family="Arial, sans-serif" font-size="15">last → Delhi → Agra   (1 hop back)</text>
+  <text xml:space="preserve" x="80" y="590" fill="#888888" font-family="Arial, sans-serif" font-size="15">Still O(n): no array to jump into, but never more than n/2 hops. Adding or removing at either end is O(1).</text>
+</svg>

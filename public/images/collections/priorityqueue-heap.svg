@@ -1,0 +1,71 @@
+<svg width="1200" height="620" viewBox="0 0 1200 620" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="620" rx="28" fill="#0D0D0D"/>
+  <path d="M80 130H1120" stroke="#2B2B2B" stroke-width="2"/>
+  <text xml:space="preserve" x="80" y="82" fill="#FB923C" font-family="Arial, sans-serif" font-size="18" letter-spacing="4">PRIORITYQUEUE IS A MIN-HEAP IN AN ARRAY</text>
+  <text xml:space="preserve" x="80" y="112" fill="#777777" font-family="Arial, sans-serif" font-size="16">Support tickets: smaller number = more urgent. The tree is only a way to read the array.</text>
+  <path d="M300 185L190 265" stroke="#555555" stroke-width="2"/>
+  <path d="M300 185L410 265" stroke="#555555" stroke-width="2"/>
+  <path d="M190 265L135 345" stroke="#555555" stroke-width="2"/>
+  <path d="M190 265L245 345" stroke="#555555" stroke-width="2"/>
+  <path d="M410 265L355 345" stroke="#555555" stroke-width="2"/>
+  <path d="M410 265L465 345" stroke="#555555" stroke-width="2"/>
+  <circle cx="300" cy="185" r="25" fill="#21180F" stroke="#FB923C" stroke-width="2"/>
+  <text xml:space="preserve" x="300" y="191" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="18" text-anchor="middle">2</text>
+  <text xml:space="preserve" x="330" y="167" fill="#888888" font-family="Arial, sans-serif" font-size="14">i0</text>
+  <circle cx="190" cy="265" r="25" fill="#171717" stroke="#555555" stroke-width="2"/>
+  <text xml:space="preserve" x="190" y="271" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="18" text-anchor="middle">4</text>
+  <text xml:space="preserve" x="220" y="247" fill="#888888" font-family="Arial, sans-serif" font-size="14">i1</text>
+  <circle cx="410" cy="265" r="25" fill="#171717" stroke="#555555" stroke-width="2"/>
+  <text xml:space="preserve" x="410" y="271" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="18" text-anchor="middle">3</text>
+  <text xml:space="preserve" x="440" y="247" fill="#888888" font-family="Arial, sans-serif" font-size="14">i2</text>
+  <circle cx="135" cy="345" r="25" fill="#171717" stroke="#555555" stroke-width="2"/>
+  <text xml:space="preserve" x="135" y="351" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="18" text-anchor="middle">8</text>
+  <text xml:space="preserve" x="165" y="327" fill="#888888" font-family="Arial, sans-serif" font-size="14">i3</text>
+  <circle cx="245" cy="345" r="25" fill="#171717" stroke="#555555" stroke-width="2"/>
+  <text xml:space="preserve" x="245" y="351" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="18" text-anchor="middle">5</text>
+  <text xml:space="preserve" x="275" y="327" fill="#888888" font-family="Arial, sans-serif" font-size="14">i4</text>
+  <circle cx="355" cy="345" r="25" fill="#171717" stroke="#555555" stroke-width="2"/>
+  <text xml:space="preserve" x="355" y="351" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="18" text-anchor="middle">6</text>
+  <text xml:space="preserve" x="385" y="327" fill="#888888" font-family="Arial, sans-serif" font-size="14">i5</text>
+  <circle cx="465" cy="345" r="25" fill="#171717" stroke="#555555" stroke-width="2"/>
+  <text xml:space="preserve" x="465" y="351" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="18" text-anchor="middle">7</text>
+  <text xml:space="preserve" x="495" y="327" fill="#888888" font-family="Arial, sans-serif" font-size="14">i6</text>
+  <rect x="620" y="200" width="64" height="50" rx="4" fill="#21180F" stroke="#FB923C" stroke-width="2"/>
+  <text xml:space="preserve" x="652.0" y="232" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="18" text-anchor="middle">2</text>
+  <text xml:space="preserve" x="652.0" y="190" fill="#888888" font-family="Arial, sans-serif" font-size="14" text-anchor="middle">0</text>
+  <rect x="684" y="200" width="64" height="50" rx="4" fill="#171717" stroke="#555555" stroke-width="2"/>
+  <text xml:space="preserve" x="716.0" y="232" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="18" text-anchor="middle">4</text>
+  <text xml:space="preserve" x="716.0" y="190" fill="#888888" font-family="Arial, sans-serif" font-size="14" text-anchor="middle">1</text>
+  <rect x="748" y="200" width="64" height="50" rx="4" fill="#171717" stroke="#555555" stroke-width="2"/>
+  <text xml:space="preserve" x="780.0" y="232" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="18" text-anchor="middle">3</text>
+  <text xml:space="preserve" x="780.0" y="190" fill="#888888" font-family="Arial, sans-serif" font-size="14" text-anchor="middle">2</text>
+  <rect x="812" y="200" width="64" height="50" rx="4" fill="#171717" stroke="#555555" stroke-width="2"/>
+  <text xml:space="preserve" x="844.0" y="232" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="18" text-anchor="middle">8</text>
+  <text xml:space="preserve" x="844.0" y="190" fill="#888888" font-family="Arial, sans-serif" font-size="14" text-anchor="middle">3</text>
+  <rect x="876" y="200" width="64" height="50" rx="4" fill="#171717" stroke="#555555" stroke-width="2"/>
+  <text xml:space="preserve" x="908.0" y="232" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="18" text-anchor="middle">5</text>
+  <text xml:space="preserve" x="908.0" y="190" fill="#888888" font-family="Arial, sans-serif" font-size="14" text-anchor="middle">4</text>
+  <rect x="940" y="200" width="64" height="50" rx="4" fill="#171717" stroke="#555555" stroke-width="2"/>
+  <text xml:space="preserve" x="972.0" y="232" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="18" text-anchor="middle">6</text>
+  <text xml:space="preserve" x="972.0" y="190" fill="#888888" font-family="Arial, sans-serif" font-size="14" text-anchor="middle">5</text>
+  <rect x="1004" y="200" width="64" height="50" rx="4" fill="#171717" stroke="#555555" stroke-width="2"/>
+  <text xml:space="preserve" x="1036.0" y="232" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="18" text-anchor="middle">7</text>
+  <text xml:space="preserve" x="1036.0" y="190" fill="#888888" font-family="Arial, sans-serif" font-size="14" text-anchor="middle">6</text>
+  <path d="M716 252Q780 300 842 252" stroke="#FB923C" stroke-width="2"/>
+  <path d="M838.2 261.3L842 252L832.1 253.3" stroke="#FB923C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M716 252Q812 320 906 252" stroke="#FB923C" stroke-width="2"/>
+  <path d="M901.9 261.1L906 252L896.1 253.0" stroke="#FB923C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <text xml:space="preserve" x="620" y="345" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="15">children of i: 2i + 1 and 2i + 2      parent: (i − 1) / 2</text>
+  <text xml:space="preserve" x="620" y="370" fill="#C6A17A" font-family="Arial, sans-serif" font-size="15">i1 (4) → children i3 (8), i4 (5)</text>
+  <path d="M80 400H1120" stroke="#2B2B2B" stroke-width="2"/>
+  <rect x="80" y="420" width="500" height="160" rx="14" fill="#171717" stroke="#555555" stroke-width="2"/>
+  <text xml:space="preserve" x="105" y="455" fill="#FB923C" font-family="Arial, sans-serif" font-size="17">offer(1): add at the end, sift up</text>
+  <text xml:space="preserve" x="105" y="487" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="15">put 1 at i7, parent i3 (8) is bigger → swap</text>
+  <text xml:space="preserve" x="105" y="513" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="15">parent i1 (4) → swap, parent i0 (2) → swap</text>
+  <text xml:space="preserve" x="105" y="545" fill="#C6A17A" font-family="Arial, sans-serif" font-size="15">[1, 2, 3, 4, 5, 6, 7, 8]   O(log n)</text>
+  <rect x="620" y="420" width="500" height="160" rx="14" fill="#21180F" stroke="#FB923C" stroke-width="2"/>
+  <text xml:space="preserve" x="645" y="455" fill="#FB923C" font-family="Arial, sans-serif" font-size="17">poll(): take the root, sift down</text>
+  <text xml:space="preserve" x="645" y="487" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="15">returns 1, last item 8 moves to i0</text>
+  <text xml:space="preserve" x="645" y="513" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="15">swap with smaller child 2, then with 4</text>
+  <text xml:space="preserve" x="645" y="545" fill="#C6A17A" font-family="Arial, sans-serif" font-size="15">[2, 4, 3, 8, 5, 6, 7]   O(log n)</text>
+</svg>

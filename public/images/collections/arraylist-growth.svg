@@ -1,0 +1,104 @@
+<svg width="1200" height="620" viewBox="0 0 1200 620" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="620" rx="28" fill="#0D0D0D"/>
+  <path d="M80 130H1120" stroke="#2B2B2B" stroke-width="2"/>
+  <text xml:space="preserve" x="80" y="82" fill="#FB923C" font-family="Arial, sans-serif" font-size="18" letter-spacing="4">ARRAYLIST GROWS BY COPYING</text>
+  <text xml:space="preserve" x="80" y="112" fill="#777777" font-family="Arial, sans-serif" font-size="16">elementData is a plain Object[]; size counts items, capacity is the array length.</text>
+  <text xml:space="preserve" x="80" y="170" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="16">1. Full: size = 10, capacity = 10</text>
+  <rect x="260" y="185" width="56" height="48" rx="4" fill="#171717" stroke="#555555" stroke-width="2"/>
+  <text xml:space="preserve" x="288.0" y="215" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="14" text-anchor="middle">Pune</text>
+  <rect x="316" y="185" width="56" height="48" rx="4" fill="#171717" stroke="#555555" stroke-width="2"/>
+  <text xml:space="preserve" x="344.0" y="215" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="14" text-anchor="middle">Goa</text>
+  <rect x="372" y="185" width="56" height="48" rx="4" fill="#171717" stroke="#555555" stroke-width="2"/>
+  <text xml:space="preserve" x="400.0" y="215" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="14" text-anchor="middle">Agra</text>
+  <rect x="428" y="185" width="56" height="48" rx="4" fill="#171717" stroke="#555555" stroke-width="2"/>
+  <text xml:space="preserve" x="456.0" y="215" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="14" text-anchor="middle">Delhi</text>
+  <rect x="484" y="185" width="56" height="48" rx="4" fill="#171717" stroke="#555555" stroke-width="2"/>
+  <text xml:space="preserve" x="512.0" y="215" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="14" text-anchor="middle">Surat</text>
+  <rect x="540" y="185" width="56" height="48" rx="4" fill="#171717" stroke="#555555" stroke-width="2"/>
+  <text xml:space="preserve" x="568.0" y="215" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="14" text-anchor="middle">Kochi</text>
+  <rect x="596" y="185" width="56" height="48" rx="4" fill="#171717" stroke="#555555" stroke-width="2"/>
+  <text xml:space="preserve" x="624.0" y="215" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="14" text-anchor="middle">Patna</text>
+  <rect x="652" y="185" width="56" height="48" rx="4" fill="#171717" stroke="#555555" stroke-width="2"/>
+  <text xml:space="preserve" x="680.0" y="215" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="14" text-anchor="middle">Ooty</text>
+  <rect x="708" y="185" width="56" height="48" rx="4" fill="#171717" stroke="#555555" stroke-width="2"/>
+  <text xml:space="preserve" x="736.0" y="215" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="14" text-anchor="middle">Leh</text>
+  <rect x="764" y="185" width="56" height="48" rx="4" fill="#171717" stroke="#555555" stroke-width="2"/>
+  <text xml:space="preserve" x="792.0" y="215" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="14" text-anchor="middle">Vizag</text>
+  <text xml:space="preserve" x="80" y="215" fill="#C6A17A" font-family="Arial, sans-serif" font-size="16">elementData</text>
+  <text xml:space="preserve" x="838" y="205" fill="#888888" font-family="Arial, sans-serif" font-size="15">add("Puri") has no free slot</text>
+  <text xml:space="preserve" x="838" y="226" fill="#FB923C" font-family="Arial, sans-serif" font-size="15">→ grow()</text>
+  <path d="M540 240L540 292" stroke="#FB923C" stroke-width="3"/>
+  <path d="M535.0 283.3L540 292L545.0 283.3" stroke="#FB923C" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+  <text xml:space="preserve" x="560" y="272" fill="#C6A17A" font-family="Arial, sans-serif" font-size="15">newCapacity = 10 + (10 &gt;&gt; 1) = 15, then Arrays.copyOf(...)</text>
+  <text xml:space="preserve" x="80" y="315" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="16">2. New array</text>
+  <rect x="260" y="300" width="56" height="48" rx="4" fill="#171717" stroke="#555555" stroke-width="2"/>
+  <text xml:space="preserve" x="288.0" y="330" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="14" text-anchor="middle">Pune</text>
+  <rect x="316" y="300" width="56" height="48" rx="4" fill="#171717" stroke="#555555" stroke-width="2"/>
+  <text xml:space="preserve" x="344.0" y="330" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="14" text-anchor="middle">Goa</text>
+  <rect x="372" y="300" width="56" height="48" rx="4" fill="#171717" stroke="#555555" stroke-width="2"/>
+  <text xml:space="preserve" x="400.0" y="330" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="14" text-anchor="middle">Agra</text>
+  <rect x="428" y="300" width="56" height="48" rx="4" fill="#171717" stroke="#555555" stroke-width="2"/>
+  <text xml:space="preserve" x="456.0" y="330" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="14" text-anchor="middle">Delhi</text>
+  <rect x="484" y="300" width="56" height="48" rx="4" fill="#171717" stroke="#555555" stroke-width="2"/>
+  <text xml:space="preserve" x="512.0" y="330" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="14" text-anchor="middle">Surat</text>
+  <rect x="540" y="300" width="56" height="48" rx="4" fill="#171717" stroke="#555555" stroke-width="2"/>
+  <text xml:space="preserve" x="568.0" y="330" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="14" text-anchor="middle">Kochi</text>
+  <rect x="596" y="300" width="56" height="48" rx="4" fill="#171717" stroke="#555555" stroke-width="2"/>
+  <text xml:space="preserve" x="624.0" y="330" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="14" text-anchor="middle">Patna</text>
+  <rect x="652" y="300" width="56" height="48" rx="4" fill="#171717" stroke="#555555" stroke-width="2"/>
+  <text xml:space="preserve" x="680.0" y="330" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="14" text-anchor="middle">Ooty</text>
+  <rect x="708" y="300" width="56" height="48" rx="4" fill="#171717" stroke="#555555" stroke-width="2"/>
+  <text xml:space="preserve" x="736.0" y="330" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="14" text-anchor="middle">Leh</text>
+  <rect x="764" y="300" width="56" height="48" rx="4" fill="#171717" stroke="#555555" stroke-width="2"/>
+  <text xml:space="preserve" x="792.0" y="330" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="14" text-anchor="middle">Vizag</text>
+  <rect x="820" y="300" width="56" height="48" rx="4" fill="#21180F" stroke="#FB923C" stroke-width="2"/>
+  <text xml:space="preserve" x="848.0" y="330" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="14" text-anchor="middle">Puri</text>
+  <rect x="876" y="300" width="56" height="48" rx="4" fill="#171717" stroke="#555555" stroke-width="2" stroke-dasharray="6 6"/>
+  <rect x="932" y="300" width="56" height="48" rx="4" fill="#171717" stroke="#555555" stroke-width="2" stroke-dasharray="6 6"/>
+  <rect x="988" y="300" width="56" height="48" rx="4" fill="#171717" stroke="#555555" stroke-width="2" stroke-dasharray="6 6"/>
+  <rect x="1044" y="300" width="56" height="48" rx="4" fill="#171717" stroke="#555555" stroke-width="2" stroke-dasharray="6 6"/>
+  <text xml:space="preserve" x="80" y="336" fill="#888888" font-family="Arial, sans-serif" font-size="15">capacity 15</text>
+  <text xml:space="preserve" x="260" y="372" fill="#888888" font-family="Arial, sans-serif" font-size="14">10 copied</text>
+  <text xml:space="preserve" x="820" y="372" fill="#FB923C" font-family="Arial, sans-serif" font-size="14" text-anchor="middle">Puri added, size = 11</text>
+  <text xml:space="preserve" x="1040" y="372" fill="#888888" font-family="Arial, sans-serif" font-size="14" text-anchor="middle">4 empty</text>
+  <path d="M80 400H1120" stroke="#2B2B2B" stroke-width="2"/>
+  <text xml:space="preserve" x="80" y="435" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="16">3. remove(2) shifts everything after index 2 one step left</text>
+  <rect x="80" y="470" width="72" height="48" rx="4" fill="#171717" stroke="#555555" stroke-width="2"/>
+  <text xml:space="preserve" x="116.0" y="500" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="15" text-anchor="middle">Pune</text>
+  <text xml:space="preserve" x="116.0" y="462" fill="#888888" font-family="Arial, sans-serif" font-size="14" text-anchor="middle">0</text>
+  <rect x="152" y="470" width="72" height="48" rx="4" fill="#171717" stroke="#555555" stroke-width="2"/>
+  <text xml:space="preserve" x="188.0" y="500" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="15" text-anchor="middle">Goa</text>
+  <text xml:space="preserve" x="188.0" y="462" fill="#888888" font-family="Arial, sans-serif" font-size="14" text-anchor="middle">1</text>
+  <rect x="224" y="470" width="72" height="48" rx="4" fill="#21180F" stroke="#FB923C" stroke-width="2"/>
+  <text xml:space="preserve" x="260.0" y="500" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="15" text-anchor="middle">Agra</text>
+  <text xml:space="preserve" x="260.0" y="462" fill="#888888" font-family="Arial, sans-serif" font-size="14" text-anchor="middle">2</text>
+  <rect x="296" y="470" width="72" height="48" rx="4" fill="#171717" stroke="#555555" stroke-width="2"/>
+  <text xml:space="preserve" x="332.0" y="500" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="15" text-anchor="middle">Delhi</text>
+  <text xml:space="preserve" x="332.0" y="462" fill="#888888" font-family="Arial, sans-serif" font-size="14" text-anchor="middle">3</text>
+  <rect x="368" y="470" width="72" height="48" rx="4" fill="#171717" stroke="#555555" stroke-width="2"/>
+  <text xml:space="preserve" x="404.0" y="500" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="15" text-anchor="middle">Surat</text>
+  <text xml:space="preserve" x="404.0" y="462" fill="#888888" font-family="Arial, sans-serif" font-size="14" text-anchor="middle">4</text>
+  <text xml:space="preserve" x="260.0" y="540" fill="#FB923C" font-family="Arial, sans-serif" font-size="14" text-anchor="middle">removed</text>
+  <path d="M460 494L560 494" stroke="#FB923C" stroke-width="3"/>
+  <path d="M551.3 499.0L560 494L551.3 489.0" stroke="#FB923C" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="580" y="470" width="72" height="48" rx="4" fill="#171717" stroke="#555555" stroke-width="2"/>
+  <text xml:space="preserve" x="616.0" y="500" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="15" text-anchor="middle">Pune</text>
+  <text xml:space="preserve" x="616.0" y="462" fill="#888888" font-family="Arial, sans-serif" font-size="14" text-anchor="middle">0</text>
+  <rect x="652" y="470" width="72" height="48" rx="4" fill="#171717" stroke="#555555" stroke-width="2"/>
+  <text xml:space="preserve" x="688.0" y="500" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="15" text-anchor="middle">Goa</text>
+  <text xml:space="preserve" x="688.0" y="462" fill="#888888" font-family="Arial, sans-serif" font-size="14" text-anchor="middle">1</text>
+  <rect x="724" y="470" width="72" height="48" rx="4" fill="#21180F" stroke="#FB923C" stroke-width="2"/>
+  <text xml:space="preserve" x="760.0" y="500" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="15" text-anchor="middle">Delhi</text>
+  <text xml:space="preserve" x="760.0" y="462" fill="#888888" font-family="Arial, sans-serif" font-size="14" text-anchor="middle">2</text>
+  <rect x="796" y="470" width="72" height="48" rx="4" fill="#21180F" stroke="#FB923C" stroke-width="2"/>
+  <text xml:space="preserve" x="832.0" y="500" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="15" text-anchor="middle">Surat</text>
+  <text xml:space="preserve" x="832.0" y="462" fill="#888888" font-family="Arial, sans-serif" font-size="14" text-anchor="middle">3</text>
+  <rect x="868" y="470" width="72" height="48" rx="4" fill="#171717" stroke="#555555" stroke-width="2" stroke-dasharray="6 6"/>
+  <text xml:space="preserve" x="904.0" y="500" fill="#888888" font-family="Arial, sans-serif" font-size="15" text-anchor="middle">null</text>
+  <text xml:space="preserve" x="904.0" y="462" fill="#888888" font-family="Arial, sans-serif" font-size="14" text-anchor="middle">4</text>
+  <text xml:space="preserve" x="760.0" y="540" fill="#FB923C" font-family="Arial, sans-serif" font-size="14" text-anchor="middle">moved left</text>
+  <text xml:space="preserve" x="960" y="488" fill="#C6A17A" font-family="Arial, sans-serif" font-size="15">System.arraycopy</text>
+  <text xml:space="preserve" x="960" y="510" fill="#888888" font-family="Arial, sans-serif" font-size="15">O(n) shift; last slot</text>
+  <text xml:space="preserve" x="960" y="530" fill="#888888" font-family="Arial, sans-serif" font-size="15">nulled for the GC</text>
+  <text xml:space="preserve" x="80" y="590" fill="#888888" font-family="Arial, sans-serif" font-size="15">Adding at the end is amortised O(1); inserting or removing near the front moves every later element.</text>
+</svg>
