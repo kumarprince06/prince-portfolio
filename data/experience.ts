@@ -6,29 +6,20 @@ export interface JourneyItem {
   tags: string[];
 }
 
+// Newest first: the timeline renders in array order.
 export const journey: JourneyItem[] = [
   {
-    year: "2019 — 2023",
-    role: "B.Tech · Computer Science & Engineering",
-    company:
-      "Dr Sudhir Chandra Sur Institute of Technology & Sports Complex",
+    year: "Now",
+    role: "Deepening Backend Engineering",
+    company: "Java · Spring Boot · Distributed Systems",
     description:
-      "Built the foundation in computer science, programming, data structures, databases and software engineering, graduating with a GPA of 9.17/10.",
-    tags: ["CSE", "Java", "DSA", "DBMS"],
-  },
-
-  {
-    year: "Jan — Sep 2023",
-    role: "Software Engineer Intern",
-    company: "ARC Document Solutions",
-    description:
-      "Built OCR extraction services in C++ and Scala with Tesseract and OpenCV, improving search accuracy and consolidating three overlapping services into one.",
+      "Building RideX and Smart Dispatch in Java 21 and Spring Boot while going deeper into system design, databases, distributed systems and the architecture behind production-grade backends.",
     tags: [
-      "C++",
-      "Scala",
-      "Tesseract",
-      "OpenCV",
-      "Microservices",
+      "Java",
+      "Spring Boot",
+      "Kafka",
+      "Redis",
+      "System Design",
     ],
   },
 
@@ -51,17 +42,27 @@ export const journey: JourneyItem[] = [
   },
 
   {
-    year: "Now",
-    role: "Deepening Backend Engineering",
-    company: "Java · Spring Boot · Distributed Systems",
+    year: "Jan — Sep 2023",
+    role: "Software Engineer Intern",
+    company: "ARC Document Solutions",
     description:
-      "Building RideX and Smart Dispatch in Java 21 and Spring Boot while going deeper into system design, databases, distributed systems and the architecture behind production-grade backends.",
+      "Built OCR extraction services in C++ and Scala with Tesseract and OpenCV, improving search accuracy and consolidating three overlapping services into one.",
     tags: [
-      "Java",
-      "Spring Boot",
-      "Kafka",
-      "Redis",
-      "System Design",
+      "C++",
+      "Scala",
+      "Tesseract",
+      "OpenCV",
+      "Microservices",
     ],
+  },
+
+  {
+    year: "2019 — 2023",
+    role: "B.Tech · Computer Science & Engineering",
+    company:
+      "Dr Sudhir Chandra Sur Institute of Technology & Sports Complex",
+    description:
+      "Built the foundation in computer science, programming, data structures, databases and software engineering, graduating with a GPA of 9.17/10.",
+    tags: ["CSE", "Java", "DSA", "DBMS"],
   },
 ];
