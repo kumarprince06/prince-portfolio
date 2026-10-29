@@ -3,6 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ArrowLeft, ArrowUpRight } from "lucide-react";
 import LessonBlocks, { Inline } from "@/components/LessonBlocks";
+import { LessonContents, LessonContentsMobile } from "@/components/LessonContents";
 import ReadingProgress from "@/components/ReadingProgress";
 import { social } from "@/data/social";
 import {
@@ -94,6 +95,8 @@ export default async function WritingLessonPage({
     ...section,
     number: String(index + 1).padStart(2, "0"),
   }));
+  // Only titles go to the client, not the lesson blocks
+  const contents = sections.map(({ number, title }) => ({ number, title }));
 
   return (
     <main className="min-h-screen bg-[#080808] text-white">
@@ -229,27 +232,12 @@ export default async function WritingLessonPage({
           <div className="grid gap-14 lg:grid-cols-[180px_1fr]">
             {/* Table of Contents */}
             <aside className="hidden lg:block">
-              <div className="sticky top-24">
-                <p className="text-[10px] uppercase tracking-[0.2em] text-white/25">
-                  Contents
-                </p>
-
-                <nav className="mt-5 space-y-3">
-                  {sections.map((section) => (
-                    <a
-                      key={section.number}
-                      href={`#section-${section.number}`}
-                      className="block text-xs leading-5 text-white/30 transition-colors hover:text-white"
-                    >
-                      {section.number}. {section.title}
-                    </a>
-                  ))}
-                </nav>
-              </div>
+              <LessonContents sections={contents} />
             </aside>
 
             {/* Main Content */}
             <article className="min-w-0">
+              <LessonContentsMobile sections={contents} />
               <div className="space-y-16">
                 {sections.map((section) => (
                   <section
