@@ -54,4 +54,6 @@ export interface Category {
   unit: string;
   lessons: Lesson[];
   phases?: Phase[];
+  // Studied in parallel with the main path rather than as a numbered step
+  alongside?: boolean;
 }

@@ -1,13 +1,16 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { ArrowLeft, ChevronDown } from "lucide-react";
+import { ArrowLeft, ArrowRight, ChevronDown } from "lucide-react";
 import { ArticleList } from "@/components/WritingPreview";
 import type { Phase } from "@/content/writing/types";
 import type { LessonEntry } from "@/content/writing";
 import {
   getCategory,
   getEntries,
+  getNextCategory,
+  getPreviousCategory,
+  getStep,
   publishedCategories,
 } from "@/content/writing";
 
@@ -47,6 +50,11 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
     notFound();
   }
 
+  const step = getStep(category);
+  const next = getNextCategory(category);
+  const previous = getPreviousCategory(category);
+  const count = category.lessons.length;
+
   return (
     <main className="min-h-screen bg-[#080808] text-white">
       <header className="border-b border-white/10">
@@ -67,8 +75,10 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
       <section className="px-5 pb-28 pt-20 md:px-8 md:pt-28">
         <div className="mx-auto max-w-7xl">
           <p className="text-xs uppercase tracking-[0.25em] text-orange-300">
-            {category.lessons.length} {category.unit.toLowerCase()}
-            {category.lessons.length === 1 ? "" : "s"}
+            {step ? `Step ${step} · ` : category.alongside ? "Alongside the path · " : ""}
+            {count > 0
+              ? `${count} ${category.unit.toLowerCase()}${count === 1 ? "" : "s"}`
+              : "Coming soon"}
           </p>
 
           <h1 className="mt-5 max-w-3xl text-5xl font-semibold leading-[0.95] tracking-[-0.06em] md:text-7xl">
@@ -80,9 +90,61 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
           </p>
 
           {category.phases ? (
-            <PhaseList phases={category.phases} entries={getEntries(category)} />
+            <PhaseList
+              phases={category.phases}
+              entries={getEntries(category)}
+              unit={category.unit.toLowerCase()}
+            />
           ) : (
             <ArticleList entries={getEntries(category)} />
+          )}
+
+          {(previous || next) && (
+            <nav aria-label="Learning path" className="mt-16 grid gap-4 md:grid-cols-2">
+              {previous ? (
+                <Link
+                  href={`/writing/${previous.slug}`}
+                  className="group flex items-center gap-6 rounded-3xl border border-white/10 p-6 transition-colors hover:border-white/20 hover:bg-white/[0.025] md:p-8"
+                >
+                  <ArrowLeft
+                    size={22}
+                    aria-hidden="true"
+                    className="shrink-0 text-white/30 transition-all group-hover:-translate-x-1 group-hover:text-white"
+                  />
+                  <div className="min-w-0">
+                    <p className="text-[10px] uppercase tracking-[0.25em] text-orange-300">
+                      Previous · Step {getStep(previous)}
+                    </p>
+                    <p className="mt-3 text-2xl font-semibold tracking-[-0.03em] text-white md:text-3xl">
+                      {previous.title}
+                    </p>
+                  </div>
+                </Link>
+              ) : (
+                <div className="hidden md:block" />
+              )}
+
+              {next && (
+                <Link
+                  href={`/writing/${next.slug}`}
+                  className="group flex items-center justify-between gap-6 rounded-3xl border border-white/10 p-6 transition-colors hover:border-white/20 hover:bg-white/[0.025] md:p-8 md:text-right"
+                >
+                  <div className="min-w-0 flex-1">
+                    <p className="text-[10px] uppercase tracking-[0.25em] text-orange-300">
+                      Up next · Step {getStep(next)}
+                    </p>
+                    <p className="mt-3 text-2xl font-semibold tracking-[-0.03em] text-white md:text-3xl">
+                      {next.title}
+                    </p>
+                  </div>
+                  <ArrowRight
+                    size={22}
+                    aria-hidden="true"
+                    className="shrink-0 text-white/30 transition-all group-hover:translate-x-1 group-hover:text-white"
+                  />
+                </Link>
+              )}
+            </nav>
           )}
         </div>
       </section>
@@ -93,9 +155,11 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
 function PhaseList({
   phases,
   entries,
+  unit,
 }: {
   phases: Phase[];
   entries: LessonEntry[];
+  unit: string;
 }) {
   return (
     <div className="mt-16 space-y-4">
@@ -130,7 +194,7 @@ function PhaseList({
               }`}
             >
               {ready
-                ? `${phaseEntries.length} lesson${phaseEntries.length === 1 ? "" : "s"}`
+                ? `${phaseEntries.length} ${unit}${phaseEntries.length === 1 ? "" : "s"}`
                 : "Coming soon"}
             </span>
           </div>

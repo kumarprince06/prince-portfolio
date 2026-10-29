@@ -1,20 +1,22 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowLeft, ArrowUpRight } from "lucide-react";
-import { publishedCategories } from "@/content/writing";
+import type { Category } from "@/content/writing/types";
+import { alongsideCategories, getStep, pathCategories } from "@/content/writing";
+
+const DESCRIPTION =
+  "A Java backend learning path in order — Java, Collections, Java 8, concurrency, databases, Spring, APIs, messaging, microservices and system design — plus DSA, interview questions and projects.";
 
 export const metadata: Metadata = {
   title: "Writing",
-  description:
-    "Lessons and notes on Java, DSA, Spring Boot, system design, databases, operating systems and networking.",
+  description: DESCRIPTION,
   alternates: { canonical: "/writing" },
   openGraph: {
     type: "website",
     images: ["/opengraph-image.jpg"],
     url: "/writing",
     title: "Writing — Prince Kumar Sharma",
-    description:
-      "Lessons and notes on Java, DSA, Spring Boot, system design, databases, operating systems and networking.",
+    description: DESCRIPTION,
   },
 };
 
@@ -47,40 +49,64 @@ export default function WritingPage() {
           </h1>
 
           <p className="mt-7 max-w-2xl text-base leading-7 text-white/45 md:text-lg">
-            Notes organised by topic. Pick a track and read it in order.
+            A Java backend learning path. Follow the steps in order, finish one and move to the
+            next, and keep the tracks below going alongside.
           </p>
 
-          <div className="mt-20 grid border-l border-t border-white/10 md:grid-cols-2 lg:grid-cols-3">
-            {publishedCategories.map((category) => (
-              <Link
-                key={category.slug}
-                href={`/writing/${category.slug}`}
-                className="group border-b border-r border-white/10 p-7 transition-colors hover:bg-white/[0.025] md:p-9"
-              >
-                <div className="flex items-start justify-between">
-                  <span className="text-[10px] uppercase tracking-[0.2em] text-orange-300/70">
-                    {category.lessons.length} {category.unit.toLowerCase()}
-                    {category.lessons.length === 1 ? "" : "s"}
-                  </span>
+          <h2 className="mt-20 text-xs uppercase tracking-[0.25em] text-white/40">
+            The path, in order
+          </h2>
+          <CategoryGrid categories={pathCategories} />
 
-                  <ArrowUpRight
-                    size={17}
-                    className="text-white/20 transition-all group-hover:-translate-y-1 group-hover:translate-x-1 group-hover:text-white"
-                  />
-                </div>
-
-                <h2 className="mt-10 text-2xl font-medium tracking-tight text-white">
-                  {category.title}
-                </h2>
-
-                <p className="mt-4 text-sm leading-6 text-white/40">
-                  {category.description}
-                </p>
-              </Link>
-            ))}
-          </div>
+          <h2 className="mt-20 text-xs uppercase tracking-[0.25em] text-white/40">
+            Alongside the path
+          </h2>
+          <CategoryGrid categories={alongsideCategories} />
         </div>
       </section>
     </main>
+  );
+}
+
+function CategoryGrid({ categories }: { categories: Category[] }) {
+  return (
+    <div className="mt-6 grid border-l border-t border-white/10 md:grid-cols-2 lg:grid-cols-3">
+      {categories.map((category) => {
+        const step = getStep(category);
+        const count = category.lessons.length;
+
+        return (
+          <Link
+            key={category.slug}
+            href={`/writing/${category.slug}`}
+            className="group border-b border-r border-white/10 p-6 transition-colors hover:bg-white/[0.025] md:p-9"
+          >
+            <div className="flex items-start justify-between gap-4">
+              <span className="text-[10px] uppercase tracking-[0.2em] text-orange-300/70">
+                {step ? `Step ${step} · ` : ""}
+                {count > 0
+                  ? `${count} ${category.unit.toLowerCase()}${count === 1 ? "" : "s"}`
+                  : "Coming soon"}
+              </span>
+
+              <ArrowUpRight
+                size={17}
+                className="shrink-0 text-white/20 transition-all group-hover:-translate-y-1 group-hover:translate-x-1 group-hover:text-white"
+              />
+            </div>
+
+            <h3
+              className={`mt-6 text-2xl font-medium tracking-tight md:mt-10 ${count > 0 ? "text-white" : "text-white/50"}`}
+            >
+              {category.title}
+            </h3>
+
+            <p className="mt-3 text-sm leading-6 text-white/40 md:mt-4">
+              {category.description}
+            </p>
+          </Link>
+        );
+      })}
+    </div>
   );
 }
