@@ -34,7 +34,7 @@ export const accessModifiers: Lesson = {
         },
         {
           type: "paragraph",
-          text: "The very first Java releases briefly accepted a fifth combination, `private protected`, meaning subclasses only, without the package. It was dropped almost immediately (in the JDK 1.0.x line, as far as I can tell from the histories) and never made it into the Java Language Specification. Today it's just an illegal combination:",
+          text: "Some of the earliest Java compilers also accepted a fifth combination, `private protected`, meaning subclasses only, without the package. It was dropped early and isn't in any edition of the Java Language Specification, starting with the first one in 1996. Today it's just an illegal combination:",
         },
         {
           type: "output",
@@ -509,7 +509,7 @@ Exception Details:
         },
         {
           type: "paragraph",
-          text: "Access isn't only checked, it's used. When `invokevirtual` picks which method runs, JVMS 5.4.5 says a method only overrides a package-private method if it's in the same run-time package, and private methods are never selected by overriding at all. The Access and Inheritance section shows a method that looks like an override, compiles without a warning, and is never called through the parent.",
+          text: "Access isn't only checked, it's used. JVMS 5.4.5 defines overriding so that a method only overrides a package-private method from the same run-time package and never overrides a private one, and when `invokevirtual` picks which method runs, JVMS 5.4.6 selects a resolved private method directly, without looking for overrides. The Access and Inheritance section shows a method that looks like an override, compiles without a warning, and is never called through the parent.",
         },
       ],
     },
@@ -672,7 +672,7 @@ world:      Kettle`,
         },
         {
           type: "paragraph",
-          text: "The JLS rule for `private` is about where the code is written: inside the top-level class that declares the member. It never asks whose object it is. So an `Employee` method can read another `Employee`'s private salary, which is exactly what `compareTo` and `equals` need:",
+          text: "The Encapsulation lesson showed this with `transferTo` writing `other.balance`: the JLS rule for `private` asks only where the code is written, never whose object it is. One more quick case, an `Employee` reading another `Employee`'s private salary, which is exactly what `compareTo` and `equals` need, then the flip side:",
         },
         {
           type: "code",
@@ -681,7 +681,6 @@ world:      Kettle`,
           code: `import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Objects;
 
 class Employee implements Comparable<Employee> {
     private final String name;
@@ -702,16 +701,6 @@ class Employee implements Comparable<Employee> {
     }
 
     @Override
-    public boolean equals(Object o) {
-        return o instanceof Employee e && name.equals(e.name) && salary == e.salary;
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(name, salary);
-    }
-
-    @Override
     public String toString() {
         return name;
     }
@@ -726,15 +715,13 @@ public class SalaryCompare {
         List<Employee> team = new ArrayList<>(List.of(asha, ravi, new Employee("Meera", 82_000)));
         Collections.sort(team);
         System.out.println("by salary: " + team);
-        System.out.println("equal to a copy: " + asha.equals(new Employee("Asha", 90_000)));
     }
 }`,
         },
         {
           type: "output",
           text: `Asha earns more than Ravi: true
-by salary: [Ravi, Meera, Asha]
-equal to a copy: true`,
+by salary: [Ravi, Meera, Asha]`,
         },
         {
           type: "paragraph",
@@ -887,7 +874,7 @@ public class PrivateConstructors {
         {
           type: "list",
           items: [
-            "**Utility class.** Without the private constructor, `javac` would add a public-or-package default one and anyone could write `new Units()`. The `AssertionError` also stops the class's own code from instantiating it by accident. `java.lang.Math` and `java.util.Collections` both do this.",
+            "**Utility class.** Without the private constructor, `javac` would add a default one with the class's access, and anyone in the package could write `new Units()`. The `AssertionError` also stops the class's own code from instantiating it by accident. `java.lang.Math` and `java.util.Collections` both have a private constructor for the same reason.",
             "**Static factory.** `Temperature.of(21)` returned the same object twice, so the class controls identity, caching and validation. `Integer.valueOf` and `List.of` are the JDK versions.",
             "**Chaining.** The one private constructor holds the validation, and the public paths (`new Rectangle(w, h)` and `square`) go through it. Callers can't pass an arbitrary `kind`.",
             "**Closed hierarchy.** A subclass constructor must call a superclass constructor, and only nestmates can call `Shape()`, so only `Circle` and `Square` can ever extend `Shape`. Since Java 17, `sealed` says that directly; this is the older trick, and it still works.",
@@ -948,10 +935,6 @@ PrivateErrors.java:26: error: Node.value is defined in an inaccessible class or 
 4 errors`,
         },
         {
-          type: "heading",
-          text: "Private nested types",
-        },
-        {
           type: "list",
           items: [
             "`Rupee` failed at its declaration line, because the compiler-generated `Rupee()` constructor calls `super()`, and `Money()` is private.",
@@ -975,41 +958,22 @@ PrivateErrors.java:26: error: Node.value is defined in an inaccessible class or 
         },
         {
           type: "heading",
-          text: "Hiding implementation classes in a feature package",
+          text: "Hiding implementation classes, and testing them",
         },
         {
           type: "paragraph",
-          text: "Package-by-feature (from the Packages lesson) is where this level pays off. An `orders` package exposes one public class, and everything that implements it stays package-private:",
+          text: "The Packages lesson built the package-by-feature version of this: a public `OrderService` as the feature's entry point, a package-private `OrderRepository` behind it, and a `Shortcut` class in another package that `javac` stopped at the import with \"OrderRepository is not public in com.shop.order\". I won't repeat that run. The part it left for this lesson is the question everyone asks next: if the implementation classes are package-private, how do the tests reach them?",
         },
         {
           type: "diagram",
           text: `src/main/java/
-├── orders/
-│   ├── OrderService.java      public: the feature's API
-│   ├── PriceCalculator.java   package-private
-│   └── OrderRepository.java   package-private
-└── app/
-    └── Main.java              uses OrderService only
+└── orders/
+    ├── OrderService.java          public: the feature's API
+    └── PriceCalculator.java       package-private
 src/test/java/
 └── orders/
     └── PriceCalculatorTest.java   same package, other source root`,
           caption: "The Maven and Gradle layout: main and test code are separate directories that share package names.",
-        },
-        {
-          type: "code",
-          language: "java",
-          title: "orders/OrderService.java",
-          code: `package orders;
-
-public class OrderService {                          // the one public type: the feature's API
-    private final PriceCalculator calculator = new PriceCalculator();
-    private final OrderRepository repository = new OrderRepository();
-
-    public long placeOrder(String customer, int quantity, long unitPaise) {
-        long total = calculator.total(quantity, unitPaise);
-        return repository.save(customer, total);
-    }
-}`,
         },
         {
           type: "code",
@@ -1021,40 +985,6 @@ class PriceCalculator {                              // package-private: an impl
     long total(int quantity, long unitPaise) {
         long gross = quantity * unitPaise;
         return quantity >= 10 ? gross * 95 / 100 : gross;   // 5% off bulk orders
-    }
-}`,
-        },
-        {
-          type: "code",
-          language: "java",
-          title: "orders/OrderRepository.java",
-          code: `package orders;
-
-import java.util.ArrayList;
-import java.util.List;
-
-class OrderRepository {                              // package-private
-    private final List<String> rows = new ArrayList<>();
-
-    long save(String customer, long totalPaise) {
-        rows.add(customer + ":" + totalPaise);
-        return rows.size();                          // the new order's id
-    }
-}`,
-        },
-        {
-          type: "code",
-          language: "java",
-          title: "app/Main.java",
-          code: `package app;
-
-import orders.OrderService;
-
-public class Main {
-    public static void main(String[] args) {
-        OrderService service = new OrderService();
-        System.out.println("order id " + service.placeOrder("Asha", 12, 5_000));
-        System.out.println("order id " + service.placeOrder("Ravi", 2, 5_000));
     }
 }`,
         },
@@ -1080,54 +1010,19 @@ public class PriceCalculatorTest {
         {
           type: "code",
           language: "bash",
-          code: `javac -d out/main $(find src/main -name '*.java') && java -cp out/main app.Main
+          code: `javac -d out/main src/main/java/orders/PriceCalculator.java
 javac -d out/test -cp out/main src/test/java/orders/PriceCalculatorTest.java
 java -cp out/main:out/test orders.PriceCalculatorTest`,
         },
         {
           type: "output",
-          text: `order id 1
-order id 2
-PriceCalculatorTest: 2 checks passed`,
-        },
-        {
-          type: "paragraph",
-          text: "A class in `app` that reaches past the API is stopped at the import. I compiled it on its own against `out/main`:",
-        },
-        {
-          type: "code",
-          language: "java",
-          title: "app/Shortcut.java",
-          code: `package app;
-
-import orders.PriceCalculator;
-
-public class Shortcut {
-    public static void main(String[] args) {
-        System.out.println(new PriceCalculator().total(10, 5_000));
-    }
-}`,
-        },
-        {
-          type: "code",
-          language: "bash",
-          code: `javac -d out/bad -cp out/main app/Shortcut.java`,
-        },
-        {
-          type: "output",
-          text: `app/Shortcut.java:3: error: PriceCalculator is not public in orders; cannot be accessed from outside package
-import orders.PriceCalculator;
-             ^
-app/Shortcut.java:7: error: PriceCalculator is not public in orders; cannot be accessed from outside package
-        System.out.println(new PriceCalculator().total(10, 5_000));
-                               ^
-2 errors`,
+          text: `PriceCalculatorTest: 2 checks passed`,
         },
         {
           type: "list",
           items: [
             "The test compiled into a different output directory, from a different source root, and still used `PriceCalculator`. Access is about the **package name** (and, at run time, the class loader), not about directories. That's exactly how JUnit tests under `src/test/java` test package-private code in Maven and Gradle builds.",
-            "`OrderService` is the only thing `app` can touch, so `PriceCalculator` and `OrderRepository` can be renamed, merged or rewritten without anyone outside `orders` noticing. In a package-by-layer design (`service`, `repository`), those classes would have to be `public` just so the layers could call each other.",
+            "Nothing had to be widened for the test, so `PriceCalculator` can still be renamed, merged or rewritten without anyone outside `orders` noticing. In a package-by-layer design (`service`, `repository`), it would have to be `public` just so the layers could call each other.",
           ],
         },
         {
@@ -1349,7 +1244,7 @@ public class CloneCall {
         },
         {
           type: "paragraph",
-          text: "Because `protected` includes package access, a protected member is visible to every class in its package plus every subclass anyone ever writes, in any package. That's usually far more code than `public` methods of a small class are called from. The Encapsulation lesson showed a non-subclass in the same package writing `account.balance = -1` through a protected field. My rule: `protected` goes on methods I've designed as extension points, and never on fields.",
+          text: "Because `protected` includes package access, a protected member is visible to every class in its package plus every subclass anyone ever writes, in any package. The Encapsulation lesson showed a non-subclass in the same package writing `account.balance = -1` through a protected field. My rule: `protected` goes on methods I've designed as extension points, and never on fields.",
         },
       ],
     },
@@ -1383,7 +1278,7 @@ public class Right {
           items: [
             "So a file has at most one public top-level type: adding `public class Another` to `TwoPublic.java` gives the same error, \"class Another is public, should be declared in a file named Another.java\". It can have any number of package-private ones, as `Counter.java` did with `CounterHelper`, and each still compiles to its own `.class` file.",
             "Strictly, JLS 7.6 says a host system that stores packages in a file system **may** enforce this; `javac` always does. The point is lookup: when `javac` needs `shop.Product`, it can go straight to `shop/Product.java` instead of scanning every file in the package.",
-            "A file with no public type can have any name. `PrivateErrors.java` above contained five package-private classes and one public one, named after the file.",
+            "A file with no public type can have any name. `PrivateErrors.java` above contained four package-private top-level classes and one public one, named after the file.",
           ],
         },
         {
@@ -1650,7 +1545,7 @@ export discount 5%`,
         {
           type: "list",
           items: [
-            "`StaffInvoice.header()` never ran: the header stayed `INVOICE`. `Invoice.header()` is private, so `print` always calls `Invoice`'s own version. In `javap -c`, all three calls in `print` are `invokevirtual`, but the JVM doesn't select overrides of a private method (JVMS 5.4.5).",
+            "`StaffInvoice.header()` never ran: the header stayed `INVOICE`. `Invoice.header()` is private, so `print` always calls `Invoice`'s own version. In `javap -c`, all three calls in `print` are `invokevirtual`, but when the resolved method is private, JVMS 5.4.6 selects it directly and never looks for an override.",
             "`StaffInvoice.discountNote()` did override, because it's in the same package. `@Override` compiled.",
             "`ExportInvoice.discountNote()` is the trap. It's `public`, same name, same signature, and `javac -Xlint:all` compiled it without a single warning. But `Invoice.discountNote()` is package-private and `ExportInvoice` is in another package, so it was never inherited and can't be overridden. `print` still said `no discount`, while calling it directly said `export discount 5%`.",
             "`taxPaise` is protected, so the override in another package worked: `tax 0`.",
@@ -1940,35 +1835,20 @@ public class ReflectiveAccess {
         } catch (IllegalArgumentException e) {
             System.out.println("4. " + e.getMessage());
         }
-
-        Method isLatin1 = String.class.getDeclaredMethod("isLatin1");
-        System.out.println("5. trySetAccessible on String.isLatin1: " + isLatin1.trySetAccessible());
-        try {
-            isLatin1.setAccessible(true);
-        } catch (RuntimeException e) {
-            System.out.println("6. " + e.getClass().getSimpleName() + ": " + e.getMessage());
-        }
     }
 }`,
         },
         {
           type: "code",
           language: "bash",
-          code: `java ReflectiveAccess
-java --add-opens java.base/java.lang=ALL-UNNAMED ReflectiveAccess     # last lines only`,
+          code: `javac ReflectiveAccess.java && java ReflectiveAccess`,
         },
         {
           type: "output",
           text: `1. class ReflectiveAccess cannot access a member of class Printer with modifiers "private"
 2. <report>
 3. same object? false, constructor ran 2 times
-4. Cannot reflectively create enum objects
-5. trySetAccessible on String.isLatin1: false
-6. InaccessibleObjectException: Unable to make boolean java.lang.String.isLatin1() accessible: module java.base does not "opens java.lang" to unnamed module @4d7e1886
-
-# --add-opens java.base/java.lang=ALL-UNNAMED
-4. Cannot reflectively create enum objects
-5. trySetAccessible on String.isLatin1: true`,
+4. Cannot reflectively create enum objects`,
         },
         {
           type: "list",
@@ -1977,15 +1857,15 @@ java --add-opens java.base/java.lang=ALL-UNNAMED ReflectiveAccess     # last lin
             "**2.** `ReflectiveAccess` and `Printer` are in the same (unnamed) module, so `setAccessible(true)` simply worked.",
             "**3.** The private constructor didn't protect the singleton: reflection made a second `Printer`, and the static counter shows the constructor really ran twice. A private constructor stops honest code, not reflection.",
             "**4.** An enum singleton is the exception. `Constructor.newInstance` refuses enum classes outright (enum constructors take the hidden name and ordinal parameters, hence `String.class, int.class`). That's why Effective Java recommends a single-element enum for a singleton that has to survive reflection, and serialization too.",
-            "**5 and 6.** On a JDK internal, `trySetAccessible` returned `false` and `setAccessible` threw `InaccessibleObjectException`, because `java.base` doesn't open `java.lang` to my code. That's strong encapsulation of modules (JEP 396 and 403), and it's the Java Modules lesson's territory. With `--add-opens`, it returned `true`. The `@4d7e1886` is the unnamed module's identity hash and changes every run.",
-            "JDK 25 printed the same six lines, apart from that hash.",
+            "Across a module boundary it's different. The Encapsulation lesson ran `setAccessible(true)` on `String.value` and got `InaccessibleObjectException`, because `java.base` doesn't open `java.lang` to classpath code (JEP 396 and 403), until `--add-opens java.base/java.lang=ALL-UNNAMED` was added. `trySetAccessible()` is the variant that returns `false` instead of throwing. The Java Modules lesson covers when a package is open and to whom.",
+            "JDK 25 printed the same four lines.",
           ],
         },
         {
           type: "callout",
           tone: "note",
           title: "Public is not enough if the class is not",
-          text: "I had a public factory in package `lib` return an instance of a package-private class `Impl`, and called its `public String hello()` reflectively from package `user`. `invoke` threw `IllegalAccessException: class user.Call cannot access a member of class lib.Impl with modifiers \"public\"`. The method was public, but its class wasn't, exactly as in source. After `setAccessible(true)` it returned `hi`. That's why frameworks that call into user classes call `setAccessible`, and why, once the code is in a named module, the package has to be opened to them, which the Java Modules lesson covers.",
+          text: "The reflective check looks at the class as well as the member, exactly as `javac` does. A `public` method of a package-private class, called through `Method.invoke` from another package, throws `IllegalAccessException` with the message ending `with modifiers \"public\"`: the method is public, its class isn't. `setAccessible(true)` lifts that check too. That's why frameworks that call into user classes call `setAccessible`, and why, once the code is in a named module, the package has to be opened to them, which the Java Modules lesson covers.",
         },
       ],
     },
@@ -2000,7 +1880,7 @@ java --add-opens java.base/java.lang=ALL-UNNAMED ReflectiveAccess     # last lin
           type: "list",
           ordered: true,
           items: [
-            "`javac` reads `outlet/Checkout.java`, sees `import shop.Product`, and checks that the **class** `shop.Product` is accessible from package `outlet`. It's `public`, so the import is fine. If it weren't, the import line itself would fail, as `app/Shortcut.java` did.",
+            "`javac` reads `outlet/Checkout.java`, sees `import shop.Product`, and checks that the **class** `shop.Product` is accessible from package `outlet`. It's `public`, so the import is fine. If it weren't, the import line itself would fail, as `Mechanic`'s did once `Engine` lost `public`.",
             "For each member use it applies JLS 6.6.1 to the code's location. In the version with the `DENIED` lines, `p.pricePaise` in `Checkout` fails: protected, other package, and `Checkout` isn't a subclass of `Product`.",
             "In `SaleProduct.label()`, the bare name `pricePaise` means `this.pricePaise`. `SaleProduct` is a subclass in another package and the qualifier's type is `SaleProduct`, so JLS 6.6.2 is satisfied. `javac` emits `getfield #13 // Field pricePaise:J`, a reference qualified by `SaleProduct` itself.",
             "`javac` writes each field's access into `Product.class` as flags: `costPaise` `0x0002`, `stock` `0x0000`, `pricePaise` `0x0004`, `name` `0x0001`. The call sites in other classes record only names and descriptors.",
@@ -2627,7 +2507,7 @@ public class NoPublic { }`,
         },
         {
           type: "paragraph",
-          text: "The IDE suggests \"make public\" whenever a call doesn't compile. Accepting it from another package is how an implementation class like `PriceCalculator` ends up in another team's code. Once that happens, its signature can't change without breaking them. When the compiler says \"is not public in orders\", the first question is whether the caller should be using it at all.",
+          text: "The IDE suggests \"make public\" whenever a call doesn't compile. Accepting it from another package is how an implementation class like `PriceCalculator` ends up in another team's code. Once that happens, its signature can't change without breaking them. When the compiler says \"is not public in ...; cannot be accessed from outside package\", the first question is whether the caller should be using it at all.",
         },
         {
           type: "heading",
@@ -2657,7 +2537,7 @@ public class NoPublic { }`,
             "Keep fields `private`. Give subclasses `protected` methods, not `protected` fields.",
             "Make one class per feature `public` and keep its collaborators package-private. A package with every class public has no inside.",
             "Design for inheritance or prohibit it: a class with `protected` hooks documents them; any other class is `final` or has no accessible constructor.",
-            "Put `@Override` on every override. It's the only thing that catches a \"override\" of a package-private or private method.",
+            "Put `@Override` on every override. It's the only thing that catches an \"override\" of a package-private or private method.",
             "Don't return or accept a type that's less accessible than the method itself.",
             "Test package-private code from the same package; don't widen to `public` for tests.",
             "Treat narrowing access as a breaking change. If a public member has to go, deprecate it first; callers compiled against it will otherwise fail at run time with `IllegalAccessError`.",
@@ -2943,14 +2823,13 @@ AFTER   ride-7 receipt sent on receipts-1`,
             "**The cache never hit.** Three identical airport quotes made three pricing engine calls. CGLIB builds a subclass, and a subclass can't override a private method, so the proxy has no `quote` to intercept. The call `quote(zone, km)` inside `fareFor` is a call on `this`, the real target object, with nothing in between.",
             "**The async send ran on the request thread**: `http-nio-8080-exec-1`, the name I gave `main`'s thread to stand in for a Tomcat worker. In a real service that's the HTTP request waiting for an email to go out, with no error anywhere.",
             "**Making them public isn't enough on its own.** I changed both methods in `FareServiceBefore` to `public` and ran it again: still three engine calls and still `http-nio-8080-exec-1`, because `fareFor` calls `quote` on `this`, which skips the proxy. That's self-invocation, the same trap the Methods lesson mentioned for `@Transactional`.",
-            "**The fix** moves each advised method to its own bean and calls it through the injected reference, which is the proxy: four quotes with two distinct keys made two engine calls, and the receipt went out on `receipts-1`, a thread from the executor. An `@Async` method should return `void` or a `CompletableFuture`, as `send` does here, so the caller gets something it can wait on.",
+            "**The fix** moves each advised method to its own bean and calls it through the injected reference, which is the proxy: four quotes with two distinct keys made two engine calls, and the receipt went out on `receipts-1`, a thread from the executor. An `@Async` method returns `void` or a `Future`; `send` returns a `CompletableFuture` so the caller can wait for it.",
             "**Package-private works too, private never does.** When I made `FareQuoter.quote` and `ReceiptSender.send` package-private, Spring 6.2.11 still intercepted both (two engine calls, `receipts-1`), because CGLIB can override package-private methods from a proxy class in the same package. JDK interface-based proxies only see interface methods, which are public. `public` is the safe choice for anything a framework must intercept.",
-            "**Fields aren't intercepted either.** In an earlier version of this program the counter was a field read directly through the bean, `fares.engineCalls.get()`, and it threw `NullPointerException: Cannot invoke \"java.util.concurrent.atomic.AtomicInteger.get()\" because \"<local2>.engineCalls\" is null`. The proxy is a separate object whose own fields are never initialized; only method calls are forwarded to the target. That's one more reason for private fields behind methods.",
           ],
         },
         {
           type: "paragraph",
-          text: "`@Transactional` follows the same rules, which makes this bug worse there: a private or self-invoked `@Transactional` method runs with no transaction at all, so a failure halfway through leaves half the writes committed. The Spring Framework track covers proxies in detail; the access-modifier lesson is that `private` means \"not interceptable\", and a framework annotation on a private method is a mistake whether or not anything complains.",
+          text: "`@Transactional` follows the same rules, which makes this bug worse there: a private or self-invoked `@Transactional` method runs with no transaction at all, so a failure halfway through can leave the earlier writes committed. The Spring Framework track covers proxies in detail; the access-modifier lesson is that `private` means \"not interceptable\", and a framework annotation on a private method is a mistake whether or not anything complains.",
         },
       ],
     },
@@ -3041,12 +2920,12 @@ AFTER   ride-7 receipt sent on receipts-1`,
             {
               question: "Which modifier combinations are illegal, and why?",
               answer:
-                "`abstract` with `private`, `static` or `final` (an abstract method must be overridden, and those can't be), `abstract` with `synchronized` or `native` (they describe a body it doesn't have), two access modifiers, `final` with `volatile`, and `sealed` with `final`.\n\nMy `IllegalCombos` file produced eight \"illegal combination of modifiers\" errors, including \"private and protected\": the old Java 1.0-era `private protected` is gone.",
+                "`abstract` with `private`, `static` or `final` (an abstract method must be overridden, and those can't be), `abstract` with `synchronized` or `native` (they describe a body it doesn't have), two access modifiers, `final` with `volatile`, and `sealed` with `final`.\n\nMy `IllegalCombos` file produced eight \"illegal combination of modifiers\" errors, including \"private and protected\": the `private protected` that some of the earliest compilers accepted is long gone.",
             },
             {
               question: "Can you access private fields or methods with reflection?",
               answer:
-                "Yes, within the same module, with `setAccessible(true)`. Without it, `Method.invoke` throws `IllegalAccessException`; across a module boundary that isn't opened, `setAccessible` itself throws `InaccessibleObjectException`.\n\nI got \"class ReflectiveAccess cannot access a member of class Printer with modifiers \"private\"\" first, then `<report>` after `setAccessible`. On `String.isLatin1`, `trySetAccessible` returned `false` until I added `--add-opens java.base/java.lang=ALL-UNNAMED`.",
+                "Yes, within the same module, with `setAccessible(true)`. Without it, `Method.invoke` throws `IllegalAccessException`; across a module boundary that isn't opened, `setAccessible` itself throws `InaccessibleObjectException`.\n\nI got \"class ReflectiveAccess cannot access a member of class Printer with modifiers \"private\"\" first, then `<report>` after `setAccessible`. On a JDK internal like `String.value`, the Encapsulation lesson's run threw `InaccessibleObjectException` until `--add-opens java.base/java.lang=ALL-UNNAMED` was added.",
             },
             {
               question: "Is a package-private method inherited by a subclass in another package?",
@@ -3095,7 +2974,7 @@ AFTER   ride-7 receipt sent on receipts-1`,
             {
               question: "What does setAccessible(true) do, and when does it fail?",
               answer:
-                "It suppresses the reflective access check for that one `Field`, `Method` or `Constructor` object. Since Java 9 it's itself checked against modules: it works within the caller's module and on packages that are open to it, and throws `InaccessibleObjectException` otherwise. `trySetAccessible()` returns `false` instead of throwing.\n\nOn my own `Printer` it worked and even built a second singleton. On `String.isLatin1` it threw \"module java.base does not \"opens java.lang\" to unnamed module\", and `--add-opens java.base/java.lang=ALL-UNNAMED` made `trySetAccessible` return `true`.",
+                "It suppresses the reflective access check for that one `Field`, `Method` or `Constructor` object. Since Java 9 it's itself checked against modules: it works within the caller's module, on packages that are open to it, and on public members of public classes in exported packages, and throws `InaccessibleObjectException` otherwise. `trySetAccessible()` returns `false` instead of throwing.\n\nOn my own `Printer` it worked and even built a second singleton. On the private `String.value` field, the Encapsulation lesson's run threw \"module java.base does not \"opens java.lang\" to unnamed module\" until `--add-opens java.base/java.lang=ALL-UNNAMED` was added.",
             },
             {
               question: "Why can reflection break a private-constructor singleton, and what resists it?",
@@ -3124,7 +3003,7 @@ AFTER   ride-7 receipt sent on receipts-1`,
             {
               question: "Another team started using an internal helper class of yours because it was public. Now you can't change it. What do you do, and how do you prevent it next time?",
               answer:
-                "Short term, treat it as API: deprecate it, give them a supported public entry point that covers their use case, and remove the old class after a release or two. Changing it in place would break them at compile time, or at run time with `IllegalAccessError` if their build isn't recompiled.\n\nTo prevent it, keep implementation classes package-private inside a feature package, like `PriceCalculator` behind `OrderService`, so another package gets \"is not public in orders\" at the import. Across JARs, a module that exports only the API package makes even public internals unreachable.",
+                "Short term, treat it as API: deprecate it, give them a supported public entry point that covers their use case, and remove the old class after a release or two. Changing it in place would break them at compile time, or at run time with `IllegalAccessError` if their build isn't recompiled.\n\nTo prevent it, keep implementation classes package-private inside a feature package, like `PriceCalculator`, so another package gets \"is not public in ...; cannot be accessed from outside package\" at the import, as `Mechanic` did with `Engine`. Across JARs, a module that exports only the API package makes even public internals unreachable.",
             },
             {
               question: "A codebase has made nearly everything public \"so the tests can reach it\". How would you fix that?",
