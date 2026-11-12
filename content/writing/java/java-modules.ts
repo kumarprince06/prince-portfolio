@@ -2911,5 +2911,255 @@ java.logging@21.0.13.0.3`,
         },
       ],
     },
+    {
+      title: "Interview Questions",
+      blocks: [
+        {
+          type: "heading",
+          text: "Beginner",
+        },
+        {
+          type: "qa",
+          items: [
+            {
+              question: "What is JPMS, and why was it introduced?",
+              answer:
+                "The Java Platform Module System, added in Java 9 (JSR 376, JEP 261). A module is a named set of packages with a descriptor that declares what it requires and which packages it exports. It was introduced for two things the classpath couldn't do: strong encapsulation (a public class can still be private to its module) and reliable configuration (missing or duplicate modules are detected at startup). It also let the JDK split itself into about 70 modules and hide its internals.\n\nIn my shop project, `TaxTable` is a public class, but `com.shop.app` couldn't import it: `package com.shop.internal is not visible`. And with `com.shop.money` missing, the module path failed with `FindException` before `main`, while the classpath ran until line 10 and threw `NoClassDefFoundError`.",
+            },
+            {
+              question: "What is module-info.java and where does it go?",
+              answer:
+                "The module declaration: the module's name and its directives (`requires`, `exports`, `opens`, `uses`, `provides`). It goes at the root of the module's source tree, next to the top-level package directories, not inside a package. `javac` compiles it to `module-info.class`, and a JAR with that file at its root is a modular JAR.\n\nWith `--module-source-path`, each module gets its own directory named after it, like `src/com.shop.core/module-info.java`. `javap -v` on the compiled file showed a class file flagged `ACC_MODULE` with no fields or methods, only a `Module` attribute.",
+            },
+            {
+              question: "What does requires do?",
+              answer:
+                "It declares a dependency and makes my module read the other module. At compile time, my code may use that module's exported packages; at run time, the module must be present, or startup fails with `FindException`.\n\nIt isn't transitive by default. When my app required only `com.shop.reports`, which itself requires `com.shop.core`, `javac` still said `com.shop.app does not read` `com.shop.core`. Each module states its own direct dependencies; `java.base` is the one implicit exception.",
+            },
+            {
+              question: "What does exports do, and what happens to public classes in packages that aren't exported?",
+              answer:
+                "`exports P` makes package P usable by modules that read mine, at compile time and for reflection on public members. A package that isn't exported is invisible outside the module, and that includes its public classes.\n\n`TaxTable` is `public` with a `public static` method, and the app still got `package com.shop.internal is not visible ... which does not export it to module com.shop.app`. A stale class file that called it anyway failed at run time with `IllegalAccessError`.",
+            },
+            {
+              question: "What's the difference between the classpath and the module path?",
+              answer:
+                "The classpath is a flat list of JARs and directories whose classes all end up in one unnamed module, with no boundaries and first-match lookup. The module path holds modules, each with a name, explicit dependencies and exports, resolved into a graph at startup.\n\nI ran the same compiled shop classes both ways. On the module path, `internal to app` was `false`; on the classpath it was `true`, because everything became one unnamed module. A missing module failed at startup on the module path and mid-run on the classpath.",
+            },
+            {
+              question: "What is java.base, and do I have to require it?",
+              answer:
+                "The foundation module with `java.lang`, `java.util`, `java.io`, `java.time` and the rest of the core packages. Every module reads it implicitly; writing `requires java.base;` is allowed but unnecessary.\n\n`javap` showed it in every `module-info.class` anyway, as a `requires` flagged `ACC_MANDATED`, meaning the language added it. `java.base` itself requires nothing, and in my run 54 of its 196 packages were exported to everyone.",
+            },
+            {
+              question: "How do you compile and run a modular application from the command line?",
+              answer:
+                "Compile with `javac -d out --module-source-path src $(find src -name \"*.java\")`, where `src` has one directory per module. Run with `java -p out -m com.shop.app/com.shop.app.Main`: `-p` is the module path, and `-m` names the module and its main class.\n\nWith a modular JAR built by `jar --main-class com.shop.app.Main`, the class name can be dropped: `java -p mods -m com.shop.app`, because the main class is stored in the `ModuleMainClass` attribute.",
+            },
+            {
+              question: "What do java --list-modules and java --describe-module show?",
+              answer:
+                "`--list-modules` lists every module in the runtime with its version; my JDK 21 has 69, 22 `java.*` and 47 `jdk.*`. `--describe-module` prints one module's descriptor: exports, requires with their modifiers, uses, provides, and the packages it only contains.\n\n`java --describe-module java.sql` showed two exports and three `requires transitive` (logging, XML, XA) plus `uses java.sql.Driver`. `jar --describe-module --file x.jar` does the same for a JAR, including telling me when it would be an automatic module.",
+            },
+          ],
+        },
+        {
+          type: "heading",
+          text: "Intermediate",
+        },
+        {
+          type: "qa",
+          items: [
+            {
+              question: "What's the difference between exports and opens?",
+              answer:
+                "`exports` gives compile-time access to a package's public types and reflective access to their public members. `opens` gives run-time reflective access to all members, private ones included (`setAccessible(true)` succeeds), and no compile-time access at all. They're independent: a package can be exported, opened, both or neither.\n\nMy `Inspector` could call a public method and read a public field with only `exports`, but `setAccessible(true)` on the private `email` threw `InaccessibleObjectException`. Adding `opens com.shop.customers to com.shop.inspect;` fixed it. A package that was opened but not exported also worked for reflection.",
+            },
+            {
+              question: "requires vs requires transitive vs requires static?",
+              answer:
+                "`requires` is a normal dependency read only by my module. `requires transitive` also makes my readers read it, which is right when the dependency's types appear in my exported API. `requires static` is mandatory at compile time and optional at run time: the module isn't resolved because of it, but if something else resolves it, my module reads it.\n\nWithout `transitive`, the app lost access to `Money` and `-Xlint:exports` warned that `Order.total()` exposed it. With `requires static com.shop.audit`, the audit module sat on the module path unresolved until I added `--add-modules com.shop.audit`.",
+            },
+            {
+              question: "What are named, automatic and unnamed modules?",
+              answer:
+                "A named (explicit) module has a `module-info.class` and lives on the module path. An automatic module is a plain JAR on the module path; its name comes from `Automatic-Module-Name` or the file name, it reads every module including the unnamed one, and exports and opens everything. The unnamed module is everything on the classpath: it reads all modules and exports everything, but nobody can require it.\n\n`text-tools-1.4.2.jar` became `text.tools`, and it could still call `ascii-legacy-0.9.jar` on the classpath because automatic modules read the unnamed module. Spring Framework 6.2.11's JARs are automatic modules; Jackson 2.21's are explicit ones in multi-release JARs.",
+            },
+            {
+              question: "Can the unnamed module read named modules? And the reverse?",
+              answer:
+                "The unnamed module reads every module, so classpath code can use any exported package of any resolved module. A named module can't read the unnamed module by declaration, because there's no name to `requires`. Automatic modules are the exception, and `--add-reads M=ALL-UNNAMED` is the command-line escape hatch.\n\nWith the old JARs left on the classpath, my app module couldn't compile against them (`package com.acme.text does not exist`), and when compiled with `--add-reads` but run without it, the JVM threw `IllegalAccessError ... does not read unnamed module`.",
+            },
+            {
+              question: "What does InaccessibleObjectException mean?",
+              answer:
+                "That `setAccessible(true)` was refused because the target's package isn't opened to the caller's module (`trySetAccessible()` returns `false` in the same situation instead of throwing). It's an unchecked exception added in Java 9, and its message names the missing directive, such as `module com.rides.api does not \"opens com.rides.api\" to module com.fasterxml.jackson.databind`.\n\nThe fix is an `opens` (ideally qualified to that module) in the target's descriptor, or `--add-opens` on the command line when I don't own the target, as with `java.base` internals. Avoiding deep reflection works too: a record let Jackson use the public constructor with `exports` alone.",
+            },
+            {
+              question: "What is a qualified export, and when would you use one?",
+              answer:
+                "`exports P to M1, M2` makes P accessible only to the named modules. It's for internals shared between modules maintained together, so the package isn't part of the public API but a sister module can still use it.\n\n`com.shop.core` exports `com.shop.internal` only to `com.shop.reports`: `isExported(\"com.shop.internal\", reports)` was `true` and the same check for the app was `false`. The JDK uses this heavily; `java.base` has 67 qualified exports to other JDK modules.",
+            },
+            {
+              question: "How does ServiceLoader work with modules?",
+              answer:
+                "The API module exports a service interface, provider modules declare `provides Service with Impl`, and the consumer declares `uses Service` and calls `ServiceLoader.load(Service.class)`. The resolver binds every observable provider module into the graph, and providers don't need to export their packages.\n\nMy checkout found the card and UPI processors without knowing either class; removing the UPI JAR from the module path removed it without recompiling. Without `uses`, the call threw `ServiceConfigurationError: ... does not declare uses`. A provider can be a public no-arg constructor or a `public static provider()` method.",
+            },
+            {
+              question: "Do Spring Boot applications need module-info.java?",
+              answer:
+                "No. The usual setup runs everything from the classpath in the unnamed module, and that's what most Spring Boot apps do. Spring's JARs are automatic modules, and the framework relies on deep reflection, so a descriptor mostly turns into a list of `opens`.\n\nI tried a small Spring 6.2.11 app as a named module: field injection failed with `InaccessibleObjectException ... does not \"opens com.shop.app\" to module spring.core`, and `jlink` refused the automatic Spring modules. For a smaller image, I'd keep the app on the classpath and `jlink` only the JDK modules that `jdeps --print-module-deps` reports.",
+            },
+          ],
+        },
+        {
+          type: "heading",
+          text: "Advanced",
+        },
+        {
+          type: "qa",
+          items: [
+            {
+              question: "What is a split package, and why is it forbidden?",
+              answer:
+                "A package whose classes are spread over two modules. It's forbidden because a package must belong to exactly one module for the access rules to mean anything, and because each layer maps a package to one class loader. `javac` rejects a module that reads the same package from two modules; at run time, two modules with one package in a layer that shares a loader fail.\n\nMy app got `reads package com.shop.util from both com.shop.strings and com.shop.dates` from `javac`, and forcing both into the boot layer gave `LayerInstantiationException: Package com.shop.util in both module com.shop.strings and module com.shop.dates`. On the classpath the two halves just merged.",
+            },
+            {
+              question: "How does the JVM enforce module boundaries at run time, not just javac?",
+              answer:
+                "The access check that runs when a symbolic class reference is resolved (JVMS 5.4.4) includes module rules: a public class in another module is accessible only if the accessing module reads it and the package is exported to it. Reflection has its own check in `AccessibleObject`, using exports for public access and opens for deep access.\n\nI compiled the app against a `com.shop.core` that exported its internal package, removed the export and recompiled only core. The app compiled earlier still ran until `TaxTable` was first resolved and then threw `IllegalAccessError: ... because module com.shop.core does not export com.shop.internal to module com.shop.app`.",
+            },
+            {
+              question: "What is in module-info.class?",
+              answer:
+                "A class file flagged `ACC_MODULE` with no superclass, fields or methods, whose `Module` attribute lists the module name and flags (`ACC_OPEN` for an open module), each `requires` with flags (`ACC_TRANSITIVE`, `ACC_STATIC_PHASE`, `ACC_MANDATED`) and the compile-time version, each `exports` and `opens` with target modules, and the `uses` and `provides` entries. The constant pool uses `CONSTANT_Module` and `CONSTANT_Package` entries.\n\n`javap -v` on `com.shop.core` showed `java.base` as `ACC_MANDATED` with version `21.0.13.0.3` and `com.shop.money` as `ACC_TRANSITIVE`. The `jar` tool added `ModulePackages` and `ModuleMainClass` attributes when I packaged the app.",
+            },
+            {
+              question: "What is the boot layer, and how are modules mapped to class loaders?",
+              answer:
+                "At startup the JVM resolves the root module's dependencies plus service providers into a `Configuration` and instantiates it as the boot layer, a `ModuleLayer` that maps each module to a loader. Core JDK modules like `java.base` go to the bootstrap loader, others like `java.sql` to the platform loader, and tool modules plus everything on the module path to the application loader. Programs can create more layers on top.\n\n`BootLayer` printed `java.base` with `bootstrap`, `java.sql` with `platform`, and `jdk.compiler` and my class with `app`. The shop app's boot layer had 49 modules because of service binding, and `LayerDemo` loaded two versions of one module side by side in two child layers.",
+            },
+            {
+              question: "What are --add-opens, --add-exports and --add-reads, and when are they used?",
+              answer:
+                "Launch-time overrides of the module graph. `--add-exports M/P=T` exports P from M to T, `--add-opens M/P=T` opens it for deep reflection, and `--add-reads M=T` adds a readability edge. `ALL-UNNAMED` as the target means the classpath. `javac` accepts `--add-exports` and `--add-reads`; `--add-opens` only matters at run time, and `javac` warns that it has no effect.\n\nThey're for code I can't change yet: `--add-exports java.base/sun.security.util=ALL-UNNAMED` made `LegacyHex` compile and run, and the reflection demo worked with `--add-opens` instead of an `opens` line. Each one is a dependency on someone's internals, so I'd document them and remove them as libraries are fixed.",
+            },
+            {
+              question: "What do jdeps and jlink do, and what are their limits?",
+              answer:
+                "`jdeps` analyses class files for module, package and class dependencies, finds uses of JDK internals with `--jdk-internals`, and prints a `jlink`-ready module list with `--print-module-deps`. `jlink` builds a custom runtime image containing a resolved set of modules, with options to strip debug data, compress and add a launcher.\n\n`jdeps` only sees bytecode references: it missed `jdk.compiler` for a class that loaded it with `Class.forName`. `jlink` only takes explicit modules. My shop image was 39 MB stripped and compressed, against 287 MB for the JDK, but it started slower until I added `--generate-cds-archive`.",
+            },
+            {
+              question: "Why can't jlink include automatic modules?",
+              answer:
+                "Because an automatic module has no real descriptor: it reads every module including the unnamed one, so its dependencies can't be known statically, and an image has no classpath to supply them. `jlink` needs a closed, fully declared graph.\n\nI got `Error: automatic module cannot be used with jlink: text.tools` for my old JAR and the same for `spring.core`. Jackson 2.21 worked because its JARs carry real `module-info.class` files under `META-INF/versions/9`.",
+            },
+            {
+              question: "How did strong encapsulation of JDK internals evolve from Java 9 to 17?",
+              answer:
+                "Java 9 encapsulated most internals (JEP 260) but defaulted to `--illegal-access=permit`, which let classpath code reflect into JDK packages that existed in Java 8, with a warning. JDK 16 (JEP 396) changed the default to deny. JDK 17 (JEP 403) removed the option, so only `--add-opens` and `--add-exports` open internals; critical APIs like `sun.misc.Unsafe` in `jdk.unsupported` stayed accessible.\n\nThe Encapsulation lesson showed the result on JDK 21: `setAccessible(true)` on `String.value` threw `InaccessibleObjectException`, and `--illegal-access=permit` was ignored with a warning. `java --describe-module jdk.unsupported` shows `exports sun.misc` and `opens sun.misc`.",
+            },
+          ],
+        },
+        {
+          type: "heading",
+          text: "Scenario-Based",
+        },
+        {
+          type: "qa",
+          items: [
+            {
+              question: "After upgrading from JDK 11 to JDK 21, a classpath service fails at startup with InaccessibleObjectException. What happened, and what do you do?",
+              answer:
+                "Some library is reflecting into a JDK internal package. On JDK 11, `--illegal-access=permit` allowed that with a warning; since JDK 16 it's denied by default and since 17 there's no switch. The message names the package and the target, such as `module java.base does not \"opens java.lang\" to unnamed module`.\n\nFirst I'd upgrade the library, since most fixed this years ago. If that's not possible yet, `--add-opens java.base/java.lang=ALL-UNNAMED` (only the packages named in errors) is the temporary fix, documented with the library that needs it. Then `jdeps --jdk-internals` over all JARs in the build, as I did for `LegacyHex`, finds the rest before production does.",
+            },
+            {
+              question: "You need to shrink a service's container image. How would you use the module system?",
+              answer:
+                "Build a custom runtime with `jlink` instead of shipping a full JDK. For a modular app, `jlink --add-modules` with the root module; for a classpath app, run `jdeps --print-module-deps` on the JARs, add anything loaded reflectively by hand, and `jlink` just those JDK modules.\n\nThe shop image was 57 MB plain and 39 MB with `--strip-debug`, `--no-header-files`, `--no-man-pages` and `--compress zip-6`, against 287 MB for the JDK. I'd measure startup before and after, though: without `--generate-cds-archive` my image started slower than the full JDK, and I'd keep debug info so stack traces have line numbers.",
+            },
+            {
+              question: "A library team wants users to stop depending on its internal classes. What would you suggest?",
+              answer:
+                "Give the library a `module-info.java` that exports only the API packages, moves helpers into clearly internal packages, uses `exports ... to` for sister modules that need them, and declares `requires transitive` for dependencies that appear in its API. Until that's ready, publish `Automatic-Module-Name` so users have a stable name.\n\nThat's the shop's `com.shop.core`: `TaxTable` is public, yet invisible to the app at compile time, an outdated caller fails with `IllegalAccessError`, and `com.shop.reports` keeps access by name. Classpath users still see everything, so the docs should say which packages are API.",
+            },
+            {
+              question: "How would you migrate a large classpath application to modules?",
+              answer:
+                "Incrementally. Run `jdeps` to see the dependency graph and JDK internals, fix split packages, and make sure every library has a stable module name. Then go bottom-up (leaf modules first, everything else still on the classpath) or top-down (my code as named modules, third-party JARs as automatic modules, using `--add-reads` only as a crutch).\n\nThe failures I'd expect are the ones in this lesson: \"not visible\" for missing `requires` or `exports`, split packages, `InaccessibleObjectException` from frameworks needing `opens`, and missing `uses`. Before starting, I'd ask whether the goal is a small runtime, in which case `jlink` of the JDK modules alone may be enough.",
+            },
+            {
+              question: "In the ride-hailing fare-quote listener, deserialisation started failing right after the team added module-info.java files. Explain and fix it.",
+              answer:
+                "`FareQuote` has private fields and only getters, so Jackson sets the fields reflectively with `setAccessible(true)`. On the classpath that was allowed; once `com.rides.api` became a named module that only `exports` its package, Jackson's module had no deep access, and Jackson wrapped the `InaccessibleObjectException` in an `InvalidDefinitionException`.\n\nThe fix was `opens com.rides.api to com.fasterxml.jackson.databind;`, after which it printed `received FareQuote[R-1042, KOL-SALTLAKE, 28750 paise, x1.25]`. Making `FareQuote` a record worked with `exports` alone. I'd also add a startup check that deserialises a sample of each API type, so the next missing `opens` fails the deployment, not the first message.",
+            },
+          ],
+        },
+      ],
+    },
+    {
+      title: "Try It Yourself",
+      blocks: [
+        {
+          type: "list",
+          ordered: true,
+          items: [
+            "Create two modules under `src`: `com.greet.api`, which exports `com.greet.api` and has a `Greeter` class with `public static String hello(String name)` returning `\"Hello, \" + name`, and `com.greet.app`, which requires it and whose `Main` prints `Greeter.hello(\"Asha\")` and `Main.class.getModule()`. Compile with `--module-source-path` and run with `-p out -m com.greet.app/com.greet.app.Main`.",
+            "Delete the `exports` line from `com.greet.api`'s descriptor and recompile. Then put it back.",
+            "Run the same compiled directories from the classpath: `java -cp out/com.greet.api:out/com.greet.app com.greet.app.Main`.",
+            "Give `Greeter` a field `private String secret = \"s3cr3t\";` and make `Main` read it with `getDeclaredField(\"secret\")` and `setAccessible(true)`. Run it on the module path, then with `--add-opens com.greet.api/com.greet.api=com.greet.app`, then fix it properly with `opens com.greet.api to com.greet.app;`.",
+            "Run `java --describe-module java.net.http` and `jdeps --module-path out -s -m com.greet.app`.",
+            "Run `jlink --add-modules java.base --output tiny`, then `du -sh tiny` and `tiny/bin/java --list-modules`.",
+          ],
+        },
+        {
+          type: "paragraph",
+          text: "What to expect: step 1 prints `Hello, Asha` and `module com.greet.app`. Step 2 fails with `package com.greet.api is not visible` and `(package com.greet.api is declared in module com.greet.api, which does not export it)`. Step 3 prints `Hello, Asha` and `unnamed module @` followed by a hash that changes per run. In step 4, the module path run prints the greeting and then `InaccessibleObjectException: Unable to make field private java.lang.String com.greet.api.Greeter.secret accessible: module com.greet.api does not \"opens com.greet.api\" to module com.greet.app`; with the flag or the `opens` line it prints `s3cr3t`, and on the classpath it prints `s3cr3t` with no flag at all. Step 5 shows `exports java.net.http`, `requires java.base mandated` and five `contains jdk.internal.net.http...` lines, then `com.greet.app -> com.greet.api` and `com.greet.app -> java.base`. Step 6 lists only `java.base`; the image was 57 MB on my machine, and the number depends on the JDK build.",
+        },
+      ],
+    },
+    {
+      title: "Summary",
+      blocks: [
+        {
+          type: "diagram",
+          text: `MODULE      named set of packages + module-info.java
+            Java 9, JSR 376, JEP 261; JDK = ~70 modules
+DIRECTIVES  requires M            read M
+            requires transitive M my readers read M too
+            requires static M     compile time only
+            exports P [to M]      API: compile + public reflection
+            opens P [to M]        deep reflection, run time only
+            open module           every package opened
+            uses S / provides S with C   ServiceLoader
+ACCESS      reads + exported + public  (else "not visible")
+            checked by javac, by the JVM at link time
+            (IllegalAccessError) and by reflection
+            (InaccessibleObjectException)
+KINDS       named      module-info, module path
+            automatic  plain JAR on module path, reads all,
+                       exports/opens all, no jlink
+            unnamed    the classpath, reads all, can't be
+                       required
+RULES       no cycles, no split packages, unique names
+GRAPH       resolved at startup -> boot layer; java.base on
+            bootstrap, java.sql on platform, mine on app
+HATCHES     --add-exports --add-opens --add-reads (ALL-UNNAMED)
+TOOLS       --list-modules  --describe-module
+            jdeps -s / --jdk-internals / --print-module-deps
+            jlink: 287 MB JDK -> 39 MB image (+CDS for startup)
+JDK 25      import module java.sql;   (JEP 511)`,
+          caption: "The one-screen version I'd want before an interview.",
+        },
+        {
+          type: "list",
+          items: [
+            "If someone says `public` means visible everywhere: not since Java 9. It means visible to modules that read mine, for packages I export, and deep reflection needs `opens` on top.",
+            "Modules pay off at boundaries between people, such as libraries and large codebases, and for `jlink` images. A framework-heavy application is usually better off on the classpath, using the JDK's modules through `jdeps` and `jlink` only.",
+            "Next comes Phase 7, Exception Handling, which starts from what this lesson kept producing: `NoClassDefFoundError`, `IllegalAccessError`, `InaccessibleObjectException` and their `Caused by:` chains, and how Java's checked and unchecked exceptions are meant to be thrown, caught and read.",
+          ],
+        },
+      ],
+    },
   ],
 };
