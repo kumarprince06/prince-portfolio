@@ -1,0 +1,113 @@
+<svg width="1200" height="700" viewBox="0 0 1200 700" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="700" rx="28" fill="#0D0D0D"/>
+  <path d="M80 130H1120" stroke="#2B2B2B" stroke-width="2"/>
+  <text x="80" y="82" fill="#FB923C" font-family="Arial, sans-serif" font-size="18" letter-spacing="4">EQUAL OBJECTS NEED EQUAL HASH CODES</text>
+  <text x="80" y="112" fill="#777777" font-family="Arial, sans-serif" font-size="16">Two equal Address objects added to a HashSet with 16 buckets. Numbers from MissingHashCode.java on JDK 21.</text>
+
+  <!-- ===== left panel: equals without hashCode ===== -->
+  <text x="80" y="170" fill="#888888" font-family="Arial, sans-serif" font-size="14" letter-spacing="2">EQUALS() ONLY · IDENTITY HASH CODES</text>
+
+  <rect x="80" y="188" width="225" height="100" rx="10" fill="#21180F" stroke="#FB923C" stroke-width="2"/>
+  <text x="98" y="216" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="16">first</text>
+  <text x="98" y="242" fill="#C6A17A" font-family="Arial, sans-serif" font-size="13">12 Park Street, Kolkata 700016</text>
+  <text x="98" y="268" fill="#C6A17A" font-family="Arial, sans-serif" font-size="14">hash 692404036</text>
+
+  <rect x="335" y="188" width="225" height="100" rx="10" fill="#21180F" stroke="#FB923C" stroke-width="2"/>
+  <text x="353" y="216" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="16">second</text>
+  <text x="353" y="242" fill="#C6A17A" font-family="Arial, sans-serif" font-size="13">12 Park Street, Kolkata 700016</text>
+  <text x="353" y="268" fill="#C6A17A" font-family="Arial, sans-serif" font-size="14">hash 1554874502</text>
+
+  <!-- arrows to buckets 1 and 11 -->
+  <path d="M160 288C160 330 125 340 125 372" stroke="#FB923C" stroke-width="2"/>
+  <path d="M120 364L125 373L130 364" stroke="#FB923C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="170" y="336" fill="#C6A17A" font-family="Arial, sans-serif" font-size="14">bucket 1</text>
+  <path d="M447 288C447 330 425 340 425 372" stroke="#FB923C" stroke-width="2"/>
+  <path d="M420 364L425 373L430 364" stroke="#FB923C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="457" y="336" fill="#C6A17A" font-family="Arial, sans-serif" font-size="14">bucket 11</text>
+
+  <!-- 16 buckets, 30px each, x 80..560 -->
+  <g stroke="#444444" stroke-width="1.5" fill="#151515">
+    <rect x="80" y="378" width="30" height="40"/>
+    <rect x="140" y="378" width="30" height="40"/>
+    <rect x="170" y="378" width="30" height="40"/>
+    <rect x="200" y="378" width="30" height="40"/>
+    <rect x="230" y="378" width="30" height="40"/>
+    <rect x="260" y="378" width="30" height="40"/>
+    <rect x="290" y="378" width="30" height="40"/>
+    <rect x="320" y="378" width="30" height="40"/>
+    <rect x="350" y="378" width="30" height="40"/>
+    <rect x="380" y="378" width="30" height="40"/>
+    <rect x="440" y="378" width="30" height="40"/>
+    <rect x="470" y="378" width="30" height="40"/>
+    <rect x="500" y="378" width="30" height="40"/>
+    <rect x="530" y="378" width="30" height="40"/>
+  </g>
+  <rect x="110" y="378" width="30" height="40" fill="#21180F" stroke="#FB923C" stroke-width="2"/>
+  <rect x="410" y="378" width="30" height="40" fill="#21180F" stroke="#FB923C" stroke-width="2"/>
+  <g font-family="Arial, sans-serif" font-size="12" fill="#777777" text-anchor="middle">
+    <text x="95" y="438">0</text><text x="125" y="438" fill="#FB923C">1</text><text x="155" y="438">2</text><text x="185" y="438">3</text>
+    <text x="215" y="438">4</text><text x="245" y="438">5</text><text x="275" y="438">6</text><text x="305" y="438">7</text>
+    <text x="335" y="438">8</text><text x="365" y="438">9</text><text x="395" y="438">10</text><text x="425" y="438" fill="#FB923C">11</text>
+    <text x="455" y="438">12</text><text x="485" y="438">13</text><text x="515" y="438">14</text><text x="545" y="438">15</text>
+  </g>
+
+  <rect x="80" y="468" width="480" height="122" rx="10" fill="#151515" stroke="#444444" stroke-width="2" stroke-dasharray="6 6"/>
+  <text x="100" y="500" fill="#AAAAAA" font-family="Arial, sans-serif" font-size="16">Different buckets: equals() is never called</text>
+  <text x="100" y="530" fill="#777777" font-family="Arial, sans-serif" font-size="14">add(second) → true · size 2 · get(second) → null</text>
+  <text x="100" y="556" fill="#777777" font-family="Arial, sans-serif" font-size="14">Even in one bucket, a different stored hash</text>
+  <text x="100" y="578" fill="#777777" font-family="Arial, sans-serif" font-size="14">would skip equals(). Result: a duplicate entry.</text>
+
+  <!-- ===== right panel: equals and hashCode together ===== -->
+  <text x="640" y="170" fill="#888888" font-family="Arial, sans-serif" font-size="14" letter-spacing="2">EQUALS() + HASHCODE() · OBJECTS.HASH</text>
+
+  <rect x="640" y="188" width="225" height="100" rx="10" fill="#0F1A21" stroke="#60A5FA" stroke-width="2"/>
+  <text x="658" y="216" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="16">first</text>
+  <text x="658" y="242" fill="#93B4D6" font-family="Arial, sans-serif" font-size="13">12 Park Street, Kolkata 700016</text>
+  <text x="658" y="268" fill="#93B4D6" font-family="Arial, sans-serif" font-size="14">hash 1177777548</text>
+
+  <rect x="895" y="188" width="225" height="100" rx="10" fill="#0F1A21" stroke="#60A5FA" stroke-width="2"/>
+  <text x="913" y="216" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="16">second</text>
+  <text x="913" y="242" fill="#93B4D6" font-family="Arial, sans-serif" font-size="13">12 Park Street, Kolkata 700016</text>
+  <text x="913" y="268" fill="#93B4D6" font-family="Arial, sans-serif" font-size="14">hash 1177777548</text>
+
+  <!-- both arrows to bucket 15: x 1090..1120, centre 1105 -->
+  <path d="M752 288C752 340 1098 330 1098 372" stroke="#60A5FA" stroke-width="2"/>
+  <path d="M1093 364L1098 373L1103 364" stroke="#60A5FA" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M1007 288C1007 330 1112 340 1112 372" stroke="#60A5FA" stroke-width="2"/>
+  <path d="M1107 364L1112 373L1117 364" stroke="#60A5FA" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="660" y="345" fill="#93B4D6" font-family="Arial, sans-serif" font-size="14">both → bucket 15</text>
+
+  <g stroke="#444444" stroke-width="1.5" fill="#151515">
+    <rect x="640" y="378" width="30" height="40"/>
+    <rect x="670" y="378" width="30" height="40"/>
+    <rect x="700" y="378" width="30" height="40"/>
+    <rect x="730" y="378" width="30" height="40"/>
+    <rect x="760" y="378" width="30" height="40"/>
+    <rect x="790" y="378" width="30" height="40"/>
+    <rect x="820" y="378" width="30" height="40"/>
+    <rect x="850" y="378" width="30" height="40"/>
+    <rect x="880" y="378" width="30" height="40"/>
+    <rect x="910" y="378" width="30" height="40"/>
+    <rect x="940" y="378" width="30" height="40"/>
+    <rect x="970" y="378" width="30" height="40"/>
+    <rect x="1000" y="378" width="30" height="40"/>
+    <rect x="1030" y="378" width="30" height="40"/>
+    <rect x="1060" y="378" width="30" height="40"/>
+  </g>
+  <rect x="1090" y="378" width="30" height="40" fill="#132433" stroke="#60A5FA" stroke-width="2"/>
+  <g font-family="Arial, sans-serif" font-size="12" fill="#777777" text-anchor="middle">
+    <text x="655" y="438">0</text><text x="685" y="438">1</text><text x="715" y="438">2</text><text x="745" y="438">3</text>
+    <text x="775" y="438">4</text><text x="805" y="438">5</text><text x="835" y="438">6</text><text x="865" y="438">7</text>
+    <text x="895" y="438">8</text><text x="925" y="438">9</text><text x="955" y="438">10</text><text x="985" y="438">11</text>
+    <text x="1015" y="438">12</text><text x="1045" y="438">13</text><text x="1075" y="438">14</text><text x="1105" y="438" fill="#60A5FA">15</text>
+  </g>
+
+  <rect x="640" y="468" width="480" height="122" rx="10" fill="#0F1A21" stroke="#60A5FA" stroke-width="2"/>
+  <text x="660" y="500" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="16">Same bucket, same stored hash: equals() decides</text>
+  <text x="660" y="530" fill="#93B4D6" font-family="Arial, sans-serif" font-size="14">second.equals(first) → true · add(second) → false</text>
+  <text x="660" y="556" fill="#93B4D6" font-family="Arial, sans-serif" font-size="14">size 1 · get(second) → Asha</text>
+  <text x="660" y="578" fill="#93B4D6" font-family="Arial, sans-serif" font-size="14">Result: one address, one entry.</text>
+
+  <text x="80" y="634" fill="#777777" font-family="Arial, sans-serif" font-size="14">Bucket = (h ^ (h &gt;&gt;&gt; 16)) &amp; 15 for a 16-bucket table (the HashMap Internals lesson has the details).</text>
+  <text x="80" y="658" fill="#777777" font-family="Arial, sans-serif" font-size="14">The identity hash codes on the left are from one run. The ones on the right come from String.hashCode and never change.</text>
+</svg>
