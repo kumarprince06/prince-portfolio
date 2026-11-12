@@ -963,10 +963,10 @@ src/com/shop/Checkout.java:6: error: cannot find symbol
         {
           type: "list",
           items: [
-            "An import has to name a package, so `import PriceUtil;` doesn't even parse. Compilers before Java 1.4 accepted it; since then it's been illegal.",
+            "An import has to name a package, so `import PriceUtil;` doesn't even parse. `javac` up to 1.3 accepted it anyway; JDK 1.4 brought the compiler in line with the JLS and has rejected it ever since.",
             "Without the import, the simple name `PriceUtil` is looked up in `com.shop`, then in the on-demand imports. The unnamed package is in neither place, even though both files were compiled in the same `javac` run into the same `out/`.",
             "Reflection is the only bridge: `Class.forName(\"PriceUtil\")` works, because at run time the class is just `PriceUtil` on the classpath. That's not a design, it's a workaround.",
-            "Other reasons to avoid it: a named module can't contain the unnamed package at all, and frameworks that scan \"from the main class's package down\" would scan everything on the classpath if that package is the unnamed one. Spring Boot logs a warning for exactly that case.",
+            "Other reasons to avoid it: a named module can't contain the unnamed package at all, and frameworks that scan \"from the main class's package down\" would scan everything on the classpath if that package is the unnamed one. Spring Boot logs a warning for exactly that case: `Your ApplicationContext is unlikely to start due to a @ComponentScan of the default package.`",
           ],
         },
         {
@@ -1257,7 +1257,7 @@ RuntimeVisibleAnnotations:
           items: [
             "The annotation goes **before** `package`, the Javadoc comment before that, and imports after `package` as usual. Only one file per package may carry package annotations (JLS 7.4.1).",
             "`javac` compiled it into a synthetic interface named `package-info` (`ACC_SYNTHETIC`, no fields, no methods) whose only job is to carry the `RuntimeVisibleAnnotations` attribute. `Package.getAnnotation` reads it from there, which is why `Owner` needs `RetentionPolicy.RUNTIME`.",
-            "With only a Javadoc comment and no annotations, `javac` doesn't write `package-info.class` at all; `-Xpkginfo:always` forces it. The Javadoc still matters: the `javadoc` tool turns it into the package's summary page, replacing the old `package.html` files.",
+            "With only a Javadoc comment and no annotations, `javac` doesn't write `package-info.class` at all; `-Xpkginfo:always` forces it. The Javadoc still matters: the `javadoc` tool turns it into the package's summary page, and it's the preferred successor to the older `package.html` files.",
             "Real uses: package-level nullness defaults like Spring's `@NonNullApi`, and JAXB's `@XmlSchema` for a package's XML namespace. Annotations get their own lesson later in this track.",
           ],
         },
@@ -1466,7 +1466,7 @@ Exception in thread "main" java.lang.SecurityException: sealing violation: packa
           items: [
             "Unsealed, `Money` from the JAR and `Discount` from the folder formed one run-time package, because the same loader defined both. That's legal and occasionally deliberate, but it's also how two versions of one library end up mixed together.",
             "`Sealed: true` in the manifest (Java 1.2) says every class of the packages in this JAR must come from this JAR. The loader enforced it when `Discount` was defined from somewhere else: a `SecurityException` at the first line that used `Discount`.",
-            "Sealing is rare today. Modules made the rule universal instead: a package belongs to exactly one module, and the module system refuses to start when two modules in the same layer contain the same package. The Java Modules lesson shows that error and the usual fixes.",
+            "Sealing is rare today. Modules made the rule the default instead: a package belongs to exactly one module, and on the module path, where every application module shares one class loader, two modules containing the same package fail at startup. The Java Modules lesson shows that error and the usual fixes.",
           ],
         },
       ],
@@ -2435,7 +2435,7 @@ Exception in thread "main" java.lang.SecurityException: Prohibited package name:
           type: "list",
           items: [
             "Imports have zero run-time cost. Three versions of `Basket` (wildcard, explicit, no imports) compiled with `-g:none` produced byte-for-byte identical class files with the same SHA-256. A wildcard import can't make a program load more classes or run slower.",
-            "Package-private and public calls compile to the same instructions (`invokestatic`, `invokevirtual`, `getfield`...). The access check happens once, when the JVM resolves the symbolic reference; after that the call is no different. Choosing narrow access has no performance cost.",
+            "Choosing package-private over public has no per-call cost; the Access Modifiers lesson measures that.",
             "Classes are loaded lazily, on first use. A large classpath doesn't load more classes; it only makes each lookup potentially longer, because the application loader tries the entries in order.",
             "That lookup cost is measurable with an extreme classpath. I generated 1,000 small JARs and timed `java ... com.shop.app.Hello` three times each (machine-dependent wall-clock numbers): with the class in an entry before all 1,000 JARs, about 0.06 s; with it after all of them, about 0.18 s; with no extra JARs, 0.02 to 0.03 s. The class had to be looked for in 1,000 JARs before it was found, and just having them listed cost a little.",
             "Real applications rarely have 1,000 JARs, but a Spring Boot service can easily have a hundred or more, and every class lookup that misses (`Class.forName` probes, optional-dependency checks) walks the whole list. Fewer, deduplicated dependencies help startup a bit and correctness a lot.",
@@ -2685,7 +2685,7 @@ airport fare: 30000`,
             "So the first symptom was **silent and wrong**: a 2.8x demand surge on a Rs. 200 base fare charged Rs. 560 instead of the 2x-capped Rs. 400. Nothing threw. That's a pricing incident, not a crash.",
             "The second symptom was loud: `capFor` doesn't exist in 1.4, so resolving it threw `NoSuchMethodError` the first time an airport fare was calculated, at line 14. A `LinkageError` like this one, or `NoClassDefFoundError`, `AbstractMethodError` or `IncompatibleClassChangeError`, right after a dependency change almost always means the class that loaded isn't the one the code was compiled against.",
             "The startup check is cheap insurance: `ClassLoader.getResources` returns every copy of a resource on the classpath, in search order, while `getResource` returns only the first. Logging (or failing on) more than one copy of a critical class turns the silent version into a visible one.",
-            "The fix is removing the duplicate, not reordering the classpath, because with a wildcard like `-cp 'lib/*'` the order isn't even specified. In Maven that means finding who pulls in 1.4 with `mvn dependency:tree` and excluding it or pinning 2.0 in `dependencyManagement`. Modules make this a startup error instead of a coin toss, because two modules can't contain the same package; that's in the Java Modules lesson.",
+            "The fix is removing the duplicate, not reordering the classpath, because with a wildcard like `-cp 'lib/*'` the order isn't even specified. In Maven that means finding who pulls in 1.4 with `mvn dependency:tree` and excluding it or pinning 2.0 in `dependencyManagement`. Modules make this a startup error instead of a coin toss, because two modules on the module path can't contain the same package; that's in the Java Modules lesson.",
           ],
         },
       ],
@@ -2831,7 +2831,7 @@ airport fare: 30000`,
             {
               question: "What is a split package, and how do sealing and modules deal with it?",
               answer:
-                "A package whose classes come from more than one JAR or directory. On the classpath it's legal: with one loader, they form a single run-time package. A JAR manifest with `Sealed: true` forbids it for that JAR's packages, and the module system forbids it outright, because each package belongs to exactly one module.\n\nI ran `Money` from a JAR and `Discount` from another folder, both in `com.shop.money`. Unsealed it worked; sealed, it threw `SecurityException: sealing violation: package com.shop.money is sealed` when `Discount` was loaded.",
+                "A package whose classes come from more than one JAR or directory. On the classpath it's legal: with one loader, they form a single run-time package. A JAR manifest with `Sealed: true` forbids it for that JAR's packages, and the module system forbids it between modules, because each package belongs to exactly one module.\n\nI ran `Money` from a JAR and `Discount` from another folder, both in `com.shop.money`. Unsealed it worked; sealed, it threw `SecurityException: sealing violation: package com.shop.money is sealed` when `Discount` was loaded.",
             },
             {
               question: "What are module import declarations in JDK 25, and how do they interact with other imports?",
@@ -2909,7 +2909,7 @@ airport fare: 30000`,
         },
         {
           type: "paragraph",
-          text: "What to expect: step 1 prints `com.example.hello.Hello`, and from inside the folder `Error: Could not find or load main class Hello` with `Caused by: java.lang.NoClassDefFoundError: Hello (wrong name: com/example/hello/Hello)`. Step 2 reports `reference to Date is ambiguous` with both `java.sql.Date` and `java.util.Date` listed, and compiles cleanly after the extra import. Step 3 fails with `secret() is not public in Base; cannot be accessed from outside package`, and prints `package-private` (or your string) once both are in `com.example`. In step 4 all three hashes match. Step 5 prints `Version 1`, then `Version 2`, and with the JARs swapped the log line reads `com.example.Version source:` followed by the path of `v2.jar`. Step 6 shows only the class file the first time and a `package-info.class` the second. Step 7 fails with `reference to Date is ambiguous` and compiles after the single-type import.",
+          text: "What to expect: step 1 prints `com.example.hello.Hello`, and from inside the folder `Error: Could not find or load main class Hello` with `Caused by: java.lang.NoClassDefFoundError: Hello (wrong name: com/example/hello/Hello)`. Step 2 reports `reference to Date is ambiguous` with both `java.sql.Date` and `java.util.Date` listed, and compiles cleanly after the extra import. Step 3 fails with `secret() is not public in Base; cannot be accessed from outside package`, and prints whatever `secret()` returns once both are in `com.example`. In step 4 all three hashes match. Step 5 prints `1`, then `2`, and with the JARs swapped the log line reads `com.example.Version source:` followed by the path of `v2.jar`. Step 6 shows only the class file the first time and a `package-info.class` the second. Step 7 fails with `reference to Date is ambiguous` and compiles after the single-type import.",
         },
       ],
     },
