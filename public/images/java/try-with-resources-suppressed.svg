@@ -1,0 +1,71 @@
+<svg width="1200" height="720" viewBox="0 0 1200 720" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="720" rx="28" fill="#0D0D0D"/>
+  <path d="M80 130H1120" stroke="#2B2B2B" stroke-width="2"/>
+  <text x="80" y="82" fill="#FB923C" font-family="Arial, sans-serif" font-size="18" letter-spacing="4">WHEN THE BODY AND CLOSE() BOTH FAIL</text>
+  <text x="80" y="112" fill="#777777" font-family="Arial, sans-serif" font-size="16">SuppressedDemo: try (Resource file = ...; Resource cursor = ...) { throw new RuntimeException("body failed"); }</text>
+
+  <!-- left: steps -->
+  <text x="80" y="170" fill="#888888" font-family="Arial, sans-serif" font-size="14" letter-spacing="2">WHAT RUNS, IN ORDER</text>
+
+  <rect x="80" y="185" width="480" height="56" rx="10" fill="#21180F" stroke="#FB923C" stroke-width="2"/>
+  <text x="100" y="219" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="16">1  open file</text>
+
+  <rect x="80" y="261" width="480" height="56" rx="10" fill="#21180F" stroke="#FB923C" stroke-width="2"/>
+  <text x="100" y="295" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="16">2  open cursor</text>
+
+  <rect x="80" y="337" width="480" height="56" rx="10" fill="#21180F" stroke="#FB923C" stroke-width="2"/>
+  <text x="100" y="361" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="16">3  body throws RuntimeException("body failed")</text>
+  <text x="122" y="382" fill="#C6A17A" font-family="Arial, sans-serif" font-size="14">becomes the primary exception</text>
+
+  <rect x="80" y="413" width="480" height="56" rx="10" fill="#0F1A21" stroke="#60A5FA" stroke-width="2"/>
+  <text x="100" y="437" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="16">4  cursor.close() throws</text>
+  <text x="122" y="458" fill="#93B4D6" font-family="Arial, sans-serif" font-size="14">primary.addSuppressed(...) · last opened, first closed</text>
+
+  <rect x="80" y="489" width="480" height="56" rx="10" fill="#0F1A21" stroke="#60A5FA" stroke-width="2"/>
+  <text x="100" y="513" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="16">5  file.close() throws</text>
+  <text x="122" y="534" fill="#93B4D6" font-family="Arial, sans-serif" font-size="14">primary.addSuppressed(...) · runs even though step 4 threw</text>
+
+  <rect x="80" y="565" width="480" height="56" rx="10" fill="#151515" stroke="#444444" stroke-width="2"/>
+  <text x="100" y="589" fill="#AAAAAA" font-family="Arial, sans-serif" font-size="16">6  athrow primary</text>
+  <text x="122" y="610" fill="#777777" font-family="Arial, sans-serif" font-size="14">the caller's catch runs only now, resources closed</text>
+
+  <!-- down arrows between steps -->
+  <g stroke="#555555" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M320 241V259"/><path d="M315 251L320 259L325 251"/>
+    <path d="M320 317V335"/><path d="M315 327L320 335L325 327"/>
+    <path d="M320 393V411"/><path d="M315 403L320 411L325 403"/>
+    <path d="M320 469V487"/><path d="M315 479L320 487L325 479"/>
+    <path d="M320 545V563"/><path d="M315 555L320 563L325 555"/>
+  </g>
+
+  <!-- right: the exception object -->
+  <text x="640" y="170" fill="#888888" font-family="Arial, sans-serif" font-size="14" letter-spacing="2">WHAT THE CALLER CATCHES</text>
+  <rect x="640" y="185" width="480" height="284" rx="16" fill="#21180F" stroke="#FB923C" stroke-width="2"/>
+  <text x="664" y="219" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="17">RuntimeException: body failed</text>
+  <text x="664" y="244" fill="#C6A17A" font-family="Arial, sans-serif" font-size="14">getSuppressed() returns, in close order:</text>
+
+  <rect x="664" y="263" width="432" height="80" rx="10" fill="#132433" stroke="#60A5FA" stroke-width="1.5"/>
+  <text x="684" y="293" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="15">[0] IllegalStateException</text>
+  <text x="684" y="320" fill="#93B4D6" font-family="Arial, sans-serif" font-size="14">close failed: cursor</text>
+
+  <rect x="664" y="361" width="432" height="80" rx="10" fill="#132433" stroke="#60A5FA" stroke-width="1.5"/>
+  <text x="684" y="391" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="15">[1] IllegalStateException</text>
+  <text x="684" y="418" fill="#93B4D6" font-family="Arial, sans-serif" font-size="14">close failed: file</text>
+
+  <!-- arrows from steps to the object -->
+  <path d="M560 365C600 365 610 214 652 214" stroke="#FB923C" stroke-width="2"/>
+  <path d="M644 209L653 214L644 219" stroke="#FB923C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M560 441C610 441 610 303 656 303" stroke="#60A5FA" stroke-width="2"/>
+  <path d="M648 298L657 303L648 308" stroke="#60A5FA" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M560 517C615 517 615 401 656 401" stroke="#60A5FA" stroke-width="2"/>
+  <path d="M648 396L657 401L648 406" stroke="#60A5FA" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+
+  <!-- contrast: finally -->
+  <rect x="640" y="497" width="480" height="124" rx="16" fill="#151515" stroke="#444444" stroke-width="2" stroke-dasharray="6 6"/>
+  <text x="664" y="529" fill="#AAAAAA" font-family="Arial, sans-serif" font-size="16">Same failure, closed in hand-written finally blocks</text>
+  <text x="664" y="557" fill="#777777" font-family="Arial, sans-serif" font-size="14">caller catches only the last close failure: close failed: file</text>
+  <text x="664" y="581" fill="#777777" font-family="Arial, sans-serif" font-size="14">"body failed" is gone; getSuppressed() is empty</text>
+  <text x="664" y="605" fill="#777777" font-family="Arial, sans-serif" font-size="14">an exception thrown in finally replaces the one in flight</text>
+
+  <text x="80" y="668" fill="#777777" font-family="Arial, sans-serif" font-size="14">Body ok but close fails: the close exception propagates by itself. Suppression needs a primary to attach to.</text>
+</svg>
