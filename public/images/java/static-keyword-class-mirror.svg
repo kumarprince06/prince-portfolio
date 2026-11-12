@@ -1,0 +1,79 @@
+<svg width="1200" height="750" viewBox="0 0 1200 750" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="750" rx="28" fill="#0D0D0D"/>
+  <path d="M80 130H1120" stroke="#2B2B2B" stroke-width="2"/>
+  <text x="80" y="82" fill="#FB923C" font-family="Arial, sans-serif" font-size="18" letter-spacing="4">STATIC FIELDS: ONE COPY PER CLASS, PER CLASS LOADER</text>
+  <text x="80" y="112" fill="#777777" font-family="Arial, sans-serif" font-size="16">Employee after EmployeeCount (Asha 3 tasks, Ravi 1), plus the plugin loader's copy from TwoCopies. HotSpot, JDK 21.</text>
+
+  <!-- metaspace -->
+  <rect x="80" y="150" width="1040" height="170" rx="16" fill="#151515" stroke="#444444" stroke-width="2"/>
+  <text x="105" y="180" fill="#888888" font-family="Arial, sans-serif" font-size="14" letter-spacing="2">METASPACE · class metadata, native memory outside the heap</text>
+
+  <rect x="105" y="200" width="490" height="100" rx="10" fill="#21180F" stroke="#FB923C" stroke-width="2"/>
+  <text x="125" y="230" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="16">Employee · defined by the app loader</text>
+  <text x="125" y="256" fill="#C6A17A" font-family="Arial, sans-serif" font-size="14">methods: Employee(String), completeTask(), describe(), summary()</text>
+  <text x="125" y="280" fill="#C6A17A" font-family="Arial, sans-serif" font-size="14">field layout, constant pool, bytecode: stored once</text>
+
+  <rect x="640" y="200" width="455" height="100" rx="10" fill="#151515" stroke="#444444" stroke-width="2" stroke-dasharray="6 6"/>
+  <text x="660" y="230" fill="#AAAAAA" font-family="Arial, sans-serif" font-size="16">Employee · defined by the plugin loader</text>
+  <text x="660" y="256" fill="#777777" font-family="Arial, sans-serif" font-size="14">same Employee.class bytes, but a different class</text>
+  <text x="660" y="280" fill="#777777" font-family="Arial, sans-serif" font-size="14">its own methods, constant pool and mirror</text>
+
+  <!-- heap -->
+  <rect x="80" y="375" width="1040" height="345" rx="16" fill="#0F1A21" stroke="#60A5FA" stroke-width="2"/>
+  <text x="105" y="702" fill="#888888" font-family="Arial, sans-serif" font-size="14" letter-spacing="2">HEAP · ordinary objects, garbage-collected</text>
+
+  <!-- Asha -->
+  <rect x="105" y="405" width="210" height="110" rx="10" fill="#132433" stroke="#60A5FA" stroke-width="1.5"/>
+  <text x="120" y="432" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="16">Employee object: Asha</text>
+  <text x="120" y="457" fill="#93B4D6" font-family="Arial, sans-serif" font-size="14">class pointer ●</text>
+  <text x="120" y="480" fill="#93B4D6" font-family="Arial, sans-serif" font-size="14">name → "Asha"</text>
+  <text x="120" y="502" fill="#93B4D6" font-family="Arial, sans-serif" font-size="14">tasks = 3  (offset 12)</text>
+
+  <!-- Ravi -->
+  <rect x="335" y="405" width="210" height="110" rx="10" fill="#132433" stroke="#60A5FA" stroke-width="1.5"/>
+  <text x="350" y="432" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="16">Employee object: Ravi</text>
+  <text x="350" y="457" fill="#93B4D6" font-family="Arial, sans-serif" font-size="14">class pointer ●</text>
+  <text x="350" y="480" fill="#93B4D6" font-family="Arial, sans-serif" font-size="14">name → "Ravi"</text>
+  <text x="350" y="502" fill="#93B4D6" font-family="Arial, sans-serif" font-size="14">tasks = 1  (offset 12)</text>
+
+  <!-- app mirror -->
+  <rect x="105" y="545" width="440" height="120" rx="10" fill="#21180F" stroke="#FB923C" stroke-width="2"/>
+  <text x="125" y="573" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="16">java.lang.Class object for Employee (its mirror)</text>
+  <text x="125" y="603" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="17">static int headcount = 2</text>
+  <text x="125" y="628" fill="#C6A17A" font-family="Arial, sans-serif" font-size="14">one copy, shared by Asha, Ravi and every app Employee</text>
+  <text x="125" y="651" fill="#C6A17A" font-family="Arial, sans-serif" font-size="14">stored at offset 112 inside this object (JDK 21)</text>
+
+  <!-- Kiran -->
+  <rect x="640" y="405" width="410" height="110" rx="10" fill="#151515" stroke="#444444" stroke-width="1.5" stroke-dasharray="6 6"/>
+  <text x="660" y="432" fill="#AAAAAA" font-family="Arial, sans-serif" font-size="16">Employee object: Kiran</text>
+  <text x="660" y="457" fill="#777777" font-family="Arial, sans-serif" font-size="14">class pointer ●</text>
+  <text x="660" y="480" fill="#777777" font-family="Arial, sans-serif" font-size="14">an instance of the plugin's Employee</text>
+  <text x="660" y="502" fill="#777777" font-family="Arial, sans-serif" font-size="14">tasks = 0</text>
+
+  <!-- plugin mirror -->
+  <rect x="640" y="545" width="410" height="120" rx="10" fill="#151515" stroke="#444444" stroke-width="1.5" stroke-dasharray="6 6"/>
+  <text x="660" y="573" fill="#AAAAAA" font-family="Arial, sans-serif" font-size="16">Class object for the plugin's Employee</text>
+  <text x="660" y="603" fill="#AAAAAA" font-family="Arial, sans-serif" font-size="17">static int headcount = 1</text>
+  <text x="660" y="628" fill="#777777" font-family="Arial, sans-serif" font-size="14">a separate copy: only Kiran was counted</text>
+  <text x="660" y="651" fill="#777777" font-family="Arial, sans-serif" font-size="14">unloaded with its loader, statics and all</text>
+
+  <!-- class pointers: objects to metadata -->
+  <path d="M210 405V302" stroke="#60A5FA" stroke-width="2"/>
+  <path d="M205 311L210 302L215 311" stroke="#60A5FA" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M440 405V302" stroke="#60A5FA" stroke-width="2"/>
+  <path d="M435 311L440 302L445 311" stroke="#60A5FA" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="252" y="352" fill="#93B4D6" font-family="Arial, sans-serif" font-size="13">class pointers</text>
+
+  <path d="M845 405V302" stroke="#777777" stroke-width="2"/>
+  <path d="M840 311L845 302L850 311" stroke="#777777" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="858" y="352" fill="#777777" font-family="Arial, sans-serif" font-size="13">class pointer</text>
+
+  <!-- metadata to mirror -->
+  <path d="M575 300V605H555" stroke="#FB923C" stroke-width="2"/>
+  <path d="M563 600L554 605L563 610" stroke="#FB923C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="586" y="352" fill="#C6A17A" font-family="Arial, sans-serif" font-size="13">its mirror</text>
+
+  <path d="M1075 300V605H1060" stroke="#777777" stroke-width="2"/>
+  <path d="M1068 600L1059 605L1068 610" stroke="#777777" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="1064" y="352" fill="#777777" font-family="Arial, sans-serif" font-size="13" text-anchor="end">its mirror</text>
+</svg>
