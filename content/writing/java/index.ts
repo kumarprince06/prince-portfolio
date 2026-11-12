@@ -1,9 +1,16 @@
 import type { Phase } from "../types";
+import { abstraction } from "./abstraction";
+import { associationAggregationComposition } from "./association-aggregation-composition";
 import { classLoading } from "./class-loading";
+import { classesAndObjects } from "./classes-and-objects";
 import { compilationProcess } from "./compilation-process";
+import { constructors } from "./constructors";
 import { controlStatements } from "./control-statements";
 import { dataTypes } from "./data-types";
+import { encapsulation } from "./encapsulation";
 import { historyOfJava } from "./history-of-java";
+import { inheritance } from "./inheritance";
+import { interfaces } from "./interfaces";
 import { javaFeatures } from "./java-features";
 import { jdk } from "./jdk";
 import { jre } from "./jre";
@@ -11,11 +18,16 @@ import { jvm } from "./jvm";
 import { loops } from "./loops";
 import { memoryAllocation } from "./memory-allocation";
 import { methods } from "./methods";
+import { nestedClasses } from "./nested-classes";
+import { objectClass } from "./object-class";
 import { operators } from "./operators";
+import { polymorphism } from "./polymorphism";
 import { stackVsHeap } from "./stack-vs-heap";
+import { staticKeyword } from "./static-keyword";
 import { typeCasting } from "./type-casting";
 import { variables } from "./variables";
 import { whatIsJava } from "./what-is-java";
+import { whenToUseWhat } from "./when-to-use-what";
 
 // Reading order — phases run in sequence, lessons are numbered straight through them.
 export const javaPhases: Phase[] = [
@@ -50,8 +62,21 @@ export const javaPhases: Phase[] = [
   },
   {
     title: "Object-Oriented Programming",
-    description: "Classes, objects and constructors, then encapsulation, inheritance, polymorphism, abstraction and interfaces.",
-    lessons: [],
+    description: "Classes, objects, constructors and static, then encapsulation, inheritance, object relationships, polymorphism, abstraction and interfaces, the Object class methods, nested classes, and when to use which.",
+    lessons: [
+      classesAndObjects,
+      constructors,
+      staticKeyword,
+      encapsulation,
+      inheritance,
+      associationAggregationComposition,
+      polymorphism,
+      abstraction,
+      interfaces,
+      objectClass,
+      nestedClasses,
+      whenToUseWhat,
+    ],
   },
   {
     title: "Packages, Access Modifiers",
