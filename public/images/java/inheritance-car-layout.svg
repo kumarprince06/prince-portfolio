@@ -1,0 +1,89 @@
+<svg width="1200" height="660" viewBox="0 0 1200 660" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="660" rx="28" fill="#0D0D0D"/>
+  <path d="M80 130H1120" stroke="#2B2B2B" stroke-width="2"/>
+  <text x="80" y="82" fill="#FB923C" font-family="Arial, sans-serif" font-size="18" letter-spacing="4">ONE CAR OBJECT: VEHICLE'S FIELDS, THEN CAR'S</text>
+  <text x="80" y="112" fill="#777777" font-family="Arial, sans-serif" font-size="16">new Car() on JDK 21 with compressed class pointers and oops (the default). Offsets read with Unsafe.objectFieldOffset.</text>
+
+  <!-- left: the object, row by row -->
+  <text x="80" y="170" fill="#888888" font-family="Arial, sans-serif" font-size="14" letter-spacing="2">LAYOUT · 32 BYTES ON THE HEAP</text>
+
+  <g font-family="Arial, sans-serif" font-size="14" fill="#888888" text-anchor="end">
+    <text x="128" y="205">0</text>
+    <text x="128" y="285">12</text>
+    <text x="128" y="355">16</text>
+    <text x="128" y="425">24</text>
+    <text x="128" y="495">28</text>
+    <text x="128" y="540">32</text>
+  </g>
+
+  <rect x="145" y="185" width="450" height="70" rx="10" fill="#151515" stroke="#444444" stroke-width="2"/>
+  <text x="165" y="215" fill="#AAAAAA" font-family="Arial, sans-serif" font-size="17">header</text>
+  <text x="165" y="240" fill="#777777" font-family="Arial, sans-serif" font-size="14">mark word 8 + class pointer 4 (points to Car)</text>
+  <text x="575" y="215" fill="#777777" font-family="Arial, sans-serif" font-size="14" text-anchor="end">12 bytes</text>
+
+  <rect x="145" y="265" width="450" height="60" rx="10" fill="#0F1A21" stroke="#60A5FA" stroke-width="2"/>
+  <text x="165" y="292" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="17">int seats</text>
+  <text x="165" y="314" fill="#93B4D6" font-family="Arial, sans-serif" font-size="14">fills the gap after the header</text>
+  <text x="575" y="292" fill="#93B4D6" font-family="Arial, sans-serif" font-size="14" text-anchor="end">4 bytes</text>
+
+  <rect x="145" y="335" width="450" height="60" rx="10" fill="#0F1A21" stroke="#60A5FA" stroke-width="2" stroke-dasharray="6 6"/>
+  <text x="165" y="362" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="17">long id   (private)</text>
+  <text x="165" y="384" fill="#93B4D6" font-family="Arial, sans-serif" font-size="14">present in every Car, but Car can't name it</text>
+  <text x="575" y="362" fill="#93B4D6" font-family="Arial, sans-serif" font-size="14" text-anchor="end">8 bytes</text>
+
+  <rect x="145" y="405" width="450" height="60" rx="10" fill="#21180F" stroke="#FB923C" stroke-width="2"/>
+  <text x="165" y="432" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="17">int doors</text>
+  <text x="165" y="454" fill="#C6A17A" font-family="Arial, sans-serif" font-size="14">Car's own fields start where Vehicle's end</text>
+  <text x="575" y="432" fill="#C6A17A" font-family="Arial, sans-serif" font-size="14" text-anchor="end">4 bytes</text>
+
+  <rect x="145" y="475" width="450" height="60" rx="10" fill="#21180F" stroke="#FB923C" stroke-width="2"/>
+  <text x="165" y="502" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="17">String plate</text>
+  <text x="165" y="524" fill="#C6A17A" font-family="Arial, sans-serif" font-size="14">a compressed reference to a String</text>
+  <text x="575" y="502" fill="#C6A17A" font-family="Arial, sans-serif" font-size="14" text-anchor="end">4 bytes</text>
+
+  <!-- brackets -->
+  <path d="M608 267H618V393H608" stroke="#60A5FA" stroke-width="2"/>
+  <text x="630" y="326" fill="#60A5FA" font-family="Arial, sans-serif" font-size="15">Vehicle's</text>
+  <text x="630" y="346" fill="#60A5FA" font-family="Arial, sans-serif" font-size="15">part</text>
+  <path d="M608 407H618V533H608" stroke="#FB923C" stroke-width="2"/>
+  <text x="630" y="466" fill="#FB923C" font-family="Arial, sans-serif" font-size="15">Car's</text>
+  <text x="630" y="486" fill="#FB923C" font-family="Arial, sans-serif" font-size="15">part</text>
+
+  <text x="80" y="590" fill="#888888" font-family="Arial, sans-serif" font-size="15">Same visible fields, no superclass (FlatCar): 24 bytes.</text>
+  <text x="80" y="615" fill="#888888" font-family="Arial, sans-serif" font-size="15">The private id costs every Car 8 bytes it can never read.</text>
+
+  <!-- right: hierarchy and constructor chain -->
+  <text x="740" y="170" fill="#888888" font-family="Arial, sans-serif" font-size="14" letter-spacing="2">HIERARCHY · CONSTRUCTOR CHAIN</text>
+
+  <rect x="740" y="190" width="240" height="70" rx="10" fill="#151515" stroke="#444444" stroke-width="2"/>
+  <text x="760" y="220" fill="#AAAAAA" font-family="Arial, sans-serif" font-size="17">java.lang.Object</text>
+  <text x="760" y="245" fill="#777777" font-family="Arial, sans-serif" font-size="14">no fields, empty &lt;init&gt;</text>
+
+  <rect x="740" y="320" width="240" height="70" rx="10" fill="#132433" stroke="#60A5FA" stroke-width="2"/>
+  <text x="760" y="350" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="17">Vehicle</text>
+  <text x="760" y="375" fill="#93B4D6" font-family="Arial, sans-serif" font-size="14">private long id · int seats</text>
+
+  <rect x="740" y="450" width="240" height="70" rx="10" fill="#21180F" stroke="#FB923C" stroke-width="2"/>
+  <text x="760" y="480" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="17">Car extends Vehicle</text>
+  <text x="760" y="505" fill="#C6A17A" font-family="Arial, sans-serif" font-size="14">int doors · String plate</text>
+
+  <!-- extends arrows: hollow triangles point at the parent -->
+  <path d="M800 320V262" stroke="#777777" stroke-width="2"/>
+  <path d="M792 275L800 262L808 275Z" fill="#0D0D0D" stroke="#777777" stroke-width="2" stroke-linejoin="round"/>
+  <text x="812" y="298" fill="#777777" font-family="Arial, sans-serif" font-size="13">extends</text>
+  <path d="M800 450V392" stroke="#777777" stroke-width="2"/>
+  <path d="M792 405L800 392L808 405Z" fill="#0D0D0D" stroke="#777777" stroke-width="2" stroke-linejoin="round"/>
+  <text x="812" y="428" fill="#777777" font-family="Arial, sans-serif" font-size="13">extends</text>
+
+  <!-- constructor calls go up -->
+  <path d="M980 485C1040 485 1040 355 988 355" stroke="#FB923C" stroke-width="2"/>
+  <path d="M996 350L987 355L996 360" stroke="#FB923C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="1046" y="415" fill="#FB923C" font-family="Arial, sans-serif" font-size="14">super()</text>
+  <path d="M980 355C1040 355 1040 225 988 225" stroke="#FB923C" stroke-width="2"/>
+  <path d="M996 220L987 225L996 230" stroke="#FB923C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="1046" y="285" fill="#FB923C" font-family="Arial, sans-serif" font-size="14">super()</text>
+
+  <text x="740" y="565" fill="#888888" font-family="Arial, sans-serif" font-size="15">Calls go up: Car() → Vehicle() → Object()</text>
+  <text x="740" y="590" fill="#888888" font-family="Arial, sans-serif" font-size="15">Bodies finish back down: Object, Vehicle, Car</text>
+  <text x="740" y="615" fill="#888888" font-family="Arial, sans-serif" font-size="15">Vehicle's offsets are the same in every subclass</text>
+</svg>
