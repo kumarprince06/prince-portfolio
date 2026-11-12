@@ -1,0 +1,79 @@
+<svg width="1200" height="660" viewBox="0 0 1200 660" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="660" rx="28" fill="#0D0D0D"/>
+  <path d="M80 130H1120" stroke="#2B2B2B" stroke-width="2"/>
+  <text x="80" y="82" fill="#FB923C" font-family="Arial, sans-serif" font-size="18" letter-spacing="4">ONE FAILURE, THREE LAYERS, ONE LOG LINE</text>
+  <text x="80" y="112" fill="#777777" font-family="Arial, sans-serif" font-size="16">GET /orders/13 while the database connection drops: who catches, who translates, who logs, and what the client sees</text>
+
+  <!-- lane 1: the call path -->
+  <text x="80" y="165" fill="#888888" font-family="Arial, sans-serif" font-size="14" letter-spacing="2">CALL PATH</text>
+  <rect x="80" y="180" width="230" height="80" rx="10" fill="#151515" stroke="#444444" stroke-width="2"/>
+  <text x="100" y="212" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="17">Client</text>
+  <text x="100" y="240" fill="#AAAAAA" font-family="Arial, sans-serif" font-size="14">GET /orders/13</text>
+
+  <rect x="350" y="180" width="230" height="80" rx="10" fill="#0F1A21" stroke="#60A5FA" stroke-width="2"/>
+  <text x="370" y="212" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="17">OrderController</text>
+  <text x="370" y="240" fill="#93B4D6" font-family="Arial, sans-serif" font-size="14">maps HTTP to a method call</text>
+
+  <rect x="620" y="180" width="230" height="80" rx="10" fill="#0F1A21" stroke="#60A5FA" stroke-width="2"/>
+  <text x="640" y="212" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="17">OrderService</text>
+  <text x="640" y="240" fill="#93B4D6" font-family="Arial, sans-serif" font-size="14">business rules</text>
+
+  <rect x="890" y="180" width="230" height="80" rx="10" fill="#0F1A21" stroke="#60A5FA" stroke-width="2"/>
+  <text x="910" y="212" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="17">OrderRepository</text>
+  <text x="910" y="240" fill="#93B4D6" font-family="Arial, sans-serif" font-size="14">talks to the database</text>
+
+  <!-- call arrows, left to right -->
+  <path d="M312 220H342" stroke="#60A5FA" stroke-width="2"/>
+  <path d="M334 215L343 220L334 225" stroke="#60A5FA" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M582 220H612" stroke="#60A5FA" stroke-width="2"/>
+  <path d="M604 215L613 220L604 225" stroke="#60A5FA" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M852 220H882" stroke="#60A5FA" stroke-width="2"/>
+  <path d="M874 215L883 220L874 225" stroke="#60A5FA" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+
+  <!-- failure starts in the repository -->
+  <path d="M1005 262V312" stroke="#FB923C" stroke-width="2"/>
+  <path d="M1000 304L1005 313L1010 304" stroke="#FB923C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+
+  <!-- lane 2: what each layer does -->
+  <text x="80" y="305" fill="#888888" font-family="Arial, sans-serif" font-size="14" letter-spacing="2">WHAT EACH LAYER DOES WITH THE FAILURE</text>
+
+  <rect x="890" y="320" width="230" height="110" rx="10" fill="#21180F" stroke="#FB923C" stroke-width="2"/>
+  <text x="910" y="350" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="16">throws IOException</text>
+  <text x="910" y="377" fill="#C6A17A" font-family="Arial, sans-serif" font-size="14">"connection reset by peer"</text>
+  <text x="910" y="401" fill="#C6A17A" font-family="Arial, sans-serif" font-size="14">can't fix it, so no catch</text>
+
+  <rect x="620" y="320" width="230" height="110" rx="10" fill="#21180F" stroke="#FB923C" stroke-width="2"/>
+  <text x="640" y="350" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="16">catches and translates</text>
+  <text x="640" y="377" fill="#C6A17A" font-family="Arial, sans-serif" font-size="14">OrderStoreException(</text>
+  <text x="640" y="401" fill="#C6A17A" font-family="Arial, sans-serif" font-size="14">"could not load order 13", e)</text>
+
+  <rect x="350" y="320" width="230" height="110" rx="10" fill="#151515" stroke="#444444" stroke-width="2" stroke-dasharray="6 6"/>
+  <text x="370" y="350" fill="#AAAAAA" font-family="Arial, sans-serif" font-size="16">does nothing</text>
+  <text x="370" y="377" fill="#777777" font-family="Arial, sans-serif" font-size="14">no try, no catch, no log</text>
+  <text x="370" y="401" fill="#777777" font-family="Arial, sans-serif" font-size="14">the exception passes through</text>
+
+  <rect x="80" y="320" width="230" height="110" rx="10" fill="#0F1A21" stroke="#60A5FA" stroke-width="2"/>
+  <text x="100" y="350" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="16">503 problem+json</text>
+  <text x="100" y="377" fill="#93B4D6" font-family="Arial, sans-serif" font-size="14">"try again later"</text>
+  <text x="100" y="401" fill="#93B4D6" font-family="Arial, sans-serif" font-size="14">no stack trace, no class names</text>
+
+  <!-- failure travels back, right to left -->
+  <path d="M888 375H858" stroke="#FB923C" stroke-width="2"/>
+  <path d="M866 370L857 375L866 380" stroke="#FB923C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M618 375H588" stroke="#FB923C" stroke-width="2"/>
+  <path d="M596 370L587 375L596 380" stroke="#FB923C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+
+  <!-- down to the handler, then up to the client -->
+  <path d="M465 432V482" stroke="#FB923C" stroke-width="2"/>
+  <path d="M460 474L465 483L470 474" stroke="#FB923C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M195 488V438" stroke="#60A5FA" stroke-width="2"/>
+  <path d="M190 446L195 437L200 446" stroke="#60A5FA" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+
+  <!-- lane 3: the boundary -->
+  <rect x="80" y="490" width="1040" height="100" rx="10" fill="#21180F" stroke="#FB923C" stroke-width="2"/>
+  <text x="100" y="520" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="16">Global handler (@RestControllerAdvice): the boundary</text>
+  <text x="100" y="547" fill="#C6A17A" font-family="Arial, sans-serif" font-size="14">Logs once: ERROR, full trace, "Caused by: java.io.IOException: connection reset by peer"</text>
+  <text x="100" y="571" fill="#C6A17A" font-family="Arial, sans-serif" font-size="14">Maps type to status: not found → 404 · store unavailable → 503 · anything unexpected → 500 with an error id</text>
+
+  <text x="80" y="628" fill="#777777" font-family="Arial, sans-serif" font-size="15">Catch only to recover, add context, translate, or answer at a boundary. Everything else propagates.</text>
+</svg>
