@@ -1,0 +1,70 @@
+<svg width="1200" height="700" viewBox="0 0 1200 700" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="700" rx="28" fill="#0D0D0D"/>
+  <path d="M80 130H1120" stroke="#2B2B2B" stroke-width="2"/>
+  <text x="80" y="82" fill="#FB923C" font-family="Arial, sans-serif" font-size="18" letter-spacing="4">WHAT THE HIDDEN THIS$0 KEEPS ALIVE</text>
+  <text x="80" y="112" fill="#777777" font-family="Arial, sans-serif" font-size="16">A closed EditorWindow whose save listener is still in a static EventBus list</text>
+
+  <!-- column headings -->
+  <text x="80" y="172" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="17">Inner class listener</text>
+  <text x="80" y="196" fill="#888888" font-family="Arial, sans-serif" font-size="14">class SaveBanner implements SaveListener</text>
+  <text x="640" y="172" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="17">Static nested listener</text>
+  <text x="640" y="196" fill="#888888" font-family="Arial, sans-serif" font-size="14">static class SaveText implements SaveListener</text>
+
+  <!-- LEFT: GC root -->
+  <rect x="80" y="215" width="480" height="72" rx="10" fill="#132433" stroke="#60A5FA" stroke-width="2"/>
+  <text x="100" y="246" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="18">EventBus.LISTENERS</text>
+  <text x="100" y="272" fill="#93B4D6" font-family="Arial, sans-serif" font-size="14">static List · a GC root, lives as long as the JVM</text>
+
+  <path d="M320 287V325" stroke="#FB923C" stroke-width="2"/>
+  <path d="M315 316L320 325L325 316" stroke="#FB923C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+
+  <!-- LEFT: inner listener -->
+  <rect x="80" y="330" width="480" height="72" rx="10" fill="#21180F" stroke="#FB923C" stroke-width="2"/>
+  <text x="100" y="361" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="18">SaveBanner</text>
+  <text x="100" y="387" fill="#C6A17A" font-family="Arial, sans-serif" font-size="14">final EditorWindow this$0  (synthetic, never written by me)</text>
+
+  <path d="M320 402V440" stroke="#FB923C" stroke-width="2"/>
+  <path d="M315 431L320 440L325 431" stroke="#FB923C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="335" y="427" fill="#FB923C" font-family="Arial, sans-serif" font-size="14">this$0</text>
+
+  <!-- LEFT: outer window, still reachable -->
+  <rect x="80" y="445" width="480" height="72" rx="10" fill="#21180F" stroke="#FB923C" stroke-width="2"/>
+  <text x="100" y="476" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="18">EditorWindow "doc-1" (closed)</text>
+  <text x="100" y="502" fill="#C6A17A" font-family="Arial, sans-serif" font-size="14">String docId · byte[] imageCache</text>
+
+  <path d="M320 517V555" stroke="#FB923C" stroke-width="2"/>
+  <path d="M315 546L320 555L325 546" stroke="#FB923C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+
+  <rect x="80" y="560" width="480" height="60" rx="10" fill="#21180F" stroke="#FB923C" stroke-width="2"/>
+  <text x="100" y="597" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="18">byte[] imageCache · 4 MB</text>
+
+  <text x="80" y="658" fill="#FB923C" font-family="Arial, sans-serif" font-size="15">All reachable from the root, so the GC must keep all of it.</text>
+
+  <!-- RIGHT: GC root -->
+  <rect x="640" y="215" width="480" height="72" rx="10" fill="#132433" stroke="#60A5FA" stroke-width="2"/>
+  <text x="660" y="246" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="18">EventBus.LISTENERS</text>
+  <text x="660" y="272" fill="#93B4D6" font-family="Arial, sans-serif" font-size="14">the same static list</text>
+
+  <path d="M880 287V325" stroke="#60A5FA" stroke-width="2"/>
+  <path d="M875 316L880 325L885 316" stroke="#60A5FA" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+
+  <!-- RIGHT: static nested listener -->
+  <rect x="640" y="330" width="480" height="72" rx="10" fill="#0F1A21" stroke="#60A5FA" stroke-width="2"/>
+  <text x="660" y="361" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="18">SaveText</text>
+  <text x="660" y="387" fill="#93B4D6" font-family="Arial, sans-serif" font-size="14">private final String docId = "doc-1"  (no this$0)</text>
+
+  <text x="660" y="432" fill="#777777" font-family="Arial, sans-serif" font-size="14">no reference from the root reaches the window</text>
+
+  <!-- RIGHT: outer window, unreachable -->
+  <rect x="640" y="445" width="480" height="72" rx="10" fill="#151515" stroke="#444444" stroke-width="2" stroke-dasharray="6 6"/>
+  <text x="660" y="476" fill="#AAAAAA" font-family="Arial, sans-serif" font-size="18">EditorWindow "doc-1" (closed)</text>
+  <text x="660" y="502" fill="#777777" font-family="Arial, sans-serif" font-size="14">unreachable</text>
+
+  <path d="M880 517V555" stroke="#444444" stroke-width="2"/>
+  <path d="M875 546L880 555L885 546" stroke="#444444" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+
+  <rect x="640" y="560" width="480" height="60" rx="10" fill="#151515" stroke="#444444" stroke-width="2" stroke-dasharray="6 6"/>
+  <text x="660" y="597" fill="#AAAAAA" font-family="Arial, sans-serif" font-size="18">byte[] imageCache · 4 MB</text>
+
+  <text x="640" y="658" fill="#60A5FA" font-family="Arial, sans-serif" font-size="15">Only a short String is kept; the window and 4 MB are collected.</text>
+</svg>
