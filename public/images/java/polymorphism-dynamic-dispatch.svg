@@ -1,0 +1,95 @@
+<svg width="1200" height="720" viewBox="0 0 1200 720" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="720" rx="28" fill="#0D0D0D"/>
+  <path d="M80 130H1120" stroke="#2B2B2B" stroke-width="2"/>
+  <text x="80" y="82" fill="#FB923C" font-family="Arial, sans-serif" font-size="18" letter-spacing="4">ONE CALL SITE, TWO TARGETS: DISPATCH THROUGH THE VTABLE</text>
+  <text x="80" y="112" fill="#777777" font-family="Arial, sans-serif" font-size="16">v.toll(10) is one invokevirtual instruction. The class pointer in the object's header decides which code runs (HotSpot, JDK 21).</text>
+
+  <!-- lane labels -->
+  <text x="350" y="178" fill="#888888" font-family="Arial, sans-serif" font-size="14" letter-spacing="2">v POINTS TO A CAR</text>
+  <text x="350" y="458" fill="#888888" font-family="Arial, sans-serif" font-size="14" letter-spacing="2">v POINTS TO A BIKE</text>
+
+  <!-- call site -->
+  <rect x="80" y="318" width="220" height="150" rx="10" fill="#21180F" stroke="#FB923C" stroke-width="2"/>
+  <text x="100" y="346" fill="#C6A17A" font-family="Arial, sans-serif" font-size="13" letter-spacing="2">CALL SITE</text>
+  <text x="100" y="376" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="18">v.toll(10)</text>
+  <text x="100" y="403" fill="#C6A17A" font-family="Arial, sans-serif" font-size="14">invokevirtual</text>
+  <text x="100" y="425" fill="#C6A17A" font-family="Arial, sans-serif" font-size="14">Vehicle.toll:(I)D</text>
+  <text x="100" y="449" fill="#C6A17A" font-family="Arial, sans-serif" font-size="14">resolved once to slot 5</text>
+
+  <!-- call site to objects -->
+  <path d="M300 360C325 360 320 262 342 262" stroke="#FB923C" stroke-width="2"/>
+  <path d="M334 257L343 262L334 267" stroke="#FB923C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M300 426C325 426 320 542 342 542" stroke="#FB923C" stroke-width="2"/>
+  <path d="M334 537L343 542L334 547" stroke="#FB923C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+
+  <!-- Car object -->
+  <rect x="350" y="200" width="190" height="124" rx="10" fill="#0F1A21" stroke="#60A5FA" stroke-width="2"/>
+  <text x="368" y="228" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="16">Car object (heap)</text>
+  <rect x="366" y="242" width="158" height="30" rx="6" fill="#132433" stroke="#60A5FA" stroke-width="1"/>
+  <text x="378" y="262" fill="#93B4D6" font-family="Arial, sans-serif" font-size="14">mark word</text>
+  <rect x="366" y="280" width="158" height="30" rx="6" fill="#132433" stroke="#60A5FA" stroke-width="1"/>
+  <text x="378" y="300" fill="#93B4D6" font-family="Arial, sans-serif" font-size="14">class pointer ●</text>
+
+  <!-- Bike object -->
+  <rect x="350" y="480" width="190" height="124" rx="10" fill="#0F1A21" stroke="#60A5FA" stroke-width="2"/>
+  <text x="368" y="508" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="16">Bike object (heap)</text>
+  <rect x="366" y="522" width="158" height="30" rx="6" fill="#132433" stroke="#60A5FA" stroke-width="1"/>
+  <text x="378" y="542" fill="#93B4D6" font-family="Arial, sans-serif" font-size="14">mark word</text>
+  <rect x="366" y="560" width="158" height="30" rx="6" fill="#132433" stroke="#60A5FA" stroke-width="1"/>
+  <text x="378" y="580" fill="#93B4D6" font-family="Arial, sans-serif" font-size="14">class pointer ●</text>
+
+  <!-- class pointer to vtable (step 1) -->
+  <path d="M474 295C560 295 548 214 582 214" stroke="#60A5FA" stroke-width="2"/>
+  <path d="M574 209L583 214L574 219" stroke="#60A5FA" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="352" y="346" fill="#93B4D6" font-family="Arial, sans-serif" font-size="13">1 read the class pointer</text>
+  <path d="M474 575C560 575 548 494 582 494" stroke="#60A5FA" stroke-width="2"/>
+  <path d="M574 489L583 494L574 499" stroke="#60A5FA" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="352" y="626" fill="#93B4D6" font-family="Arial, sans-serif" font-size="13">1 read the class pointer</text>
+
+  <!-- Car vtable -->
+  <rect x="590" y="192" width="310" height="194" rx="10" fill="#151515" stroke="#444444" stroke-width="2"/>
+  <text x="608" y="220" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="16">Car's vtable · 8 slots</text>
+  <rect x="604" y="234" width="282" height="30" rx="6" fill="#151515" stroke="#444444" stroke-width="1" stroke-dasharray="5 5"/>
+  <text x="616" y="254" fill="#AAAAAA" font-family="Arial, sans-serif" font-size="14">[0–4] Object's methods</text>
+  <rect x="604" y="270" width="282" height="30" rx="6" fill="#21180F" stroke="#FB923C" stroke-width="2"/>
+  <text x="616" y="290" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="14">[5] toll → Car.toll</text>
+  <text x="790" y="290" fill="#C6A17A" font-family="Arial, sans-serif" font-size="13">replaced</text>
+  <rect x="604" y="306" width="282" height="30" rx="6" fill="#151515" stroke="#444444" stroke-width="1"/>
+  <text x="616" y="326" fill="#AAAAAA" font-family="Arial, sans-serif" font-size="14">[6] describe → Vehicle.describe</text>
+  <rect x="604" y="342" width="282" height="30" rx="6" fill="#151515" stroke="#444444" stroke-width="1"/>
+  <text x="616" y="362" fill="#AAAAAA" font-family="Arial, sans-serif" font-size="14">[7] doors → Car.doors</text>
+  <text x="790" y="362" fill="#777777" font-family="Arial, sans-serif" font-size="13">new slot</text>
+
+  <!-- Bike vtable -->
+  <rect x="590" y="472" width="310" height="158" rx="10" fill="#151515" stroke="#444444" stroke-width="2"/>
+  <text x="608" y="500" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="16">Bike's vtable · 7 slots</text>
+  <rect x="604" y="514" width="282" height="30" rx="6" fill="#151515" stroke="#444444" stroke-width="1" stroke-dasharray="5 5"/>
+  <text x="616" y="534" fill="#AAAAAA" font-family="Arial, sans-serif" font-size="14">[0–4] Object's methods</text>
+  <rect x="604" y="550" width="282" height="30" rx="6" fill="#21180F" stroke="#FB923C" stroke-width="2"/>
+  <text x="616" y="570" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="14">[5] toll → Bike.toll</text>
+  <text x="790" y="570" fill="#C6A17A" font-family="Arial, sans-serif" font-size="13">replaced</text>
+  <rect x="604" y="586" width="282" height="30" rx="6" fill="#151515" stroke="#444444" stroke-width="1"/>
+  <text x="616" y="606" fill="#AAAAAA" font-family="Arial, sans-serif" font-size="14">[6] describe → Vehicle.describe</text>
+
+  <!-- slot 5 to code (steps 2 and 3) -->
+  <path d="M886 285C912 285 908 268 932 268" stroke="#FB923C" stroke-width="2"/>
+  <path d="M924 263L933 268L924 273" stroke="#FB923C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M886 565C912 565 908 548 932 548" stroke="#FB923C" stroke-width="2"/>
+  <path d="M924 543L933 548L924 553" stroke="#FB923C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+
+  <!-- method code -->
+  <rect x="940" y="222" width="180" height="96" rx="10" fill="#21180F" stroke="#FB923C" stroke-width="2"/>
+  <text x="958" y="250" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="16">Car.toll code</text>
+  <text x="958" y="276" fill="#C6A17A" font-family="Arial, sans-serif" font-size="14">50 + km × 14.0</text>
+  <text x="958" y="300" fill="#C6A17A" font-family="Arial, sans-serif" font-size="14">returns 190.0</text>
+  <rect x="940" y="502" width="180" height="96" rx="10" fill="#21180F" stroke="#FB923C" stroke-width="2"/>
+  <text x="958" y="530" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="16">Bike.toll code</text>
+  <text x="958" y="556" fill="#C6A17A" font-family="Arial, sans-serif" font-size="14">20 + km × 6.0</text>
+  <text x="958" y="580" fill="#C6A17A" font-family="Arial, sans-serif" font-size="14">returns 80.0</text>
+  <text x="940" y="344" fill="#C6A17A" font-family="Arial, sans-serif" font-size="13">2 read slot 5 · 3 jump there</text>
+  <text x="940" y="624" fill="#C6A17A" font-family="Arial, sans-serif" font-size="13">2 read slot 5 · 3 jump there</text>
+
+  <!-- footer -->
+  <text x="80" y="672" fill="#777777" font-family="Arial, sans-serif" font-size="14">An override takes over its parent's slot; a brand-new method gets a slot at the end. Same instruction, same slot number,</text>
+  <text x="80" y="695" fill="#777777" font-family="Arial, sans-serif" font-size="14">different class pointer, different code. Slot numbers are the ones VtableDump printed on my JDK 21 run.</text>
+</svg>
