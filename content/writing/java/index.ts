@@ -1,5 +1,6 @@
 import type { Phase } from "../types";
 import { abstraction } from "./abstraction";
+import { accessModifiers } from "./access-modifiers";
 import { associationAggregationComposition } from "./association-aggregation-composition";
 import { classLoading } from "./class-loading";
 import { classesAndObjects } from "./classes-and-objects";
@@ -12,6 +13,7 @@ import { historyOfJava } from "./history-of-java";
 import { inheritance } from "./inheritance";
 import { interfaces } from "./interfaces";
 import { javaFeatures } from "./java-features";
+import { javaModules } from "./java-modules";
 import { jdk } from "./jdk";
 import { jre } from "./jre";
 import { jvm } from "./jvm";
@@ -21,6 +23,7 @@ import { methods } from "./methods";
 import { nestedClasses } from "./nested-classes";
 import { objectClass } from "./object-class";
 import { operators } from "./operators";
+import { packages } from "./packages";
 import { polymorphism } from "./polymorphism";
 import { stackVsHeap } from "./stack-vs-heap";
 import { staticKeyword } from "./static-keyword";
@@ -80,8 +83,8 @@ export const javaPhases: Phase[] = [
   },
   {
     title: "Packages, Access Modifiers",
-    description: "Organising code into packages and controlling what each class exposes.",
-    lessons: [],
+    description: "Organising code into packages, controlling what each class exposes, and the module system that enforces it across JARs.",
+    lessons: [packages, accessModifiers, javaModules],
   },
   {
     title: "Exception Handling",
