@@ -1,0 +1,88 @@
+<svg width="1200" height="740" viewBox="0 0 1200 740" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="740" rx="28" fill="#0D0D0D"/>
+  <path d="M80 130H1120" stroke="#2B2B2B" stroke-width="2"/>
+  <text x="80" y="82" fill="#FB923C" font-family="Arial, sans-serif" font-size="18" letter-spacing="4">WHAT NEW CAR(4) DOES, IN ORDER</text>
+  <text x="80" y="112" fill="#777777" font-family="Arial, sans-serif" font-size="16">OverrideTrap on JDK 21: Vehicle's constructor calls describe(), which Car overrides. Right: Car's fields at each step.</text>
+
+  <text x="80" y="164" fill="#888888" font-family="Arial, sans-serif" font-size="14" letter-spacing="2">STEP</text>
+  <text x="780" y="164" fill="#888888" font-family="Arial, sans-serif" font-size="14" letter-spacing="2">THE CAR OBJECT</text>
+
+  <!-- 0: class initialization -->
+  <rect x="80" y="180" width="660" height="54" rx="10" fill="#151515" stroke="#444444" stroke-width="2" stroke-dasharray="6 6"/>
+  <text x="100" y="202" fill="#AAAAAA" font-family="Arial, sans-serif" font-size="16">0  Class initialization: Vehicle first, then Car</text>
+  <text x="100" y="224" fill="#777777" font-family="Arial, sans-serif" font-size="14">static initializers in textual order, once per class, before the first new only</text>
+  <rect x="780" y="180" width="340" height="54" rx="10" fill="#151515" stroke="#444444" stroke-width="2" stroke-dasharray="6 6"/>
+  <text x="800" y="213" fill="#777777" font-family="Arial, sans-serif" font-size="15">no Car object yet</text>
+
+  <!-- 1: allocate and zero -->
+  <rect x="80" y="244" width="660" height="54" rx="10" fill="#0F1A21" stroke="#60A5FA" stroke-width="2"/>
+  <text x="100" y="266" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="16">1  new: allocate on the heap and zero every field</text>
+  <text x="100" y="288" fill="#93B4D6" font-family="Arial, sans-serif" font-size="14">one block sized for Vehicle's and Car's fields together, header written</text>
+  <rect x="780" y="244" width="340" height="54" rx="10" fill="#0F1A21" stroke="#60A5FA" stroke-width="2"/>
+  <text x="800" y="277" fill="#93B4D6" font-family="Arial, sans-serif" font-size="15">seats = 0 · category = null</text>
+
+  <!-- 2: Car.<init> starts -->
+  <rect x="80" y="308" width="660" height="54" rx="10" fill="#21180F" stroke="#FB923C" stroke-width="2"/>
+  <text x="100" y="330" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="16">2  Car.&lt;init&gt;(4) starts, and its first action is super()</text>
+  <text x="100" y="352" fill="#C6A17A" font-family="Arial, sans-serif" font-size="14">invokespecial Vehicle."&lt;init&gt;":()V (a Java 25 prologue would run before it)</text>
+  <rect x="780" y="308" width="340" height="54" rx="10" fill="#0F1A21" stroke="#60A5FA" stroke-width="2"/>
+  <text x="800" y="341" fill="#93B4D6" font-family="Arial, sans-serif" font-size="15">seats = 0 · category = null</text>
+
+  <!-- 3: Vehicle.<init> -> Object.<init> -->
+  <rect x="80" y="372" width="660" height="54" rx="10" fill="#21180F" stroke="#FB923C" stroke-width="2"/>
+  <text x="100" y="394" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="16">3  Vehicle.&lt;init&gt;() calls super(), so Object.&lt;init&gt;() runs</text>
+  <text x="100" y="416" fill="#C6A17A" font-family="Arial, sans-serif" font-size="14">Object's constructor is a single return instruction</text>
+  <rect x="780" y="372" width="340" height="54" rx="10" fill="#0F1A21" stroke="#60A5FA" stroke-width="2"/>
+  <text x="800" y="405" fill="#93B4D6" font-family="Arial, sans-serif" font-size="15">seats = 0 · category = null</text>
+
+  <!-- 4: Vehicle's body calls describe() -->
+  <rect x="80" y="436" width="660" height="54" rx="10" fill="#2A1A0C" stroke="#FB923C" stroke-width="3"/>
+  <text x="100" y="458" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="16">4  Vehicle's initializers, then its body, which calls describe()</text>
+  <text x="100" y="480" fill="#C6A17A" font-family="Arial, sans-serif" font-size="14">invokevirtual picks Car's override, on a Car that is not built yet</text>
+  <rect x="780" y="436" width="340" height="54" rx="10" fill="#2A1A0C" stroke="#FB923C" stroke-width="3"/>
+  <text x="800" y="458" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="15">seats = 0 · category = null</text>
+  <text x="800" y="480" fill="#FB923C" font-family="Arial, sans-serif" font-size="14">printed: "null, 0 seats, CNG"</text>
+
+  <!-- 5: Car's initializers -->
+  <rect x="80" y="500" width="660" height="54" rx="10" fill="#21180F" stroke="#FB923C" stroke-width="2"/>
+  <text x="100" y="522" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="16">5  Car's field initializers: category = "SEDAN"</text>
+  <text x="100" y="544" fill="#C6A17A" font-family="Arial, sans-serif" font-size="14">initializers and instance blocks, in textual order, copied in by javac after super()</text>
+  <rect x="780" y="500" width="340" height="54" rx="10" fill="#0F1A21" stroke="#60A5FA" stroke-width="2"/>
+  <text x="800" y="533" fill="#93B4D6" font-family="Arial, sans-serif" font-size="15">seats = 0 · category = "SEDAN"</text>
+
+  <!-- 6: Car's body -->
+  <rect x="80" y="564" width="660" height="54" rx="10" fill="#21180F" stroke="#FB923C" stroke-width="2"/>
+  <text x="100" y="586" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="16">6  The rest of Car's constructor body: this.seats = seats</text>
+  <text x="100" y="608" fill="#C6A17A" font-family="Arial, sans-serif" font-size="14">the final field gets its only assignment here</text>
+  <rect x="780" y="564" width="340" height="54" rx="10" fill="#0F1A21" stroke="#60A5FA" stroke-width="2"/>
+  <text x="800" y="597" fill="#93B4D6" font-family="Arial, sans-serif" font-size="15">seats = 4 · category = "SEDAN"</text>
+
+  <!-- 7: reference returned -->
+  <rect x="80" y="628" width="660" height="54" rx="10" fill="#0F1A21" stroke="#60A5FA" stroke-width="2"/>
+  <text x="100" y="650" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="16">7  The new expression completes: Car car = ...</text>
+  <text x="100" y="672" fill="#93B4D6" font-family="Arial, sans-serif" font-size="14">astore_1: only now does the caller hold a reference</text>
+  <rect x="780" y="628" width="340" height="54" rx="10" fill="#132433" stroke="#60A5FA" stroke-width="2"/>
+  <text x="800" y="661" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="15">fully built: "SEDAN, 4 seats, CNG"</text>
+
+  <!-- arrows from each step to the object state -->
+  <g stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M744 207H774" stroke="#444444"/>
+    <path d="M768 202L776 207L768 212" stroke="#444444"/>
+    <path d="M744 271H774" stroke="#60A5FA"/>
+    <path d="M768 266L776 271L768 276" stroke="#60A5FA"/>
+    <path d="M744 335H774" stroke="#FB923C"/>
+    <path d="M768 330L776 335L768 340" stroke="#FB923C"/>
+    <path d="M744 399H774" stroke="#FB923C"/>
+    <path d="M768 394L776 399L768 404" stroke="#FB923C"/>
+    <path d="M744 463H774" stroke="#FB923C"/>
+    <path d="M768 458L776 463L768 468" stroke="#FB923C"/>
+    <path d="M744 527H774" stroke="#FB923C"/>
+    <path d="M768 522L776 527L768 532" stroke="#FB923C"/>
+    <path d="M744 591H774" stroke="#FB923C"/>
+    <path d="M768 586L776 591L768 596" stroke="#FB923C"/>
+    <path d="M744 655H774" stroke="#60A5FA"/>
+    <path d="M768 650L776 655L768 660" stroke="#60A5FA"/>
+  </g>
+
+  <text x="80" y="716" fill="#777777" font-family="Arial, sans-serif" font-size="14">Steps 1 to 7 run on every new; step 0 runs once. The fuel field is left out: javac inlines its constant "CNG" into describe().</text>
+</svg>
