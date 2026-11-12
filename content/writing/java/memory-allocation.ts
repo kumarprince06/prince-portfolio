@@ -13,7 +13,7 @@ export const memoryAllocation: Lesson = {
       blocks: [
         {
           type: "paragraph",
-          text: "Every value a program works with has to sit somewhere in memory: a counter in a loop, a `String` from a request, an array of fares. **Memory allocation** is the act of reserving that space, and every language has to answer three questions about it: where does the value go, who reserves the space, and who gives it back.",
+          text: "Every value a program works with has to sit somewhere in memory: a counter in a loop, a `String` from a request, an array of prices. **Memory allocation** is the act of reserving that space, and every language has to answer three questions about it: where does the value go, who reserves the space, and who gives it back.",
         },
         {
           type: "paragraph",
@@ -114,10 +114,10 @@ export const memoryAllocation: Lesson = {
           type: "table",
           headers: ["Declaration", "The variable", "The value"],
           rows: [
-            ["`int km = 12;` (local)", "Slot in the method's frame", "The `12` itself, right in the slot"],
-            ["`Ride ride = new Ride();` (local)", "Slot in the frame", "A reference; the `Ride` object is on the heap"],
-            ["`int fare;` (instance field)", "Inside every `Ride` object", "On the heap, as part of the object"],
-            ["`static int trips;`", "Belongs to the class", "In HotSpot, stored in the class's `java.lang.Class` mirror, which is a heap object"],
+            ["`int price = 12;` (local)", "Slot in the method's frame", "The `12` itself, right in the slot"],
+            ["`Order order = new Order();` (local)", "Slot in the frame", "A reference; the `Order` object is on the heap"],
+            ["`int quantity;` (instance field)", "Inside every `Order` object", "On the heap, as part of the object"],
+            ["`static int orderCount;`", "Belongs to the class", "In HotSpot, stored in the class's `java.lang.Class` mirror, which is a heap object"],
             ["`\"Kolkata\"` (literal)", "—", "One pooled `String` object on the heap, shared by every use of that literal"],
             ["`new int[3]`", "—", "Arrays are objects: heap, every element zeroed"],
           ],
@@ -126,7 +126,7 @@ export const memoryAllocation: Lesson = {
           type: "callout",
           tone: "warning",
           title: "\"Primitives live on the stack\" is half true",
-          text: "It's true for **local** primitives. A primitive field lives inside its object, so `ride.fare` is on the heap. And an `int[]` with a million elements is a million `int`s on the heap. The type doesn't decide the location; where the variable is declared does.",
+          text: "It's true for **local** primitives. A primitive field lives inside its object, so `order.quantity` is on the heap. And an `int[]` with a million elements is a million `int`s on the heap. The type doesn't decide the location; where the variable is declared does.",
         },
       ],
     },
@@ -224,8 +224,8 @@ allocate(size):
         {
           type: "image",
           src: "/images/java/object-layout.svg",
-          alt: "Layout of new Trip(1L, 12, \"Pune\"): an 8-byte mark word, a 4-byte class pointer, int km at offset 12, long id at offset 16, a 4-byte reference to the String at offset 24, and 4 bytes of padding, 32 bytes in total.",
-          caption: "Declared as `long id; int km; String city;`, but the JVM moved `km` into the 4-byte gap right after the header.",
+          alt: "Layout of new Product(1L, 12, \"Pen\"): an 8-byte mark word, a 4-byte class pointer, int stock at offset 12, long id at offset 16, a 4-byte reference to the name String at offset 24, and 4 bytes of padding, 32 bytes in total.",
+          caption: "Declared as `long id; int stock; String name;`, but the JVM moved `stock` into the 4-byte gap right after the header.",
         },
         {
           type: "paragraph",
@@ -239,14 +239,14 @@ allocate(size):
 import sun.misc.Unsafe;
 
 public class Offsets {
-    static class Trip { long id; int km; String city; }
+    static class Product { long id; int stock; String name; }
 
     public static void main(String[] args) throws Exception {
         Field f = Unsafe.class.getDeclaredField("theUnsafe");
         f.setAccessible(true);
         Unsafe u = (Unsafe) f.get(null);
-        for (String name : new String[] {"id", "km", "city"}) {
-            System.out.println(name + " at offset " + u.objectFieldOffset(Trip.class.getDeclaredField(name)));
+        for (String field : new String[] {"id", "stock", "name"}) {
+            System.out.println(field + " at offset " + u.objectFieldOffset(Product.class.getDeclaredField(field)));
         }
         System.out.println("int[] data starts at " + u.arrayBaseOffset(int[].class));
     }
@@ -261,19 +261,19 @@ java -XX:-UseCompressedClassPointers -XX:-UseCompressedOops Offsets`,
         {
           type: "output",
           text: `id at offset 16
-km at offset 12
-city at offset 24
+stock at offset 12
+name at offset 24
 int[] data starts at 16
 
 id at offset 16
-km at offset 24
-city at offset 32
+stock at offset 24
+name at offset 32
 int[] data starts at 24`,
         },
         {
           type: "list",
           items: [
-            "With the defaults, the header is 12 bytes, so `km` (4 bytes) fits at offset 12. `id` is a `long` and needs an 8-aligned address, so it goes to 16. The reference `city` is 4 bytes, compressed, at 24.",
+            "With the defaults, the header is 12 bytes, so `stock` (4 bytes) fits at offset 12. `id` is a `long` and needs an 8-aligned address, so it goes to 16. The reference `name` is 4 bytes, compressed, at 24.",
             "With compression off, the header is 16 bytes and references are 8. Everything moves, and the gap after the header disappears, so the declared order happens to come back.",
             "For an `int[]`, the data starts at 16: 8 bytes of mark word, 4 of class pointer, 4 of length.",
           ],
@@ -305,7 +305,7 @@ public class AllocSize {
     static Object sink;                       // keeps each object reachable, so it is really allocated
 
     record Point(int x, int y) {}
-    record Trip(long id, int km, String city) {}
+    record Product(long id, int stock, String name) {}
 
     static long bytes(Runnable r) {
         long id = Thread.currentThread().threadId();
@@ -318,11 +318,11 @@ public class AllocSize {
         Runnable[] all = {
             () -> sink = new Object(),       () -> sink = new int[0],
             () -> sink = new int[10],        () -> sink = new long[10],
-            () -> sink = new Point(1, 2),    () -> sink = new Trip(1L, 12, "Pune"),
+            () -> sink = new Point(1, 2),    () -> sink = new Product(1L, 12, "Pen"),
             () -> sink = new byte[1_000_000]
         };
         String[] names = { "new Object()", "new int[0]", "new int[10]", "new long[10]",
-                           "new Point(1, 2)", "new Trip(1L, 12, \\"Pune\\")", "new byte[1_000_000]" };
+                           "new Point(1, 2)", "new Product(1L, 12, \\"Pen\\")", "new byte[1_000_000]" };
         for (int round = 0; round < 3; round++) for (Runnable r : all) bytes(r);   // load classes first
         long base = bytes(() -> {});
         for (int i = 0; i < all.length; i++) {
@@ -346,7 +346,7 @@ java -XX:-UseCompressedClassPointers -XX:-UseCompressedOops AllocSize`,
             ["`new int[10]`", "56", "64", "16 + 40 of data"],
             ["`new long[10]`", "96", "104", "16 + 80 of data"],
             ["`new Point(1, 2)`", "24", "24", "12 + 4 + 4 = 20, rounded to 24"],
-            ["`new Trip(1L, 12, \"Pune\")`", "32", "40", "12 + 4 + 8 + 4 = 28, rounded to 32"],
+            ["`new Product(1L, 12, \"Pen\")`", "32", "40", "12 + 4 + 8 + 4 = 28, rounded to 32"],
             ["`new byte[1_000_000]`", "1,000,016", "1,000,024", "16 + one byte per element"],
           ],
         },
@@ -354,7 +354,7 @@ java -XX:-UseCompressedClassPointers -XX:-UseCompressedOops AllocSize`,
           type: "list",
           items: [
             "An empty `Object` is 16 bytes, not 0. An `Integer` holding a 4-byte `int` is also 16. That's why a `List<Integer>` of a million numbers costs around 20 MB (16 per `Integer` plus 4 per reference in the backing array), while an `int[]` of the same numbers costs 4 MB.",
-            "The \"Pune\" string isn't counted in `Trip`'s 32 bytes. The literal already existed in the pool; `Trip` only holds a 4-byte reference to it.",
+            "The \"Pen\" string isn't counted in `Product`'s 32 bytes. The literal already existed in the pool; `Product` only holds a 4-byte reference to it.",
             "I warmed up three rounds first, because the very first `new Point` also loaded the class and allocated about 4.8 KB of metadata objects along the way. The first run of anything measures class loading, not the thing itself.",
           ],
         },
@@ -449,9 +449,9 @@ round 2: 240 MB allocated`,
           title: "Pools.java",
           code: `public class Pools {
     public static void main(String[] args) {
-        String a = "ride";
-        String b = "ride";
-        String c = new String("ride");
+        String a = "hello";
+        String b = "hello";
+        String c = new String("hello");
         String d = c.intern();
         System.out.println("a == b        " + (a == b));
         System.out.println("a == c        " + (a == c));
@@ -477,8 +477,8 @@ a.equals(c)   true
         {
           type: "list",
           items: [
-            "**String literals** are interned: every `\"ride\"` literal in every class of the JVM resolves to one `String` object in the string pool, which has been on the heap since Java 7. That's why `a == b`.",
-            "`new String(\"ride\")` always allocates a new object, so `a == c` is false even though the text is equal. `intern()` returns the pooled copy, so `a == d`.",
+            "**String literals** are interned: every `\"hello\"` literal in every class of the JVM resolves to one `String` object in the string pool, which has been on the heap since Java 7. That's why `a == b`.",
+            "`new String(\"hello\")` always allocates a new object, so `a == c` is false even though the text is equal. `intern()` returns the pooled copy, so `a == d`.",
             "**Autoboxing** goes through `Integer.valueOf`, which returns cached objects for -128 to 127. The same applies to `Short`, `Byte`, `Long` and `Character` (0 to 127). From 128 up, each boxing allocates a new `Integer`, so `==` compares two different objects. The upper bound of the `Integer` cache can be raised with `-XX:AutoBoxCacheMax`, which is one more reason never to rely on it.",
           ],
         },
@@ -493,17 +493,17 @@ a.equals(c)   true
       blocks: [
         {
           type: "paragraph",
-          text: "Putting it together for `Ride ride = new Ride(240);` inside `main`:",
+          text: "Putting it together for `Order order = new Order(5);` inside `main`:",
         },
         {
           type: "list",
           ordered: true,
           items: [
-            "`main`'s frame already has a slot for `ride`, sized by `javac` (`locals=`). Nothing is allocated for the variable at runtime.",
-            "`new #x` resolves `Ride` (loading and initialising it on first use) and knows its size from the field layout.",
+            "`main`'s frame already has a slot for `order`, sized by `javac` (`locals=`). Nothing is allocated for the variable at runtime.",
+            "`new #x` resolves `Order` (loading and initialising it on first use) and knows its size from the field layout.",
             "The thread bumps the pointer in its TLAB by that many bytes. On the rare slow path it gets a new TLAB, and that may trigger a young GC.",
-            "The fields are zeroed, so `fare` is `0`, and the header is written.",
-            "`dup`, then the argument `240` is pushed, then `invokespecial Ride.<init>(I)V` runs the constructor in a new frame, with `this` in slot 0. It sets `fare` to `240` and returns.",
+            "The fields are zeroed, so `quantity` is `0`, and the header is written.",
+            "`dup`, then the argument `5` is pushed, then `invokespecial Order.<init>(I)V` runs the constructor in a new frame, with `this` in slot 0. It sets `quantity` to `5` and returns.",
             "`astore_1` stores the reference into `main`'s slot 1. The object is now reachable through that slot.",
             "When `main` returns, the slot disappears with the frame. If nothing else holds a reference, the object is now garbage, and the next GC that looks at its region reclaims the space. There is no explicit free; reclaiming is the GC noticing nobody can reach it.",
           ],
@@ -521,11 +521,11 @@ a.equals(c)   true
           type: "diagram",
           text: `GC roots                      heap
 ──────────                    ─────────────────────────────────
-main frame: ride ───────────► Ride ──► "Kolkata"
-static CACHE ───────────────► HashMap ──► Quote ──► byte[10000]
-                                      └─► Quote ──► byte[10000]
+main frame: order ──────────► Order ──► "Asha"
+static CACHE ───────────────► HashMap ──► Report ──► byte[10000]
+                                      └─► Report ──► byte[10000]
 
-                              Order ◄──► Payment     ◄ point to each other,
+                              Employee ◄──► Team     ◄ point to each other,
                                                        but no root reaches them:
                                                        garbage (cycles are fine)`,
           caption: "Reachability, not reference counting. Two objects pointing at each other are still collected if nothing from a root reaches them.",
@@ -552,29 +552,29 @@ static CACHE ───────────────► HashMap ──► 
 import java.util.List;
 
 public class AllocationSyntax {
-    record Ride(int fare) {}
-    record Trip(long id, int km, String city) {}
+    record Order(int quantity) {}
+    record Product(long id, int stock, String name) {}
 
     public static void main(String[] args) {
         int count = 0;                         // local primitive: value in the frame
-        Ride ride = new Ride(240);             // reference in the frame, object on the heap
-        int[] fares = new int[5];              // array object, zero-filled: [0, 0, 0, 0, 0]
+        Order order = new Order(5);            // reference in the frame, object on the heap
+        int[] prices = new int[5];             // array object, zero-filled: [0, 0, 0, 0, 0]
         int[] fixed = {120, 340, 90};          // array initializer: same as new int[] {...}
         String city = "Pune";                  // pooled literal, no allocation at this line
         String copy = new String("Pune");      // always a new object (almost never needed)
         Integer boxed = 42;                    // Integer.valueOf(42): cached, no allocation
         List<Integer> ids = new ArrayList<>(); // one ArrayList object; its array grows later
-        var trip = new Trip(1L, 12, "Pune");   // var: same allocation, the type is inferred
+        var pen = new Product(1L, 12, "Pen");  // var: same allocation, the type is inferred
 
-        System.out.println(count + " " + ride + " " + fares.length + " " + fixed[1] + " "
-            + (city == copy) + " " + boxed + " " + ids + " " + trip);
-        ride = null;                           // drops this reference; the object may now be garbage
+        System.out.println(count + " " + order + " " + prices.length + " " + fixed[1] + " "
+            + (city == copy) + " " + boxed + " " + ids + " " + pen);
+        order = null;                          // drops this reference; the object may now be garbage
     }
 }`,
         },
         {
           type: "output",
-          text: "0 Ride[fare=240] 5 340 false 42 [] Trip[id=1, km=12, city=Pune]",
+          text: "0 Order[quantity=5] 5 340 false 42 [] Product[id=1, stock=12, name=Pen]",
         },
         {
           type: "table",
@@ -602,40 +602,40 @@ public class AllocationSyntax {
           language: "java",
           title: "WhereItLives.java",
           code: `public class WhereItLives {
-    static int trips = 0;                         // static field: with the class
-    int fare;                                     // instance field: inside each object
+    static int orderCount = 0;                    // static field: with the class
+    int quantity;                                 // instance field: inside each object
 
-    WhereItLives(int fare) { this.fare = fare; }
+    WhereItLives(int quantity) { this.quantity = quantity; }
 
     public static void main(String[] args) {
-        int km = 12;                              // primitive local: the value sits in main's frame
-        WhereItLives ride = new WhereItLives(240);// reference in the frame, object on the heap
-        String city = "Kolkata";                  // literal: one pooled String object on the heap
-        int[] stops = new int[3];                 // arrays are objects too: heap, zero-filled
-        trips++;
+        int price = 12;                           // primitive local: the value sits in main's frame
+        WhereItLives order = new WhereItLives(3); // reference in the frame, object on the heap
+        String customer = "Asha";                 // literal: one pooled String object on the heap
+        int[] ratings = new int[3];               // arrays are objects too: heap, zero-filled
+        orderCount++;
 
-        System.out.println("km=" + km + " fare=" + ride.fare + " city=" + city);
-        System.out.println("stops=" + java.util.Arrays.toString(stops) + " trips=" + trips);
+        System.out.println("price=" + price + " quantity=" + order.quantity + " customer=" + customer);
+        System.out.println("ratings=" + java.util.Arrays.toString(ratings) + " orderCount=" + orderCount);
     }
 }`,
         },
         {
           type: "output",
-          text: `km=12 fare=240 city=Kolkata
-stops=[0, 0, 0] trips=1`,
+          text: `price=12 quantity=3 customer=Asha
+ratings=[0, 0, 0] orderCount=1`,
         },
         {
           type: "diagram",
           text: `main frame (stack)          heap
 ┌──────────────────┐
-│ 0 args    ●──────┼──────► String[0]
-│ 1 km      12     │
-│ 2 ride    ●──────┼──────► WhereItLives { fare: 240 }
-│ 3 city    ●──────┼──────► "Kolkata"  (string pool)
-│ 4 stops   ●──────┼──────► int[3] { 0, 0, 0 }
+│ 0 args     ●─────┼──────► String[0]
+│ 1 price    12    │
+│ 2 order    ●─────┼──────► WhereItLives { quantity: 3 }
+│ 3 customer ●─────┼──────► "Asha"  (string pool)
+│ 4 ratings  ●─────┼──────► int[3] { 0, 0, 0 }
 └──────────────────┘
-class WhereItLives: trips = 1  (static, held by the Class object)`,
-          caption: "Four of the five locals are references. Only `km` holds its value directly.",
+class WhereItLives: orderCount = 1  (static, held by the Class object)`,
+          caption: "Four of the five locals are references. Only `price` holds its value directly.",
         },
         {
           type: "paragraph",
@@ -949,7 +949,7 @@ java -XX:MaxRAM=1g -XX:MaxRAMPercentage=75 -XX:+PrintFlagsFinal -version | grep 
             {
               question: "What is the String pool?",
               answer:
-                "A JVM-wide table of interned `String` objects, so every occurrence of the same literal refers to one object. Since Java 7 it lives on the heap.\n\nIn my `Pools` test, two `\"ride\"` literals were `==`, `new String(\"ride\")` was not, and `intern()` returned the pooled one again. It saves memory for repeated text, but it's not a reason to compare strings with `==`.",
+                "A JVM-wide table of interned `String` objects, so every occurrence of the same literal refers to one object. Since Java 7 it lives on the heap.\n\nIn my `Pools` test, two `\"hello\"` literals were `==`, `new String(\"hello\")` was not, and `intern()` returned the pooled one again. It saves memory for repeated text, but it's not a reason to compare strings with `==`.",
             },
             {
               question: "Does Java have pointers?",
@@ -1003,7 +1003,7 @@ java -XX:MaxRAM=1g -XX:MaxRAMPercentage=75 -XX:+PrintFlagsFinal -version | grep 
             {
               question: "What are compressed oops?",
               answer:
-                "Ordinary object pointers stored as 32-bit values instead of 64-bit. Objects are 8-byte aligned, so the JVM stores the address divided by 8 and multiplies it back on use, which covers 32 GB of heap. It's on by default for heaps under about 32 GB.\n\nIt halves the size of every reference field and object array element. In my tests, turning it off made a `Trip` record 40 bytes instead of 32. It's also why crossing the 32 GB mark can shrink usable heap: the same objects suddenly need more bytes.",
+                "Ordinary object pointers stored as 32-bit values instead of 64-bit. Objects are 8-byte aligned, so the JVM stores the address divided by 8 and multiplies it back on use, which covers 32 GB of heap. It's on by default for heaps under about 32 GB.\n\nIt halves the size of every reference field and object array element. In my tests, turning it off made a `Product` record 40 bytes instead of 32. It's also why crossing the 32 GB mark can shrink usable heap: the same objects suddenly need more bytes.",
             },
             {
               question: "Can you force garbage collection?",
@@ -1020,9 +1020,9 @@ java -XX:MaxRAM=1g -XX:MaxRAMPercentage=75 -XX:+PrintFlagsFinal -version | grep 
           type: "qa",
           items: [
             {
-              question: "Walk through exactly what the JVM does for `new Ride(240)`.",
+              question: "Walk through exactly what the JVM does for `new Order(5)`.",
               answer:
-                "The `new` instruction resolves the class reference in the constant pool, loading and initialising `Ride` if this is the first use. The object's size is already known from the field layout. The thread tries to bump-allocate that many bytes in its TLAB; if it can't, it gets a new TLAB from eden, possibly after a young GC, and large objects may go straight to the old generation or, in G1, to humongous regions. The fields are zeroed, the mark word and class pointer are written, and the reference is pushed.\n\nThen `dup` and the argument are pushed and `invokespecial Ride.<init>(I)V` runs the constructor in a new frame with `this` in slot 0, assigning `fare = 240`. Finally `astore` puts the reference into the caller's local slot. With escape analysis, C2 may skip all of this if the object never escapes.",
+                "The `new` instruction resolves the class reference in the constant pool, loading and initialising `Order` if this is the first use. The object's size is already known from the field layout. The thread tries to bump-allocate that many bytes in its TLAB; if it can't, it gets a new TLAB from eden, possibly after a young GC, and large objects may go straight to the old generation or, in G1, to humongous regions. The fields are zeroed, the mark word and class pointer are written, and the reference is pushed.\n\nThen `dup` and the argument are pushed and `invokespecial Order.<init>(I)V` runs the constructor in a new frame with `this` in slot 0, assigning `quantity = 5`. Finally `astore` puts the reference into the caller's local slot. With escape analysis, C2 may skip all of this if the object never escapes.",
             },
             {
               question: "Explain the object header on a 64-bit HotSpot JVM.",
@@ -1032,7 +1032,7 @@ java -XX:MaxRAM=1g -XX:MaxRAMPercentage=75 -XX:+PrintFlagsFinal -version | grep 
             {
               question: "Does the JVM keep fields in declaration order?",
               answer:
-                "No. The layout is up to the JVM, and HotSpot packs fields to minimise padding: generally larger fields first, with smaller fields used to fill gaps. The JLS doesn't guarantee any order.\n\nFor `class Trip { long id; int km; String city; }` I read the offsets back: `km` at 12, `id` at 16, `city` at 24. The `int` moved ahead of the `long` to fill the 4 bytes after the 12-byte header. That's why tools like JOL exist; reasoning about layout from the source is unreliable.",
+                "No. The layout is up to the JVM, and HotSpot packs fields to minimise padding: generally larger fields first, with smaller fields used to fill gaps. The JLS doesn't guarantee any order.\n\nFor `class Product { long id; int stock; String name; }` I read the offsets back: `stock` at 12, `id` at 16, `name` at 24. The `int` moved ahead of the `long` to fill the 4 bytes after the 12-byte header. That's why tools like JOL exist; reasoning about layout from the source is unreliable.",
             },
             {
               question: "What's the difference between allocation rate and retention, and how does each show up?",

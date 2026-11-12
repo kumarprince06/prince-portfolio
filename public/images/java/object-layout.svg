@@ -2,7 +2,7 @@
   <rect width="1200" height="600" rx="28" fill="#0D0D0D"/>
   <path d="M80 130H1120" stroke="#2B2B2B" stroke-width="2"/>
   <text x="80" y="82" fill="#FB923C" font-family="Arial, sans-serif" font-size="18" letter-spacing="4">ONE OBJECT ON THE HEAP, BYTE BY BYTE</text>
-  <text x="80" y="112" fill="#777777" font-family="Arial, sans-serif" font-size="16">new Trip(1L, 12, "Pune") on JDK 21, 64-bit, compressed class pointers and oops (the default under 32 GB)</text>
+  <text x="80" y="112" fill="#777777" font-family="Arial, sans-serif" font-size="16">new Product(1L, 12, "Pen") on JDK 21, 64-bit, compressed class pointers and oops (the default under 32 GB)</text>
 
   <!-- offsets -->
   <g font-family="Arial, sans-serif" font-size="14" fill="#888888">
@@ -15,7 +15,7 @@
     <text x="1100" y="190">32</text>
   </g>
 
-  <!-- cells: 8 bytes = 320px is too wide; scale: mark 0-8 (80-400), klass 8-12 (400-560), km 12-16 (560-720), id 16-24 (720-880), city 24-28 (880-1000), pad 28-32 (1000-1120) -->
+  <!-- cells: 8 bytes = 320px is too wide; scale: mark 0-8 (80-400), klass 8-12 (400-560), stock 12-16 (560-720), id 16-24 (720-880), name 24-28 (880-1000), pad 28-32 (1000-1120) -->
   <rect x="80" y="205" width="320" height="110" rx="10" fill="#21180F" stroke="#FB923C" stroke-width="2"/>
   <text x="100" y="245" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="18">mark word</text>
   <text x="100" y="272" fill="#C6A17A" font-family="Arial, sans-serif" font-size="14">identity hash, GC age,</text>
@@ -23,11 +23,11 @@
 
   <rect x="400" y="205" width="160" height="110" rx="10" fill="#21180F" stroke="#FB923C" stroke-width="2"/>
   <text x="415" y="245" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="18">class pointer</text>
-  <text x="415" y="272" fill="#C6A17A" font-family="Arial, sans-serif" font-size="14">→ Trip in</text>
+  <text x="415" y="272" fill="#C6A17A" font-family="Arial, sans-serif" font-size="14">→ Product in</text>
   <text x="415" y="294" fill="#C6A17A" font-family="Arial, sans-serif" font-size="14">Metaspace · 4</text>
 
   <rect x="560" y="205" width="160" height="110" rx="10" fill="#0F1A21" stroke="#60A5FA" stroke-width="2"/>
-  <text x="575" y="245" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="18">int km</text>
+  <text x="575" y="245" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="18">int stock</text>
   <text x="575" y="272" fill="#93B4D6" font-family="Arial, sans-serif" font-size="14">= 12</text>
   <text x="575" y="294" fill="#93B4D6" font-family="Arial, sans-serif" font-size="14">fills the gap · 4</text>
 
@@ -37,7 +37,7 @@
   <text x="735" y="294" fill="#93B4D6" font-family="Arial, sans-serif" font-size="14">8-aligned · 8</text>
 
   <rect x="880" y="205" width="120" height="110" rx="10" fill="#0F1A21" stroke="#60A5FA" stroke-width="2"/>
-  <text x="893" y="245" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="18">city</text>
+  <text x="893" y="245" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="18">name</text>
   <text x="893" y="272" fill="#93B4D6" font-family="Arial, sans-serif" font-size="14">reference</text>
   <text x="893" y="294" fill="#93B4D6" font-family="Arial, sans-serif" font-size="14">· 4</text>
 
@@ -56,12 +56,12 @@
   <path d="M940 315V420" stroke="#60A5FA" stroke-width="2"/>
   <path d="M935 411L940 420L945 411" stroke="#60A5FA" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
   <rect x="800" y="425" width="320" height="110" rx="10" fill="#151515" stroke="#2B2B2B" stroke-width="2"/>
-  <text x="820" y="462" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="17">String "Pune" (string pool)</text>
+  <text x="820" y="462" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="17">String "Pen" (string pool)</text>
   <text x="820" y="490" fill="#888888" font-family="Arial, sans-serif" font-size="14">a separate heap object, with its own</text>
   <text x="820" y="512" fill="#888888" font-family="Arial, sans-serif" font-size="14">header and a byte[] holding the text</text>
 
   <text x="80" y="430" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="17">Total: 28 bytes of real data → 32 bytes allocated</text>
   <text x="80" y="462" fill="#888888" font-family="Arial, sans-serif" font-size="15">Objects start on 8-byte boundaries, so sizes round up.</text>
-  <text x="80" y="488" fill="#888888" font-family="Arial, sans-serif" font-size="15">The JVM picks the field order: km was declared after id,</text>
+  <text x="80" y="488" fill="#888888" font-family="Arial, sans-serif" font-size="15">The JVM picks the field order: stock was declared after id,</text>
   <text x="80" y="514" fill="#888888" font-family="Arial, sans-serif" font-size="15">but it is placed first to fill the gap after the header.</text>
 </svg>
