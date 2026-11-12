@@ -1,0 +1,73 @@
+<svg width="1200" height="700" viewBox="0 0 1200 700" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="700" rx="28" fill="#0D0D0D"/>
+  <path d="M80 130H1120" stroke="#2B2B2B" stroke-width="2"/>
+  <text x="80" y="82" fill="#FB923C" font-family="Arial, sans-serif" font-size="18" letter-spacing="4">UNWINDING, ONE FRAME AT A TIME</text>
+  <text x="80" y="112" fill="#777777" font-family="Arial, sans-serif" font-size="16">Unwind.java: an IllegalStateException thrown in checkStock, searched for in each frame's exception table</text>
+
+  <g font-family="Arial, sans-serif">
+    <text x="80" y="168" fill="#888888" font-size="14">THE MAIN THREAD'S STACK (TOP FIRST)</text>
+    <text x="600" y="168" fill="#888888" font-size="14">WHAT THE SEARCH FINDS</text>
+
+    <!-- frames -->
+    <rect x="80" y="184" width="400" height="96" rx="10" fill="#151515" stroke="#444444" stroke-width="2" stroke-dasharray="6 6"/>
+    <text x="100" y="219" fill="#AAAAAA" font-size="18">checkStock(9)</text>
+    <text x="100" y="246" fill="#777777" font-size="14">athrow at line 5</text>
+    <text x="100" y="266" fill="#777777" font-size="14">"checkStock: ok" never prints</text>
+
+    <rect x="80" y="304" width="400" height="96" rx="10" fill="#151515" stroke="#444444" stroke-width="2" stroke-dasharray="6 6"/>
+    <text x="100" y="339" fill="#AAAAAA" font-size="18">reserve(9)</text>
+    <text x="100" y="366" fill="#777777" font-size="14">pc 9: the call to checkStock</text>
+    <text x="100" y="386" fill="#777777" font-size="14">"reserve: end" never prints</text>
+
+    <rect x="80" y="424" width="400" height="96" rx="10" fill="#151515" stroke="#444444" stroke-width="2" stroke-dasharray="6 6"/>
+    <text x="100" y="459" fill="#AAAAAA" font-size="18">placeOrder(9)</text>
+    <text x="100" y="486" fill="#777777" font-size="14">pc: the call to reserve</text>
+    <text x="100" y="506" fill="#777777" font-size="14">"placeOrder: end" never prints</text>
+
+    <rect x="80" y="544" width="400" height="96" rx="10" fill="#0F1A21" stroke="#60A5FA" stroke-width="2"/>
+    <text x="100" y="579" fill="#FFFFFF" font-size="18">main(args)</text>
+    <text x="100" y="606" fill="#93B4D6" font-size="14">pc 2: the call to placeOrder</text>
+    <text x="100" y="626" fill="#93B4D6" font-size="14">the only frame that survives</text>
+
+    <!-- results -->
+    <rect x="600" y="184" width="520" height="96" rx="10" fill="#151515" stroke="#444444" stroke-width="2"/>
+    <text x="620" y="219" fill="#AAAAAA" font-size="17">no exception table</text>
+    <text x="620" y="246" fill="#777777" font-size="14">nothing can match</text>
+    <text x="620" y="266" fill="#777777" font-size="14">frame popped, rethrown in the caller</text>
+
+    <rect x="600" y="304" width="520" height="96" rx="10" fill="#21180F" stroke="#FB923C" stroke-width="2"/>
+    <text x="620" y="339" fill="#FFFFFF" font-size="17">8–20 NumberFormatException: no · 8–20 any: yes</text>
+    <text x="620" y="366" fill="#C6A17A" font-size="14">jump to 51: prints "reserve: finally", then athrow</text>
+    <text x="620" y="386" fill="#C6A17A" font-size="14">61 is in no row: frame popped, rethrown in the caller</text>
+
+    <rect x="600" y="424" width="520" height="96" rx="10" fill="#151515" stroke="#444444" stroke-width="2"/>
+    <text x="620" y="459" fill="#AAAAAA" font-size="17">no exception table</text>
+    <text x="620" y="486" fill="#777777" font-size="14">no try in this method at all</text>
+    <text x="620" y="506" fill="#777777" font-size="14">frame popped, rethrown in the caller</text>
+
+    <rect x="600" y="544" width="520" height="96" rx="10" fill="#0F1A21" stroke="#60A5FA" stroke-width="2"/>
+    <text x="620" y="579" fill="#FFFFFF" font-size="17">0–13 IllegalStateException: match</text>
+    <text x="620" y="606" fill="#93B4D6" font-size="14">jump to 16: prints the message and the four saved frames</text>
+    <text x="620" y="626" fill="#93B4D6" font-size="14">then "main: carries on"</text>
+  </g>
+
+  <!-- frame to result arrows -->
+  <path d="M480 232H588" stroke="#444444" stroke-width="2"/>
+  <path d="M579 227L588 232L579 237" stroke="#444444" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M480 352H588" stroke="#FB923C" stroke-width="2"/>
+  <path d="M579 347L588 352L579 357" stroke="#FB923C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M480 472H588" stroke="#444444" stroke-width="2"/>
+  <path d="M579 467L588 472L579 477" stroke="#444444" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M480 592H588" stroke="#60A5FA" stroke-width="2"/>
+  <path d="M579 587L588 592L579 597" stroke="#60A5FA" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+
+  <!-- propagation arrows between result boxes -->
+  <path d="M1090 280V296" stroke="#FB923C" stroke-width="2"/>
+  <path d="M1085 288L1090 297L1095 288" stroke="#FB923C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M1090 400V416" stroke="#FB923C" stroke-width="2"/>
+  <path d="M1085 408L1090 417L1095 408" stroke="#FB923C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M1090 520V536" stroke="#FB923C" stroke-width="2"/>
+  <path d="M1085 528L1090 537L1095 528" stroke="#FB923C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+
+  <text x="80" y="672" fill="#888888" font-family="Arial, sans-serif" font-size="15">Dashed frames were popped before main's handler ran. The stack trace still lists all four: it was captured by the constructor.</text>
+</svg>
