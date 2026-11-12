@@ -1,0 +1,96 @@
+<svg width="1200" height="720" viewBox="0 0 1200 720" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="720" rx="28" fill="#0D0D0D"/>
+  <path d="M80 130H1120" stroke="#2B2B2B" stroke-width="2"/>
+  <text x="80" y="82" fill="#FB923C" font-family="Arial, sans-serif" font-size="18" letter-spacing="4">THE ENCAPSULATION BOUNDARY</text>
+  <text x="80" y="112" fill="#777777" font-family="Arial, sans-serif" font-size="16">A BankAccount object: private state inside, three public operations on the edge, every write checked. Amounts in paise.</text>
+
+  <!-- column labels -->
+  <text x="80" y="168" fill="#888888" font-family="Arial, sans-serif" font-size="14" letter-spacing="2">OUTSIDE · other classes</text>
+  <text x="500" y="168" fill="#888888" font-family="Arial, sans-serif" font-size="14" letter-spacing="2">INSIDE · the BankAccount class, one object on the heap</text>
+
+  <!-- the boundary -->
+  <rect x="500" y="185" width="620" height="487" rx="16" fill="#151515" stroke="#FB923C" stroke-width="2" stroke-dasharray="8 6"/>
+
+  <!-- caller that tells -->
+  <rect x="80" y="185" width="300" height="270" rx="10" fill="#0F1A21" stroke="#60A5FA" stroke-width="2"/>
+  <text x="100" y="217" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="17">Checkout</text>
+  <text x="182" y="217" fill="#93B4D6" font-family="Arial, sans-serif" font-size="14">tells, never reaches in</text>
+  <text x="100" y="246" fill="#93B4D6" font-family="Arial, sans-serif" font-size="15">asha.balance()</text>
+  <text x="100" y="336" fill="#93B4D6" font-family="Arial, sans-serif" font-size="15">asha.credit(50_000)</text>
+  <text x="100" y="426" fill="#93B4D6" font-family="Arial, sans-serif" font-size="15">asha.debit(32_000)</text>
+
+  <!-- arrows caller -> ports -->
+  <path d="M250 240H442" stroke="#60A5FA" stroke-width="2"/>
+  <path d="M434 235L443 240L434 245" stroke="#60A5FA" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M250 330H442" stroke="#60A5FA" stroke-width="2"/>
+  <path d="M434 325L443 330L434 335" stroke="#60A5FA" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M250 420H442" stroke="#60A5FA" stroke-width="2"/>
+  <path d="M434 415L443 420L434 425" stroke="#60A5FA" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+
+  <!-- ports on the edge -->
+  <rect x="450" y="210" width="190" height="60" rx="10" fill="#21180F" stroke="#FB923C" stroke-width="2"/>
+  <text x="470" y="246" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="17">balance()</text>
+  <rect x="450" y="300" width="190" height="60" rx="10" fill="#21180F" stroke="#FB923C" stroke-width="2"/>
+  <text x="470" y="336" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="17">credit(amount)</text>
+  <rect x="450" y="390" width="190" height="60" rx="10" fill="#21180F" stroke="#FB923C" stroke-width="2"/>
+  <text x="470" y="426" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="17">debit(amount)</text>
+
+  <!-- checks -->
+  <rect x="672" y="210" width="180" height="60" rx="10" fill="#151515" stroke="#444444" stroke-width="2"/>
+  <text x="690" y="245" fill="#AAAAAA" font-family="Arial, sans-serif" font-size="15">read only</text>
+  <rect x="672" y="300" width="180" height="60" rx="10" fill="#151515" stroke="#444444" stroke-width="2"/>
+  <text x="690" y="335" fill="#AAAAAA" font-family="Arial, sans-serif" font-size="15">amount &gt; 0</text>
+  <rect x="672" y="390" width="180" height="60" rx="10" fill="#151515" stroke="#444444" stroke-width="2"/>
+  <text x="690" y="415" fill="#AAAAAA" font-family="Arial, sans-serif" font-size="15">amount &gt; 0</text>
+  <text x="690" y="437" fill="#AAAAAA" font-family="Arial, sans-serif" font-size="15">amount &lt;= balance</text>
+
+  <!-- port -> check -->
+  <path d="M640 240H664" stroke="#FB923C" stroke-width="2"/>
+  <path d="M656 235L665 240L656 245" stroke="#FB923C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M640 330H664" stroke="#FB923C" stroke-width="2"/>
+  <path d="M656 325L665 330L656 335" stroke="#FB923C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M640 420H664" stroke="#FB923C" stroke-width="2"/>
+  <path d="M656 415L665 420L656 425" stroke="#FB923C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+
+  <!-- check -> state -->
+  <path d="M852 240H882" stroke="#FB923C" stroke-width="2"/>
+  <path d="M874 235L883 240L874 245" stroke="#FB923C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M852 330H882" stroke="#FB923C" stroke-width="2"/>
+  <path d="M874 325L883 330L874 335" stroke="#FB923C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M852 420H882" stroke="#FB923C" stroke-width="2"/>
+  <path d="M874 415L883 420L874 425" stroke="#FB923C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+
+  <!-- private state -->
+  <rect x="890" y="210" width="200" height="240" rx="10" fill="#132433" stroke="#60A5FA" stroke-width="2"/>
+  <text x="910" y="240" fill="#93B4D6" font-family="Arial, sans-serif" font-size="13" letter-spacing="2">PRIVATE STATE</text>
+  <text x="910" y="285" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="18">long balance</text>
+  <text x="910" y="310" fill="#93B4D6" font-family="Arial, sans-serif" font-size="15">18000 paise</text>
+  <text x="910" y="360" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="18">String currency</text>
+  <text x="910" y="385" fill="#93B4D6" font-family="Arial, sans-serif" font-size="15">"INR", final</text>
+  <text x="910" y="428" fill="#93B4D6" font-family="Arial, sans-serif" font-size="14">no setters</text>
+
+  <!-- rejected path from the debit check -->
+  <path d="M762 450V480" stroke="#777777" stroke-width="2" stroke-dasharray="5 5"/>
+  <path d="M757 472L762 481L767 472" stroke="#777777" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="672" y="488" width="418" height="66" rx="10" fill="#151515" stroke="#444444" stroke-width="2" stroke-dasharray="6 6"/>
+  <text x="690" y="515" fill="#AAAAAA" font-family="Arial, sans-serif" font-size="15">debit(25_000) when the balance is 18000</text>
+  <text x="690" y="540" fill="#777777" font-family="Arial, sans-serif" font-size="14">IllegalStateException; nothing is written, balance stays 18000</text>
+
+  <!-- invariants -->
+  <text x="530" y="612" fill="#FB923C" font-family="Arial, sans-serif" font-size="15">Invariants, true between calls: balance &gt;= 0, currency never changes</text>
+  <text x="530" y="640" fill="#C6A17A" font-family="Arial, sans-serif" font-size="14">Only credit and debit ever write balance, so the rules live in exactly two places.</text>
+
+  <!-- caller that reaches in -->
+  <rect x="80" y="490" width="312" height="182" rx="10" fill="#151515" stroke="#444444" stroke-width="2" stroke-dasharray="6 6"/>
+  <text x="100" y="522" fill="#AAAAAA" font-family="Arial, sans-serif" font-size="17">Code that reaches in</text>
+  <text x="100" y="549" fill="#777777" font-family="Arial, sans-serif" font-size="15">account.balance = -500;</text>
+  <text x="100" y="588" fill="#FB923C" font-family="Arial, sans-serif" font-size="14">stopped by javac:</text>
+  <text x="100" y="608" fill="#777777" font-family="Arial, sans-serif" font-size="14">balance has private access in BankAccount</text>
+  <text x="100" y="638" fill="#FB923C" font-family="Arial, sans-serif" font-size="14">stale .class file? stopped by the JVM:</text>
+  <text x="100" y="658" fill="#777777" font-family="Arial, sans-serif" font-size="14">java.lang.IllegalAccessError</text>
+
+  <!-- blocked arrow -->
+  <path d="M290 545C380 545 420 560 486 560" stroke="#777777" stroke-width="2" stroke-dasharray="5 5"/>
+  <path d="M500 540V580" stroke="#FB923C" stroke-width="4" stroke-linecap="round"/>
+  <path d="M478 551L494 569M494 551L478 569" stroke="#FB923C" stroke-width="2.5" stroke-linecap="round"/>
+</svg>
