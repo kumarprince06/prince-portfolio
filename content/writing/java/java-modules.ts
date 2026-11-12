@@ -17,7 +17,7 @@ export const javaModules: Lesson = {
         },
         {
           type: "paragraph",
-          text: "A **module** is the layer above packages. It's a named group of packages with a descriptor, `module-info.java`, that states two things the classpath never could: which other modules it needs (`requires`), and which of its packages other modules may use (`exports`). Everything else is hidden, including public classes. The JVM enforces it at compile time, at link time and in reflection, which the JDK calls **strong encapsulation**.",
+          text: "A **module** is the layer above packages. It's a named group of packages with a descriptor, `module-info.java`, that states two things the classpath never could: which other modules it needs (`requires`), and which of its packages other modules may use (`exports`). Everything else is hidden, including public classes. `javac` enforces that at compile time and the JVM enforces it again at link time and in reflection, which the JDK calls **strong encapsulation**.",
         },
         {
           type: "paragraph",
@@ -53,7 +53,7 @@ export const javaModules: Lesson = {
           headers: ["Version", "Change", "Why it matters here"],
           rows: [
             ["Java 9 (2017)", "JEP 200 (the modular JDK), JEP 201 (modular source code), JEP 220 (modular run-time images), JEP 260 (encapsulate most internal APIs), JEP 261 (the module system), JEP 282 (`jlink`)", "The JDK itself was split into modules (69 of them on my JDK 21, after later removals); `rt.jar` was replaced by the `lib/modules` image; `module-info.java`, the module path and `jlink` arrived"],
-            ["Java 9 (2017)", "JEP 238 (multi-release JARs)", "One JAR can carry a `module-info.class` under `META-INF/versions/9` and still run on Java 8, which is how Jackson 2.x ships it"],
+            ["Java 9 (2017)", "JEP 238 (multi-release JARs)", "One JAR can carry a `module-info.class` under `META-INF/versions/9` and still run on Java 8, which is how `jackson-databind` and `jackson-core` 2.21 ship theirs"],
             ["Java 9 to 15", "`--illegal-access=permit` by default", "Classpath code could still reflect into JDK internals, with a warning on first use"],
             ["Java 11 (2018)", "JEP 320 removed the Java EE and CORBA modules", "`java.xml.bind` (JAXB) and friends became ordinary Maven dependencies"],
             ["Java 16 (2021)", "JEP 396, strong encapsulation of JDK internals by default", "`--illegal-access=deny` became the default"],
@@ -198,7 +198,7 @@ export const javaModules: Lesson = {
             ["Unit", "Directories and JARs, flattened into one namespace", "Modules, each with a name and a boundary"],
             ["Missing dependency", "`NoClassDefFoundError` when a class is first used", "`FindException` before `main` runs"],
             ["Two copies of a library", "First JAR wins, class by class, silently", "\"Two versions of module ... found\", startup fails"],
-            ["Same package in two JARs", "Allowed, merged", "Not allowed in one layer"],
+            ["Same package in two JARs", "Allowed, merged", "Not allowed in the boot layer"],
             ["`module-info.class` in a JAR", "Ignored", "Used"],
             ["Started with", "`java -cp app.jar com.shop.Main`", "`java -p mods -m com.shop.app/com.shop.app.Main`"],
           ],
@@ -543,7 +543,7 @@ jdk.security.auth requires java.security.jgss jrt:/java.security.jgss
         },
         {
           type: "paragraph",
-          text: "(I shortened the paths.) The first five lines are my graph. The rest, 105 lines in total with 36 `binds`, is `java.base` binding service providers: `java.base` declares `uses` for things like charsets, file systems and security providers, so every JDK module that provides one gets resolved, plus their own dependencies. `jrt:/` is the URL scheme for the JDK's modules inside `lib/modules`. I counted the result from inside the program: `ModuleLayer.boot().modules().size()` was 49, my four modules and 45 from the JDK. With `--limit-modules com.shop.app`, which shrinks the set of observable modules to what the root needs, it was 5. That gap is what `jlink` exploits later.",
+          text: "(I shortened the paths, and the order of the lines changed from run to run.) The `root` line and the four `requires` lines between my modules are my graph. The rest, 98 lines in total with 36 `binds`, is `java.base` binding service providers: `java.base` declares `uses` for things like charsets, file systems and security providers, so every JDK module that provides one gets resolved, plus their own dependencies. `jrt:/` is the URL scheme for the JDK's modules inside `lib/modules`. I counted the result from inside the program: `ModuleLayer.boot().modules().size()` was 49, my four modules and 45 from the JDK. With `--limit-modules com.shop.app`, which shrinks the set of observable modules to what the root needs, it was 5. That gap is what `jlink` exploits later.",
         },
         {
           type: "heading",
@@ -612,7 +612,7 @@ java.lang opened to me: false`,
             "`java.base` and the other core modules are defined to the **bootstrap** loader, which Java represents as `null`.",
             "`java.sql` is defined to the **platform** loader (the old extension loader's replacement). Modules that don't need bootstrap privileges were moved there in Java 9.",
             "`jdk.compiler` and the other tool modules are defined to the **application** loader, the same one that loads my classpath classes and every module on the module path.",
-            "My class is in the application loader's **unnamed module**. `@4d7e1886` is its identity hash and changes between runs. It reads `java.base`, sees `java.lang` because it's exported, doesn't see `jdk.internal.misc`, and can't deep-reflect into `java.lang`. Started with `--add-opens java.base/java.lang=ALL-UNNAMED`, the last line printed `true`.",
+            "My class is in the application loader's **unnamed module**. `@4d7e1886` is its identity hash, which can differ between runs and machines. It reads `java.base`, sees `java.lang` because it's exported, doesn't see `jdk.internal.misc`, and can't deep-reflect into `java.lang`. Started with `--add-opens java.base/java.lang=ALL-UNNAMED`, the last line printed `true`.",
             "A classpath program got 62 of the JDK's 69 modules in its boot layer. When the main class is on the classpath, the default root modules are, roughly, every system module that exports an API, so classpath code can use any of them without asking.",
           ],
         },
@@ -1295,7 +1295,7 @@ src/com.shop.app/com/shop/app/Main.java:8: error: cannot find symbol
       blocks: [
         {
           type: "paragraph",
-          text: "Frameworks don't call my code the way `Main` does. Jackson finds fields by name, Spring sets private `@Autowired` fields, Hibernate reads and writes entity fields. All of that is reflection, and modules treat reflection with two separate permissions: `exports` for public members, `opens` for everything. To see the difference, I wrote a tiny stand-in for such a framework.",
+          text: "Frameworks don't call my code the way `Main` does. Jackson finds fields by name, Spring sets private `@Autowired` fields, and Hibernate, when an entity uses field access, reads and writes its private fields. All of that is reflection, and modules treat reflection with two separate permissions: `exports` for public members, `opens` for everything. To see the difference, I wrote a tiny stand-in for such a framework.",
         },
         {
           type: "code",
@@ -1854,27 +1854,7 @@ orders java.xml`,
         },
         {
           type: "paragraph",
-          text: "Two module imports, and `List`, `Path`, `Timestamp`, `Logger` and `DocumentBuilderFactory` from five packages in four modules all resolved. The single-type import of `java.sql.Timestamp` isn't decoration. Without it, JDK 25 refused:",
-        },
-        {
-          type: "output",
-          text: `ModuleImports.java:9: error: reference to Timestamp is ambiguous
-        Timestamp placed = Timestamp.valueOf("2026-11-13 10:15:00");       // java.sql
-        ^
-  both class java.sql.Timestamp in java.sql and class java.security.Timestamp in java.security match
-ModuleImports.java:9: error: reference to Timestamp is ambiguous
-        Timestamp placed = Timestamp.valueOf("2026-11-13 10:15:00");       // java.sql
-                           ^
-  both class java.sql.Timestamp in java.sql and class java.security.Timestamp in java.security match
-2 errors`,
-        },
-        {
-          type: "list",
-          items: [
-            "Module imports are on-demand imports, so they have the same weakness: two imported packages with the same simple name make that name ambiguous, and a single-type import is how to choose. The classic pair is `java.util.Date` and `java.sql.Date`; here it was `java.security.Timestamp` from `java.base`.",
-            "It's purely a compile-time convenience. The class file has the same references as with ordinary imports, and the module graph at run time is unchanged.",
-            "JDK 25's compact source files (JEP 512) import `java.base` this way implicitly, which the Packages lesson shows.",
-          ],
+          text: "Two module imports, and `List`, `Path`, `Timestamp`, `Logger` and `DocumentBuilderFactory` from five packages in four modules all resolved: `Logger` and `DocumentBuilderFactory` came in only because `java.sql` requires `java.logging` and `java.xml` transitively. The single-type import of `java.sql.Timestamp` is needed because `java.base` exports `java.security.Timestamp` too; without it JDK 25 reported `reference to Timestamp is ambiguous`. The Packages lesson covers the rest from the import side: how module imports are shadowed, the ambiguity rules, and that they leave no trace in the class file. JDK 25's compact source files (JEP 512) import `java.base` this way implicitly.",
         },
       ],
     },
@@ -2752,7 +2732,7 @@ requires java.base mandated`,
         {
           type: "list",
           items: [
-            "Jackson 2.x ships real descriptors, inside `META-INF/versions/9` of a multi-release JAR (JEP 238), so the same JAR still runs on Java 8. On the module path these are named, explicit modules, not automatic ones, which matters for `jlink`.",
+            "`jackson-databind` and `jackson-core` 2.21.7 ship real descriptors inside `META-INF/versions/9` of a multi-release JAR (JEP 238, `Multi-Release: true` in the manifest), so the same JAR still runs on Java 8. `jackson-annotations` 2.21 has its `module-info.class` at the root. On the module path all three are named, explicit modules, not automatic ones, which matters for `jlink`.",
             "`requires java.sql static`, `java.xml static` and `java.desktop static`: Jackson's optional integrations, exactly the `requires static` pattern from earlier.",
             "`jackson-annotations` is an `open module`.",
           ],
@@ -2909,7 +2889,7 @@ java.logging@21.0.13.0.3`,
           type: "list",
           items: [
             "41 MB for the whole runtime, against 287 MB for the JDK directory it came from (63 MB without the stripping and compression options). `java.logging` is in because `jackson-databind` requires it; `java.sql`, `java.xml` and `java.desktop` are out because those requires are `static`, and the service still worked.",
-            "`jlink` accepted Jackson because its JARs have real descriptors. With the Spring example from When to Use, whose JARs are automatic modules, the same kind of command stopped with `Error: automatic module cannot be used with jlink: spring.core`.",
+            "`jlink` accepted Jackson because its JARs have real descriptors. With the Spring example from When to Use, whose JARs are automatic modules, the same kind of command stopped with `Error: automatic module cannot be used with jlink:` followed by one of the Spring JARs (which one it named changed between runs: `spring.context`, `spring.aop`, `micrometer.commons` and others).",
             "Adding `--generate-cds-archive` would cost about 25 MB and win back the startup time measured in Performance. For a listener that runs for days, I'd skip it; for a job started per message, I'd keep it.",
             "Because of `--strip-debug`, a production stack trace from this image would show `Unknown Source` instead of line numbers. Dropping that one option is the trade I'd make for a service.",
           ],
@@ -2988,7 +2968,7 @@ java.logging@21.0.13.0.3`,
             {
               question: "What are named, automatic and unnamed modules?",
               answer:
-                "A named (explicit) module has a `module-info.class` and lives on the module path. An automatic module is a plain JAR on the module path; its name comes from `Automatic-Module-Name` or the file name, it reads every module including the unnamed one, and exports and opens everything. The unnamed module is everything on the classpath: it reads all modules and exports everything, but nobody can require it.\n\n`text-tools-1.4.2.jar` became `text.tools`, and it could still call `ascii-legacy-0.9.jar` on the classpath because automatic modules read the unnamed module. Spring Framework 6.2.11's JARs are automatic modules; Jackson 2.21's are explicit ones in multi-release JARs.",
+                "A named (explicit) module has a `module-info.class` and lives on the module path. An automatic module is a plain JAR on the module path; its name comes from `Automatic-Module-Name` or the file name, it reads every module including the unnamed one, and exports and opens everything. The unnamed module is everything on the classpath: it reads all modules and exports everything, but nobody can require it.\n\n`text-tools-1.4.2.jar` became `text.tools`, and it could still call `ascii-legacy-0.9.jar` on the classpath because automatic modules read the unnamed module. Spring Framework 6.2.11's JARs are automatic modules; Jackson 2.21's are explicit ones (databind and core as multi-release JARs).",
             },
             {
               question: "Can the unnamed module read named modules? And the reverse?",
@@ -3057,7 +3037,7 @@ java.logging@21.0.13.0.3`,
             {
               question: "Why can't jlink include automatic modules?",
               answer:
-                "Because an automatic module has no real descriptor: it reads every module including the unnamed one, so its dependencies can't be known statically, and an image has no classpath to supply them. `jlink` needs a closed, fully declared graph.\n\nI got `Error: automatic module cannot be used with jlink: text.tools` for my old JAR and the same for `spring.core`. Jackson 2.21 worked because its JARs carry real `module-info.class` files under `META-INF/versions/9`.",
+                "Because an automatic module has no real descriptor: it reads every module including the unnamed one, so its dependencies can't be known statically, and an image has no classpath to supply them. `jlink` needs a closed, fully declared graph.\n\nI got `Error: automatic module cannot be used with jlink: text.tools` for my old JAR and the same error for the Spring 6.2.11 JARs. Jackson 2.21 worked because its JARs carry real `module-info.class` files (under `META-INF/versions/9` for databind and core, at the root for annotations).",
             },
             {
               question: "How did strong encapsulation of JDK internals evolve from Java 9 to 17?",

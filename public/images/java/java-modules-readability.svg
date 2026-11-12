@@ -10,6 +10,7 @@
   <rect x="80" y="165" width="290" height="200" rx="12" fill="#0F1A21" stroke="#60A5FA" stroke-width="2"/>
   <text x="100" y="197" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="18">module com.shop.app</text>
   <text x="100" y="221" fill="#93B4D6" font-family="Arial, sans-serif" font-size="14">requires com.shop.core;</text>
+  <text x="100" y="240" fill="#93B4D6" font-family="Arial, sans-serif" font-size="14">requires com.shop.reports;</text>
   <rect x="100" y="250" width="250" height="90" rx="8" fill="#132433" stroke="#2B4A63" stroke-width="1.5"/>
   <!-- closed door -->
   <rect x="116" y="266" width="34" height="56" rx="3" fill="#2B2B2B" stroke="#777777" stroke-width="2"/>
