@@ -1,0 +1,103 @@
+<svg width="1200" height="740" viewBox="0 0 1200 740" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="740" rx="28" fill="#0D0D0D"/>
+  <path d="M80 130H1120" stroke="#2B2B2B" stroke-width="2"/>
+  <text x="80" y="82" fill="#FB923C" font-family="Arial, sans-serif" font-size="18" letter-spacing="4">WHICH CONSTRUCT DOES THIS TYPE NEED?</text>
+  <text x="80" y="112" fill="#777777" font-family="Arial, sans-serif" font-size="16">Answer top to bottom. Each leaf names the example types from this lesson that ended up there.</text>
+
+  <!-- root question -->
+  <rect x="390" y="150" width="420" height="60" rx="10" fill="#151515" stroke="#444444" stroke-width="2"/>
+  <text x="600" y="186" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="17" text-anchor="middle">Is it mainly data, compared by value?</text>
+
+  <!-- root arrows -->
+  <path d="M470 210L330 246" stroke="#60A5FA" stroke-width="2"/>
+  <path d="M341 238L330 246L343 248" stroke="#60A5FA" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="380" y="222" fill="#60A5FA" font-family="Arial, sans-serif" font-size="14">yes</text>
+  <path d="M730 210L870 246" stroke="#FB923C" stroke-width="2"/>
+  <path d="M857 248L870 246L859 238" stroke="#FB923C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="800" y="222" fill="#FB923C" font-family="Arial, sans-serif" font-size="14">no</text>
+
+  <!-- level 2: data side -->
+  <rect x="80" y="250" width="470" height="70" rx="10" fill="#151515" stroke="#444444" stroke-width="2"/>
+  <text x="100" y="280" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="17">A fixed list of named constants?</text>
+  <text x="100" y="304" fill="#888888" font-family="Arial, sans-serif" font-size="14">every constant has the same fields and methods</text>
+
+  <!-- level 2: behaviour side -->
+  <rect x="650" y="250" width="470" height="70" rx="10" fill="#151515" stroke="#444444" stroke-width="2"/>
+  <text x="670" y="280" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="17">Should callers see only a contract?</text>
+  <text x="670" y="304" fill="#888888" font-family="Arial, sans-serif" font-size="14">several implementations, a fake in tests, an outside system</text>
+
+  <!-- level 2 to level 3 arrows -->
+  <path d="M185 320V369" stroke="#60A5FA" stroke-width="2"/>
+  <path d="M180 360L185 369L190 360" stroke="#60A5FA" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="194" y="352" fill="#60A5FA" font-family="Arial, sans-serif" font-size="14">yes</text>
+  <path d="M430 320V369" stroke="#60A5FA" stroke-width="2"/>
+  <path d="M425 360L430 369L435 360" stroke="#60A5FA" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="439" y="352" fill="#60A5FA" font-family="Arial, sans-serif" font-size="14">no</text>
+  <path d="M770 320V369" stroke="#FB923C" stroke-width="2"/>
+  <path d="M765 360L770 369L775 360" stroke="#FB923C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="779" y="352" fill="#FB923C" font-family="Arial, sans-serif" font-size="14">yes</text>
+  <path d="M1015 320V369" stroke="#FB923C" stroke-width="2"/>
+  <path d="M1010 360L1015 369L1020 360" stroke="#FB923C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="1024" y="352" fill="#FB923C" font-family="Arial, sans-serif" font-size="14">no</text>
+
+  <!-- level 3: enum leaf -->
+  <rect x="80" y="375" width="210" height="90" rx="10" fill="#0F1A21" stroke="#60A5FA" stroke-width="2"/>
+  <text x="98" y="408" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="18">enum</text>
+  <text x="98" y="433" fill="#93B4D6" font-family="Arial, sans-serif" font-size="14">OrderStatus,</text>
+  <text x="98" y="453" fill="#93B4D6" font-family="Arial, sans-serif" font-size="14">ShippingSpeed</text>
+
+  <!-- level 3: data question -->
+  <rect x="310" y="375" width="240" height="90" rx="10" fill="#151515" stroke="#444444" stroke-width="2"/>
+  <text x="328" y="410" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="16">A closed set of variants,</text>
+  <text x="328" y="434" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="16">each with its own data?</text>
+
+  <!-- level 3: behaviour question -->
+  <rect x="650" y="375" width="240" height="90" rx="10" fill="#151515" stroke="#444444" stroke-width="2"/>
+  <text x="668" y="410" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="16">Do they share state or</text>
+  <text x="668" y="434" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="16">a fixed sequence of steps?</text>
+
+  <!-- level 3: concrete class leaf -->
+  <rect x="910" y="375" width="210" height="90" rx="10" fill="#21180F" stroke="#FB923C" stroke-width="2"/>
+  <text x="928" y="408" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="18">concrete class</text>
+  <text x="928" y="433" fill="#C6A17A" font-family="Arial, sans-serif" font-size="14">Order, OrderService,</text>
+  <text x="928" y="453" fill="#C6A17A" font-family="Arial, sans-serif" font-size="14">TaxCalculator</text>
+
+  <!-- level 3 to level 4 arrows -->
+  <path d="M370 465L218 525" stroke="#60A5FA" stroke-width="2"/>
+  <path d="M228 517L218 525L231 527" stroke="#60A5FA" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="262" y="492" fill="#60A5FA" font-family="Arial, sans-serif" font-size="14">yes</text>
+  <path d="M480 465V524" stroke="#60A5FA" stroke-width="2"/>
+  <path d="M475 515L480 524L485 515" stroke="#60A5FA" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="489" y="502" fill="#60A5FA" font-family="Arial, sans-serif" font-size="14">no</text>
+  <path d="M730 465V524" stroke="#FB923C" stroke-width="2"/>
+  <path d="M725 515L730 524L735 515" stroke="#FB923C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="739" y="502" fill="#FB923C" font-family="Arial, sans-serif" font-size="14">yes</text>
+  <path d="M840 465L982 525" stroke="#FB923C" stroke-width="2"/>
+  <path d="M969 527L982 525L973 517" stroke="#FB923C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="906" y="492" fill="#FB923C" font-family="Arial, sans-serif" font-size="14">no</text>
+
+  <!-- level 4 leaves -->
+  <rect x="80" y="530" width="245" height="100" rx="10" fill="#0F1A21" stroke="#60A5FA" stroke-width="2"/>
+  <text x="98" y="563" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="16">sealed interface + records</text>
+  <text x="98" y="590" fill="#93B4D6" font-family="Arial, sans-serif" font-size="14">PaymentMethod: Card,</text>
+  <text x="98" y="610" fill="#93B4D6" font-family="Arial, sans-serif" font-size="14">Upi, NetBanking · OrderEvent</text>
+
+  <rect x="345" y="530" width="245" height="100" rx="10" fill="#0F1A21" stroke="#60A5FA" stroke-width="2"/>
+  <text x="363" y="563" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="16">record</text>
+  <text x="363" y="590" fill="#93B4D6" font-family="Arial, sans-serif" font-size="14">Money, Receipt,</text>
+  <text x="363" y="610" fill="#93B4D6" font-family="Arial, sans-serif" font-size="14">Address</text>
+
+  <rect x="610" y="530" width="245" height="100" rx="10" fill="#21180F" stroke="#FB923C" stroke-width="2"/>
+  <text x="628" y="563" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="16">interface + abstract skeleton</text>
+  <text x="628" y="590" fill="#C6A17A" font-family="Arial, sans-serif" font-size="14">PaymentGateway +</text>
+  <text x="628" y="610" fill="#C6A17A" font-family="Arial, sans-serif" font-size="14">AbstractPaymentGateway</text>
+
+  <rect x="875" y="530" width="245" height="100" rx="10" fill="#21180F" stroke="#FB923C" stroke-width="2"/>
+  <text x="893" y="563" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="16">interface</text>
+  <text x="893" y="590" fill="#C6A17A" font-family="Arial, sans-serif" font-size="14">ShippingCostPolicy,</text>
+  <text x="893" y="610" fill="#C6A17A" font-family="Arial, sans-serif" font-size="14">PricingRule, Channel</text>
+
+  <!-- footnotes -->
+  <text x="80" y="676" fill="#777777" font-family="Arial, sans-serif" font-size="14">Blue leaves model data, orange leaves model behaviour. An entity such as Order is compared by identity, so it takes the "no" branch.</text>
+  <text x="80" y="700" fill="#777777" font-family="Arial, sans-serif" font-size="14">Callers always depend on the interface; the abstract skeleton is an optional base for implementers, like List and AbstractList.</text>
+</svg>
