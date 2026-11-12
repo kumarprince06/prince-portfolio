@@ -2,7 +2,7 @@ import type { Lesson } from "../types";
 
 export const polymorphism: Lesson = {
   slug: "polymorphism",
-  date: "2026-11-06",
+  date: "2026-11-03",
   title: "Polymorphism",
   description:
     "How one Java call site runs different code for different objects: overloading versus overriding, every overriding rule with its real compile error, casting and pattern matching over sealed types, and how javac, HotSpot's vtables and the JIT's inline caches make dynamic dispatch cheap.",

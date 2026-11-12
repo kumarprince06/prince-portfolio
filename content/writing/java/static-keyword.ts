@@ -2,7 +2,7 @@ import type { Lesson } from "../types";
 
 export const staticKeyword: Lesson = {
   slug: "static-keyword",
-  date: "2026-11-01",
+  date: "2026-10-30",
   title: "Static Keyword",
   description:
     "What `static` really means in Java: class-level fields, methods, blocks and imports, exactly when class initialization runs, why constants go stale in jars nobody rebuilt, where HotSpot keeps static fields, and how one shared copy behaves across threads and class loaders, down to the bytecode.",

@@ -2,7 +2,7 @@ import type { Lesson } from "../types";
 
 export const classesAndObjects: Lesson = {
   slug: "classes-and-objects",
-  date: "2026-10-30",
+  date: "2026-10-28",
   title: "Classes and Objects",
   description:
     "What a class and an object really are in Java: fields and methods bundled into a type, `new` and reference variables, aliasing and helpful NullPointerExceptions, `this` as local slot 0, identity versus equality, how many objects `new String(\"book\")` creates, and a measured proof that methods are never copied into objects, down to the bytecode and the object header.",

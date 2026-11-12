@@ -2,7 +2,7 @@ import type { Lesson } from "../types";
 
 export const whenToUseWhat: Lesson = {
   slug: "when-to-use-what",
-  date: "2026-11-12",
+  date: "2026-11-10",
   title: "When to Use What in Java OOP",
   description:
     "The decision guide that closes the OOP phase: interface vs abstract class vs concrete class, inheritance vs composition vs association, class vs record vs enum vs sealed type, static vs instance, constructor vs factory vs builder, overriding vs pattern matching, mutability, nested classes vs lambdas and when not to abstract at all, each with everyday examples run on JDK 21, and ending in a worked pricing-and-payments design for a ride-hailing backend.",

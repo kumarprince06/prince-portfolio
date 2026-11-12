@@ -2,7 +2,7 @@ import type { Lesson } from "../types";
 
 export const interfaces: Lesson = {
   slug: "interfaces",
-  date: "2026-11-09",
+  date: "2026-11-06",
   title: "Interfaces",
   description:
     "Java interfaces as contracts and as types: implicit modifiers, default, static and private methods, the diamond rules, functional, marker and sealed interfaces, the full interface vs abstract class comparison, evolving a published interface safely, and how invokeinterface, itables and JDK dynamic proxies let Spring Data hand me an implementation nobody wrote.",
