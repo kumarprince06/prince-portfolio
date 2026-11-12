@@ -2,7 +2,7 @@ import type { Lesson } from "../types";
 
 export const stackVsHeap: Lesson = {
   slug: "stack-vs-heap",
-  date: "2026-11-12",
+  date: "2026-10-27",
   title: "Stack vs Heap",
   description:
     "The two memory areas every Java program uses, side by side: per-thread stacks versus the shared heap, how long values live in each, StackOverflowError versus OutOfMemoryError, why locals are thread-safe and fields are not, virtual threads whose stacks live on the heap, and reading both with jcmd in production.",

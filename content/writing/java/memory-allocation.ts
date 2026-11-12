@@ -2,7 +2,7 @@ import type { Lesson } from "../types";
 
 export const memoryAllocation: Lesson = {
   slug: "memory-allocation",
-  date: "2026-11-12",
+  date: "2026-10-25",
   title: "Memory Allocation",
   description:
     "Where every value in a Java program lives — stack frames, the heap, Metaspace — and what really happens on `new`: TLAB bump-pointer allocation, zeroing, the object header, measured object sizes, escape analysis, the string pool, and a production memory leak traced to OutOfMemoryError.",
