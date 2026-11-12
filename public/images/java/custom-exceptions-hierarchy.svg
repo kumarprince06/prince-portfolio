@@ -1,0 +1,79 @@
+<svg width="1200" height="720" viewBox="0 0 1200 720" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="720" rx="28" fill="#0D0D0D"/>
+  <path d="M80 130H1120" stroke="#2B2B2B" stroke-width="2"/>
+  <text x="80" y="82" fill="#FB923C" font-family="Arial, sans-serif" font-size="18" letter-spacing="4">AN APPLICATION EXCEPTION HIERARCHY</text>
+  <text x="80" y="112" fill="#777777" font-family="Arial, sans-serif" font-size="16">Throw specific, catch general: code throws OutOfStockException, the web edge only sees ConflictException.</text>
+
+  <!-- JDK row -->
+  <text x="80" y="168" fill="#888888" font-family="Arial, sans-serif" font-size="14" letter-spacing="2">JDK</text>
+  <rect x="80" y="180" width="220" height="56" rx="10" fill="#151515" stroke="#444444" stroke-width="1.5" stroke-dasharray="6 6"/>
+  <text x="100" y="214" fill="#AAAAAA" font-family="Arial, sans-serif" font-size="16">Throwable</text>
+  <rect x="380" y="180" width="220" height="56" rx="10" fill="#151515" stroke="#444444" stroke-width="1.5" stroke-dasharray="6 6"/>
+  <text x="400" y="214" fill="#AAAAAA" font-family="Arial, sans-serif" font-size="16">Exception</text>
+  <text x="400" y="256" fill="#777777" font-family="Arial, sans-serif" font-size="13">checked</text>
+  <rect x="680" y="180" width="260" height="56" rx="10" fill="#151515" stroke="#444444" stroke-width="1.5" stroke-dasharray="6 6"/>
+  <text x="700" y="214" fill="#AAAAAA" font-family="Arial, sans-serif" font-size="16">RuntimeException</text>
+  <text x="700" y="256" fill="#777777" font-family="Arial, sans-serif" font-size="13">unchecked</text>
+  <!-- extends arrows (child to parent) -->
+  <path d="M380 208H310" stroke="#555555" stroke-width="2"/>
+  <path d="M318 203L309 208L318 213" stroke="#555555" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M680 208H610" stroke="#555555" stroke-width="2"/>
+  <path d="M618 203L609 208L618 213" stroke="#555555" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+
+  <!-- AppException -->
+  <rect x="640" y="290" width="340" height="86" rx="10" fill="#21180F" stroke="#FB923C" stroke-width="2"/>
+  <text x="660" y="322" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="17">AppException  (abstract, sealed)</text>
+  <text x="660" y="348" fill="#C6A17A" font-family="Arial, sans-serif" font-size="14">code: stable, machine-readable</text>
+  <text x="660" y="366" fill="#C6A17A" font-family="Arial, sans-serif" font-size="14">message, cause: passed to super(...)</text>
+  <path d="M810 290V246" stroke="#FB923C" stroke-width="2"/>
+  <path d="M805 254L810 245L815 254" stroke="#FB923C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+
+  <!-- categories -->
+  <text x="80" y="330" fill="#888888" font-family="Arial, sans-serif" font-size="14" letter-spacing="2">CATEGORIES · HOW A CLIENT SHOULD REACT</text>
+  <rect x="80" y="436" width="230" height="86" rx="10" fill="#0F1A21" stroke="#60A5FA" stroke-width="2"/>
+  <text x="98" y="468" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="16">NotFoundException</text>
+  <text x="98" y="496" fill="#93B4D6" font-family="Arial, sans-serif" font-size="14">→ 404  NOT_FOUND</text>
+
+  <rect x="350" y="436" width="230" height="86" rx="10" fill="#0F1A21" stroke="#60A5FA" stroke-width="2"/>
+  <text x="368" y="468" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="16">ConflictException</text>
+  <text x="368" y="496" fill="#93B4D6" font-family="Arial, sans-serif" font-size="14">→ 409  CONFLICT</text>
+  <text x="368" y="514" fill="#93B4D6" font-family="Arial, sans-serif" font-size="12">non-sealed: open for features</text>
+
+  <rect x="620" y="436" width="230" height="86" rx="10" fill="#0F1A21" stroke="#60A5FA" stroke-width="2"/>
+  <text x="638" y="468" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="16">ValidationException</text>
+  <text x="638" y="496" fill="#93B4D6" font-family="Arial, sans-serif" font-size="14">→ 400  VALIDATION_FAILED</text>
+  <text x="638" y="514" fill="#93B4D6" font-family="Arial, sans-serif" font-size="12">errors: List.copyOf(...)</text>
+
+  <rect x="890" y="436" width="230" height="86" rx="10" fill="#0F1A21" stroke="#60A5FA" stroke-width="2"/>
+  <text x="908" y="468" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="16">DependencyException</text>
+  <text x="908" y="496" fill="#93B4D6" font-family="Arial, sans-serif" font-size="14">→ 503  DEPENDENCY_FAILED</text>
+  <text x="908" y="514" fill="#93B4D6" font-family="Arial, sans-serif" font-size="12">always has a cause</text>
+
+  <!-- category to AppException arrows -->
+  <path d="M195 436C195 400 640 395 690 378" stroke="#60A5FA" stroke-width="2"/>
+  <path d="M465 436C465 405 690 400 740 378" stroke="#60A5FA" stroke-width="2"/>
+  <path d="M735 436C735 410 790 400 800 378" stroke="#60A5FA" stroke-width="2"/>
+  <path d="M1005 436C1005 405 880 400 860 378" stroke="#60A5FA" stroke-width="2"/>
+  <path d="M685 386L690 377L695 386" stroke="#60A5FA" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M735 386L740 377L745 386" stroke="#60A5FA" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M795 386L800 377L805 386" stroke="#60A5FA" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M855 386L860 377L865 386" stroke="#60A5FA" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+
+  <!-- domain subclass -->
+  <text x="80" y="566" fill="#888888" font-family="Arial, sans-serif" font-size="14" letter-spacing="2">DOMAIN</text>
+  <rect x="350" y="580" width="230" height="76" rx="10" fill="#21180F" stroke="#FB923C" stroke-width="2"/>
+  <text x="368" y="610" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="16">OutOfStockException</text>
+  <text x="368" y="636" fill="#C6A17A" font-family="Arial, sans-serif" font-size="14">sku, requested, available</text>
+  <path d="M465 580V532" stroke="#FB923C" stroke-width="2"/>
+  <path d="M460 540L465 531L470 540" stroke="#FB923C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+
+  <rect x="890" y="580" width="230" height="76" rx="10" fill="#151515" stroke="#444444" stroke-width="1.5" stroke-dasharray="6 6"/>
+  <text x="908" y="610" fill="#AAAAAA" font-family="Arial, sans-serif" font-size="15">cause: ConnectException</text>
+  <text x="908" y="636" fill="#777777" font-family="Arial, sans-serif" font-size="13">for the log, not the response</text>
+  <path d="M1005 580V532" stroke="#555555" stroke-width="2" stroke-dasharray="5 5"/>
+
+  <text x="620" y="608" fill="#777777" font-family="Arial, sans-serif" font-size="14">One switch at the edge maps</text>
+  <text x="620" y="628" fill="#777777" font-family="Arial, sans-serif" font-size="14">categories to HTTP status;</text>
+  <text x="620" y="648" fill="#777777" font-family="Arial, sans-serif" font-size="14">subclasses inherit theirs.</text>
+  <text x="80" y="692" fill="#777777" font-family="Arial, sans-serif" font-size="14">Arrows point from a subclass to its superclass. Sealed + pattern switch: a new category won't compile until it's mapped.</text>
+</svg>

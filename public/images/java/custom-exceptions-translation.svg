@@ -1,0 +1,63 @@
+<svg width="1200" height="700" viewBox="0 0 1200 700" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="700" rx="28" fill="#0D0D0D"/>
+  <path d="M80 130H1120" stroke="#2B2B2B" stroke-width="2"/>
+  <text x="80" y="82" fill="#FB923C" font-family="Arial, sans-serif" font-size="18" letter-spacing="4">EXCEPTION TRANSLATION BETWEEN LAYERS</text>
+  <text x="80" y="112" fill="#777777" font-family="Arial, sans-serif" font-size="16">track(42) with the database down. Each layer wraps in its own vocabulary and keeps the cause.</text>
+
+  <!-- column labels -->
+  <text x="80" y="170" fill="#888888" font-family="Arial, sans-serif" font-size="14" letter-spacing="2">REPOSITORY · knows SQL</text>
+  <text x="440" y="170" fill="#888888" font-family="Arial, sans-serif" font-size="14" letter-spacing="2">SERVICE · knows orders</text>
+  <text x="800" y="170" fill="#888888" font-family="Arial, sans-serif" font-size="14" letter-spacing="2">WEB HANDLER · knows HTTP</text>
+
+  <!-- SQL exception -->
+  <rect x="80" y="186" width="320" height="104" rx="10" fill="#0F1A21" stroke="#60A5FA" stroke-width="2"/>
+  <text x="98" y="216" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="15">SQLTransientConnectionException</text>
+  <text x="98" y="242" fill="#93B4D6" font-family="Arial, sans-serif" font-size="14">SQLState 08001, thrown by the driver</text>
+  <text x="98" y="264" fill="#93B4D6" font-family="Arial, sans-serif" font-size="13">FATAL: password authentication failed</text>
+  <text x="98" y="281" fill="#93B4D6" font-family="Arial, sans-serif" font-size="13">for user "orders_rw" (host 10.0.4.17:5432)</text>
+
+  <!-- DataAccessException -->
+  <rect x="80" y="350" width="320" height="104" rx="10" fill="#21180F" stroke="#FB923C" stroke-width="2"/>
+  <text x="98" y="380" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="16">DataAccessException</text>
+  <text x="98" y="406" fill="#C6A17A" font-family="Arial, sans-serif" font-size="14">"order lookup failed for id 42"</text>
+  <text x="98" y="430" fill="#C6A17A" font-family="Arial, sans-serif" font-size="14">cause → SQLTransientConnection...</text>
+  <path d="M240 290V340" stroke="#FB923C" stroke-width="2"/>
+  <path d="M235 332L240 341L245 332" stroke="#FB923C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="252" y="321" fill="#C6A17A" font-family="Arial, sans-serif" font-size="13">catch SQLException, wrap</text>
+
+  <!-- OrderServiceException -->
+  <rect x="440" y="350" width="320" height="104" rx="10" fill="#21180F" stroke="#FB923C" stroke-width="2"/>
+  <text x="458" y="380" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="16">OrderServiceException</text>
+  <text x="458" y="406" fill="#C6A17A" font-family="Arial, sans-serif" font-size="14">"tracking unavailable", orderId = 42</text>
+  <text x="458" y="430" fill="#C6A17A" font-family="Arial, sans-serif" font-size="14">cause → DataAccessException</text>
+  <path d="M400 402H430" stroke="#FB923C" stroke-width="2"/>
+  <path d="M422 397L431 402L422 407" stroke="#FB923C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="440" y="482" fill="#777777" font-family="Arial, sans-serif" font-size="13">no java.sql type above the repository</text>
+
+  <!-- to the log -->
+  <rect x="800" y="186" width="320" height="140" rx="10" fill="#151515" stroke="#444444" stroke-width="1.5"/>
+  <text x="818" y="216" fill="#AAAAAA" font-family="Arial, sans-serif" font-size="15">LOG · the full chain</text>
+  <text x="818" y="244" fill="#AAAAAA" font-family="Arial, sans-serif" font-size="13">OrderServiceException (order 42)</text>
+  <text x="818" y="268" fill="#AAAAAA" font-family="Arial, sans-serif" font-size="13">  caused by DataAccessException</text>
+  <text x="818" y="292" fill="#AAAAAA" font-family="Arial, sans-serif" font-size="13">  caused by SQLTransientConnection...</text>
+  <text x="818" y="314" fill="#777777" font-family="Arial, sans-serif" font-size="12">for the people who fix it</text>
+
+  <!-- to the client -->
+  <rect x="800" y="390" width="320" height="100" rx="10" fill="#0F1A21" stroke="#60A5FA" stroke-width="2"/>
+  <text x="818" y="420" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="15">CLIENT · a stable message</text>
+  <text x="818" y="448" fill="#93B4D6" font-family="Arial, sans-serif" font-size="14">503 Order tracking is</text>
+  <text x="818" y="470" fill="#93B4D6" font-family="Arial, sans-serif" font-size="14">temporarily unavailable</text>
+
+  <!-- split arrows from service exception -->
+  <path d="M760 390C780 390 770 260 792 260" stroke="#888888" stroke-width="2"/>
+  <path d="M784 255L793 260L784 265" stroke="#888888" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M760 430H790" stroke="#60A5FA" stroke-width="2"/>
+  <path d="M782 425L791 430L782 435" stroke="#60A5FA" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+
+  <!-- leaky path -->
+  <rect x="80" y="540" width="1040" height="104" rx="10" fill="#151515" stroke="#444444" stroke-width="1.5" stroke-dasharray="6 6"/>
+  <text x="100" y="572" fill="#AAAAAA" font-family="Arial, sans-serif" font-size="15">✕  The leaky handler: catch (Exception e), walk to the root cause, send its message</text>
+  <text x="100" y="600" fill="#777777" font-family="Arial, sans-serif" font-size="14">500 FATAL: password authentication failed for user "orders_rw" (host 10.0.4.17:5432)</text>
+  <text x="100" y="626" fill="#777777" font-family="Arial, sans-serif" font-size="14">A database user, an internal IP and a port, handed to whoever made the request.</text>
+  <text x="80" y="674" fill="#777777" font-family="Arial, sans-serif" font-size="14">Translate where the vocabulary changes, once per layer. Wrap with the cause; never discard it.</text>
+</svg>
