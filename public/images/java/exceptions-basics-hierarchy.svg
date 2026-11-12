@@ -1,0 +1,60 @@
+<svg width="1200" height="760" viewBox="0 0 1200 760" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="760" rx="28" fill="#0D0D0D"/>
+  <path d="M80 130H1120" stroke="#2B2B2B" stroke-width="2"/>
+  <text x="80" y="82" fill="#FB923C" font-family="Arial, sans-serif" font-size="18" letter-spacing="4">THE THROWABLE HIERARCHY</text>
+  <text x="80" y="112" fill="#777777" font-family="Arial, sans-serif" font-size="16">Orange: checked, javac enforces catch-or-declare. Blue: unchecked. Grey: errors, not meant to be caught.</text>
+  <rect x="430" y="150" width="340" height="64" rx="10" fill="#21180F" stroke="#FB923C" stroke-width="2"/>
+  <text x="450" y="178" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="18">Throwable</text>
+  <text x="450" y="200" fill="#C6A17A" font-family="Arial, sans-serif" font-size="14">message · cause · stack trace · suppressed</text>
+  <path d="M600 214V236H240M600 236H780" stroke="#777777" stroke-width="2"/>
+  <path d="M240 236V258" stroke="#777777" stroke-width="2"/>
+  <path d="M235 249L240 258L245 249" stroke="#777777" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M780 236V258" stroke="#FB923C" stroke-width="2"/>
+  <path d="M775 249L780 258L785 249" stroke="#FB923C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="80" y="260" width="320" height="64" rx="10" fill="#151515" stroke="#444444" stroke-width="2" stroke-dasharray="6 6"/>
+  <text x="100" y="288" fill="#AAAAAA" font-family="Arial, sans-serif" font-size="18">Error</text>
+  <text x="100" y="310" fill="#777777" font-family="Arial, sans-serif" font-size="14">the JVM or its environment failed</text>
+  <rect x="440" y="260" width="680" height="64" rx="10" fill="#21180F" stroke="#FB923C" stroke-width="2"/>
+  <text x="460" y="288" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="18">Exception</text>
+  <text x="460" y="310" fill="#C6A17A" font-family="Arial, sans-serif" font-size="14">checked, and so is every subclass outside RuntimeException</text>
+  <path d="M240 324V356" stroke="#777777" stroke-width="2"/>
+  <path d="M235 347L240 356L245 347" stroke="#777777" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="80" y="360" width="320" height="218" rx="10" fill="#151515" stroke="#444444" stroke-width="2" stroke-dasharray="6 6"/>
+  <text x="100" y="392" fill="#777777" font-family="Arial, sans-serif" font-size="14">VirtualMachineError</text>
+  <text x="122" y="420" fill="#AAAAAA" font-family="Arial, sans-serif" font-size="15">StackOverflowError</text>
+  <text x="122" y="448" fill="#AAAAAA" font-family="Arial, sans-serif" font-size="15">OutOfMemoryError</text>
+  <text x="100" y="476" fill="#777777" font-family="Arial, sans-serif" font-size="14">LinkageError</text>
+  <text x="122" y="504" fill="#AAAAAA" font-family="Arial, sans-serif" font-size="15">NoClassDefFoundError</text>
+  <text x="122" y="532" fill="#AAAAAA" font-family="Arial, sans-serif" font-size="15">ExceptionInInitializerError</text>
+  <text x="100" y="560" fill="#AAAAAA" font-family="Arial, sans-serif" font-size="15">AssertionError</text>
+  <path d="M600 324V356" stroke="#FB923C" stroke-width="2"/>
+  <path d="M595 347L600 356L605 347" stroke="#FB923C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="440" y="360" width="320" height="190" rx="10" fill="#21180F" stroke="#FB923C" stroke-width="2"/>
+  <text x="460" y="392" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="15">IOException</text>
+  <text x="482" y="420" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="15">FileNotFoundException</text>
+  <text x="460" y="448" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="15">InterruptedException</text>
+  <text x="460" y="476" fill="#C6A17A" font-family="Arial, sans-serif" font-size="14">ReflectiveOperationException</text>
+  <text x="482" y="504" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="15">ClassNotFoundException</text>
+  <text x="460" y="532" fill="#C6A17A" font-family="Arial, sans-serif" font-size="14">your own: extends Exception</text>
+  <path d="M960 324V356" stroke="#60A5FA" stroke-width="2"/>
+  <path d="M955 347L960 356L965 347" stroke="#60A5FA" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="800" y="360" width="320" height="64" rx="10" fill="#0F1A21" stroke="#60A5FA" stroke-width="2"/>
+  <text x="820" y="388" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="18">RuntimeException</text>
+  <text x="820" y="410" fill="#93B4D6" font-family="Arial, sans-serif" font-size="14">unchecked: no catch-or-declare rule</text>
+  <path d="M960 424V446" stroke="#60A5FA" stroke-width="2"/>
+  <path d="M955 437L960 446L965 437" stroke="#60A5FA" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="800" y="450" width="320" height="282" rx="10" fill="#0F1A21" stroke="#60A5FA" stroke-width="2"/>
+  <text x="820" y="482" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="15">NullPointerException</text>
+  <text x="820" y="508" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="15">ArithmeticException</text>
+  <text x="820" y="534" fill="#93B4D6" font-family="Arial, sans-serif" font-size="14">IndexOutOfBoundsException</text>
+  <text x="842" y="560" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="15">ArrayIndexOutOfBoundsException</text>
+  <text x="820" y="586" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="15">ClassCastException</text>
+  <text x="820" y="612" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="15">IllegalArgumentException</text>
+  <text x="842" y="638" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="15">NumberFormatException</text>
+  <text x="820" y="664" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="15">IllegalStateException</text>
+  <text x="820" y="690" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="15">UnsupportedOperationException</text>
+  <text x="820" y="716" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="15">ConcurrentModificationException</text>
+  <text x="80" y="640" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="16">Only Throwable and its subclasses can follow throw.</text>
+  <text x="80" y="668" fill="#888888" font-family="Arial, sans-serif" font-size="15">Checked or unchecked is decided by javac alone (JLS 11.1.1).</text>
+  <text x="80" y="694" fill="#888888" font-family="Arial, sans-serif" font-size="15">The JVM throws and catches all of them the same way.</text>
+</svg>

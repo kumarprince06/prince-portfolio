@@ -1,0 +1,61 @@
+<svg width="1200" height="640" viewBox="0 0 1200 640" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="640" rx="28" fill="#0D0D0D"/>
+  <path d="M80 130H1120" stroke="#2B2B2B" stroke-width="2"/>
+  <text x="80" y="82" fill="#FB923C" font-family="Arial, sans-serif" font-size="18" letter-spacing="4">FROM NEW TO THE UNCAUGHT HANDLER</text>
+  <text x="80" y="112" fill="#777777" font-family="Arial, sans-serif" font-size="16">checkout("three") in Unwinding.java: the trace is recorded at new, then frames are popped until a handler matches</text>
+  <text x="80" y="166" fill="#888888" font-family="Arial, sans-serif" font-size="14">THREAD STACK, TOP FIRST</text>
+  <rect x="80" y="180" width="400" height="58" rx="10" fill="#151515" stroke="#444444" stroke-width="2" stroke-dasharray="6 6"/>
+  <text x="98" y="205" fill="#AAAAAA" font-family="Arial, sans-serif" font-size="17">3 JDK frames inside Integer.parseInt</text>
+  <text x="98" y="225" fill="#777777" font-family="Arial, sans-serif" font-size="14">new NumberFormatException, then athrow</text>
+  <rect x="80" y="250" width="400" height="58" rx="10" fill="#21180F" stroke="#FB923C" stroke-width="2"/>
+  <text x="98" y="275" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="17">parse</text>
+  <text x="98" y="295" fill="#C6A17A" font-family="Arial, sans-serif" font-size="14">no handler in its exception table: pop</text>
+  <rect x="80" y="320" width="400" height="58" rx="10" fill="#21180F" stroke="#FB923C" stroke-width="2"/>
+  <text x="98" y="345" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="17">addItem</text>
+  <text x="98" y="365" fill="#C6A17A" font-family="Arial, sans-serif" font-size="14">no handler: pop, "addItem: end" skipped</text>
+  <rect x="80" y="390" width="400" height="58" rx="10" fill="#21180F" stroke="#FB923C" stroke-width="2"/>
+  <text x="98" y="415" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="17">checkout</text>
+  <text x="98" y="435" fill="#C6A17A" font-family="Arial, sans-serif" font-size="14">no handler: pop, "checkout: end" skipped</text>
+  <rect x="80" y="460" width="400" height="58" rx="10" fill="#0F1A21" stroke="#60A5FA" stroke-width="2"/>
+  <text x="98" y="485" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="17">main</text>
+  <text x="98" y="505" fill="#93B4D6" font-family="Arial, sans-serif" font-size="14">catch (NumberFormatException e) matches</text>
+  <path d="M60 200V518" stroke="#FB923C" stroke-width="2"/>
+  <path d="M55 509L60 518L65 509" stroke="#FB923C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="560" y="180" width="560" height="58" rx="10" fill="#21180F" stroke="#FB923C" stroke-width="2"/>
+  <text x="578" y="205" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="17">1. new: the Throwable constructor calls fillInStackTrace()</text>
+  <text x="578" y="225" fill="#C6A17A" font-family="Arial, sans-serif" font-size="14">the JVM records 7 frames now, before anything is thrown</text>
+  <path d="M840 238V258" stroke="#FB923C" stroke-width="2"/>
+  <path d="M835 249L840 258L845 249" stroke="#FB923C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="560" y="262" width="560" height="58" rx="10" fill="#21180F" stroke="#FB923C" stroke-width="2"/>
+  <text x="578" y="287" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="17">2. athrow: search the exception table of each frame</text>
+  <text x="578" y="307" fill="#C6A17A" font-family="Arial, sans-serif" font-size="14">no matching entry: discard the frame, try the caller</text>
+  <path d="M840 320V334" stroke="#FB923C" stroke-width="2"/>
+  <rect x="560" y="344" width="270" height="82" rx="10" fill="#0F1A21" stroke="#60A5FA" stroke-width="2"/>
+  <text x="578" y="369" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="17">match found</text>
+  <text x="578" y="389" fill="#93B4D6" font-family="Arial, sans-serif" font-size="14">jump to the handler;</text>
+  <text x="578" y="409" fill="#93B4D6" font-family="Arial, sans-serif" font-size="14">the thread carries on</text>
+  <rect x="850" y="344" width="270" height="82" rx="10" fill="#151515" stroke="#444444" stroke-width="2" stroke-dasharray="6 6"/>
+  <text x="868" y="369" fill="#AAAAAA" font-family="Arial, sans-serif" font-size="17">no frame matches</text>
+  <text x="868" y="389" fill="#777777" font-family="Arial, sans-serif" font-size="14">every frame is popped,</text>
+  <text x="868" y="409" fill="#777777" font-family="Arial, sans-serif" font-size="14">and the thread will end</text>
+  <path d="M695 334H985" stroke="#777777" stroke-width="2"/>
+  <path d="M695 334V340" stroke="#60A5FA" stroke-width="2"/>
+  <path d="M690 331L695 340L700 331" stroke="#60A5FA" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M985 334V340" stroke="#777777" stroke-width="2"/>
+  <path d="M980 331L985 340L990 331" stroke="#777777" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M985 426V446" stroke="#777777" stroke-width="2"/>
+  <path d="M980 437L985 446L990 437" stroke="#777777" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="850" y="450" width="270" height="82" rx="10" fill="#151515" stroke="#444444" stroke-width="2" stroke-dasharray="6 6"/>
+  <text x="868" y="475" fill="#AAAAAA" font-family="Arial, sans-serif" font-size="17">dispatchUncaughtException</text>
+  <text x="868" y="495" fill="#777777" font-family="Arial, sans-serif" font-size="14">handler, or ThreadGroup:</text>
+  <text x="868" y="515" fill="#777777" font-family="Arial, sans-serif" font-size="14">"Exception in thread ..."</text>
+  <path d="M985 532V552" stroke="#777777" stroke-width="2"/>
+  <path d="M980 543L985 552L990 543" stroke="#777777" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="850" y="556" width="270" height="58" rx="10" fill="#151515" stroke="#444444" stroke-width="2" stroke-dasharray="6 6"/>
+  <text x="868" y="581" fill="#AAAAAA" font-family="Arial, sans-serif" font-size="16">main thread: exit code 1</text>
+  <text x="868" y="601" fill="#777777" font-family="Arial, sans-serif" font-size="14">other threads keep running</text>
+  <text x="560" y="478" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="15">Checked or unchecked makes no</text>
+  <text x="560" y="500" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="15">difference here: the JVM only</text>
+  <text x="560" y="522" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="15">compares the thrown class with</text>
+  <text x="560" y="544" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="15">each handler's catch type.</text>
+</svg>
