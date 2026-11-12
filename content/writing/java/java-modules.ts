@@ -25,7 +25,7 @@ export const javaModules: Lesson = {
         },
         {
           type: "paragraph",
-          text: "This lesson goes from the directives in `module-info.java`, each with a multi-module project I compiled and ran, through the module path versus the classpath, reflection and `opens`, services, and the JDK's own tools (`jdeps`, `jlink`), down to what's in the class file and how the boot layer is built. It ends with a ride-hailing service where Jackson can't deserialise a fare quote until one `opens` line is added, and a `jlink` image of that service at a fraction of the JDK's size.",
+          text: "This lesson goes from the directives in `module-info.java`, each with a multi-module project I compiled and ran, through the module path versus the classpath, reflection and `opens`, services, and the JDK's own tools (`jdeps`, `jlink`), down to what's in the class file and how the boot layer is built. It ends with a production service where Jackson can't deserialise an incoming message until one `opens` line is added, and a `jlink` image of that service at a fraction of the JDK's size.",
         },
       ],
     },
@@ -52,7 +52,7 @@ export const javaModules: Lesson = {
           type: "table",
           headers: ["Version", "Change", "Why it matters here"],
           rows: [
-            ["Java 9 (2017)", "JEP 200 (the modular JDK), JEP 201 (modular source code), JEP 220 (modular run-time images), JEP 260 (encapsulate most internal APIs), JEP 261 (the module system), JEP 282 (`jlink`)", "The JDK became about 70 modules; `rt.jar` was replaced by the `lib/modules` image; `module-info.java`, the module path and `jlink` arrived"],
+            ["Java 9 (2017)", "JEP 200 (the modular JDK), JEP 201 (modular source code), JEP 220 (modular run-time images), JEP 260 (encapsulate most internal APIs), JEP 261 (the module system), JEP 282 (`jlink`)", "The JDK itself was split into modules (69 of them on my JDK 21, after later removals); `rt.jar` was replaced by the `lib/modules` image; `module-info.java`, the module path and `jlink` arrived"],
             ["Java 9 (2017)", "JEP 238 (multi-release JARs)", "One JAR can carry a `module-info.class` under `META-INF/versions/9` and still run on Java 8, which is how Jackson 2.x ships it"],
             ["Java 9 to 15", "`--illegal-access=permit` by default", "Classpath code could still reflect into JDK internals, with a warning on first use"],
             ["Java 11 (2018)", "JEP 320 removed the Java EE and CORBA modules", "`java.xml.bind` (JAXB) and friends became ordinary Maven dependencies"],
@@ -86,7 +86,7 @@ export const javaModules: Lesson = {
             "When B's products always come with C's packaging, B's agreement covers C too, so A's staff can also visit C. That's `requires transitive`.",
             "An **inspector's pass** for one floor is `opens`. The inspector can walk into every office, including the locked ones, but only while the building is running, not while it's being designed. That's deep reflection at run time.",
             "A **staffing agency** that sends whoever is registered for a job is `ServiceLoader` with `uses` and `provides`.",
-            "Building **only the buildings you need** on a new site is `jlink`.",
+            "Putting up **only the buildings a new site needs** is `jlink`.",
             "The old **warehouse** is the classpath: one big room, no doors, and when two teams put a desk with the same label on the floor, whoever got there first wins.",
           ],
         },
@@ -137,7 +137,7 @@ export const javaModules: Lesson = {
             ["`opens P to M1, M2`", "Deep reflection for these modules only", "Nothing", "Only M1 and M2 can use `setAccessible(true)` in P"],
             ["`open module X`", "Every package is opened", "Nothing extra", "Like `opens` on every package; `opens` directives are then not allowed"],
             ["`uses S`", "I look up implementations of service S", "S must be accessible", "`ServiceLoader.load(S.class)` is allowed from my code"],
-            ["`provides S with C`", "C is an implementation of S", "C must implement S and have a public no-arg constructor or a `public static provider()` method", "`ServiceLoader` finds C even if C's package isn't exported"],
+            ["`provides S with C`", "C is an implementation of S", "C implements S with a public no-arg constructor, or C has a `public static provider()` method returning an S", "`ServiceLoader` finds C even if C's package isn't exported"],
           ],
         },
         {
@@ -660,7 +660,8 @@ public class Main {
         {
           type: "code",
           language: "bash",
-          code: `cd stale        # the money and core sources from shop, app replaced by this Main
+          code: `cd stale        # money and core copied from shop; com.shop.app has this Main
+                # and its module-info only says requires com.shop.core;
 javac -d out --module-source-path src $(find src -name "*.java")
 java -p out -m com.shop.app/com.shop.app.Main
 
@@ -1285,7 +1286,7 @@ src/com.shop.app/com/shop/app/Main.java:8: error: cannot find symbol
         },
         {
           type: "paragraph",
-          text: "With `--add-reads com.shop.app=ALL-UNNAMED` on the `java` command too, it printed `cafe-deals-2026` and then threw a `NullPointerException` on the next line, because `getDescriptor()` returns `null` for the unnamed module: it has no descriptor to return. `--add-reads` is a migration crutch; the real fix is to move the JAR to the module path as an automatic module.",
+          text: "(The `@0x76fb509a` is the unnamed module's identity hash and can differ between runs.) With `--add-reads com.shop.app=ALL-UNNAMED` on the `java` command too, it printed `cafe-deals-2026` and then threw a `NullPointerException` on the next line, because `getDescriptor()` returns `null` for the unnamed module: it has no descriptor to return. `--add-reads` is a migration crutch; the real fix is to move the JAR to the module path as an automatic module.",
         },
       ],
     },
@@ -1680,7 +1681,7 @@ uses java.sql.Driver`,
         },
         {
           type: "paragraph",
-          text: "69 modules on my JDK 21: 22 `java.*` modules that are part of the Java SE specification, and 47 `jdk.*` modules specific to the JDK. `java.sql` is a good example of a descriptor done right: two exported packages, three transitive dependencies because its API mentions logging, XML and XA types, and a `uses` for JDBC drivers. `jar --describe-module --file x.jar` does the same for a JAR, which is how I checked every library in this lesson.",
+          text: "69 modules on my JDK 21: 22 `java.*` modules that are part of the Java SE specification, and 47 `jdk.*` modules specific to the JDK. The order of the `requires` lines changed from run to run when I repeated the command; the set is what matters. `java.sql` is a good example of a descriptor done right: two exported packages, three transitive dependencies because its API mentions logging, XML and XA types, and a `uses` for JDBC drivers. `jar --describe-module --file x.jar` does the same for a JAR, which is how I checked every library in this lesson.",
         },
         {
           type: "heading",
@@ -1817,7 +1818,7 @@ Total: Rs. 2220.00`,
       blocks: [
         {
           type: "paragraph",
-          text: "The Packages lesson covered single-type imports and on-demand `import java.util.*;`. JDK 25 finalized a third kind (JEP 511): `import module M;` imports, on demand, every public top-level type in every package that M exports, plus the packages exported by modules M requires transitively. It needs JDK 25 (JDK 21 stops at `'.' expected`), and the code that uses it doesn't have to be in a module:",
+          text: "The Packages lesson introduced JDK 25's module import declarations (JEP 511) next to the other kinds of import. From the module side, the interesting part is what \"a module's packages\" means: `import module M;` imports, on demand, every public top-level type in every package that M **exports**, plus the packages exported by the modules M **requires transitively**. Non-exported packages never come along. It needs JDK 25 (JDK 21 stops at `'.' expected`), and the importing code doesn't have to be in a module:",
         },
         {
           type: "code",
@@ -1872,7 +1873,7 @@ ModuleImports.java:9: error: reference to Timestamp is ambiguous
           items: [
             "Module imports are on-demand imports, so they have the same weakness: two imported packages with the same simple name make that name ambiguous, and a single-type import is how to choose. The classic pair is `java.util.Date` and `java.sql.Date`; here it was `java.security.Timestamp` from `java.base`.",
             "It's purely a compile-time convenience. The class file has the same references as with ordinary imports, and the module graph at run time is unchanged.",
-            "JDK 25's compact source files (JEP 512) import `java.base` this way implicitly. A `Cart.java` with no class declaration and no import lines, whose `void main()` used `List`, `TreeMap` and `IO.println`, ran on JDK 25 with `java Cart.java`.",
+            "JDK 25's compact source files (JEP 512) import `java.base` this way implicitly, which the Packages lesson shows.",
           ],
         },
       ],
@@ -2083,7 +2084,7 @@ java.base: 196 packages, 54 exported to everyone`,
           type: "list",
           items: [
             "Readability is directed: `java.sql` reads `java.base`, never the other way round. The unnamed module reads `java.sql` because it reads everything.",
-            "`java.base` has 196 packages on JDK 21 and only 54 are exported to everyone. The other 142 are internals (`jdk.internal.*`, `sun.*`) or qualified exports to other JDK modules. On JDK 25 the same program printed 197 and 58. Before Java 9, every one of them was reachable from the classpath.",
+            "`java.base` has 196 packages on JDK 21 and only 54 are exported to everyone. The other 142 are internals (`jdk.internal.*`, `sun.*`) or qualified exports to other JDK modules. On JDK 25 the same program printed 197 and 58. Before Java 9 there was no such line: any public class in `rt.jar` could be used from the classpath.",
             "I ran it on the `jlink` image of the shop app as well, and the first line threw `NoSuchElementException: No value present`: that image has no `java.sql`, so `findModule` came back empty. A custom runtime really contains only its graph.",
           ],
         },
@@ -2351,7 +2352,7 @@ same class loader: false`,
             ["A large codebase where teams keep reaching into each other's internals", "Modules (or at least build-tool boundaries) per component", "The compiler enforces the boundaries code review keeps missing"],
             ["A small runtime for a container, CLI tool or desktop app", "`jlink`, which needs every module to be explicit", "Tens of megabytes instead of a full JDK"],
             ["A plug-in system", "`uses` / `provides` with `ServiceLoader`, maybe layers", "Providers stay hidden and are found at run time"],
-            ["A typical Spring Boot service", "The classpath, no `module-info`", "Spring and most of its dependencies are automatic modules, the Boot launcher runs from the classpath, and the framework needs deep reflection everywhere"],
+            ["A typical Spring Boot service", "The classpath, no `module-info`", "Spring and most of its dependencies are automatic modules, Boot's executable-JAR launcher loads the application through its own class loader, into an unnamed module, and the framework needs deep reflection everywhere"],
             ["An application that uses `jlink` without being modular itself", "Classpath app + `jdeps --print-module-deps` + `jlink` of just the JDK modules", "Gets most of the size win with none of the migration"],
           ],
         },
@@ -2368,8 +2369,8 @@ same class loader: false`,
           │         image, jlink only the JDK modules that
           │         jdeps --print-module-deps reports
           │
-          └─ no ──► do you need a small self-contained
-                    runtime or enforced component walls?
+          └─ no ──► is a small self-contained runtime
+                    or an enforced component wall needed?
                     ├─ yes ─► modules + jlink
                     └─ no  ─► the classpath is fine`,
           caption: "The question I ask first is who compiles against the code, not whether modules are modern.",
@@ -2436,8 +2437,8 @@ public class Main {
           type: "code",
           language: "bash",
           code: `# Maven: org.springframework:spring-context:6.2.11 (brings spring-core, spring-beans,
-# spring-aop, spring-expression, spring-jcl and micrometer-observation)
-cd spring
+# spring-aop, spring-expression, spring-jcl, micrometer-observation and micrometer-commons)
+cd spring      # $SPRING: those JAR paths, colon-separated
 javac -d out -p "$SPRING" --module-source-path src $(find src -name "*.java")
 java -p "out:$SPRING" -m com.shop.app/com.shop.app.Main`,
         },
@@ -2555,14 +2556,18 @@ Caused by: java.lang.ClassNotFoundException: com.shop.audit.AuditLog
         },
         {
           type: "output",
-          text: `src/com.shop.customers/module-info.java:2: error: package is empty or does not exist: com.shop.customer
+          text: `src/com.shop.app/com/shop/app/Main.java:3: error: package com.shop.customers is not visible
+import com.shop.customers.Customer;
+               ^
+  (package com.shop.customers is declared in module com.shop.customers, which does not export it)
+src/com.shop.customers/module-info.java:2: error: package is empty or does not exist: com.shop.customer
     exports com.shop.customer;
                     ^
-1 error`,
+2 errors`,
         },
         {
           type: "paragraph",
-          text: "The same check applies to `opens`: both name packages that must exist in the module.",
+          text: "Two errors from one typo: the misspelled package doesn't exist, and the real one is now not exported, so the app lost it too. The same existence check applies to `opens`.",
         },
         {
           type: "heading",
@@ -2663,7 +2668,7 @@ java.lang.module.FindException: Two versions of module text.tools found in libs 
         },
         {
           type: "paragraph",
-          text: "Two surprises, and `-Xlog:cds` explained both:",
+          text: "Two surprises, and `-Xlog:cds` explained both (excerpts; the timestamps vary per run):",
         },
         {
           type: "code",
@@ -2818,7 +2823,7 @@ public class QuoteListener {
         {
           type: "code",
           language: "bash",
-          code: `cd rides
+          code: `cd rides      # $JACKSON: the three Jackson JAR paths, colon-separated
 javac -d out -p "$JACKSON" --module-source-path src $(find src -name "*.java")
 java -p "out:$JACKSON" -m com.rides.service/com.rides.service.QuoteListener`,
         },
@@ -2842,7 +2847,7 @@ Caused by: java.lang.reflect.InaccessibleObjectException: Unable to make field p
         },
         {
           type: "paragraph",
-          text: "(Trimmed; the full trace is about 40 lines.) Since Java 9, stack frames carry the module, and its version when known: `com.fasterxml.jackson.databind@2.21.7/` before the class name. That alone says the failure is inside Jackson, triggered from `QuoteListener.java:11`.",
+          text: "(Trimmed; the full trace is 33 lines.) Since Java 9, stack frames carry the module, and its version when known: `com.fasterxml.jackson.databind@2.21.7/` before the class name. That alone says the failure is inside Jackson, triggered from `QuoteListener.java:11`.",
         },
         {
           type: "heading",
@@ -2924,7 +2929,7 @@ java.logging@21.0.13.0.3`,
             {
               question: "What is JPMS, and why was it introduced?",
               answer:
-                "The Java Platform Module System, added in Java 9 (JSR 376, JEP 261). A module is a named set of packages with a descriptor that declares what it requires and which packages it exports. It was introduced for two things the classpath couldn't do: strong encapsulation (a public class can still be private to its module) and reliable configuration (missing or duplicate modules are detected at startup). It also let the JDK split itself into about 70 modules and hide its internals.\n\nIn my shop project, `TaxTable` is a public class, but `com.shop.app` couldn't import it: `package com.shop.internal is not visible`. And with `com.shop.money` missing, the module path failed with `FindException` before `main`, while the classpath ran until line 10 and threw `NoClassDefFoundError`.",
+                "The Java Platform Module System, added in Java 9 (JSR 376, JEP 261). A module is a named set of packages with a descriptor that declares what it requires and which packages it exports. It was introduced for two things the classpath couldn't do: strong encapsulation (a public class can still be private to its module) and reliable configuration (missing or duplicate modules are detected at startup). It also let the JDK split itself into modules (69 on my JDK 21) and hide its internals.\n\nIn my shop project, `TaxTable` is a public class, but `com.shop.app` couldn't import it: `package com.shop.internal is not visible`. And with `com.shop.money` missing, the module path failed with `FindException` before `main`, while the classpath ran until line 10 and threw `NoClassDefFoundError`.",
             },
             {
               question: "What is module-info.java and where does it go?",
@@ -2993,7 +2998,7 @@ java.logging@21.0.13.0.3`,
             {
               question: "What does InaccessibleObjectException mean?",
               answer:
-                "That `setAccessible(true)` was refused because the target's package isn't opened to the caller's module (`trySetAccessible()` returns `false` in the same situation instead of throwing). It's an unchecked exception added in Java 9, and its message names the missing directive, such as `module com.rides.api does not \"opens com.rides.api\" to module com.fasterxml.jackson.databind`.\n\nThe fix is an `opens` (ideally qualified to that module) in the target's descriptor, or `--add-opens` on the command line when I don't own the target, as with `java.base` internals. Avoiding deep reflection works too: a record let Jackson use the public constructor with `exports` alone.",
+                "That `setAccessible(true)` was refused because the target's package isn't opened to the caller's module (`trySetAccessible()` returns `false` in the same situation instead of throwing). It's an unchecked exception added in Java 9, and its message names the missing directive, such as `module com.shop.customers does not \"opens com.shop.customers\" to module com.shop.inspect`.\n\nThe fix is an `opens` (ideally qualified to that module) in the target's descriptor, or `--add-opens` on the command line when I don't own the target, as with `java.base` internals. Avoiding deep reflection works too: in the production example, turning the API class into a record let Jackson use its public constructor with `exports` alone.",
             },
             {
               question: "What is a qualified export, and when would you use one?",
@@ -3008,7 +3013,7 @@ java.logging@21.0.13.0.3`,
             {
               question: "Do Spring Boot applications need module-info.java?",
               answer:
-                "No. The usual setup runs everything from the classpath in the unnamed module, and that's what most Spring Boot apps do. Spring's JARs are automatic modules, and the framework relies on deep reflection, so a descriptor mostly turns into a list of `opens`.\n\nI tried a small Spring 6.2.11 app as a named module: field injection failed with `InaccessibleObjectException ... does not \"opens com.shop.app\" to module spring.core`, and `jlink` refused the automatic Spring modules. For a smaller image, I'd keep the app on the classpath and `jlink` only the JDK modules that `jdeps --print-module-deps` reports.",
+                "No. Most Spring Boot apps run without one: on the classpath, or from Boot's executable JAR, whose launcher loads everything through its own class loader into an unnamed module. Spring's JARs are automatic modules, and the framework relies on deep reflection, so a descriptor mostly turns into a list of `opens`.\n\nI tried a small Spring 6.2.11 app as a named module: field injection failed with `InaccessibleObjectException ... does not \"opens com.shop.app\" to module spring.core`, and `jlink` refused the automatic Spring modules. For a smaller image, I'd keep the app on the classpath and `jlink` only the JDK modules that `jdeps --print-module-deps` reports.",
             },
           ],
         },
@@ -3124,7 +3129,7 @@ java.logging@21.0.13.0.3`,
         {
           type: "diagram",
           text: `MODULE      named set of packages + module-info.java
-            Java 9, JSR 376, JEP 261; JDK = ~70 modules
+            Java 9, JSR 376, JEP 261; JDK 21 = 69 modules
 DIRECTIVES  requires M            read M
             requires transitive M my readers read M too
             requires static M     compile time only
