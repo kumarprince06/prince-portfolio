@@ -1,0 +1,119 @@
+<svg width="1200" height="760" viewBox="0 0 1200 760" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="760" rx="28" fill="#0D0D0D"/>
+  <path d="M80 130H1120" stroke="#2B2B2B" stroke-width="2"/>
+  <text x="80" y="82" fill="#FB923C" font-family="Arial, sans-serif" font-size="18" letter-spacing="4">WHO CAN SEE WHAT ACROSS MODULES</text>
+  <text x="80" y="112" fill="#777777" font-family="Arial, sans-serif" font-size="16">The shop and reflection modules from this lesson. Arrows are readability; doors and windows are what each package lets through.</text>
+
+  <!-- ===== Row 1: com.shop.app -> com.shop.core -> com.shop.money ===== -->
+
+  <!-- com.shop.app -->
+  <rect x="80" y="165" width="290" height="200" rx="12" fill="#0F1A21" stroke="#60A5FA" stroke-width="2"/>
+  <text x="100" y="197" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="18">module com.shop.app</text>
+  <text x="100" y="221" fill="#93B4D6" font-family="Arial, sans-serif" font-size="14">requires com.shop.core;</text>
+  <rect x="100" y="250" width="250" height="90" rx="8" fill="#132433" stroke="#2B4A63" stroke-width="1.5"/>
+  <!-- closed door -->
+  <rect x="116" y="266" width="34" height="56" rx="3" fill="#2B2B2B" stroke="#777777" stroke-width="2"/>
+  <circle cx="143" cy="296" r="3" fill="#AAAAAA"/>
+  <text x="164" y="286" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="15">com.shop.app</text>
+  <text x="164" y="310" fill="#93B4D6" font-family="Arial, sans-serif" font-size="14">exports nothing</text>
+
+  <!-- com.shop.core -->
+  <rect x="455" y="165" width="340" height="250" rx="12" fill="#21180F" stroke="#FB923C" stroke-width="2"/>
+  <text x="475" y="197" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="18">module com.shop.core</text>
+  <text x="475" y="221" fill="#C6A17A" font-family="Arial, sans-serif" font-size="14">requires transitive com.shop.money;</text>
+  <!-- package com.shop.core: open door -->
+  <rect x="475" y="240" width="300" height="74" rx="8" fill="#2A1E12" stroke="#5C4128" stroke-width="1.5"/>
+  <rect x="491" y="250" width="34" height="54" rx="3" fill="#0D0D0D" stroke="#FB923C" stroke-width="2"/>
+  <path d="M491 250L509 258V312L491 304Z" fill="#FB923C" fill-opacity="0.35" stroke="#FB923C" stroke-width="2" stroke-linejoin="round"/>
+  <text x="540" y="272" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="15">com.shop.core</text>
+  <text x="540" y="295" fill="#C6A17A" font-family="Arial, sans-serif" font-size="14">exports: open to every reader</text>
+  <!-- package com.shop.internal: closed door -->
+  <rect x="475" y="324" width="300" height="74" rx="8" fill="#2A1E12" stroke="#5C4128" stroke-width="1.5"/>
+  <rect x="491" y="334" width="34" height="54" rx="3" fill="#2B2B2B" stroke="#777777" stroke-width="2"/>
+  <circle cx="518" cy="363" r="3" fill="#AAAAAA"/>
+  <text x="540" y="356" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="15">com.shop.internal</text>
+  <text x="540" y="379" fill="#C6A17A" font-family="Arial, sans-serif" font-size="14">shut to app; exported to reports only</text>
+
+  <!-- com.shop.money -->
+  <rect x="880" y="165" width="240" height="200" rx="12" fill="#21180F" stroke="#FB923C" stroke-width="2"/>
+  <text x="900" y="197" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="18">module com.shop.money</text>
+  <rect x="900" y="250" width="200" height="90" rx="8" fill="#2A1E12" stroke="#5C4128" stroke-width="1.5"/>
+  <rect x="916" y="266" width="34" height="56" rx="3" fill="#0D0D0D" stroke="#FB923C" stroke-width="2"/>
+  <path d="M916 266L934 274V330L916 322Z" fill="#FB923C" fill-opacity="0.35" stroke="#FB923C" stroke-width="2" stroke-linejoin="round"/>
+  <text x="962" y="286" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="15">com.shop.money</text>
+  <text x="962" y="310" fill="#C6A17A" font-family="Arial, sans-serif" font-size="14">exports</text>
+
+  <!-- app -> core : requires -->
+  <path d="M370 280H446" stroke="#60A5FA" stroke-width="2"/>
+  <path d="M437 275L446 280L437 285" stroke="#60A5FA" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="380" y="270" fill="#60A5FA" font-family="Arial, sans-serif" font-size="14">requires</text>
+
+  <!-- core -> money : requires transitive -->
+  <path d="M795 280H871" stroke="#FB923C" stroke-width="2"/>
+  <path d="M862 275L871 280L862 285" stroke="#FB923C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="803" y="262" fill="#FB923C" font-family="Arial, sans-serif" font-size="13">requires</text>
+  <text x="803" y="302" fill="#FB923C" font-family="Arial, sans-serif" font-size="13">transitive</text>
+
+  <!-- implied readability app -> money (dashed, over the top) -->
+  <path d="M225 165V146H1000V161" stroke="#60A5FA" stroke-width="2" stroke-dasharray="7 6"/>
+  <path d="M995 152L1000 161L1005 152" stroke="#60A5FA" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="520" y="137" width="210" height="18" fill="#0D0D0D"/>
+  <text x="625" y="151" fill="#60A5FA" font-family="Arial, sans-serif" font-size="14" text-anchor="middle">app reads money too (implied)</text>
+
+  <!-- ===== Row 2: reflection ===== -->
+
+  <!-- com.shop.inspect -->
+  <rect x="80" y="450" width="290" height="140" rx="12" fill="#0F1A21" stroke="#60A5FA" stroke-width="2"/>
+  <text x="100" y="482" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="18">module com.shop.inspect</text>
+  <text x="100" y="510" fill="#93B4D6" font-family="Arial, sans-serif" font-size="14">Inspector.dump(customer)</text>
+  <text x="100" y="534" fill="#93B4D6" font-family="Arial, sans-serif" font-size="14">getDeclaredField("email")</text>
+  <text x="100" y="558" fill="#93B4D6" font-family="Arial, sans-serif" font-size="14">.setAccessible(true)</text>
+
+  <!-- com.shop.customers -->
+  <rect x="455" y="450" width="340" height="140" rx="12" fill="#21180F" stroke="#FB923C" stroke-width="2"/>
+  <text x="475" y="482" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="18">module com.shop.customers</text>
+  <rect x="475" y="500" width="300" height="74" rx="8" fill="#2A1E12" stroke="#5C4128" stroke-width="1.5"/>
+  <!-- window -->
+  <rect x="491" y="514" width="30" height="30" rx="2" fill="#132433" stroke="#60A5FA" stroke-width="2"/>
+  <path d="M506 514V544M491 529H521" stroke="#60A5FA" stroke-width="1.5"/>
+  <!-- open door -->
+  <rect x="531" y="510" width="34" height="54" rx="3" fill="#0D0D0D" stroke="#FB923C" stroke-width="2"/>
+  <path d="M531 510L549 518V572L531 564Z" fill="#FB923C" fill-opacity="0.35" stroke="#FB923C" stroke-width="2" stroke-linejoin="round"/>
+  <text x="578" y="527" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="15">com.shop.customers</text>
+  <text x="578" y="550" fill="#C6A17A" font-family="Arial, sans-serif" font-size="14">exports + opens … to</text>
+  <text x="578" y="568" fill="#C6A17A" font-family="Arial, sans-serif" font-size="14">com.shop.inspect</text>
+
+  <!-- inspect -> window : deep reflection -->
+  <path d="M370 529H482" stroke="#60A5FA" stroke-width="2" stroke-dasharray="7 6"/>
+  <path d="M473 524L482 529L473 534" stroke="#60A5FA" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="380" y="503" fill="#60A5FA" font-family="Arial, sans-serif" font-size="13">deep</text>
+  <text x="380" y="519" fill="#60A5FA" font-family="Arial, sans-serif" font-size="13">reflection</text>
+  <text x="380" y="550" fill="#60A5FA" font-family="Arial, sans-serif" font-size="13">run time</text>
+
+  <!-- legend -->
+  <rect x="880" y="450" width="240" height="140" rx="12" fill="#151515" stroke="#444444" stroke-width="2"/>
+  <rect x="898" y="466" width="18" height="28" rx="2" fill="#0D0D0D" stroke="#FB923C" stroke-width="2"/>
+  <path d="M898 466L907 470V498L898 494Z" fill="#FB923C" fill-opacity="0.35" stroke="#FB923C" stroke-width="1.5" stroke-linejoin="round"/>
+  <text x="928" y="478" fill="#AAAAAA" font-family="Arial, sans-serif" font-size="14">exported: compile</text>
+  <text x="928" y="496" fill="#777777" font-family="Arial, sans-serif" font-size="13">and run time, public only</text>
+  <rect x="898" y="510" width="18" height="28" rx="2" fill="#2B2B2B" stroke="#777777" stroke-width="2"/>
+  <text x="928" y="522" fill="#AAAAAA" font-family="Arial, sans-serif" font-size="14">not exported: invisible,</text>
+  <text x="928" y="540" fill="#777777" font-family="Arial, sans-serif" font-size="13">even its public classes</text>
+  <rect x="898" y="554" width="18" height="18" rx="2" fill="#132433" stroke="#60A5FA" stroke-width="2"/>
+  <path d="M907 554V572M898 563H916" stroke="#60A5FA" stroke-width="1.2"/>
+  <text x="928" y="566" fill="#AAAAAA" font-family="Arial, sans-serif" font-size="14">opened: reflection,</text>
+  <text x="928" y="583" fill="#777777" font-family="Arial, sans-serif" font-size="13">private members too</text>
+
+  <!-- ===== Row 3: the unnamed module ===== -->
+  <rect x="80" y="640" width="1040" height="84" rx="12" fill="#151515" stroke="#444444" stroke-width="2" stroke-dasharray="6 6"/>
+  <text x="100" y="672" fill="#AAAAAA" font-family="Arial, sans-serif" font-size="18">unnamed module: everything on the classpath</text>
+  <text x="100" y="700" fill="#777777" font-family="Arial, sans-serif" font-size="14">reads every module · sees exported packages only · no named module can say requires on it</text>
+
+  <!-- reads arrows up from the unnamed module -->
+  <path d="M225 640V600" stroke="#777777" stroke-width="2"/>
+  <path d="M220 609L225 600L230 609" stroke="#777777" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="236" y="626" fill="#777777" font-family="Arial, sans-serif" font-size="13">reads</text>
+  <path d="M625 640V600" stroke="#777777" stroke-width="2"/>
+  <path d="M620 609L625 600L630 609" stroke="#777777" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="636" y="626" fill="#777777" font-family="Arial, sans-serif" font-size="13">reads</text>
+</svg>
