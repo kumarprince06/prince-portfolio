@@ -9,8 +9,10 @@ import { jdk } from "./jdk";
 import { jre } from "./jre";
 import { jvm } from "./jvm";
 import { loops } from "./loops";
+import { memoryAllocation } from "./memory-allocation";
 import { methods } from "./methods";
 import { operators } from "./operators";
+import { stackVsHeap } from "./stack-vs-heap";
 import { typeCasting } from "./type-casting";
 import { variables } from "./variables";
 import { whatIsJava } from "./what-is-java";
@@ -44,7 +46,7 @@ export const javaPhases: Phase[] = [
   {
     title: "Methods, Memory Allocation, Stack vs Heap",
     description: "Writing and calling methods, how arguments are passed, and what each call does to the stack and the heap.",
-    lessons: [methods],
+    lessons: [methods, memoryAllocation, stackVsHeap],
   },
   {
     title: "Object-Oriented Programming",
