@@ -75,14 +75,14 @@ export const stackVsHeap: Lesson = {
         {
           type: "image",
           src: "/images/java/stack-and-heap.svg",
-          alt: "Two thread stacks, http-1 and http-2, each with an assign frame holding its own id and a reference to its own Ride object in the shared heap; both Rides and a caller's local point to the same Zone object; an unreachable old Ride is marked as garbage.",
+          alt: "Two thread stacks, http-1 and http-2, each with a placeOrder frame holding its own id and a reference to its own Order object in the shared heap; both Orders and a caller's local point to the same Customer object; an unreachable old Order is marked as garbage.",
           caption: "Each thread's frames are private. The objects they point to are in one shared heap, and nothing stops two threads from pointing at the same object.",
         },
         {
           type: "callout",
           tone: "note",
           title: "The rule that resolves most confusion",
-          text: "Objects always live on the heap. Variables live wherever they're declared: a local in its frame, a field inside its object. So `Ride ride = new Ride()` inside a method is **both**: the variable `ride` is on the stack, the `Ride` object is on the heap, and the stack slot holds a reference to it.",
+          text: "Objects always live on the heap. Variables live wherever they're declared: a local in its frame, a field inside its object. So `Order order = new Order()` inside a method is **both**: the variable `order` is on the stack, the `Order` object is on the heap, and the stack slot holds a reference to it.",
         },
       ],
     },
@@ -151,14 +151,15 @@ jcmd <pid> VM.native_memory summary | grep -A3 "Thread"`,
           text: `GC ROOTS                              HEAP
 ┌─────────────────────────────┐
 │ stack of thread main        │
-│   frame main: order ●───────┼──────► Order ──► List ──► Item, Item
+│   frame main: library ●─────┼──────► Library ──► List ──► Book, Book
 │ stack of thread http-1      │
-│   frame assign: ride ●──────┼──────► Ride ──► "zone-2"
+│   frame placeOrder: order ●─┼──────► Order ──► "customer-2"
 │ static fields               │
-│   Registry.ALL ●────────────┼──────► HashMap ──► ...
+│   Catalog.PRODUCTS ●────────┼──────► HashMap ──► ...
 └─────────────────────────────┘
-                                       Ride (old)      ◄ no path from a root:
-                                                         collected at the next GC`,
+                                       Order (old)  ◄ no path from a
+                                                      root: collected
+                                                      at the next GC`,
           caption: "Stacks are part of the root set. When a frame is popped, the objects only it referenced become collectable.",
         },
       ],
@@ -398,19 +399,19 @@ public class ManyThreads {
       blocks: [
         {
           type: "paragraph",
-          text: "One request through a service, following both areas, for `Ride ride = new Ride(id, zone); rides.add(ride); return ride.id();`:",
+          text: "One request through a service, following both areas, for `Order order = new Order(id, customerId); orders.add(order); return order.id();`:",
         },
         {
           type: "list",
           ordered: true,
           items: [
-            "The request thread calls `assign(42)`. **Stack:** a frame for `assign` is pushed, with `this`, `id = 42` and an empty slot for `ride`.",
-            "`\"zone-\" + (id % 5)` builds a `String`. **Heap:** a new `String` (and its `byte[]`) in the thread's TLAB.",
-            "`new Ride(...)`. **Heap:** the `Ride` is allocated and zeroed. **Stack:** a frame for the constructor is pushed, sets the fields, and is popped.",
-            "`ride` now holds the reference. **Stack:** one 4-byte slot. **Heap:** the 24-byte `Ride`.",
-            "`rides.add(ride)` stores the reference in a shared list. **Heap:** the list's array now points at the `Ride` too, so the object has two incoming references.",
-            "`return ride.id()`. **Stack:** the `long` is pushed to the caller's operand stack and the frame is popped, so `ride` and `id` are gone.",
-            "**Heap:** the `Ride` is still alive because the shared list references it. The temporary `String`s from concatenation that nothing kept are garbage, reclaimed at the next young GC without anyone doing anything.",
+            "The request thread calls `placeOrder(42)`. **Stack:** a frame for `placeOrder` is pushed, with `this`, `id = 42` and an empty slot for `order`.",
+            "`\"customer-\" + (id % 5)` builds the `customerId` `String`. **Heap:** a new `String` (and its `byte[]`) in the thread's TLAB.",
+            "`new Order(...)`. **Heap:** the `Order` is allocated and zeroed. **Stack:** a frame for the constructor is pushed, sets the fields, and is popped.",
+            "`order` now holds the reference. **Stack:** one 4-byte slot. **Heap:** the 24-byte `Order` (12 header + 8 for the `long` id + 4 for the `String` reference).",
+            "`orders.add(order)` stores the reference in a shared list. **Heap:** the list's array now points at the `Order` too, so the object has two incoming references.",
+            "`return order.id()`. **Stack:** the `long` is pushed to the caller's operand stack and the frame is popped, so `order` and `id` are gone.",
+            "**Heap:** the `Order` is still alive because the shared list references it. The temporary `String`s from concatenation that nothing kept are garbage, reclaimed at the next young GC without anyone doing anything.",
           ],
         },
       ],
@@ -426,29 +427,29 @@ public class ManyThreads {
 import java.util.List;
 
 public class StackOrHeap {
-    static final List<String> LOG = new ArrayList<>();   // static: the List object is on the heap,
+    static final List<String> AUDIT = new ArrayList<>(); // static: the List object is on the heap,
                                                          // reachable for the life of the class
-    private int requests;                                // field: inside this object, on the heap
+    private int orders;                                  // field: inside this object, on the heap
 
-    int handle(int km) {                                 // km: parameter, in this call's frame
-        int fare = 50 + km * 12;                         // local primitive: in the frame
-        String line = "fare=" + fare;                    // reference in the frame, String on the heap
-        LOG.add(line);                                   // now the heap list references it too
-        requests++;                                      // updates the field on the heap
-        return fare;                                     // fare's value is copied to the caller
-    }                                                    // frame popped: km, fare, line are gone
+    int checkout(int items) {                            // items: parameter, in this call's frame
+        int total = 50 + items * 12;                     // local primitive: in the frame
+        String line = "total=" + total;                  // reference in the frame, String on the heap
+        AUDIT.add(line);                                 // now the heap list references it too
+        orders++;                                        // updates the field on the heap
+        return total;                                    // total's value is copied to the caller
+    }                                                    // frame popped: items, total, line are gone
 
     public static void main(String[] args) {
-        StackOrHeap service = new StackOrHeap();         // reference on the stack, object on the heap
-        System.out.println(service.handle(10) + " " + service.handle(3));
-        System.out.println(LOG + " requests=" + service.requests);
+        StackOrHeap shop = new StackOrHeap();            // reference on the stack, object on the heap
+        System.out.println(shop.checkout(10) + " " + shop.checkout(3));
+        System.out.println(AUDIT + " orders=" + shop.orders);
     }
 }`,
         },
         {
           type: "output",
           text: `170 86
-[fare=170, fare=86] requests=2`,
+[total=170, total=86] orders=2`,
         },
         {
           type: "table",
@@ -730,7 +731,7 @@ jcmd <pid> GC.class_histogram | grep DispatchService`,
             {
               question: "Where is a local variable stored? Where is the object it refers to stored?",
               answer:
-                "The variable is in the method's frame on the stack. The object is on the heap. For `Ride ride = new Ride()`, the stack slot holds only a reference, a 4-byte compressed pointer by default, and the `Ride` itself is a separate block on the heap.\n\nThat's why the same object can be reached from several variables in different frames or threads: each holds a copy of the reference, not a copy of the object.",
+                "The variable is in the method's frame on the stack. The object is on the heap. For `Order order = new Order()`, the stack slot holds only a reference, a 4-byte compressed pointer by default, and the `Order` itself is a separate block on the heap.\n\nThat's why the same object can be reached from several variables in different frames or threads: each holds a copy of the reference, not a copy of the object.",
             },
             {
               question: "What happens to local variables when a method returns?",
@@ -757,6 +758,11 @@ jcmd <pid> GC.class_histogram | grep DispatchService`,
               answer:
                 "Arrays, the string pool (since Java 7), boxed values from autoboxing, lambda and anonymous-class instances, and the `Class` objects, which in HotSpot also hold the values of static fields. In short, anything that is an object.\n\nWhat's not on the heap: class metadata and bytecode (Metaspace, native memory), JIT-compiled code (code cache), and thread stacks of platform threads.",
             },
+            {
+              question: "In `int total = 50 + items * 12; String line = \"total=\" + total;`, what goes on the stack and what goes on the heap?",
+              answer:
+                "On the stack, in the method's frame: `items`, `total` and the `line` variable itself. On the heap: the `String` object that `line` points to. `total` is a primitive local, so its value sits right in the frame; `line` is a reference, so only the pointer is in the frame.\n\nThat's exactly the split in my `StackOrHeap` program. When `checkout` returned, `items`, `total` and `line` disappeared with the frame, but the two strings survived, because the static `AUDIT` list still referenced them: it printed `[total=170, total=86]`.",
+            },
           ],
         },
         {
@@ -769,7 +775,7 @@ jcmd <pid> GC.class_histogram | grep DispatchService`,
             {
               question: "Why are local variables thread-safe?",
               answer:
-                "Because each thread has its own stack, and each call has its own frame, no other thread can name or access them. Two threads running the same method at the same moment have two separate `km` variables.\n\nThe caveat: a local reference is private, but the object it points to isn't, if it's reachable some other way. In `FareService`, moving `km` from a field to a local took wrong fares from about 130,000 out of 1.6 million to zero, with no locks.",
+                "Because each thread has its own stack, and each call has its own frame, no other thread can name or access them. Two threads running the same method at the same moment have two separate `km` variables.\n\nThe caveat: a local reference is private, but the object it points to isn't, if it's reachable some other way. In the production section's `FareService`, moving `km` from a field to a local took wrong fares from about 130,000 out of 1.6 million to zero, with no locks.",
             },
             {
               question: "Can a heap object be referenced from multiple stacks?",
@@ -800,6 +806,11 @@ jcmd <pid> GC.class_histogram | grep DispatchService`,
               question: "What is `OutOfMemoryError: unable to create native thread`?",
               answer:
                 "The JVM asked the OS for a new thread and the OS refused, because a thread limit was hit (`ulimit -u`, a container's `pids.max`) or there wasn't native memory for the new stack. It isn't a heap problem.\n\nThe cause is almost always unbounded thread creation, like `new Thread` per request or an unbounded `newCachedThreadPool`. The fix is a bounded pool or virtual threads. A bigger `-Xmx` makes it worse, since it leaves less native memory.",
+            },
+            {
+              question: "A method creates an object and returns it. Why doesn't the object disappear when the method's frame is popped?",
+              answer:
+                "Because only the frame is popped. The object was never in the frame; the frame only held a reference to it, and `return` copied that reference to the caller. As long as the caller (or anything else) still holds it, the object is reachable and the GC leaves it alone.\n\nMy `Lifetime` program showed both sides: `create(\"BK-1\")` and `create(\"BK-2\")` built their objects in frames that were gone right after. After `System.gc()`, the one `main` kept printed `Booking[id=BK-1]`, and the one only held by a `WeakReference` printed `null`.",
             },
           ],
         },
@@ -840,6 +851,16 @@ jcmd <pid> GC.class_histogram | grep DispatchService`,
               answer:
                 "It sets the stack size for new platform threads (Java frames and native frames share it in HotSpot), which bounds recursion depth. It doesn't affect the heap, Metaspace, or virtual threads' stacks, which grow as heap objects while parked. A single thread can also be given its own size through the `Thread` constructor's `stackSize` argument, which the JVM treats as a hint.\n\nIn the Methods lesson I measured it: `-Xss512k` cut the recursion depth by much more than half, because guard pages at the end of the stack are a fixed cost, and `-Xss4m` multiplied it.",
             },
+            {
+              question: "Why don't stack frames need garbage collection, while heap objects do?",
+              answer:
+                "Because a frame's lifetime is known exactly: it starts at the call and ends at the return, in strict last-in, first-out order. Popping it is a pointer move and frees everything in it at once. A heap object's lifetime depends on who still references it, which can be any thread, field or collection, so only a reachability trace can tell when it's dead.\n\nThat's also why the two run out differently. My `TwoErrors` program hit `StackOverflowError` after about 22,000 frames of one thread's own recursion, but the heap ran out only after 31 eight-megabyte arrays were all still reachable from one list.",
+            },
+            {
+              question: "How can 100,000 virtual threads fit in memory when 100,000 platform threads would not?",
+              answer:
+                "A platform thread is an OS thread with its own reserved native stack, 1 MB of address space by default, and the OS caps how many it will create. A virtual thread is a JVM object; while it's blocked its frames sit on the heap as stack chunk objects sized to its real depth, and only a few carrier threads exist.\n\nIn my `ManyThreads` run, 100,000 virtual threads each slept one second and the whole thing finished in about 1.4 seconds on the default heap. With platform threads, the same code would have needed 100,000 OS threads and about 100 GB of reserved stack address space.",
+            },
           ],
         },
         {
@@ -868,6 +889,11 @@ jcmd <pid> GC.class_histogram | grep DispatchService`,
               question: "Your service creates a new thread per incoming request, and under a traffic spike it crashes with `unable to create native thread`. What do you change?",
               answer:
                 "Stop creating unbounded platform threads. Each needs an OS thread and a stack reservation, and the OS limit was hit. For blocking I/O work on Java 21, `Executors.newVirtualThreadPerTaskExecutor()` keeps the thread-per-request style while parked threads cost only heap. Otherwise, a bounded `ThreadPoolExecutor` with a bounded queue and a rejection policy makes overload visible instead of fatal.\n\nI'd also check that a bigger `-Xmx` wasn't the attempted fix, since it takes memory away from thread stacks.",
+            },
+            {
+              question: "A teammate sets every local variable to `null` at the end of each method \"to help the garbage collector\". Is it worth it?",
+              answer:
+                "No. The locals disappear the moment the frame is popped, which happens a line later anyway, and in JIT-compiled code the GC already ignores locals that are no longer used. Nulling them adds noise and changes nothing about when objects become collectable.\n\nWhat matters is references that outlive the method: fields, static collections and caches. In my `StackOrHeap` program, nulling `line` inside `checkout` would not free its string, because the static `AUDIT` list still references it. That list, not the local, is what keeps it alive.",
             },
           ],
         },

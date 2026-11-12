@@ -2,24 +2,24 @@
   <rect width="1200" height="680" rx="28" fill="#0D0D0D"/>
   <path d="M80 130H1120" stroke="#2B2B2B" stroke-width="2"/>
   <text x="80" y="82" fill="#FB923C" font-family="Arial, sans-serif" font-size="18" letter-spacing="4">STACKS ARE PER THREAD, THE HEAP IS SHARED</text>
-  <text x="80" y="112" fill="#777777" font-family="Arial, sans-serif" font-size="16">Two request threads in one JVM, each in the middle of assign(...). Arrows are references.</text>
+  <text x="80" y="112" fill="#777777" font-family="Arial, sans-serif" font-size="16">Two request threads in one JVM, each in the middle of placeOrder(...). Arrows are references.</text>
 
   <!-- thread 1 stack -->
   <text x="80" y="170" fill="#888888" font-family="Arial, sans-serif" font-size="14" letter-spacing="2">STACK · thread http-1</text>
   <rect x="80" y="185" width="300" height="120" rx="10" fill="#21180F" stroke="#FB923C" stroke-width="2"/>
-  <text x="100" y="215" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="16">assign(id = 42)    ◄ top</text>
+  <text x="100" y="215" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="16">placeOrder(id = 42)    ◄ top</text>
   <text x="100" y="245" fill="#C6A17A" font-family="Arial, sans-serif" font-size="15">long id = 42</text>
-  <text x="100" y="272" fill="#C6A17A" font-family="Arial, sans-serif" font-size="15">Ride ride ●</text>
+  <text x="100" y="272" fill="#C6A17A" font-family="Arial, sans-serif" font-size="15">Order order ●</text>
   <rect x="80" y="315" width="300" height="80" rx="10" fill="#171310" stroke="#6B4A2A" stroke-width="2"/>
   <text x="100" y="345" fill="#BBBBBB" font-family="Arial, sans-serif" font-size="16">handle(request)</text>
-  <text x="100" y="372" fill="#8A7660" font-family="Arial, sans-serif" font-size="15">Zone zone ●</text>
+  <text x="100" y="372" fill="#8A7660" font-family="Arial, sans-serif" font-size="15">Customer customer ●</text>
 
   <!-- thread 2 stack -->
   <text x="80" y="440" fill="#888888" font-family="Arial, sans-serif" font-size="14" letter-spacing="2">STACK · thread http-2</text>
   <rect x="80" y="455" width="300" height="120" rx="10" fill="#21180F" stroke="#FB923C" stroke-width="2"/>
-  <text x="100" y="485" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="16">assign(id = 77)    ◄ top</text>
+  <text x="100" y="485" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="16">placeOrder(id = 77)    ◄ top</text>
   <text x="100" y="515" fill="#C6A17A" font-family="Arial, sans-serif" font-size="15">long id = 77</text>
-  <text x="100" y="542" fill="#C6A17A" font-family="Arial, sans-serif" font-size="15">Ride ride ●</text>
+  <text x="100" y="542" fill="#C6A17A" font-family="Arial, sans-serif" font-size="15">Order order ●</text>
   <text x="80" y="615" fill="#777777" font-family="Arial, sans-serif" font-size="14">Same method, separate frames: id = 42 and id = 77 never clash.</text>
   <text x="80" y="638" fill="#777777" font-family="Arial, sans-serif" font-size="14">Frames vanish on return; nothing to garbage-collect.</text>
 
@@ -28,25 +28,25 @@
   <rect x="560" y="185" width="560" height="390" rx="16" fill="#0F1A21" stroke="#60A5FA" stroke-width="2"/>
 
   <rect x="600" y="215" width="220" height="80" rx="10" fill="#132433" stroke="#60A5FA" stroke-width="1.5"/>
-  <text x="615" y="245" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="16">Ride #1</text>
-  <text x="615" y="272" fill="#93B4D6" font-family="Arial, sans-serif" font-size="14">id 42, zone ●</text>
+  <text x="615" y="245" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="16">Order #1</text>
+  <text x="615" y="272" fill="#93B4D6" font-family="Arial, sans-serif" font-size="14">id 42, customer ●</text>
 
   <rect x="600" y="455" width="220" height="80" rx="10" fill="#132433" stroke="#60A5FA" stroke-width="1.5"/>
-  <text x="615" y="485" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="16">Ride #2</text>
-  <text x="615" y="512" fill="#93B4D6" font-family="Arial, sans-serif" font-size="14">id 77, zone ●</text>
+  <text x="615" y="485" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="16">Order #2</text>
+  <text x="615" y="512" fill="#93B4D6" font-family="Arial, sans-serif" font-size="14">id 77, customer ●</text>
 
   <rect x="880" y="335" width="200" height="80" rx="10" fill="#132433" stroke="#60A5FA" stroke-width="1.5"/>
-  <text x="895" y="365" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="16">Zone "north"</text>
+  <text x="895" y="365" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="16">Customer "Asha"</text>
   <text x="895" y="392" fill="#93B4D6" font-family="Arial, sans-serif" font-size="14">one object, 3 references</text>
 
   <rect x="880" y="215" width="200" height="80" rx="10" fill="#151515" stroke="#444444" stroke-width="1.5" stroke-dasharray="6 6"/>
-  <text x="895" y="245" fill="#AAAAAA" font-family="Arial, sans-serif" font-size="16">old Ride</text>
+  <text x="895" y="245" fill="#AAAAAA" font-family="Arial, sans-serif" font-size="16">old Order</text>
   <text x="895" y="272" fill="#777777" font-family="Arial, sans-serif" font-size="14">unreachable → garbage</text>
 
   <!-- arrows from stack to heap -->
-  <path d="M230 268C420 268 470 255 592 255" stroke="#FB923C" stroke-width="2"/>
+  <path d="M198 268C420 268 470 255 592 255" stroke="#FB923C" stroke-width="2"/>
   <path d="M584 250L593 255L584 260" stroke="#FB923C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-  <path d="M230 538C420 538 470 495 592 495" stroke="#FB923C" stroke-width="2"/>
+  <path d="M198 538C420 538 470 495 592 495" stroke="#FB923C" stroke-width="2"/>
   <path d="M584 490L593 495L584 500" stroke="#FB923C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
   <path d="M250 368C500 368 700 375 872 375" stroke="#8A7660" stroke-width="2"/>
   <path d="M864 370L873 375L864 380" stroke="#8A7660" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
@@ -54,6 +54,6 @@
   <path d="M730 270C800 280 840 340 874 355" stroke="#60A5FA" stroke-width="1.5"/>
   <path d="M730 508C800 500 840 420 874 395" stroke="#60A5FA" stroke-width="1.5"/>
 
-  <text x="580" y="610" fill="#777777" font-family="Arial, sans-serif" font-size="14">Class metadata (Ride's methods, field layout) lives in Metaspace, outside the heap.</text>
+  <text x="580" y="610" fill="#777777" font-family="Arial, sans-serif" font-size="14">Class metadata (Order's methods, field layout) lives in Metaspace, outside the heap.</text>
   <text x="580" y="633" fill="#777777" font-family="Arial, sans-serif" font-size="14">The string pool and static fields' objects live in the heap.</text>
 </svg>
