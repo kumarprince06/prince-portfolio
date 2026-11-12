@@ -1,0 +1,127 @@
+<svg width="1200" height="760" viewBox="0 0 1200 760" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="760" rx="28" fill="#0D0D0D"/>
+  <path d="M80 130H1120" stroke="#2B2B2B" stroke-width="2"/>
+  <text x="80" y="82" fill="#FB923C" font-family="Arial, sans-serif" font-size="18" letter-spacing="4">ONE ORDER MODEL, EVERY RELATIONSHIP KIND</text>
+  <text x="80" y="112" fill="#777777" font-family="Arial, sans-serif" font-size="16">UML class notation. Numbers are multiplicities, read at the end they sit next to. Orange = Order and the parts it owns.</text>
+
+  <!-- ===== Row A: Customer, Order, Notifier ===== -->
+  <rect x="80" y="165" width="210" height="80" rx="10" fill="#0F1A21" stroke="#60A5FA" stroke-width="2"/>
+  <text x="100" y="198" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="17">Customer</text>
+  <text x="100" y="224" fill="#93B4D6" font-family="Arial, sans-serif" font-size="14">signs up before any order</text>
+
+  <rect x="430" y="155" width="340" height="100" rx="10" fill="#21180F" stroke="#FB923C" stroke-width="2"/>
+  <text x="450" y="188" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="17">Order</text>
+  <text x="450" y="214" fill="#C6A17A" font-family="Arial, sans-serif" font-size="14">customer: a reference it was given</text>
+  <text x="450" y="236" fill="#C6A17A" font-family="Arial, sans-serif" font-size="14">price, items: parts it creates itself</text>
+
+  <rect x="910" y="165" width="210" height="80" rx="10" fill="#151515" stroke="#444444" stroke-width="2" stroke-dasharray="6 6"/>
+  <text x="930" y="196" fill="#777777" font-family="Arial, sans-serif" font-size="13">«interface»</text>
+  <text x="930" y="222" fill="#AAAAAA" font-family="Arial, sans-serif" font-size="17">Notifier</text>
+
+  <!-- Order -> Customer: association -->
+  <path d="M430 205H291" stroke="#60A5FA" stroke-width="2"/>
+  <path d="M300 199L291 205L300 211" stroke="#60A5FA" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="300" y="195" fill="#AAAAAA" font-family="Arial, sans-serif" font-size="14">1</text>
+  <text x="392" y="195" fill="#AAAAAA" font-family="Arial, sans-serif" font-size="14">0..*</text>
+  <text x="330" y="228" fill="#777777" font-family="Arial, sans-serif" font-size="13">association</text>
+
+  <!-- Order uses Notifier: dependency, dashed open arrow -->
+  <path d="M770 205H909" stroke="#AAAAAA" stroke-width="2" stroke-dasharray="7 6"/>
+  <path d="M900 199L909 205L900 211" stroke="#AAAAAA" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="818" y="195" fill="#AAAAAA" font-family="Arial, sans-serif" font-size="13">«use»</text>
+  <text x="800" y="228" fill="#777777" font-family="Arial, sans-serif" font-size="13">dependency</text>
+
+  <!-- ===== Row B: PaymentProcessor, PriceBreakdown, OrderItem ===== -->
+  <rect x="80" y="330" width="220" height="70" rx="10" fill="#151515" stroke="#444444" stroke-width="2" stroke-dasharray="6 6"/>
+  <text x="100" y="358" fill="#777777" font-family="Arial, sans-serif" font-size="13">«interface»</text>
+  <text x="100" y="382" fill="#AAAAAA" font-family="Arial, sans-serif" font-size="17">PaymentProcessor</text>
+
+  <rect x="470" y="330" width="180" height="70" rx="10" fill="#21180F" stroke="#FB923C" stroke-width="2"/>
+  <text x="488" y="360" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="17">PriceBreakdown</text>
+  <text x="488" y="384" fill="#C6A17A" font-family="Arial, sans-serif" font-size="14">made by its Order</text>
+
+  <rect x="670" y="330" width="160" height="70" rx="10" fill="#21180F" stroke="#FB923C" stroke-width="2"/>
+  <text x="688" y="360" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="17">OrderItem</text>
+  <text x="688" y="384" fill="#C6A17A" font-family="Arial, sans-serif" font-size="14">made by its Order</text>
+
+  <!-- Order composes PriceBreakdown: filled diamond at the Order end -->
+  <path d="M560 255L567 267L560 279L553 267Z" fill="#FB923C" stroke="#FB923C" stroke-width="2" stroke-linejoin="round"/>
+  <path d="M560 279V330" stroke="#FB923C" stroke-width="2"/>
+  <text x="570" y="320" fill="#AAAAAA" font-family="Arial, sans-serif" font-size="14">1</text>
+
+  <!-- Order composes OrderItem: filled diamond at the Order end -->
+  <path d="M750 255L757 267L750 279L743 267Z" fill="#FB923C" stroke="#FB923C" stroke-width="2" stroke-linejoin="round"/>
+  <path d="M750 279V330" stroke="#FB923C" stroke-width="2"/>
+  <text x="760" y="320" fill="#AAAAAA" font-family="Arial, sans-serif" font-size="14">1..*</text>
+  <text x="590" y="300" fill="#C6A17A" font-family="Arial, sans-serif" font-size="13">composition</text>
+
+  <!-- OrderItem -> Product: association, elbow -->
+  <path d="M830 365H1015V474" stroke="#60A5FA" stroke-width="2" stroke-linejoin="round"/>
+  <path d="M1009 465L1015 474L1021 465" stroke="#60A5FA" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="838" y="355" fill="#AAAAAA" font-family="Arial, sans-serif" font-size="14">0..*</text>
+  <text x="1025" y="462" fill="#AAAAAA" font-family="Arial, sans-serif" font-size="14">1</text>
+  <text x="870" y="390" fill="#777777" font-family="Arial, sans-serif" font-size="13">association</text>
+
+  <!-- ===== Row C: CardPayment, Category, Product ===== -->
+  <rect x="80" y="475" width="220" height="70" rx="10" fill="#151515" stroke="#444444" stroke-width="2"/>
+  <text x="100" y="516" fill="#AAAAAA" font-family="Arial, sans-serif" font-size="17">CardPayment</text>
+
+  <!-- CardPayment realizes PaymentProcessor: dashed line, hollow triangle -->
+  <path d="M190 400L180 418H200Z" fill="#0D0D0D" stroke="#AAAAAA" stroke-width="2" stroke-linejoin="round"/>
+  <path d="M190 418V475" stroke="#AAAAAA" stroke-width="2" stroke-dasharray="7 6"/>
+  <text x="206" y="452" fill="#777777" font-family="Arial, sans-serif" font-size="13">implements</text>
+
+  <rect x="540" y="475" width="200" height="70" rx="10" fill="#0F1A21" stroke="#60A5FA" stroke-width="2"/>
+  <text x="560" y="505" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="17">Category</text>
+  <text x="560" y="529" fill="#93B4D6" font-family="Arial, sans-serif" font-size="14">add(Product)</text>
+
+  <rect x="910" y="475" width="210" height="70" rx="10" fill="#0F1A21" stroke="#60A5FA" stroke-width="2"/>
+  <text x="930" y="505" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="17">Product</text>
+  <text x="930" y="529" fill="#93B4D6" font-family="Arial, sans-serif" font-size="14">in the catalog first</text>
+
+  <!-- Category aggregates Product: hollow diamond at the Category end -->
+  <path d="M740 510L752 503L764 510L752 517Z" fill="#0D0D0D" stroke="#60A5FA" stroke-width="2" stroke-linejoin="round"/>
+  <path d="M764 510H909" stroke="#60A5FA" stroke-width="2"/>
+  <text x="770" y="498" fill="#AAAAAA" font-family="Arial, sans-serif" font-size="14">0..*</text>
+  <text x="872" y="498" fill="#AAAAAA" font-family="Arial, sans-serif" font-size="14">0..*</text>
+  <text x="778" y="535" fill="#777777" font-family="Arial, sans-serif" font-size="13">aggregation</text>
+
+  <!-- ===== Row D: Laptop ===== -->
+  <rect x="910" y="620" width="210" height="70" rx="10" fill="#0F1A21" stroke="#60A5FA" stroke-width="2"/>
+  <text x="930" y="661" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="17">Laptop</text>
+
+  <!-- Laptop extends Product: solid line, hollow triangle -->
+  <path d="M1015 545L1005 563H1025Z" fill="#0D0D0D" stroke="#AAAAAA" stroke-width="2" stroke-linejoin="round"/>
+  <path d="M1015 563V620" stroke="#AAAAAA" stroke-width="2"/>
+  <text x="1031" y="597" fill="#777777" font-family="Arial, sans-serif" font-size="13">extends</text>
+
+  <!-- ===== Legend ===== -->
+  <rect x="360" y="585" width="500" height="150" rx="12" fill="#151515" stroke="#2B2B2B" stroke-width="2"/>
+  <text x="380" y="611" fill="#888888" font-family="Arial, sans-serif" font-size="13" letter-spacing="2">LEGEND · THE DIAMOND SITS AT THE WHOLE</text>
+
+  <!-- column 1 -->
+  <path d="M380 640H424" stroke="#60A5FA" stroke-width="2"/>
+  <path d="M416 635L424 640L416 645" stroke="#60A5FA" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="436" y="645" fill="#AAAAAA" font-family="Arial, sans-serif" font-size="14">association (knows-a)</text>
+
+  <path d="M380 675L390 669L400 675L390 681Z" fill="#0D0D0D" stroke="#60A5FA" stroke-width="2" stroke-linejoin="round"/>
+  <path d="M400 675H424" stroke="#60A5FA" stroke-width="2"/>
+  <text x="436" y="680" fill="#AAAAAA" font-family="Arial, sans-serif" font-size="14">aggregation (has-a)</text>
+
+  <path d="M380 710L390 704L400 710L390 716Z" fill="#FB923C" stroke="#FB923C" stroke-width="2" stroke-linejoin="round"/>
+  <path d="M400 710H424" stroke="#FB923C" stroke-width="2"/>
+  <text x="436" y="715" fill="#AAAAAA" font-family="Arial, sans-serif" font-size="14">composition (owns)</text>
+
+  <!-- column 2 -->
+  <path d="M620 640H664" stroke="#AAAAAA" stroke-width="2" stroke-dasharray="7 6"/>
+  <path d="M656 635L664 640L656 645" stroke="#AAAAAA" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="676" y="645" fill="#AAAAAA" font-family="Arial, sans-serif" font-size="14">dependency (uses-a)</text>
+
+  <path d="M620 675H648" stroke="#AAAAAA" stroke-width="2"/>
+  <path d="M664 675L648 667V683Z" fill="#0D0D0D" stroke="#AAAAAA" stroke-width="2" stroke-linejoin="round"/>
+  <text x="676" y="680" fill="#AAAAAA" font-family="Arial, sans-serif" font-size="14">inheritance (is-a)</text>
+
+  <path d="M620 710H648" stroke="#AAAAAA" stroke-width="2" stroke-dasharray="7 6"/>
+  <path d="M664 710L648 702V718Z" fill="#0D0D0D" stroke="#AAAAAA" stroke-width="2" stroke-linejoin="round"/>
+  <text x="676" y="715" fill="#AAAAAA" font-family="Arial, sans-serif" font-size="14">realization (implements)</text>
+</svg>
