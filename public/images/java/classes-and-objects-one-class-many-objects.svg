@@ -1,0 +1,86 @@
+<svg width="1200" height="720" viewBox="0 0 1200 720" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="720" rx="28" fill="#0D0D0D"/>
+  <path d="M80 130H1120" stroke="#2B2B2B" stroke-width="2"/>
+  <text x="80" y="82" fill="#FB923C" font-family="Arial, sans-serif" font-size="18" letter-spacing="4">ONE CLASS IN METASPACE, THREE OBJECTS ON THE HEAP</text>
+  <text x="80" y="112" fill="#777777" font-family="Arial, sans-serif" font-size="16">HeaderPeek on JDK 21: each Order holds only its own field values and a class pointer. The code exists once.</text>
+
+  <!-- stack -->
+  <text x="80" y="170" fill="#888888" font-family="Arial, sans-serif" font-size="14" letter-spacing="2">STACK · main frame</text>
+  <rect x="80" y="185" width="250" height="300" rx="10" fill="#21180F" stroke="#FB923C" stroke-width="2"/>
+  <text x="100" y="215" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="16">main(String[] args)</text>
+  <text x="100" y="258" fill="#C6A17A" font-family="Arial, sans-serif" font-size="16">Order asha</text>
+  <text x="205" y="258" fill="#C6A17A" font-family="Arial, sans-serif" font-size="16">●</text>
+  <text x="100" y="298" fill="#C6A17A" font-family="Arial, sans-serif" font-size="16">Order same</text>
+  <text x="205" y="298" fill="#C6A17A" font-family="Arial, sans-serif" font-size="16">●</text>
+  <text x="100" y="398" fill="#C6A17A" font-family="Arial, sans-serif" font-size="16">Order ravi</text>
+  <text x="205" y="398" fill="#C6A17A" font-family="Arial, sans-serif" font-size="16">●</text>
+  <text x="100" y="458" fill="#C6A17A" font-family="Arial, sans-serif" font-size="16">Order meera</text>
+  <text x="205" y="458" fill="#C6A17A" font-family="Arial, sans-serif" font-size="16">●</text>
+  <text x="80" y="520" fill="#777777" font-family="Arial, sans-serif" font-size="14">asha and same hold the same reference:</text>
+  <text x="80" y="542" fill="#777777" font-family="Arial, sans-serif" font-size="14">one object, two names (aliasing).</text>
+
+  <!-- heap -->
+  <text x="430" y="170" fill="#888888" font-family="Arial, sans-serif" font-size="14" letter-spacing="2">HEAP · 24 bytes per Order</text>
+  <rect x="430" y="185" width="370" height="440" rx="16" fill="#0F1A21" stroke="#60A5FA" stroke-width="2"/>
+
+  <rect x="450" y="205" width="330" height="120" rx="10" fill="#132433" stroke="#60A5FA" stroke-width="1.5"/>
+  <text x="465" y="233" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="16">Order object #1</text>
+  <text x="465" y="258" fill="#93B4D6" font-family="Arial, sans-serif" font-size="14">header: mark word, class ptr 0x01000a08</text>
+  <text x="465" y="282" fill="#93B4D6" font-family="Arial, sans-serif" font-size="14">@12 items = 3</text>
+  <text x="580" y="282" fill="#93B4D6" font-family="Arial, sans-serif" font-size="14">@16 placed = true</text>
+  <text x="465" y="306" fill="#93B4D6" font-family="Arial, sans-serif" font-size="14">@20 customer → "Asha"</text>
+
+  <rect x="450" y="345" width="330" height="120" rx="10" fill="#132433" stroke="#60A5FA" stroke-width="1.5"/>
+  <text x="465" y="373" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="16">Order object #2</text>
+  <text x="465" y="398" fill="#93B4D6" font-family="Arial, sans-serif" font-size="14">header: mark word, class ptr 0x01000a08</text>
+  <text x="465" y="422" fill="#93B4D6" font-family="Arial, sans-serif" font-size="14">@12 items = 0</text>
+  <text x="580" y="422" fill="#93B4D6" font-family="Arial, sans-serif" font-size="14">@16 placed = false</text>
+  <text x="465" y="446" fill="#93B4D6" font-family="Arial, sans-serif" font-size="14">@20 customer → "Ravi"</text>
+
+  <rect x="450" y="485" width="330" height="120" rx="10" fill="#132433" stroke="#60A5FA" stroke-width="1.5"/>
+  <text x="465" y="513" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="16">Order object #3</text>
+  <text x="465" y="538" fill="#93B4D6" font-family="Arial, sans-serif" font-size="14">header: mark word, class ptr 0x01000a08</text>
+  <text x="465" y="562" fill="#93B4D6" font-family="Arial, sans-serif" font-size="14">@12 items = 2</text>
+  <text x="580" y="562" fill="#93B4D6" font-family="Arial, sans-serif" font-size="14">@16 placed = true</text>
+  <text x="465" y="586" fill="#93B4D6" font-family="Arial, sans-serif" font-size="14">@20 customer → "Meera"</text>
+
+  <!-- metaspace -->
+  <text x="880" y="170" fill="#888888" font-family="Arial, sans-serif" font-size="14" letter-spacing="2">METASPACE · once per class</text>
+  <rect x="880" y="185" width="240" height="440" rx="10" fill="#151515" stroke="#444444" stroke-width="2"/>
+  <text x="900" y="217" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="17">class Order</text>
+  <text x="900" y="240" fill="#777777" font-family="Arial, sans-serif" font-size="13">metadata, loaded once</text>
+  <path d="M900 256H1100" stroke="#2B2B2B" stroke-width="1.5"/>
+  <text x="900" y="283" fill="#888888" font-family="Arial, sans-serif" font-size="12" letter-spacing="2">FIELD LAYOUT</text>
+  <text x="900" y="308" fill="#AAAAAA" font-family="Arial, sans-serif" font-size="14">@12  int items</text>
+  <text x="900" y="331" fill="#AAAAAA" font-family="Arial, sans-serif" font-size="14">@16  boolean placed</text>
+  <text x="900" y="354" fill="#AAAAAA" font-family="Arial, sans-serif" font-size="14">@20  String customer</text>
+  <text x="900" y="377" fill="#AAAAAA" font-family="Arial, sans-serif" font-size="14">instance size: 24 bytes</text>
+  <path d="M900 395H1100" stroke="#2B2B2B" stroke-width="1.5"/>
+  <text x="900" y="422" fill="#888888" font-family="Arial, sans-serif" font-size="12" letter-spacing="2">METHOD CODE</text>
+  <text x="900" y="447" fill="#AAAAAA" font-family="Arial, sans-serif" font-size="14">Order(String)</text>
+  <text x="900" y="470" fill="#AAAAAA" font-family="Arial, sans-serif" font-size="14">place(int)</text>
+  <text x="900" y="493" fill="#AAAAAA" font-family="Arial, sans-serif" font-size="14">total()</text>
+  <text x="900" y="516" fill="#AAAAAA" font-family="Arial, sans-serif" font-size="14">+ constant pool</text>
+  <text x="900" y="568" fill="#777777" font-family="Arial, sans-serif" font-size="13">The bytecode lives here,</text>
+  <text x="900" y="588" fill="#777777" font-family="Arial, sans-serif" font-size="13">not inside any object.</text>
+
+  <!-- stack references to heap objects -->
+  <path d="M222 253C330 253 360 250 442 250" stroke="#FB923C" stroke-width="2"/>
+  <path d="M434 245L443 250L434 255" stroke="#FB923C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M222 293C330 293 360 280 442 280" stroke="#FB923C" stroke-width="2"/>
+  <path d="M434 275L443 280L434 285" stroke="#FB923C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M222 393C330 393 360 405 442 405" stroke="#FB923C" stroke-width="2"/>
+  <path d="M434 400L443 405L434 410" stroke="#FB923C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M222 453C330 453 360 545 442 545" stroke="#FB923C" stroke-width="2"/>
+  <path d="M434 540L443 545L434 550" stroke="#FB923C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+
+  <!-- class pointers to metaspace -->
+  <path d="M780 253C830 253 840 230 872 230" stroke="#60A5FA" stroke-width="2"/>
+  <path d="M780 393C840 393 830 230 872 230" stroke="#60A5FA" stroke-width="2"/>
+  <path d="M780 533C850 533 830 230 872 230" stroke="#60A5FA" stroke-width="2"/>
+  <path d="M864 225L873 230L864 235" stroke="#60A5FA" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+
+  <!-- footer notes -->
+  <text x="80" y="668" fill="#777777" font-family="Arial, sans-serif" font-size="14">All three Orders carry the same class pointer (0x01000a08 in my run); a Customer object had 0x01000c28.</text>
+  <text x="80" y="692" fill="#777777" font-family="Arial, sans-serif" font-size="14">Adding thirty methods to a class grows its metadata here, never the 24 bytes of each object.</text>
+</svg>
