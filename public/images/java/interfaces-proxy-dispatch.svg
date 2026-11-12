@@ -1,0 +1,74 @@
+<svg width="1200" height="660" viewBox="0 0 1200 660" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="660" rx="28" fill="#0D0D0D"/>
+  <path d="M80 130H1120" stroke="#2B2B2B" stroke-width="2"/>
+  <text x="80" y="82" fill="#FB923C" font-family="Arial, sans-serif" font-size="18" letter-spacing="4">AN IMPLEMENTATION NOBODY WROTE</text>
+  <text x="80" y="112" fill="#777777" font-family="Arial, sans-serif" font-size="16">One call on a JDK dynamic proxy, from MiniSpringData: rides.findByCity("Kolkata") on JDK 21</text>
+
+  <!-- caller -->
+  <rect x="80" y="160" width="230" height="170" rx="12" fill="#151515" stroke="#444444" stroke-width="2"/>
+  <text x="100" y="192" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="17">my code</text>
+  <text x="100" y="222" fill="#AAAAAA" font-family="Arial, sans-serif" font-size="14">rides.findByCity("Kolkata")</text>
+  <text x="100" y="258" fill="#777777" font-family="Arial, sans-serif" font-size="13">compiled to</text>
+  <text x="100" y="280" fill="#AAAAAA" font-family="Arial, sans-serif" font-size="13">invokeinterface</text>
+  <text x="100" y="300" fill="#AAAAAA" font-family="Arial, sans-serif" font-size="13">RideRepository.findByCity</text>
+
+  <!-- proxy -->
+  <rect x="350" y="160" width="270" height="170" rx="12" fill="#21180F" stroke="#FB923C" stroke-width="2"/>
+  <text x="370" y="192" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="17">jdk.proxy1.$Proxy0</text>
+  <text x="370" y="218" fill="#C6A17A" font-family="Arial, sans-serif" font-size="13">generated at run time, public final</text>
+  <text x="370" y="238" fill="#C6A17A" font-family="Arial, sans-serif" font-size="13">extends java.lang.reflect.Proxy</text>
+  <text x="370" y="258" fill="#C6A17A" font-family="Arial, sans-serif" font-size="13">implements RideRepository</text>
+  <text x="370" y="286" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="13">1. pack args into Object[]</text>
+  <text x="370" y="306" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="13">2. h.invoke(this, m3, args)</text>
+
+  <!-- handler -->
+  <rect x="660" y="160" width="230" height="170" rx="12" fill="#0F1A21" stroke="#60A5FA" stroke-width="2"/>
+  <text x="680" y="192" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="17">InvocationHandler</text>
+  <text x="680" y="218" fill="#93B4D6" font-family="Arial, sans-serif" font-size="13">invoke(proxy, method, args)</text>
+  <text x="680" y="250" fill="#93B4D6" font-family="Arial, sans-serif" font-size="13">queries.get(method): parsed</text>
+  <text x="680" y="270" fill="#93B4D6" font-family="Arial, sans-serif" font-size="13">once, from the name</text>
+  <text x="680" y="298" fill="#93B4D6" font-family="Arial, sans-serif" font-size="13">findBy + City → city()</text>
+
+  <!-- table -->
+  <rect x="930" y="160" width="190" height="170" rx="12" fill="#132433" stroke="#60A5FA" stroke-width="1.5"/>
+  <text x="950" y="192" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="17">rides table</text>
+  <text x="950" y="218" fill="#93B4D6" font-family="Arial, sans-serif" font-size="13">4 Ride records</text>
+  <text x="950" y="250" fill="#93B4D6" font-family="Arial, sans-serif" font-size="13">keep rides whose</text>
+  <text x="950" y="270" fill="#93B4D6" font-family="Arial, sans-serif" font-size="13">city() equals "Kolkata"</text>
+
+  <!-- forward arrows -->
+  <path d="M310 210H342" stroke="#FB923C" stroke-width="2"/>
+  <path d="M334 205L343 210L334 215" stroke="#FB923C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M620 210H652" stroke="#FB923C" stroke-width="2"/>
+  <path d="M644 205L653 210L644 215" stroke="#FB923C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M890 210H922" stroke="#60A5FA" stroke-width="2"/>
+  <path d="M914 205L923 210L914 215" stroke="#60A5FA" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+
+  <!-- return path -->
+  <path d="M1025 330V372H195V340" stroke="#60A5FA" stroke-width="2" stroke-dasharray="6 6"/>
+  <path d="M190 348L195 339L200 348" stroke="#60A5FA" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="430" y="398" fill="#93B4D6" font-family="Arial, sans-serif" font-size="14">returns [1, 3, 4]; the proxy checkcasts it to List before handing it back</text>
+
+  <!-- comparison -->
+  <text x="80" y="450" fill="#888888" font-family="Arial, sans-serif" font-size="14" letter-spacing="2">STEP</text>
+  <text x="300" y="450" fill="#888888" font-family="Arial, sans-serif" font-size="14" letter-spacing="2">MINISPRINGDATA (THIS LESSON)</text>
+  <text x="700" y="450" fill="#888888" font-family="Arial, sans-serif" font-size="14" letter-spacing="2">SPRING DATA JPA</text>
+  <path d="M80 464H1120" stroke="#2B2B2B" stroke-width="2"/>
+
+  <text x="80" y="494" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="15">Make the class</text>
+  <text x="300" y="494" fill="#C6A17A" font-family="Arial, sans-serif" font-size="15">Proxy.newProxyInstance</text>
+  <text x="700" y="494" fill="#93B4D6" font-family="Arial, sans-serif" font-size="15">ProxyFactory.getProxy, a JDK proxy for the interface</text>
+
+  <text x="80" y="528" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="15">Parse the names</text>
+  <text x="300" y="528" fill="#C6A17A" font-family="Arial, sans-serif" font-size="15">derive(): findBy / countBy + accessor</text>
+  <text x="700" y="528" fill="#93B4D6" font-family="Arial, sans-serif" font-size="15">PartTree, when the repository is created</text>
+
+  <text x="80" y="562" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="15">Run the query</text>
+  <text x="300" y="562" fill="#C6A17A" font-family="Arial, sans-serif" font-size="15">filter a List in memory</text>
+  <text x="700" y="562" fill="#93B4D6" font-family="Arial, sans-serif" font-size="15">a JPA query through the EntityManager</text>
+
+  <text x="80" y="596" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="15">A typo: findByCitty</text>
+  <text x="300" y="596" fill="#C6A17A" font-family="Arial, sans-serif" font-size="15">fails while creating the proxy</text>
+  <text x="700" y="596" fill="#93B4D6" font-family="Arial, sans-serif" font-size="15">PropertyReferenceException at startup:</text>
+  <text x="700" y="618" fill="#93B4D6" font-family="Arial, sans-serif" font-size="15">No property 'citty' found for type 'Ride'</text>
+</svg>
