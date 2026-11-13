@@ -1,0 +1,279 @@
+<svg width="1200" height="860" viewBox="0 0 1200 860" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="860" rx="28" fill="#0D0D0D"/>
+  <path d="M80 130H1120" stroke="#2B2B2B" stroke-width="2"/>
+  <text x="80" y="82" fill="#FB923C" font-family="Arial, sans-serif" font-size="18" letter-spacing="4">STRINGBUILDER GROWTH: A NEW ARRAY, NEVER A LONGER ONE</text>
+  <text x="80" y="112" fill="#777777" font-family="Arial, sans-serif" font-size="16">JDK 21. Capacities from CapacityGrowth.java, byte arrays from Inflation.java (reflection).</text>
+  <rect x="80" y="160" width="260" height="150" rx="10" fill="#0F1A21" stroke="#60A5FA" stroke-width="2"/>
+  <text x="98" y="192" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="17">StringBuilder</text>
+  <text x="98" y="222" fill="#93B4D6" font-family="Arial, sans-serif" font-size="14">byte[] value  ·  reference</text>
+  <text x="98" y="248" fill="#93B4D6" font-family="Arial, sans-serif" font-size="14">byte coder = 0 (LATIN1)</text>
+  <text x="98" y="274" fill="#93B4D6" font-family="Arial, sans-serif" font-size="14">int count = 16</text>
+  <text x="98" y="298" fill="#777777" font-family="Arial, sans-serif" font-size="13">capacity = value.length &gt;&gt; coder</text>
+  <text x="400" y="160" fill="#AAAAAA" font-family="Arial, sans-serif" font-size="15">before: byte[16], full (count 16 = capacity 16)</text>
+  <rect x="400" y="172" width="22" height="34" rx="0" fill="#1A1A1A" stroke="#555555" stroke-width="1"/>
+  <text x="411.0" y="194.0" fill="#888888" font-family="Arial, sans-serif" font-size="13" text-anchor="middle">I</text>
+  <rect x="422" y="172" width="22" height="34" rx="0" fill="#1A1A1A" stroke="#555555" stroke-width="1"/>
+  <text x="433.0" y="194.0" fill="#888888" font-family="Arial, sans-serif" font-size="13" text-anchor="middle">N</text>
+  <rect x="444" y="172" width="22" height="34" rx="0" fill="#1A1A1A" stroke="#555555" stroke-width="1"/>
+  <text x="455.0" y="194.0" fill="#888888" font-family="Arial, sans-serif" font-size="13" text-anchor="middle">V</text>
+  <rect x="466" y="172" width="22" height="34" rx="0" fill="#1A1A1A" stroke="#555555" stroke-width="1"/>
+  <text x="477.0" y="194.0" fill="#888888" font-family="Arial, sans-serif" font-size="13" text-anchor="middle">O</text>
+  <rect x="488" y="172" width="22" height="34" rx="0" fill="#1A1A1A" stroke="#555555" stroke-width="1"/>
+  <text x="499.0" y="194.0" fill="#888888" font-family="Arial, sans-serif" font-size="13" text-anchor="middle">I</text>
+  <rect x="510" y="172" width="22" height="34" rx="0" fill="#1A1A1A" stroke="#555555" stroke-width="1"/>
+  <text x="521.0" y="194.0" fill="#888888" font-family="Arial, sans-serif" font-size="13" text-anchor="middle">C</text>
+  <rect x="532" y="172" width="22" height="34" rx="0" fill="#1A1A1A" stroke="#555555" stroke-width="1"/>
+  <text x="543.0" y="194.0" fill="#888888" font-family="Arial, sans-serif" font-size="13" text-anchor="middle">E</text>
+  <rect x="554" y="172" width="22" height="34" rx="0" fill="#1A1A1A" stroke="#555555" stroke-width="1"/>
+  <text x="565.0" y="194.0" fill="#888888" font-family="Arial, sans-serif" font-size="13" text-anchor="middle">-</text>
+  <rect x="576" y="172" width="22" height="34" rx="0" fill="#1A1A1A" stroke="#555555" stroke-width="1"/>
+  <text x="587.0" y="194.0" fill="#888888" font-family="Arial, sans-serif" font-size="13" text-anchor="middle">1</text>
+  <rect x="598" y="172" width="22" height="34" rx="0" fill="#1A1A1A" stroke="#555555" stroke-width="1"/>
+  <text x="609.0" y="194.0" fill="#888888" font-family="Arial, sans-serif" font-size="13" text-anchor="middle">0</text>
+  <rect x="620" y="172" width="22" height="34" rx="0" fill="#1A1A1A" stroke="#555555" stroke-width="1"/>
+  <text x="631.0" y="194.0" fill="#888888" font-family="Arial, sans-serif" font-size="13" text-anchor="middle">4</text>
+  <rect x="642" y="172" width="22" height="34" rx="0" fill="#1A1A1A" stroke="#555555" stroke-width="1"/>
+  <text x="653.0" y="194.0" fill="#888888" font-family="Arial, sans-serif" font-size="13" text-anchor="middle">2</text>
+  <rect x="664" y="172" width="22" height="34" rx="0" fill="#1A1A1A" stroke="#555555" stroke-width="1"/>
+  <text x="675.0" y="194.0" fill="#888888" font-family="Arial, sans-serif" font-size="13" text-anchor="middle">-</text>
+  <rect x="686" y="172" width="22" height="34" rx="0" fill="#1A1A1A" stroke="#555555" stroke-width="1"/>
+  <text x="697.0" y="194.0" fill="#888888" font-family="Arial, sans-serif" font-size="13" text-anchor="middle">P</text>
+  <rect x="708" y="172" width="22" height="34" rx="0" fill="#1A1A1A" stroke="#555555" stroke-width="1"/>
+  <text x="719.0" y="194.0" fill="#888888" font-family="Arial, sans-serif" font-size="13" text-anchor="middle">E</text>
+  <rect x="730" y="172" width="22" height="34" rx="0" fill="#1A1A1A" stroke="#555555" stroke-width="1"/>
+  <text x="741.0" y="194.0" fill="#888888" font-family="Arial, sans-serif" font-size="13" text-anchor="middle">N</text>
+  <text x="762" y="194" fill="#777777" font-family="Arial, sans-serif" font-size="14">becomes garbage</text>
+  <path d="M400 189H752" stroke="#555555" stroke-width="1.5"/>
+  <path d="M340 189L392 189" stroke="#60A5FA" stroke-width="2"/>
+  <path d="M383 184L392 189L383 194" stroke="#60A5FA" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="400" y="236" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="15">append('S'): needs 17 &gt; 16, so new byte[34] = 16 * 2 + 2</text>
+  <rect x="400" y="248" width="20" height="34" rx="0" fill="#132433" stroke="#60A5FA" stroke-width="1"/>
+  <text x="410.0" y="270.0" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="13" text-anchor="middle">I</text>
+  <rect x="420" y="248" width="20" height="34" rx="0" fill="#132433" stroke="#60A5FA" stroke-width="1"/>
+  <text x="430.0" y="270.0" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="13" text-anchor="middle">N</text>
+  <rect x="440" y="248" width="20" height="34" rx="0" fill="#132433" stroke="#60A5FA" stroke-width="1"/>
+  <text x="450.0" y="270.0" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="13" text-anchor="middle">V</text>
+  <rect x="460" y="248" width="20" height="34" rx="0" fill="#132433" stroke="#60A5FA" stroke-width="1"/>
+  <text x="470.0" y="270.0" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="13" text-anchor="middle">O</text>
+  <rect x="480" y="248" width="20" height="34" rx="0" fill="#132433" stroke="#60A5FA" stroke-width="1"/>
+  <text x="490.0" y="270.0" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="13" text-anchor="middle">I</text>
+  <rect x="500" y="248" width="20" height="34" rx="0" fill="#132433" stroke="#60A5FA" stroke-width="1"/>
+  <text x="510.0" y="270.0" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="13" text-anchor="middle">C</text>
+  <rect x="520" y="248" width="20" height="34" rx="0" fill="#132433" stroke="#60A5FA" stroke-width="1"/>
+  <text x="530.0" y="270.0" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="13" text-anchor="middle">E</text>
+  <rect x="540" y="248" width="20" height="34" rx="0" fill="#132433" stroke="#60A5FA" stroke-width="1"/>
+  <text x="550.0" y="270.0" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="13" text-anchor="middle">-</text>
+  <rect x="560" y="248" width="20" height="34" rx="0" fill="#132433" stroke="#60A5FA" stroke-width="1"/>
+  <text x="570.0" y="270.0" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="13" text-anchor="middle">1</text>
+  <rect x="580" y="248" width="20" height="34" rx="0" fill="#132433" stroke="#60A5FA" stroke-width="1"/>
+  <text x="590.0" y="270.0" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="13" text-anchor="middle">0</text>
+  <rect x="600" y="248" width="20" height="34" rx="0" fill="#132433" stroke="#60A5FA" stroke-width="1"/>
+  <text x="610.0" y="270.0" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="13" text-anchor="middle">4</text>
+  <rect x="620" y="248" width="20" height="34" rx="0" fill="#132433" stroke="#60A5FA" stroke-width="1"/>
+  <text x="630.0" y="270.0" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="13" text-anchor="middle">2</text>
+  <rect x="640" y="248" width="20" height="34" rx="0" fill="#132433" stroke="#60A5FA" stroke-width="1"/>
+  <text x="650.0" y="270.0" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="13" text-anchor="middle">-</text>
+  <rect x="660" y="248" width="20" height="34" rx="0" fill="#132433" stroke="#60A5FA" stroke-width="1"/>
+  <text x="670.0" y="270.0" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="13" text-anchor="middle">P</text>
+  <rect x="680" y="248" width="20" height="34" rx="0" fill="#132433" stroke="#60A5FA" stroke-width="1"/>
+  <text x="690.0" y="270.0" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="13" text-anchor="middle">E</text>
+  <rect x="700" y="248" width="20" height="34" rx="0" fill="#132433" stroke="#60A5FA" stroke-width="1"/>
+  <text x="710.0" y="270.0" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="13" text-anchor="middle">N</text>
+  <rect x="720" y="248" width="20" height="34" rx="0" fill="#21180F" stroke="#FB923C" stroke-width="1"/>
+  <text x="730.0" y="270.0" fill="#FB923C" font-family="Arial, sans-serif" font-size="13" text-anchor="middle">S</text>
+  <rect x="740" y="248" width="20" height="34" rx="0" fill="#151515" stroke="#444444" stroke-width="1" stroke-dasharray="3 3"/>
+  <rect x="760" y="248" width="20" height="34" rx="0" fill="#151515" stroke="#444444" stroke-width="1" stroke-dasharray="3 3"/>
+  <rect x="780" y="248" width="20" height="34" rx="0" fill="#151515" stroke="#444444" stroke-width="1" stroke-dasharray="3 3"/>
+  <rect x="800" y="248" width="20" height="34" rx="0" fill="#151515" stroke="#444444" stroke-width="1" stroke-dasharray="3 3"/>
+  <rect x="820" y="248" width="20" height="34" rx="0" fill="#151515" stroke="#444444" stroke-width="1" stroke-dasharray="3 3"/>
+  <rect x="840" y="248" width="20" height="34" rx="0" fill="#151515" stroke="#444444" stroke-width="1" stroke-dasharray="3 3"/>
+  <rect x="860" y="248" width="20" height="34" rx="0" fill="#151515" stroke="#444444" stroke-width="1" stroke-dasharray="3 3"/>
+  <rect x="880" y="248" width="20" height="34" rx="0" fill="#151515" stroke="#444444" stroke-width="1" stroke-dasharray="3 3"/>
+  <rect x="900" y="248" width="20" height="34" rx="0" fill="#151515" stroke="#444444" stroke-width="1" stroke-dasharray="3 3"/>
+  <rect x="920" y="248" width="20" height="34" rx="0" fill="#151515" stroke="#444444" stroke-width="1" stroke-dasharray="3 3"/>
+  <rect x="940" y="248" width="20" height="34" rx="0" fill="#151515" stroke="#444444" stroke-width="1" stroke-dasharray="3 3"/>
+  <rect x="960" y="248" width="20" height="34" rx="0" fill="#151515" stroke="#444444" stroke-width="1" stroke-dasharray="3 3"/>
+  <rect x="980" y="248" width="20" height="34" rx="0" fill="#151515" stroke="#444444" stroke-width="1" stroke-dasharray="3 3"/>
+  <rect x="1000" y="248" width="20" height="34" rx="0" fill="#151515" stroke="#444444" stroke-width="1" stroke-dasharray="3 3"/>
+  <rect x="1020" y="248" width="20" height="34" rx="0" fill="#151515" stroke="#444444" stroke-width="1" stroke-dasharray="3 3"/>
+  <rect x="1040" y="248" width="20" height="34" rx="0" fill="#151515" stroke="#444444" stroke-width="1" stroke-dasharray="3 3"/>
+  <rect x="1060" y="248" width="20" height="34" rx="0" fill="#151515" stroke="#444444" stroke-width="1" stroke-dasharray="3 3"/>
+  <text x="400" y="302" fill="#93B4D6" font-family="Arial, sans-serif" font-size="13">16 bytes copied by Arrays.copyOf</text>
+  <text x="720" y="302" fill="#FB923C" font-family="Arial, sans-serif" font-size="13">index 16: the new char</text>
+  <text x="890" y="302" fill="#777777" font-family="Arial, sans-serif" font-size="13">17 spare slots</text>
+  <path d="M210 310V330" stroke="#60A5FA" stroke-width="2"/>
+  <path d="M210 330H380V265H392" stroke="#60A5FA" stroke-width="2"/>
+  <path d="M383 260L392 265L383 270" stroke="#60A5FA" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="80" y="352" fill="#93B4D6" font-family="Arial, sans-serif" font-size="13">value now points at the new array</text>
+  <text x="400" y="352" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="15">35th char: 35 &gt; 34, so new byte[70] = 34 * 2 + 2</text>
+  <rect x="400" y="364" width="10" height="28" rx="0" fill="#132433" stroke="#60A5FA" stroke-width="1"/>
+  <rect x="410" y="364" width="10" height="28" rx="0" fill="#132433" stroke="#60A5FA" stroke-width="1"/>
+  <rect x="420" y="364" width="10" height="28" rx="0" fill="#132433" stroke="#60A5FA" stroke-width="1"/>
+  <rect x="430" y="364" width="10" height="28" rx="0" fill="#132433" stroke="#60A5FA" stroke-width="1"/>
+  <rect x="440" y="364" width="10" height="28" rx="0" fill="#132433" stroke="#60A5FA" stroke-width="1"/>
+  <rect x="450" y="364" width="10" height="28" rx="0" fill="#132433" stroke="#60A5FA" stroke-width="1"/>
+  <rect x="460" y="364" width="10" height="28" rx="0" fill="#132433" stroke="#60A5FA" stroke-width="1"/>
+  <rect x="470" y="364" width="10" height="28" rx="0" fill="#132433" stroke="#60A5FA" stroke-width="1"/>
+  <rect x="480" y="364" width="10" height="28" rx="0" fill="#132433" stroke="#60A5FA" stroke-width="1"/>
+  <rect x="490" y="364" width="10" height="28" rx="0" fill="#132433" stroke="#60A5FA" stroke-width="1"/>
+  <rect x="500" y="364" width="10" height="28" rx="0" fill="#132433" stroke="#60A5FA" stroke-width="1"/>
+  <rect x="510" y="364" width="10" height="28" rx="0" fill="#132433" stroke="#60A5FA" stroke-width="1"/>
+  <rect x="520" y="364" width="10" height="28" rx="0" fill="#132433" stroke="#60A5FA" stroke-width="1"/>
+  <rect x="530" y="364" width="10" height="28" rx="0" fill="#132433" stroke="#60A5FA" stroke-width="1"/>
+  <rect x="540" y="364" width="10" height="28" rx="0" fill="#132433" stroke="#60A5FA" stroke-width="1"/>
+  <rect x="550" y="364" width="10" height="28" rx="0" fill="#132433" stroke="#60A5FA" stroke-width="1"/>
+  <rect x="560" y="364" width="10" height="28" rx="0" fill="#132433" stroke="#60A5FA" stroke-width="1"/>
+  <rect x="570" y="364" width="10" height="28" rx="0" fill="#132433" stroke="#60A5FA" stroke-width="1"/>
+  <rect x="580" y="364" width="10" height="28" rx="0" fill="#132433" stroke="#60A5FA" stroke-width="1"/>
+  <rect x="590" y="364" width="10" height="28" rx="0" fill="#132433" stroke="#60A5FA" stroke-width="1"/>
+  <rect x="600" y="364" width="10" height="28" rx="0" fill="#132433" stroke="#60A5FA" stroke-width="1"/>
+  <rect x="610" y="364" width="10" height="28" rx="0" fill="#132433" stroke="#60A5FA" stroke-width="1"/>
+  <rect x="620" y="364" width="10" height="28" rx="0" fill="#132433" stroke="#60A5FA" stroke-width="1"/>
+  <rect x="630" y="364" width="10" height="28" rx="0" fill="#132433" stroke="#60A5FA" stroke-width="1"/>
+  <rect x="640" y="364" width="10" height="28" rx="0" fill="#132433" stroke="#60A5FA" stroke-width="1"/>
+  <rect x="650" y="364" width="10" height="28" rx="0" fill="#132433" stroke="#60A5FA" stroke-width="1"/>
+  <rect x="660" y="364" width="10" height="28" rx="0" fill="#132433" stroke="#60A5FA" stroke-width="1"/>
+  <rect x="670" y="364" width="10" height="28" rx="0" fill="#132433" stroke="#60A5FA" stroke-width="1"/>
+  <rect x="680" y="364" width="10" height="28" rx="0" fill="#132433" stroke="#60A5FA" stroke-width="1"/>
+  <rect x="690" y="364" width="10" height="28" rx="0" fill="#132433" stroke="#60A5FA" stroke-width="1"/>
+  <rect x="700" y="364" width="10" height="28" rx="0" fill="#132433" stroke="#60A5FA" stroke-width="1"/>
+  <rect x="710" y="364" width="10" height="28" rx="0" fill="#132433" stroke="#60A5FA" stroke-width="1"/>
+  <rect x="720" y="364" width="10" height="28" rx="0" fill="#132433" stroke="#60A5FA" stroke-width="1"/>
+  <rect x="730" y="364" width="10" height="28" rx="0" fill="#132433" stroke="#60A5FA" stroke-width="1"/>
+  <rect x="740" y="364" width="10" height="28" rx="0" fill="#21180F" stroke="#FB923C" stroke-width="1"/>
+  <rect x="750" y="364" width="10" height="28" rx="0" fill="#151515" stroke="#444444" stroke-width="1" stroke-dasharray="3 3"/>
+  <rect x="760" y="364" width="10" height="28" rx="0" fill="#151515" stroke="#444444" stroke-width="1" stroke-dasharray="3 3"/>
+  <rect x="770" y="364" width="10" height="28" rx="0" fill="#151515" stroke="#444444" stroke-width="1" stroke-dasharray="3 3"/>
+  <rect x="780" y="364" width="10" height="28" rx="0" fill="#151515" stroke="#444444" stroke-width="1" stroke-dasharray="3 3"/>
+  <rect x="790" y="364" width="10" height="28" rx="0" fill="#151515" stroke="#444444" stroke-width="1" stroke-dasharray="3 3"/>
+  <rect x="800" y="364" width="10" height="28" rx="0" fill="#151515" stroke="#444444" stroke-width="1" stroke-dasharray="3 3"/>
+  <rect x="810" y="364" width="10" height="28" rx="0" fill="#151515" stroke="#444444" stroke-width="1" stroke-dasharray="3 3"/>
+  <rect x="820" y="364" width="10" height="28" rx="0" fill="#151515" stroke="#444444" stroke-width="1" stroke-dasharray="3 3"/>
+  <rect x="830" y="364" width="10" height="28" rx="0" fill="#151515" stroke="#444444" stroke-width="1" stroke-dasharray="3 3"/>
+  <rect x="840" y="364" width="10" height="28" rx="0" fill="#151515" stroke="#444444" stroke-width="1" stroke-dasharray="3 3"/>
+  <rect x="850" y="364" width="10" height="28" rx="0" fill="#151515" stroke="#444444" stroke-width="1" stroke-dasharray="3 3"/>
+  <rect x="860" y="364" width="10" height="28" rx="0" fill="#151515" stroke="#444444" stroke-width="1" stroke-dasharray="3 3"/>
+  <rect x="870" y="364" width="10" height="28" rx="0" fill="#151515" stroke="#444444" stroke-width="1" stroke-dasharray="3 3"/>
+  <rect x="880" y="364" width="10" height="28" rx="0" fill="#151515" stroke="#444444" stroke-width="1" stroke-dasharray="3 3"/>
+  <rect x="890" y="364" width="10" height="28" rx="0" fill="#151515" stroke="#444444" stroke-width="1" stroke-dasharray="3 3"/>
+  <rect x="900" y="364" width="10" height="28" rx="0" fill="#151515" stroke="#444444" stroke-width="1" stroke-dasharray="3 3"/>
+  <rect x="910" y="364" width="10" height="28" rx="0" fill="#151515" stroke="#444444" stroke-width="1" stroke-dasharray="3 3"/>
+  <rect x="920" y="364" width="10" height="28" rx="0" fill="#151515" stroke="#444444" stroke-width="1" stroke-dasharray="3 3"/>
+  <rect x="930" y="364" width="10" height="28" rx="0" fill="#151515" stroke="#444444" stroke-width="1" stroke-dasharray="3 3"/>
+  <rect x="940" y="364" width="10" height="28" rx="0" fill="#151515" stroke="#444444" stroke-width="1" stroke-dasharray="3 3"/>
+  <rect x="950" y="364" width="10" height="28" rx="0" fill="#151515" stroke="#444444" stroke-width="1" stroke-dasharray="3 3"/>
+  <rect x="960" y="364" width="10" height="28" rx="0" fill="#151515" stroke="#444444" stroke-width="1" stroke-dasharray="3 3"/>
+  <rect x="970" y="364" width="10" height="28" rx="0" fill="#151515" stroke="#444444" stroke-width="1" stroke-dasharray="3 3"/>
+  <rect x="980" y="364" width="10" height="28" rx="0" fill="#151515" stroke="#444444" stroke-width="1" stroke-dasharray="3 3"/>
+  <rect x="990" y="364" width="10" height="28" rx="0" fill="#151515" stroke="#444444" stroke-width="1" stroke-dasharray="3 3"/>
+  <rect x="1000" y="364" width="10" height="28" rx="0" fill="#151515" stroke="#444444" stroke-width="1" stroke-dasharray="3 3"/>
+  <rect x="1010" y="364" width="10" height="28" rx="0" fill="#151515" stroke="#444444" stroke-width="1" stroke-dasharray="3 3"/>
+  <rect x="1020" y="364" width="10" height="28" rx="0" fill="#151515" stroke="#444444" stroke-width="1" stroke-dasharray="3 3"/>
+  <rect x="1030" y="364" width="10" height="28" rx="0" fill="#151515" stroke="#444444" stroke-width="1" stroke-dasharray="3 3"/>
+  <rect x="1040" y="364" width="10" height="28" rx="0" fill="#151515" stroke="#444444" stroke-width="1" stroke-dasharray="3 3"/>
+  <rect x="1050" y="364" width="10" height="28" rx="0" fill="#151515" stroke="#444444" stroke-width="1" stroke-dasharray="3 3"/>
+  <rect x="1060" y="364" width="10" height="28" rx="0" fill="#151515" stroke="#444444" stroke-width="1" stroke-dasharray="3 3"/>
+  <rect x="1070" y="364" width="10" height="28" rx="0" fill="#151515" stroke="#444444" stroke-width="1" stroke-dasharray="3 3"/>
+  <rect x="1080" y="364" width="10" height="28" rx="0" fill="#151515" stroke="#444444" stroke-width="1" stroke-dasharray="3 3"/>
+  <rect x="1090" y="364" width="10" height="28" rx="0" fill="#151515" stroke="#444444" stroke-width="1" stroke-dasharray="3 3"/>
+  <text x="400" y="412" fill="#777777" font-family="Arial, sans-serif" font-size="13">34 bytes copied, 1 written, 35 spare. Each growth copies everything written so far, but growths get rarer as it doubles</text>
+  <text x="80" y="466" fill="#AAAAAA" font-family="Arial, sans-serif" font-size="15">Capacity in chars after each growth, appending one char at a time</text>
+  <rect x="80" y="482" width="110" height="46" rx="8" fill="#151515" stroke="#60A5FA" stroke-width="2"/>
+  <text x="135" y="511" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="18" text-anchor="middle">16</text>
+  <text x="220" y="500" fill="#FB923C" font-family="Arial, sans-serif" font-size="13" text-anchor="middle">×2 + 2</text>
+  <path d="M192 510L246 510" stroke="#60A5FA" stroke-width="2"/>
+  <path d="M237 505L246 510L237 515" stroke="#60A5FA" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="260" y="482" width="110" height="46" rx="8" fill="#132433" stroke="#60A5FA" stroke-width="2"/>
+  <text x="315" y="511" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="18" text-anchor="middle">34</text>
+  <text x="400" y="500" fill="#FB923C" font-family="Arial, sans-serif" font-size="13" text-anchor="middle">×2 + 2</text>
+  <path d="M372 510L426 510" stroke="#60A5FA" stroke-width="2"/>
+  <path d="M417 505L426 510L417 515" stroke="#60A5FA" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="440" y="482" width="110" height="46" rx="8" fill="#132433" stroke="#60A5FA" stroke-width="2"/>
+  <text x="495" y="511" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="18" text-anchor="middle">70</text>
+  <text x="580" y="500" fill="#FB923C" font-family="Arial, sans-serif" font-size="13" text-anchor="middle">×2 + 2</text>
+  <path d="M552 510L606 510" stroke="#60A5FA" stroke-width="2"/>
+  <path d="M597 505L606 510L597 515" stroke="#60A5FA" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="620" y="482" width="110" height="46" rx="8" fill="#132433" stroke="#60A5FA" stroke-width="2"/>
+  <text x="675" y="511" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="18" text-anchor="middle">142</text>
+  <text x="760" y="500" fill="#FB923C" font-family="Arial, sans-serif" font-size="13" text-anchor="middle">×2 + 2</text>
+  <path d="M732 510L786 510" stroke="#60A5FA" stroke-width="2"/>
+  <path d="M777 505L786 510L777 515" stroke="#60A5FA" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="800" y="482" width="110" height="46" rx="8" fill="#132433" stroke="#60A5FA" stroke-width="2"/>
+  <text x="855" y="511" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="18" text-anchor="middle">286</text>
+  <text x="940" y="500" fill="#FB923C" font-family="Arial, sans-serif" font-size="13" text-anchor="middle">×2 + 2</text>
+  <path d="M912 510L966 510" stroke="#60A5FA" stroke-width="2"/>
+  <path d="M957 505L966 510L957 515" stroke="#60A5FA" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="980" y="482" width="110" height="46" rx="8" fill="#132433" stroke="#60A5FA" stroke-width="2"/>
+  <text x="1035" y="511" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="18" text-anchor="middle">574</text>
+  <rect x="80" y="560" width="1040" height="260" rx="12" fill="#151515" stroke="#444444" stroke-width="2"/>
+  <text x="100" y="592" fill="#FB923C" font-family="Arial, sans-serif" font-size="15" letter-spacing="2">INFLATION: one char outside Latin-1 converts the whole buffer</text>
+  <text x="100" y="628" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="15">LATIN1, coder 0: 16 chars in byte[16]</text>
+  <rect x="100" y="640" width="22" height="34" rx="0" fill="#132433" stroke="#60A5FA" stroke-width="1"/>
+  <text x="111.0" y="662.0" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="13" text-anchor="middle">C</text>
+  <rect x="122" y="640" width="22" height="34" rx="0" fill="#132433" stroke="#60A5FA" stroke-width="1"/>
+  <text x="133.0" y="662.0" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="13" text-anchor="middle">a</text>
+  <rect x="144" y="640" width="22" height="34" rx="0" fill="#132433" stroke="#60A5FA" stroke-width="1"/>
+  <text x="155.0" y="662.0" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="13" text-anchor="middle">f</text>
+  <rect x="166" y="640" width="22" height="34" rx="0" fill="#132433" stroke="#60A5FA" stroke-width="1"/>
+  <text x="177.0" y="662.0" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="13" text-anchor="middle">é</text>
+  <rect x="188" y="640" width="22" height="34" rx="0" fill="#151515" stroke="#444444" stroke-width="1" stroke-dasharray="3 3"/>
+  <rect x="210" y="640" width="22" height="34" rx="0" fill="#151515" stroke="#444444" stroke-width="1" stroke-dasharray="3 3"/>
+  <rect x="232" y="640" width="22" height="34" rx="0" fill="#151515" stroke="#444444" stroke-width="1" stroke-dasharray="3 3"/>
+  <rect x="254" y="640" width="22" height="34" rx="0" fill="#151515" stroke="#444444" stroke-width="1" stroke-dasharray="3 3"/>
+  <rect x="276" y="640" width="22" height="34" rx="0" fill="#151515" stroke="#444444" stroke-width="1" stroke-dasharray="3 3"/>
+  <rect x="298" y="640" width="22" height="34" rx="0" fill="#151515" stroke="#444444" stroke-width="1" stroke-dasharray="3 3"/>
+  <rect x="320" y="640" width="22" height="34" rx="0" fill="#151515" stroke="#444444" stroke-width="1" stroke-dasharray="3 3"/>
+  <rect x="342" y="640" width="22" height="34" rx="0" fill="#151515" stroke="#444444" stroke-width="1" stroke-dasharray="3 3"/>
+  <rect x="364" y="640" width="22" height="34" rx="0" fill="#151515" stroke="#444444" stroke-width="1" stroke-dasharray="3 3"/>
+  <rect x="386" y="640" width="22" height="34" rx="0" fill="#151515" stroke="#444444" stroke-width="1" stroke-dasharray="3 3"/>
+  <rect x="408" y="640" width="22" height="34" rx="0" fill="#151515" stroke="#444444" stroke-width="1" stroke-dasharray="3 3"/>
+  <rect x="430" y="640" width="22" height="34" rx="0" fill="#151515" stroke="#444444" stroke-width="1" stroke-dasharray="3 3"/>
+  <text x="100" y="698" fill="#888888" font-family="Arial, sans-serif" font-size="13">after append("Caf") and append('é'): é is U+00E9, still one byte</text>
+  <path d="M470 657L560 657" stroke="#FB923C" stroke-width="2"/>
+  <path d="M551 652L560 657L551 662" stroke="#FB923C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="470" y="640" fill="#FB923C" font-family="Arial, sans-serif" font-size="14">append(" ₹")</text>
+  <text x="580" y="628" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="15">UTF16, coder 1: the same 16 chars in byte[32]</text>
+  <rect x="580" y="640" width="16" height="34" rx="0" fill="#132433" stroke="#60A5FA" stroke-width="1"/>
+  <rect x="596" y="640" width="16" height="34" rx="0" fill="#132433" stroke="#60A5FA" stroke-width="1"/>
+  <rect x="612" y="640" width="16" height="34" rx="0" fill="#132433" stroke="#60A5FA" stroke-width="1"/>
+  <rect x="628" y="640" width="16" height="34" rx="0" fill="#132433" stroke="#60A5FA" stroke-width="1"/>
+  <rect x="644" y="640" width="16" height="34" rx="0" fill="#132433" stroke="#60A5FA" stroke-width="1"/>
+  <rect x="660" y="640" width="16" height="34" rx="0" fill="#132433" stroke="#60A5FA" stroke-width="1"/>
+  <rect x="676" y="640" width="16" height="34" rx="0" fill="#132433" stroke="#60A5FA" stroke-width="1"/>
+  <rect x="692" y="640" width="16" height="34" rx="0" fill="#132433" stroke="#60A5FA" stroke-width="1"/>
+  <rect x="708" y="640" width="16" height="34" rx="0" fill="#21180F" stroke="#FB923C" stroke-width="1"/>
+  <rect x="724" y="640" width="16" height="34" rx="0" fill="#21180F" stroke="#FB923C" stroke-width="1"/>
+  <rect x="740" y="640" width="16" height="34" rx="0" fill="#21180F" stroke="#FB923C" stroke-width="1"/>
+  <rect x="756" y="640" width="16" height="34" rx="0" fill="#21180F" stroke="#FB923C" stroke-width="1"/>
+  <rect x="772" y="640" width="16" height="34" rx="0" fill="#151515" stroke="#444444" stroke-width="1" stroke-dasharray="3 3"/>
+  <rect x="788" y="640" width="16" height="34" rx="0" fill="#151515" stroke="#444444" stroke-width="1" stroke-dasharray="3 3"/>
+  <rect x="804" y="640" width="16" height="34" rx="0" fill="#151515" stroke="#444444" stroke-width="1" stroke-dasharray="3 3"/>
+  <rect x="820" y="640" width="16" height="34" rx="0" fill="#151515" stroke="#444444" stroke-width="1" stroke-dasharray="3 3"/>
+  <rect x="836" y="640" width="16" height="34" rx="0" fill="#151515" stroke="#444444" stroke-width="1" stroke-dasharray="3 3"/>
+  <rect x="852" y="640" width="16" height="34" rx="0" fill="#151515" stroke="#444444" stroke-width="1" stroke-dasharray="3 3"/>
+  <rect x="868" y="640" width="16" height="34" rx="0" fill="#151515" stroke="#444444" stroke-width="1" stroke-dasharray="3 3"/>
+  <rect x="884" y="640" width="16" height="34" rx="0" fill="#151515" stroke="#444444" stroke-width="1" stroke-dasharray="3 3"/>
+  <rect x="900" y="640" width="16" height="34" rx="0" fill="#151515" stroke="#444444" stroke-width="1" stroke-dasharray="3 3"/>
+  <rect x="916" y="640" width="16" height="34" rx="0" fill="#151515" stroke="#444444" stroke-width="1" stroke-dasharray="3 3"/>
+  <rect x="932" y="640" width="16" height="34" rx="0" fill="#151515" stroke="#444444" stroke-width="1" stroke-dasharray="3 3"/>
+  <rect x="948" y="640" width="16" height="34" rx="0" fill="#151515" stroke="#444444" stroke-width="1" stroke-dasharray="3 3"/>
+  <rect x="964" y="640" width="16" height="34" rx="0" fill="#151515" stroke="#444444" stroke-width="1" stroke-dasharray="3 3"/>
+  <rect x="980" y="640" width="16" height="34" rx="0" fill="#151515" stroke="#444444" stroke-width="1" stroke-dasharray="3 3"/>
+  <rect x="996" y="640" width="16" height="34" rx="0" fill="#151515" stroke="#444444" stroke-width="1" stroke-dasharray="3 3"/>
+  <rect x="1012" y="640" width="16" height="34" rx="0" fill="#151515" stroke="#444444" stroke-width="1" stroke-dasharray="3 3"/>
+  <rect x="1028" y="640" width="16" height="34" rx="0" fill="#151515" stroke="#444444" stroke-width="1" stroke-dasharray="3 3"/>
+  <rect x="1044" y="640" width="16" height="34" rx="0" fill="#151515" stroke="#444444" stroke-width="1" stroke-dasharray="3 3"/>
+  <rect x="1060" y="640" width="16" height="34" rx="0" fill="#151515" stroke="#444444" stroke-width="1" stroke-dasharray="3 3"/>
+  <rect x="1076" y="640" width="16" height="34" rx="0" fill="#151515" stroke="#444444" stroke-width="1" stroke-dasharray="3 3"/>
+  <text x="596" y="662" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="13" text-anchor="middle">C</text>
+  <text x="628" y="662" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="13" text-anchor="middle">a</text>
+  <text x="660" y="662" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="13" text-anchor="middle">f</text>
+  <text x="692" y="662" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="13" text-anchor="middle">é</text>
+  <text x="724" y="662" fill="#FB923C" font-family="Arial, sans-serif" font-size="13" text-anchor="middle">␣</text>
+  <text x="756" y="662" fill="#FB923C" font-family="Arial, sans-serif" font-size="13" text-anchor="middle">₹</text>
+  <path d="M612 640V674M644 640V674M676 640V674M708 640V674M740 640V674M772 640V674" stroke="#93B4D6" stroke-width="1.5"/>
+  <text x="580" y="698" fill="#888888" font-family="Arial, sans-serif" font-size="13">two bytes per char; capacity() still says 16</text>
+  <text x="100" y="752" fill="#93B4D6" font-family="Arial, sans-serif" font-size="15">capacity 16 chars · value.length 16 bytes</text>
+  <text x="580" y="752" fill="#93B4D6" font-family="Arial, sans-serif" font-size="15">capacity 16 chars · value.length 32 bytes</text>
+  <text x="100" y="790" fill="#777777" font-family="Arial, sans-serif" font-size="14">The builder stays UTF16 after the ₹ is deleted; toString() still produces a compact LATIN1 String when it can.</text>
+</svg>

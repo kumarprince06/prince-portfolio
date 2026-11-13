@@ -1,0 +1,76 @@
+<svg width="1200" height="720" viewBox="0 0 1200 720" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="720" rx="28" fill="#0D0D0D"/>
+  <path d="M80 130H1120" stroke="#2B2B2B" stroke-width="2"/>
+  <text x="80" y="82" fill="#FB923C" font-family="Arial, sans-serif" font-size="18" letter-spacing="4">LITERALS, NEW STRING AND THE STRING TABLE</text>
+  <text x="80" y="112" fill="#777777" font-family="Arial, sans-serif" font-size="16">The four variables from PoolIdentity.java on JDK 21. Arrows are references; every box is a separate object.</text>
+
+  <!-- stack -->
+  <text x="80" y="170" fill="#888888" font-family="Arial, sans-serif" font-size="14" letter-spacing="2">STACK · main frame</text>
+  <rect x="80" y="185" width="270" height="340" rx="10" fill="#21180F" stroke="#FB923C" stroke-width="2"/>
+  <text x="100" y="248" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="16">built</text>
+  <text x="100" y="270" fill="#C6A17A" font-family="Arial, sans-serif" font-size="13">StringBuilder.toString()</text>
+  <circle cx="325" cy="255" r="5" fill="#FB923C"/>
+  <text x="100" y="358" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="16">constructed</text>
+  <text x="100" y="380" fill="#C6A17A" font-family="Arial, sans-serif" font-size="13">new String("Kolkata")</text>
+  <circle cx="325" cy="365" r="5" fill="#FB923C"/>
+  <text x="100" y="448" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="16">literal</text>
+  <text x="100" y="470" fill="#C6A17A" font-family="Arial, sans-serif" font-size="13">"Kolkata"</text>
+  <circle cx="325" cy="455" r="5" fill="#FB923C"/>
+  <text x="100" y="500" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="16">interned</text>
+  <text x="180" y="500" fill="#C6A17A" font-family="Arial, sans-serif" font-size="13">built.intern()</text>
+  <circle cx="325" cy="495" r="5" fill="#FB923C"/>
+
+  <!-- heap -->
+  <text x="420" y="170" fill="#888888" font-family="Arial, sans-serif" font-size="14" letter-spacing="2">HEAP · pooled strings live here too (since JDK 7)</text>
+  <rect x="420" y="185" width="700" height="340" rx="16" fill="#0F1A21" stroke="#60A5FA" stroke-width="2"/>
+
+  <rect x="460" y="215" width="250" height="80" rx="10" fill="#132433" stroke="#60A5FA" stroke-width="1.5"/>
+  <text x="478" y="246" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="16">String "Kolkata"</text>
+  <text x="478" y="272" fill="#93B4D6" font-family="Arial, sans-serif" font-size="14">not pooled · 24 bytes</text>
+
+  <rect x="460" y="325" width="250" height="80" rx="10" fill="#132433" stroke="#60A5FA" stroke-width="1.5"/>
+  <text x="478" y="356" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="16">String "Kolkata"</text>
+  <text x="478" y="382" fill="#93B4D6" font-family="Arial, sans-serif" font-size="14">not pooled · 24 bytes</text>
+
+  <rect x="460" y="425" width="250" height="80" rx="10" fill="#21180F" stroke="#FB923C" stroke-width="2"/>
+  <text x="478" y="456" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="16">String "Kolkata"</text>
+  <text x="478" y="482" fill="#C6A17A" font-family="Arial, sans-serif" font-size="14">the pooled one · 24 bytes</text>
+
+  <rect x="810" y="215" width="270" height="80" rx="10" fill="#151515" stroke="#444444" stroke-width="2"/>
+  <text x="828" y="246" fill="#AAAAAA" font-family="Arial, sans-serif" font-size="16">byte[] K o l k a t a</text>
+  <text x="828" y="272" fill="#777777" font-family="Arial, sans-serif" font-size="14">its own copy · 24 bytes</text>
+
+  <rect x="810" y="375" width="270" height="80" rx="10" fill="#151515" stroke="#444444" stroke-width="2"/>
+  <text x="828" y="406" fill="#AAAAAA" font-family="Arial, sans-serif" font-size="16">byte[] K o l k a t a</text>
+  <text x="828" y="432" fill="#777777" font-family="Arial, sans-serif" font-size="14">shared by two Strings · 24 bytes</text>
+
+  <!-- stack to heap -->
+  <path d="M330 255H450" stroke="#FB923C" stroke-width="2"/>
+  <path d="M441 250L450 255L441 260" stroke="#FB923C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M330 365H450" stroke="#FB923C" stroke-width="2"/>
+  <path d="M441 360L450 365L441 370" stroke="#FB923C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M330 455H450" stroke="#FB923C" stroke-width="2"/>
+  <path d="M441 450L450 455L441 460" stroke="#FB923C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M330 495L450 478" stroke="#FB923C" stroke-width="2"/>
+  <path d="M440 474L450 478L442 484" stroke="#FB923C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+
+  <!-- String.value to byte[] -->
+  <path d="M710 255H800" stroke="#60A5FA" stroke-width="2"/>
+  <path d="M791 250L800 255L791 260" stroke="#60A5FA" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="728" y="246" fill="#93B4D6" font-family="Arial, sans-serif" font-size="13">value</text>
+  <path d="M710 365L800 405" stroke="#60A5FA" stroke-width="2"/>
+  <path d="M790 405L800 405L794 397" stroke="#60A5FA" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="722" y="360" fill="#93B4D6" font-family="Arial, sans-serif" font-size="13">value</text>
+  <path d="M710 465L800 425" stroke="#60A5FA" stroke-width="2"/>
+  <path d="M794 433L800 425L790 425" stroke="#60A5FA" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="722" y="482" fill="#93B4D6" font-family="Arial, sans-serif" font-size="13">value</text>
+
+  <!-- string table -->
+  <rect x="80" y="575" width="1040" height="105" rx="10" fill="#151515" stroke="#444444" stroke-width="2" stroke-dasharray="6 6"/>
+  <text x="100" y="610" fill="#AAAAAA" font-family="Arial, sans-serif" font-size="16">StringTable · native memory inside the JVM, not a Java object</text>
+  <text x="100" y="638" fill="#777777" font-family="Arial, sans-serif" font-size="14">A hash table of weak references to pooled Strings: 65,536 buckets by default, grows as it fills.</text>
+  <text x="100" y="662" fill="#777777" font-family="Arial, sans-serif" font-size="14">An ldc of "Kolkata" and every intern() of equal text look up the same entry.</text>
+  <path d="M585 575V510" stroke="#777777" stroke-width="2" stroke-dasharray="6 6"/>
+  <path d="M580 519L585 510L590 519" stroke="#777777" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="600" y="552" fill="#777777" font-family="Arial, sans-serif" font-size="13">weak reference: GC can still clear an unused pooled String</text>
+</svg>
