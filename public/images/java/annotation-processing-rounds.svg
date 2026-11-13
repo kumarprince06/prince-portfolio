@@ -1,0 +1,91 @@
+<svg width="1200" height="740" viewBox="0 0 1200 740" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="740" rx="28" fill="#0D0D0D"/>
+  <path d="M80 130H1120" stroke="#2B2B2B" stroke-width="2"/>
+  <text x="80" y="82" fill="#FB923C" font-family="Arial, sans-serif" font-size="18" letter-spacing="4">TWO PLACES TO READ AN ANNOTATION</text>
+  <text x="80" y="112" fill="#777777" font-family="Arial, sans-serif" font-size="16">JDK 21. Top: javac with CommandProcessor (javac -XprintRounds). Bottom: a reflective router at startup.</text>
+
+  <!-- compile time -->
+  <text x="80" y="170" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="16">Compile time: javac -processorpath proc-classes -processor CommandProcessor ...</text>
+
+  <g font-family="Arial, sans-serif" font-size="13">
+    <rect x="80" y="190" width="200" height="106" rx="12" fill="#151515" stroke="#444444" stroke-width="2"/>
+    <text x="96" y="216" fill="#FFFFFF">Parse and enter</text>
+    <text x="96" y="240" fill="#888888">4 source files</text>
+    <text x="96" y="262" fill="#888888">Main.java uses</text>
+    <text x="96" y="282" fill="#888888">CommandRegistry: not yet</text>
+
+    <rect x="320" y="190" width="250" height="106" rx="12" fill="#21180F" stroke="#FB923C" stroke-width="2"/>
+    <text x="336" y="216" fill="#FFFFFF">Round 1</text>
+    <text x="336" y="240" fill="#C6A17A">process([Command], env)</text>
+    <text x="336" y="262" fill="#C6A17A">Messager: ERROR on a class</text>
+    <text x="336" y="282" fill="#C6A17A">without a public no-arg ctor</text>
+
+    <rect x="610" y="190" width="240" height="106" rx="12" fill="#21180F" stroke="#FB923C" stroke-width="2"/>
+    <text x="626" y="216" fill="#FFFFFF">Round 2</text>
+    <text x="626" y="240" fill="#C6A17A">input: CommandRegistry</text>
+    <text x="626" y="262" fill="#C6A17A">(written by the Filer)</text>
+    <text x="626" y="282" fill="#C6A17A">annotations: []</text>
+
+    <rect x="890" y="190" width="230" height="106" rx="12" fill="#21180F" stroke="#FB923C" stroke-width="2"/>
+    <text x="906" y="216" fill="#FFFFFF">Round 3 (last)</text>
+    <text x="906" y="240" fill="#C6A17A">processingOver() = true</text>
+    <text x="906" y="262" fill="#C6A17A">no new files, so javac</text>
+    <text x="906" y="282" fill="#C6A17A">leaves the loop</text>
+  </g>
+  <path d="M280 238H310" stroke="#FB923C" stroke-width="2"/>
+  <path d="M301 233L310 238L301 243" stroke="#FB923C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M570 238H600" stroke="#FB923C" stroke-width="2"/>
+  <path d="M591 233L600 238L591 243" stroke="#FB923C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M850 238H880" stroke="#FB923C" stroke-width="2"/>
+  <path d="M871 233L880 238L871 243" stroke="#FB923C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+
+  <path d="M445 296V330" stroke="#60A5FA" stroke-width="2"/>
+  <path d="M440 321L445 330L450 321" stroke="#60A5FA" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="320" y="330" width="530" height="58" rx="10" fill="#0F1A21" stroke="#60A5FA" stroke-width="1.5"/>
+  <g font-family="Courier New, monospace" font-size="13" xml:space="preserve">
+    <text x="336" y="354" fill="#FFFFFF">generated/com/ridehail/cli/CommandRegistry.java</text>
+    <text x="336" y="376" fill="#93B4D6">"refund", RefundCommand::new, ...</text>
+  </g>
+  <path d="M730 330V298" stroke="#60A5FA" stroke-width="2"/>
+  <path d="M725 307L730 298L735 307" stroke="#60A5FA" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+
+  <rect x="890" y="330" width="230" height="58" rx="10" fill="#151515" stroke="#444444" stroke-width="2"/>
+  <text x="906" y="354" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="13">Attribute, flow, generate</text>
+  <text x="906" y="376" fill="#888888" font-family="Arial, sans-serif" font-size="13">5 .class files, no reflection</text>
+  <path d="M1005 296V330" stroke="#444444" stroke-width="2"/>
+
+  <text x="80" y="432" fill="#888888" font-family="Arial, sans-serif" font-size="14">A processor can add new files; it can't change Trip.java (FilerException: Attempt to recreate a file). Lombok edits javac's tree through internal APIs.</text>
+
+  <path d="M80 460H1120" stroke="#2B2B2B" stroke-width="2"/>
+
+  <!-- run time -->
+  <text x="80" y="500" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="16">Run time: RUNTIME retention, read with reflection</text>
+  <g font-family="Arial, sans-serif" font-size="13">
+    <rect x="80" y="520" width="240" height="96" rx="12" fill="#0F1A21" stroke="#60A5FA" stroke-width="2"/>
+    <text x="96" y="546" fill="#FFFFFF">Startup scan</text>
+    <text x="96" y="570" fill="#93B4D6">load every controller class</text>
+    <text x="96" y="592" fill="#93B4D6">getMethods(), getAnnotation</text>
+
+    <rect x="360" y="520" width="240" height="96" rx="12" fill="#0F1A21" stroke="#60A5FA" stroke-width="2"/>
+    <text x="376" y="546" fill="#FFFFFF">First read per class</text>
+    <text x="376" y="570" fill="#93B4D6">parse bytes, build proxies,</text>
+    <text x="376" y="592" fill="#93B4D6">cache in Class / Method root</text>
+
+    <rect x="640" y="520" width="240" height="96" rx="12" fill="#21180F" stroke="#FB923C" stroke-width="2"/>
+    <text x="656" y="546" fill="#FFFFFF">Route table, built once</text>
+    <text x="656" y="570" fill="#C6A17A">per request: HashMap.get</text>
+    <text x="656" y="592" fill="#C6A17A">15 ns, 0 bytes</text>
+
+    <rect x="920" y="520" width="200" height="96" rx="12" fill="#151515" stroke="#444444" stroke-width="2"/>
+    <text x="936" y="546" fill="#FFFFFF">Don't: scan per call</text>
+    <text x="936" y="570" fill="#888888">getMethods() + annos</text>
+    <text x="936" y="592" fill="#888888">355 ns, 1,216 bytes</text>
+  </g>
+  <path d="M320 568H350" stroke="#60A5FA" stroke-width="2"/>
+  <path d="M341 563L350 568L341 573" stroke="#60A5FA" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M600 568H630" stroke="#FB923C" stroke-width="2"/>
+  <path d="M621 563L630 568L621 573" stroke="#FB923C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+
+  <text x="80" y="656" fill="#AAAAAA" font-family="Arial, sans-serif" font-size="14">1,000 routes on 200 classes: reflective registration about 94 ms, the generated table about 3 ms (best of 5, one laptop).</text>
+  <text x="80" y="696" fill="#FB923C" font-family="Arial, sans-serif" font-size="15">Compile time: errors before deploy, no startup scan. Run time: flexible, but read once and cache.</text>
+</svg>

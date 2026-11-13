@@ -1,0 +1,89 @@
+<svg width="1200" height="700" viewBox="0 0 1200 700" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="700" rx="28" fill="#0D0D0D"/>
+  <path d="M80 130H1120" stroke="#2B2B2B" stroke-width="2"/>
+  <text x="80" y="82" fill="#FB923C" font-family="Arial, sans-serif" font-size="18" letter-spacing="4">WHAT ObjectOutputStream WROTE FOR ONE FARE</text>
+  <text x="80" y="112" fill="#777777" font-family="Arial, sans-serif" font-size="16">StreamDump.java on JDK 21: new Fare(14500, "SALT-LAKE") became 92 bytes. Hex on top, meaning below.</text>
+
+  <!-- row 1: stream header -->
+  <text x="80" y="168" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="16">Stream header and object start · 5 bytes</text>
+  <g font-family="Courier New, monospace" font-size="15" xml:space="preserve">
+    <rect x="80" y="182" width="140" height="44" rx="6" fill="#21180F" stroke="#FB923C" stroke-width="1.5"/>
+    <text x="96" y="210" fill="#FB923C">ac ed</text>
+    <rect x="240" y="182" width="140" height="44" rx="6" fill="#21180F" stroke="#FB923C" stroke-width="1.5"/>
+    <text x="256" y="210" fill="#FB923C">00 05</text>
+    <rect x="400" y="182" width="140" height="44" rx="6" fill="#21180F" stroke="#FB923C" stroke-width="1.5"/>
+    <text x="416" y="210" fill="#FB923C">73</text>
+  </g>
+  <g font-family="Arial, sans-serif" font-size="13" fill="#AAAAAA">
+    <text x="80" y="246">STREAM_MAGIC</text>
+    <text x="240" y="246">STREAM_VERSION 5</text>
+    <text x="400" y="246">TC_OBJECT</text>
+  </g>
+
+  <!-- row 2: class descriptor -->
+  <text x="80" y="290" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="16">Class descriptor · 67 bytes, written once per stream, then referenced by handle 0x7e0000</text>
+  <g font-family="Courier New, monospace" font-size="15" xml:space="preserve">
+    <rect x="80" y="304" width="100" height="44" rx="6" fill="#0F1A21" stroke="#60A5FA" stroke-width="1.5"/>
+    <text x="96" y="332" fill="#FFFFFF">72</text>
+    <rect x="190" y="304" width="250" height="44" rx="6" fill="#0F1A21" stroke="#60A5FA" stroke-width="1.5"/>
+    <text x="204" y="332" fill="#FFFFFF">00 0f StreamDump$Fare</text>
+    <rect x="450" y="304" width="250" height="44" rx="6" fill="#0F1A21" stroke="#60A5FA" stroke-width="1.5"/>
+    <text x="464" y="332" fill="#FFFFFF">00 00 00 00 00 00 00 01</text>
+    <rect x="710" y="304" width="60" height="44" rx="6" fill="#0F1A21" stroke="#60A5FA" stroke-width="1.5"/>
+    <text x="726" y="332" fill="#FFFFFF">02</text>
+    <rect x="780" y="304" width="80" height="44" rx="6" fill="#0F1A21" stroke="#60A5FA" stroke-width="1.5"/>
+    <text x="796" y="332" fill="#FFFFFF">00 02</text>
+  </g>
+  <g font-family="Arial, sans-serif" font-size="13" fill="#AAAAAA">
+    <text x="80" y="368">TC_CLASSDESC</text>
+    <text x="190" y="368">class name, 2-byte length + UTF</text>
+    <text x="450" y="368">serialVersionUID = 1 (8 bytes)</text>
+    <text x="710" y="368">flags</text>
+    <text x="780" y="368">2 fields</text>
+    <text x="884" y="326" fill="#93B4D6">flags 02 = SC_SERIALIZABLE</text>
+    <text x="884" y="346" fill="#93B4D6">03 adds SC_WRITE_METHOD</text>
+  </g>
+
+  <g font-family="Courier New, monospace" font-size="15" xml:space="preserve">
+    <rect x="80" y="388" width="200" height="44" rx="6" fill="#0F1A21" stroke="#60A5FA" stroke-width="1.5"/>
+    <text x="94" y="416" fill="#FFFFFF">4a 00 05 paise</text>
+    <rect x="290" y="388" width="190" height="44" rx="6" fill="#0F1A21" stroke="#60A5FA" stroke-width="1.5"/>
+    <text x="304" y="416" fill="#FFFFFF">4c 00 04 zone</text>
+    <rect x="490" y="388" width="370" height="44" rx="6" fill="#0F1A21" stroke="#60A5FA" stroke-width="1.5"/>
+    <text x="504" y="416" fill="#FFFFFF">74 00 12 Ljava/lang/String;</text>
+    <rect x="870" y="388" width="60" height="44" rx="6" fill="#0F1A21" stroke="#60A5FA" stroke-width="1.5"/>
+    <text x="886" y="416" fill="#FFFFFF">78</text>
+    <rect x="940" y="388" width="60" height="44" rx="6" fill="#0F1A21" stroke="#60A5FA" stroke-width="1.5"/>
+    <text x="956" y="416" fill="#FFFFFF">70</text>
+  </g>
+  <g font-family="Arial, sans-serif" font-size="13" fill="#AAAAAA">
+    <text x="80" y="452">'J' long, name</text>
+    <text x="290" y="452">'L' object, name</text>
+    <text x="490" y="452">TC_STRING: the field's type signature</text>
+    <text x="870" y="452">END</text>
+    <text x="940" y="452">TC_NULL</text>
+    <text x="1012" y="408" fill="#93B4D6">end of block,</text>
+    <text x="1012" y="428" fill="#93B4D6">no superclass</text>
+  </g>
+
+  <!-- row 3: field values -->
+  <text x="80" y="498" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="16">Field values · 20 bytes: primitives first, then objects, each group sorted by name</text>
+  <g font-family="Courier New, monospace" font-size="15" xml:space="preserve">
+    <rect x="80" y="512" width="250" height="44" rx="6" fill="#21180F" stroke="#FB923C" stroke-width="1.5"/>
+    <text x="94" y="540" fill="#FFFFFF">00 00 00 00 00 00 38 a4</text>
+    <rect x="340" y="512" width="230" height="44" rx="6" fill="#21180F" stroke="#FB923C" stroke-width="1.5"/>
+    <text x="354" y="540" fill="#FFFFFF">74 00 09 SALT-LAKE</text>
+  </g>
+  <g font-family="Arial, sans-serif" font-size="13" fill="#AAAAAA">
+    <text x="80" y="576">paise = 0x38a4 = 14500, big-endian</text>
+    <text x="340" y="576">zone: TC_STRING, length 9, modified UTF-8</text>
+  </g>
+  <g font-family="Arial, sans-serif" font-size="14" fill="#C6A17A">
+    <text x="640" y="530">No getters, no constructor, no code: just names,</text>
+    <text x="640" y="552">types and values. The reader trusts the stream to</text>
+    <text x="640" y="574">tell it which class to create.</text>
+  </g>
+
+  <text x="80" y="628" fill="#FB923C" font-family="Arial, sans-serif" font-size="15">5 + 67 + 20 = 92 bytes. A second Fare in the same stream is 25: 73, then 71 00 7e 00 00 (a back-reference to the descriptor), then its values.</text>
+  <text x="80" y="656" fill="#777777" font-family="Arial, sans-serif" font-size="13">Tags (ObjectStreamConstants): 70 NULL, 71 REFERENCE, 72 CLASSDESC, 73 OBJECT, 74 STRING, 75 ARRAY, 78 ENDBLOCKDATA, 7e ENUM</text>
+</svg>

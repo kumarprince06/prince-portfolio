@@ -1,0 +1,94 @@
+<svg width="1200" height="740" viewBox="0 0 1200 740" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="740" rx="28" fill="#0D0D0D"/>
+  <path d="M80 130H1120" stroke="#2B2B2B" stroke-width="2"/>
+  <text x="80" y="82" fill="#FB923C" font-family="Arial, sans-serif" font-size="18" letter-spacing="4">ONLY CALLS THAT GO THROUGH THE PROXY ARE INTERCEPTED</text>
+  <text x="80" y="112" fill="#777777" font-family="Arial, sans-serif" font-size="16">A JDK dynamic proxy around a @Transactional service, as rebuilt in SelfInvocation.java on JDK 21.</text>
+
+  <!-- caller -->
+  <rect x="80" y="170" width="170" height="110" rx="12" fill="#151515" stroke="#444444" stroke-width="2"/>
+  <text x="100" y="204" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="17">Controller</text>
+  <g font-family="Courier New, monospace" font-size="13" xml:space="preserve">
+    <text x="100" y="236" fill="#C6A17A">trips</text>
+    <text x="100" y="256" fill="#C6A17A"> .completeTrip()</text>
+  </g>
+  <path d="M250 225H290" stroke="#FB923C" stroke-width="2"/>
+  <path d="M281 220L290 225L281 230" stroke="#FB923C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+
+  <!-- proxy -->
+  <rect x="290" y="160" width="250" height="130" rx="12" fill="#21180F" stroke="#FB923C" stroke-width="2"/>
+  <text x="310" y="194" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="17">jdk.proxy1.$Proxy0</text>
+  <g font-family="Arial, sans-serif" font-size="13" fill="#C6A17A">
+    <text x="310" y="222">implements TripOperations</text>
+    <text x="310" y="244">every method: box the args,</text>
+    <text x="310" y="264">h.invoke(this, m4, args)</text>
+  </g>
+  <path d="M540 225H580" stroke="#FB923C" stroke-width="2"/>
+  <path d="M571 220L580 225L571 230" stroke="#FB923C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+
+  <!-- handler -->
+  <rect x="580" y="160" width="230" height="130" rx="12" fill="#21180F" stroke="#FB923C" stroke-width="2"/>
+  <text x="600" y="194" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="17">InvocationHandler</text>
+  <g font-family="Courier New, monospace" font-size="13" xml:space="preserve">
+    <text x="600" y="220" fill="#C6A17A">if @Transactional:</text>
+    <text x="600" y="238" fill="#C6A17A">  BEGIN</text>
+    <text x="600" y="256" fill="#C6A17A">m.invoke(target)</text>
+    <text x="600" y="274" fill="#C6A17A">  COMMIT/ROLLBACK</text>
+  </g>
+  <path d="M810 225H850" stroke="#FB923C" stroke-width="2"/>
+  <path d="M841 220L850 225L841 230" stroke="#FB923C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+
+  <!-- target -->
+  <rect x="850" y="160" width="270" height="250" rx="12" fill="#0F1A21" stroke="#60A5FA" stroke-width="2"/>
+  <text x="870" y="194" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="17">TripService (the target)</text>
+  <rect x="870" y="210" width="230" height="56" rx="8" fill="#132433" stroke="#60A5FA" stroke-width="1.5"/>
+  <g font-family="Courier New, monospace" font-size="13" xml:space="preserve">
+    <text x="884" y="234" fill="#FFFFFF">completeTrip()</text>
+    <text x="884" y="254" fill="#93B4D6">  this.chargeFare()</text>
+  </g>
+  <path d="M1080 266V312" stroke="#60A5FA" stroke-width="2"/>
+  <path d="M1075 303L1080 312L1085 303" stroke="#60A5FA" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="870" y="312" width="230" height="56" rx="8" fill="#132433" stroke="#60A5FA" stroke-width="1.5"/>
+  <g font-family="Courier New, monospace" font-size="13" xml:space="preserve">
+    <text x="884" y="336" fill="#FFFFFF">@Transactional</text>
+    <text x="884" y="356" fill="#FFFFFF">chargeFare()</text>
+  </g>
+  <text x="870" y="394" fill="#93B4D6" font-family="Arial, sans-serif" font-size="13">this is the target, not the proxy</text>
+
+  <text x="80" y="332" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="16">What the log showed</text>
+  <g font-family="Courier New, monospace" font-size="13" xml:space="preserve">
+    <text x="80" y="362" fill="#C6A17A">proxy: completeTrip          (not annotated: no BEGIN)</text>
+    <text x="80" y="384" fill="#C6A17A">error: ledger insert failed</text>
+    <text x="80" y="406" fill="#C6A17A">wallet 27500 paise, ledger []   (debit kept, nothing rolled back)</text>
+  </g>
+
+  <!-- fix -->
+  <path d="M80 446H1120" stroke="#2B2B2B" stroke-width="2"/>
+  <text x="80" y="484" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="16">The fix: move chargeFare to its own bean and call it through that bean's proxy</text>
+  <g font-family="Arial, sans-serif" font-size="14">
+    <rect x="80" y="504" width="220" height="64" rx="10" fill="#0F1A21" stroke="#60A5FA" stroke-width="1.5"/>
+    <text x="96" y="530" fill="#FFFFFF">TripService</text>
+    <text x="96" y="552" fill="#93B4D6">payments.chargeFare()</text>
+    <path d="M300 536H340" stroke="#FB923C" stroke-width="2"/>
+    <path d="M331 531L340 536L331 541" stroke="#FB923C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    <rect x="340" y="504" width="220" height="64" rx="10" fill="#21180F" stroke="#FB923C" stroke-width="1.5"/>
+    <text x="356" y="530" fill="#FFFFFF">Payments proxy</text>
+    <text x="356" y="552" fill="#C6A17A">BEGIN ... ROLLBACK</text>
+    <path d="M560 536H600" stroke="#FB923C" stroke-width="2"/>
+    <path d="M591 531L600 536L591 541" stroke="#FB923C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    <rect x="600" y="504" width="220" height="64" rx="10" fill="#0F1A21" stroke="#60A5FA" stroke-width="1.5"/>
+    <text x="616" y="530" fill="#FFFFFF">PaymentService</text>
+    <text x="616" y="552" fill="#93B4D6">wallet back to 50000</text>
+  </g>
+
+  <!-- jdk vs cglib -->
+  <text x="860" y="484" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="16">Two ways to make a proxy</text>
+  <g font-family="Arial, sans-serif" font-size="13" fill="#AAAAAA">
+    <text x="860" y="514">JDK Proxy: implements interfaces only</text>
+    <text x="860" y="536">CGLIB/ByteBuddy: subclasses a class,</text>
+    <text x="860" y="556">cannot touch final or private methods</text>
+  </g>
+
+  <text x="80" y="612" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="16">Spring AOP, either kind: the proxy forwards to a separate target object, so this.x() is never intercepted.</text>
+  <text x="80" y="640" fill="#AAAAAA" font-family="Arial, sans-serif" font-size="14">Raw CGLIB with invokeSuper runs the original code on the proxy itself, and there the inner call was intercepted.</text>
+  <text x="80" y="690" fill="#FB923C" font-family="Arial, sans-serif" font-size="15">Annotations like @Transactional, @Retry and @Cacheable only work on calls that arrive from outside the bean.</text>
+</svg>

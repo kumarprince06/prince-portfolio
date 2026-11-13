@@ -1,6 +1,8 @@
 import type { Phase } from "../types";
 import { abstraction } from "./abstraction";
 import { accessModifiers } from "./access-modifiers";
+import { annotationProcessing } from "./annotation-processing";
+import { annotations } from "./annotations";
 import { arrays } from "./arrays";
 import { arraysClassAndCopying } from "./arrays-class-and-copying";
 import { associationAggregationComposition } from "./association-aggregation-composition";
@@ -14,26 +16,34 @@ import { dataTypes } from "./data-types";
 import { encapsulation } from "./encapsulation";
 import { enums } from "./enums";
 import { enumSetEnumMapAndPatterns } from "./enumset-enummap-and-patterns";
-import { generics } from "./generics";
-import { genericsWildcardsAndErasure } from "./generics-wildcards-and-erasure";
 import { exceptionBestPractices } from "./exception-best-practices";
 import { exceptionsBasics } from "./exceptions-basics";
+import { fileIoStreamsReadersWriters } from "./file-io-streams-readers-writers";
+import { generics } from "./generics";
+import { genericsWildcardsAndErasure } from "./generics-wildcards-and-erasure";
 import { historyOfJava } from "./history-of-java";
 import { inheritance } from "./inheritance";
 import { interfaces } from "./interfaces";
 import { javaFeatures } from "./java-features";
 import { javaModules } from "./java-modules";
 import { jdk } from "./jdk";
+import { jitCompilationAndJvmTuning } from "./jit-compilation-and-jvm-tuning";
 import { jre } from "./jre";
 import { jvm } from "./jvm";
+import { jvmMemoryAndGarbageCollection } from "./jvm-memory-and-garbage-collection";
 import { loops } from "./loops";
 import { memoryAllocation } from "./memory-allocation";
 import { methods } from "./methods";
 import { nestedClasses } from "./nested-classes";
+import { nioFilesAndPaths } from "./nio-files-and-paths";
 import { objectClass } from "./object-class";
 import { operators } from "./operators";
 import { packages } from "./packages";
 import { polymorphism } from "./polymorphism";
+import { reflection } from "./reflection";
+import { reflectionProxiesAndMethodHandles } from "./reflection-proxies-and-method-handles";
+import { serialization } from "./serialization";
+import { serializationSecurityAndAlternatives } from "./serialization-security-and-alternatives";
 import { stackVsHeap } from "./stack-vs-heap";
 import { staticKeyword } from "./static-keyword";
 import { stringBuilderAndStringBuffer } from "./stringbuilder-and-stringbuffer";
@@ -134,26 +144,26 @@ export const javaPhases: Phase[] = [
   {
     title: "File Handling",
     description: "Reading and writing files with java.io and java.nio, streams, readers and paths.",
-    lessons: [],
+    lessons: [fileIoStreamsReadersWriters, nioFilesAndPaths],
   },
   {
     title: "Serialization",
     description: "Turning objects into bytes and back, serialVersionUID, transient fields and the risks.",
-    lessons: [],
+    lessons: [serialization, serializationSecurityAndAlternatives],
   },
   {
     title: "Reflection",
     description: "Inspecting and using classes, methods and fields at runtime, and what frameworks build on it.",
-    lessons: [],
+    lessons: [reflection, reflectionProxiesAndMethodHandles],
   },
   {
     title: "Annotations",
     description: "Metadata on code: built-in annotations, writing custom ones, and processing them at compile time and runtime.",
-    lessons: [],
+    lessons: [annotations, annotationProcessing],
   },
   {
     title: "JVM Deep Dive",
     description: "Back inside the JVM with everything learned since: memory, garbage collection, JIT and tuning.",
-    lessons: [],
+    lessons: [jvmMemoryAndGarbageCollection, jitCompilationAndJvmTuning],
   },
 ];

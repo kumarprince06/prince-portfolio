@@ -1,0 +1,72 @@
+<svg width="1200" height="720" viewBox="0 0 1200 720" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="720" rx="28" fill="#0D0D0D"/>
+  <path d="M80 130H1120" stroke="#2B2B2B" stroke-width="2"/>
+  <text x="80" y="82" fill="#FB923C" font-family="Arial, sans-serif" font-size="18" letter-spacing="4">ONE readLine() GOES THROUGH TWO BUFFERS BEFORE THE KERNEL</text>
+  <text x="80" y="112" fill="#777777" font-family="Arial, sans-serif" font-size="16">JDK 21: new BufferedReader(new FileReader(file, UTF_8)). Sizes from javap -p -constants, calls from strace.</text>
+
+  <!-- left: the decorator stack -->
+  <rect x="80" y="160" width="520" height="92" rx="12" fill="#21180F" stroke="#FB923C" stroke-width="2"/>
+  <text x="100" y="192" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="17">BufferedReader</text>
+  <text x="100" y="218" fill="#C6A17A" font-family="Courier New, monospace" font-size="14">char[] cb = new char[8192]</text>
+  <text x="100" y="240" fill="#888888" font-family="Arial, sans-serif" font-size="13">readLine() scans cb for '\n'; refills only when it is empty</text>
+
+  <path d="M340 252V276" stroke="#FB923C" stroke-width="2"/>
+  <path d="M335 267L340 276L345 267" stroke="#FB923C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+
+  <rect x="80" y="276" width="520" height="114" rx="12" fill="#21180F" stroke="#FB923C" stroke-width="2"/>
+  <text x="100" y="308" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="17">FileReader extends InputStreamReader</text>
+  <g font-family="Courier New, monospace" font-size="14" xml:space="preserve">
+    <text x="100" y="334" fill="#C6A17A">StreamDecoder sd:  ByteBuffer bb (8192 bytes)</text>
+    <text x="100" y="356" fill="#C6A17A">                   CharsetDecoder (UTF-8)</text>
+  </g>
+  <text x="100" y="380" fill="#888888" font-family="Arial, sans-serif" font-size="13">bytes become chars here; the wrong charset gives mojibake or U+FFFD</text>
+
+  <path d="M340 390V414" stroke="#FB923C" stroke-width="2"/>
+  <path d="M335 405L340 414L345 405" stroke="#FB923C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+
+  <rect x="80" y="414" width="520" height="92" rx="12" fill="#0F1A21" stroke="#60A5FA" stroke-width="2"/>
+  <text x="100" y="446" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="17">FileInputStream (no buffer of its own)</text>
+  <text x="100" y="472" fill="#93B4D6" font-family="Courier New, monospace" font-size="14">read() -> native read0();  read(byte[]) -> readBytes()</text>
+  <text x="100" y="494" fill="#888888" font-family="Arial, sans-serif" font-size="13">every call is one trip into the kernel</text>
+
+  <path d="M340 506V530" stroke="#60A5FA" stroke-width="2"/>
+  <path d="M335 521L340 530L345 521" stroke="#60A5FA" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+
+  <rect x="80" y="530" width="520" height="66" rx="12" fill="#151515" stroke="#444444" stroke-width="2"/>
+  <text x="100" y="560" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="17">Kernel: read(fd, buf, 8192) system call</text>
+  <text x="100" y="582" fill="#888888" font-family="Arial, sans-serif" font-size="13">page cache, then disk</text>
+
+  <!-- right: measured -->
+  <rect x="640" y="160" width="480" height="436" rx="12" fill="#151515" stroke="#444444" stroke-width="2"/>
+  <text x="660" y="192" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="17">Measured on a 1,048,600-byte CSV</text>
+  <text x="660" y="216" fill="#888888" font-family="Arial, sans-serif" font-size="13">read() system calls on that file (strace -c -P)</text>
+  <g font-family="Arial, sans-serif" font-size="14">
+    <text x="660" y="252" fill="#FB923C">FileInputStream.read() per byte</text>
+    <text x="1100" y="252" fill="#FB923C" text-anchor="end">1,048,601</text>
+    <text x="660" y="282" fill="#FFFFFF">BufferedInputStream.read() per byte</text>
+    <text x="1100" y="282" fill="#FFFFFF" text-anchor="end">130</text>
+    <text x="660" y="312" fill="#FFFFFF">FileInputStream.read(byte[8192])</text>
+    <text x="1100" y="312" fill="#FFFFFF" text-anchor="end">130</text>
+    <text x="660" y="342" fill="#FFFFFF">FileReader.read() per char</text>
+    <text x="1100" y="342" fill="#FFFFFF" text-anchor="end">130</text>
+    <text x="660" y="372" fill="#FFFFFF">BufferedReader.readLine()</text>
+    <text x="1100" y="372" fill="#FFFFFF" text-anchor="end">130</text>
+  </g>
+  <path d="M660 396H1100" stroke="#2B2B2B" stroke-width="2"/>
+  <text x="660" y="424" fill="#888888" font-family="Arial, sans-serif" font-size="13">10 MB file, best of 5, one machine (not JMH)</text>
+  <g font-family="Arial, sans-serif" font-size="14">
+    <text x="660" y="456" fill="#FB923C">unbuffered read() per byte</text>
+    <text x="1100" y="456" fill="#FB923C" text-anchor="end">7,591 ms</text>
+    <text x="660" y="484" fill="#FFFFFF">BufferedInputStream per byte</text>
+    <text x="1100" y="484" fill="#FFFFFF" text-anchor="end">158 ms</text>
+    <text x="660" y="512" fill="#FFFFFF">BufferedReader.readLine()</text>
+    <text x="1100" y="512" fill="#FFFFFF" text-anchor="end">22 ms</text>
+    <text x="660" y="540" fill="#FFFFFF">own byte[8192] loop</text>
+    <text x="1100" y="540" fill="#FFFFFF" text-anchor="end">5.9 ms</text>
+  </g>
+  <text x="660" y="576" fill="#888888" font-family="Arial, sans-serif" font-size="13">130 = 128 full reads + 24-byte tail + end-of-file read</text>
+
+  <!-- bottom: writing side -->
+  <text x="80" y="640" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="16">Writing mirrors it: BufferedWriter char[8192], then StreamEncoder bytes (512, grows to 8192), then FileOutputStream.</text>
+  <text x="80" y="672" fill="#FB923C" font-family="Arial, sans-serif" font-size="15">Data still in either buffer when the program stops without close() never reaches the file.</text>
+</svg>

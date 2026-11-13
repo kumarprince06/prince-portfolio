@@ -1,0 +1,96 @@
+<svg width="1200" height="720" viewBox="0 0 1200 720" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="720" rx="28" fill="#0D0D0D"/>
+  <path d="M80 130H1120" stroke="#2B2B2B" stroke-width="2"/>
+  <text x="80" y="82" fill="#FB923C" font-family="Arial, sans-serif" font-size="18" letter-spacing="4">WHERE readObject() RUNS CODE, AND WHERE THE FILTER STOPS IT</text>
+  <text x="80" y="112" fill="#777777" font-family="Arial, sans-serif" font-size="16">JDK 21 ObjectInputStream, from the stack traces in BeforeTheCast.java and WhereFiltered.java.</text>
+
+  <!-- row 1 -->
+  <g font-family="Arial, sans-serif">
+    <rect x="80" y="160" width="230" height="110" rx="12" fill="#151515" stroke="#444444" stroke-width="2"/>
+    <text x="100" y="192" fill="#FFFFFF" font-size="16">1. Bytes arrive</text>
+    <text x="100" y="218" fill="#AAAAAA" font-size="13">HTTP body, queue message,</text>
+    <text x="100" y="238" fill="#AAAAAA" font-size="13">cache entry, file. The sender</text>
+    <text x="100" y="258" fill="#AAAAAA" font-size="13">chose every byte.</text>
+
+    <rect x="350" y="160" width="230" height="110" rx="12" fill="#0F1A21" stroke="#60A5FA" stroke-width="2"/>
+    <text x="370" y="192" fill="#FFFFFF" font-size="16">2. readClassDesc</text>
+    <text x="370" y="218" fill="#93B4D6" font-size="13">Class name from the stream,</text>
+    <text x="370" y="238" fill="#93B4D6" font-size="13">resolveClass: Class.forName.</text>
+    <text x="370" y="258" fill="#93B4D6" font-size="13">Any class on the classpath.</text>
+
+    <rect x="620" y="160" width="230" height="110" rx="12" fill="#21180F" stroke="#FB923C" stroke-width="2.5"/>
+    <text x="640" y="192" fill="#FB923C" font-size="16">3. filterCheck(class)</text>
+    <text x="640" y="218" fill="#C6A17A" font-size="13">ObjectInputFilter.checkInput:</text>
+    <text x="640" y="238" fill="#C6A17A" font-size="13">class, array length, depth,</text>
+    <text x="640" y="258" fill="#C6A17A" font-size="13">references, stream bytes.</text>
+
+    <rect x="890" y="160" width="230" height="110" rx="12" fill="#0F1A21" stroke="#60A5FA" stroke-width="2"/>
+    <text x="910" y="192" fill="#FFFFFF" font-size="16">4. Allocate, if allowed</text>
+    <text x="910" y="218" fill="#93B4D6" font-size="13">Runs only the no-arg</text>
+    <text x="910" y="238" fill="#93B4D6" font-size="13">constructor of the first</text>
+    <text x="910" y="258" fill="#93B4D6" font-size="13">non-serializable superclass.</text>
+  </g>
+  <g stroke="#FB923C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M310 215H344"/><path d="M336 210L344 215L336 220"/>
+    <path d="M580 215H614"/><path d="M606 210L614 215L606 220"/>
+    <path d="M850 215H884"/><path d="M876 210L884 215L876 220"/>
+    <path d="M1005 270V292H195V314"/><path d="M190 306L195 314L200 306"/>
+  </g>
+
+  <!-- row 2 -->
+  <g font-family="Arial, sans-serif">
+    <rect x="80" y="320" width="230" height="110" rx="12" fill="#0F1A21" stroke="#60A5FA" stroke-width="2"/>
+    <text x="100" y="352" fill="#FFFFFF" font-size="16">5. readSerialData</text>
+    <text x="100" y="378" fill="#93B4D6" font-size="13">Field values, superclass first.</text>
+    <text x="100" y="398" fill="#93B4D6" font-size="13">Nested objects recurse to 2,</text>
+    <text x="100" y="418" fill="#93B4D6" font-size="13">each one filtered again.</text>
+
+    <rect x="350" y="320" width="230" height="110" rx="12" fill="#21180F" stroke="#FB923C" stroke-width="2"/>
+    <text x="370" y="352" fill="#FFFFFF" font-size="16">6. readObject() hooks</text>
+    <text x="370" y="378" fill="#C6A17A" font-size="13">invokeReadObject runs the</text>
+    <text x="370" y="398" fill="#C6A17A" font-size="13">class's own code on values</text>
+    <text x="370" y="418" fill="#C6A17A" font-size="13">the sender chose: gadgets.</text>
+
+    <rect x="620" y="320" width="230" height="110" rx="12" fill="#0F1A21" stroke="#60A5FA" stroke-width="2"/>
+    <text x="640" y="352" fill="#FFFFFF" font-size="16">7. readResolve()</text>
+    <text x="640" y="378" fill="#93B4D6" font-size="13">Optional swap: singleton,</text>
+    <text x="640" y="398" fill="#93B4D6" font-size="13">serialization proxy. Also</text>
+    <text x="640" y="418" fill="#93B4D6" font-size="13">validateObject callbacks.</text>
+
+    <rect x="890" y="320" width="230" height="110" rx="12" fill="#151515" stroke="#444444" stroke-width="2"/>
+    <text x="910" y="352" fill="#FFFFFF" font-size="16">8. Your cast</text>
+    <text x="910" y="378" fill="#AAAAAA" font-size="13">(TripRequest) in.readObject()</text>
+    <text x="910" y="398" fill="#AAAAAA" font-size="13">ClassCastException here is</text>
+    <text x="910" y="418" fill="#AAAAAA" font-size="13">too late: 6 already ran.</text>
+  </g>
+  <g stroke="#FB923C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M310 375H344"/><path d="M336 370L344 375L336 380"/>
+    <path d="M580 375H614"/><path d="M606 370L614 375L606 380"/>
+    <path d="M850 375H884"/><path d="M876 370L884 375L876 380"/>
+  </g>
+
+  <!-- bottom panels -->
+  <rect x="80" y="470" width="500" height="170" rx="12" fill="#21180F" stroke="#FB923C" stroke-width="1.5"/>
+  <text x="100" y="502" fill="#FB923C" font-family="Arial, sans-serif" font-size="16">REJECTED at step 3</text>
+  <g font-family="Courier New, monospace" font-size="14" xml:space="preserve">
+    <text x="100" y="532" fill="#FFFFFF">java.io.InvalidClassException:</text>
+    <text x="100" y="552" fill="#FFFFFF">    filter status: REJECTED</text>
+  </g>
+  <g font-family="Arial, sans-serif" font-size="13" fill="#C6A17A">
+    <text x="100" y="584">Thrown before step 4: no instance, no readObject(), no side effect.</text>
+    <text x="100" y="606">Also checked: arrays (readArray, and checkArray from ArrayList,</text>
+    <text x="100" y="626">HashMap, List.of), back-references (readHandle). Strings are not.</text>
+  </g>
+
+  <rect x="620" y="470" width="500" height="170" rx="12" fill="#151515" stroke="#444444" stroke-width="1.5"/>
+  <text x="640" y="502" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="16">Which filter is used</text>
+  <g font-family="Arial, sans-serif" font-size="13" fill="#AAAAAA">
+    <text x="640" y="530">Java 9 (JEP 290): in.setObjectInputFilter(...) per stream;</text>
+    <text x="640" y="552">-Djdk.serialFilter=... or java.security for the whole JVM.</text>
+    <text x="640" y="574">Java 17 (JEP 415): a filter factory, set once, is asked on</text>
+    <text x="640" y="596">every new stream and every setObjectInputFilter call,</text>
+    <text x="640" y="618">and can merge per-context filters with the JVM-wide one.</text>
+  </g>
+
+  <text x="80" y="680" fill="#FB923C" font-family="Arial, sans-serif" font-size="15">Allow-list what you expect and end with !*. A deny-list only blocks the gadgets someone already found.</text>
+</svg>

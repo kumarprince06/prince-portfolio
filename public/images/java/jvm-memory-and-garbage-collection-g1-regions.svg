@@ -1,0 +1,133 @@
+<svg width="1200" height="760" viewBox="0 0 1200 760" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="760" rx="28" fill="#0D0D0D"/>
+  <path d="M80 130H1120" stroke="#2B2B2B" stroke-width="2"/>
+  <text x="80" y="82" fill="#FB923C" font-family="Arial, sans-serif" font-size="18" letter-spacing="4">ONE JVM PROCESS, AND THE G1 HEAP INSIDE IT</text>
+  <text x="80" y="112" fill="#777777" font-family="Arial, sans-serif" font-size="16">JDK 21, -Xms256m -Xmx256m, measured with -XX:NativeMemoryTracking=summary. G1 with 1 MB regions.</text>
+
+  <!-- left: process memory -->
+  <rect x="80" y="160" width="470" height="300" rx="12" fill="#151515" stroke="#444444" stroke-width="2"/>
+  <text x="100" y="194" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="17">Process memory, committed MB (NMT)</text>
+  <g font-family="Arial, sans-serif" font-size="14">
+    <text x="100" y="232" fill="#C6A17A">Java heap</text>
+    <rect x="270" y="218" width="200" height="20" fill="#21180F" stroke="#FB923C" stroke-width="1.5"/>
+    <text x="480" y="232" fill="#FFFFFF">256</text>
+
+    <text x="100" y="262" fill="#AAAAAA">Direct buffer (Other)</text>
+    <rect x="270" y="248" width="50" height="20" fill="#132433" stroke="#60A5FA" stroke-width="1.5"/>
+    <text x="330" y="262" fill="#FFFFFF">64</text>
+
+    <text x="100" y="292" fill="#AAAAAA">GC structures</text>
+    <rect x="270" y="278" width="42" height="20" fill="#132433" stroke="#60A5FA" stroke-width="1.5"/>
+    <text x="322" y="292" fill="#FFFFFF">54</text>
+
+    <text x="100" y="322" fill="#AAAAAA">CDS shared classes</text>
+    <rect x="270" y="308" width="10" height="20" fill="#132433" stroke="#60A5FA" stroke-width="1.5"/>
+    <text x="290" y="322" fill="#FFFFFF">13</text>
+
+    <text x="100" y="352" fill="#AAAAAA">Code cache</text>
+    <rect x="270" y="338" width="6" height="20" fill="#132433" stroke="#60A5FA" stroke-width="1.5"/>
+    <text x="286" y="352" fill="#FFFFFF">7 (242 reserved)</text>
+
+    <text x="100" y="382" fill="#AAAAAA">Thread stacks (38)</text>
+    <rect x="270" y="368" width="3" height="20" fill="#132433" stroke="#60A5FA" stroke-width="1.5"/>
+    <text x="283" y="382" fill="#FFFFFF">3 (38 reserved)</text>
+
+    <text x="100" y="412" fill="#AAAAAA">Metaspace</text>
+    <rect x="270" y="398" width="2" height="20" fill="#132433" stroke="#60A5FA" stroke-width="1.5"/>
+    <text x="282" y="412" fill="#FFFFFF">1 (+1 GB class space reserved)</text>
+  </g>
+  <text x="100" y="444" fill="#888888" font-family="Arial, sans-serif" font-size="14">Total: 403 MB committed, 1,763 MB reserved, 119 MB resident</text>
+
+  <!-- right: G1 regions -->
+  <rect x="580" y="160" width="540" height="300" rx="12" fill="#151515" stroke="#444444" stroke-width="2"/>
+  <text x="600" y="194" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="17">G1 heap: equal regions with changing roles</text>
+  <g font-family="Arial, sans-serif" font-size="12" text-anchor="middle">
+    <!-- row 1 -->
+    <rect x="600" y="212" width="28" height="28" fill="#21180F" stroke="#FB923C"/><text x="614" y="231" fill="#FB923C">E</text>
+    <rect x="632" y="212" width="28" height="28" fill="#21180F" stroke="#FB923C"/><text x="646" y="231" fill="#FB923C">E</text>
+    <rect x="664" y="212" width="28" height="28" fill="#21180F" stroke="#FB923C"/><text x="678" y="231" fill="#FB923C">E</text>
+    <rect x="696" y="212" width="28" height="28" fill="#132433" stroke="#60A5FA"/><text x="710" y="231" fill="#93B4D6">O</text>
+    <rect x="728" y="212" width="28" height="28" fill="#132433" stroke="#60A5FA"/><text x="742" y="231" fill="#93B4D6">O</text>
+    <rect x="760" y="212" width="28" height="28" fill="#1A1A1A" stroke="#333333"/>
+    <rect x="792" y="212" width="28" height="28" fill="#21180F" stroke="#FB923C"/><text x="806" y="231" fill="#FB923C">E</text>
+    <rect x="824" y="212" width="28" height="28" fill="#2A2A2A" stroke="#AAAAAA"/><text x="838" y="231" fill="#FFFFFF">S</text>
+    <rect x="856" y="212" width="28" height="28" fill="#132433" stroke="#60A5FA"/><text x="870" y="231" fill="#93B4D6">O</text>
+    <rect x="888" y="212" width="28" height="28" fill="#1A1A1A" stroke="#333333"/>
+    <rect x="920" y="212" width="28" height="28" fill="#21180F" stroke="#FB923C"/><text x="934" y="231" fill="#FB923C">E</text>
+    <rect x="952" y="212" width="28" height="28" fill="#132433" stroke="#60A5FA"/><text x="966" y="231" fill="#93B4D6">O</text>
+    <rect x="984" y="212" width="28" height="28" fill="#1A1A1A" stroke="#333333"/>
+    <rect x="1016" y="212" width="28" height="28" fill="#21180F" stroke="#FB923C"/><text x="1030" y="231" fill="#FB923C">E</text>
+    <rect x="1048" y="212" width="28" height="28" fill="#132433" stroke="#60A5FA"/><text x="1062" y="231" fill="#93B4D6">O</text>
+    <rect x="1080" y="212" width="28" height="28" fill="#1A1A1A" stroke="#333333"/>
+    <!-- row 2 -->
+    <rect x="600" y="244" width="28" height="28" fill="#132433" stroke="#60A5FA"/><text x="614" y="263" fill="#93B4D6">O</text>
+    <rect x="632" y="244" width="28" height="28" fill="#1A1A1A" stroke="#333333"/>
+    <rect x="664" y="244" width="28" height="28" fill="#3A1F0B" stroke="#FDBA74" stroke-width="2"/><text x="678" y="263" fill="#FDBA74">H</text>
+    <rect x="696" y="244" width="28" height="28" fill="#3A1F0B" stroke="#FDBA74" stroke-width="2"/><text x="710" y="263" fill="#FDBA74">H</text>
+    <rect x="728" y="244" width="28" height="28" fill="#3A1F0B" stroke="#FDBA74" stroke-width="2"/><text x="742" y="263" fill="#FDBA74">H</text>
+    <rect x="760" y="244" width="28" height="28" fill="#3A1F0B" stroke="#FDBA74" stroke-width="2"/><text x="774" y="263" fill="#FDBA74">H</text>
+    <rect x="792" y="244" width="28" height="28" fill="#21180F" stroke="#FB923C"/><text x="806" y="263" fill="#FB923C">E</text>
+    <rect x="824" y="244" width="28" height="28" fill="#132433" stroke="#60A5FA"/><text x="838" y="263" fill="#93B4D6">O</text>
+    <rect x="856" y="244" width="28" height="28" fill="#1A1A1A" stroke="#333333"/>
+    <rect x="888" y="244" width="28" height="28" fill="#21180F" stroke="#FB923C"/><text x="902" y="263" fill="#FB923C">E</text>
+    <rect x="920" y="244" width="28" height="28" fill="#132433" stroke="#60A5FA"/><text x="934" y="263" fill="#93B4D6">O</text>
+    <rect x="952" y="244" width="28" height="28" fill="#2A2A2A" stroke="#AAAAAA"/><text x="966" y="263" fill="#FFFFFF">S</text>
+    <rect x="984" y="244" width="28" height="28" fill="#132433" stroke="#60A5FA"/><text x="998" y="263" fill="#93B4D6">O</text>
+    <rect x="1016" y="244" width="28" height="28" fill="#1A1A1A" stroke="#333333"/>
+    <rect x="1048" y="244" width="28" height="28" fill="#21180F" stroke="#FB923C"/><text x="1062" y="263" fill="#FB923C">E</text>
+    <rect x="1080" y="244" width="28" height="28" fill="#132433" stroke="#60A5FA"/><text x="1094" y="263" fill="#93B4D6">O</text>
+  </g>
+  <path d="M664 282H788" stroke="#FDBA74" stroke-width="1.5"/>
+  <path d="M664 278V286M788 278V286" stroke="#FDBA74" stroke-width="1.5"/>
+  <text x="664" y="304" fill="#FDBA74" font-family="Arial, sans-serif" font-size="13">a 3 MB array: 4 humongous regions</text>
+  <g font-family="Arial, sans-serif" font-size="13">
+    <rect x="600" y="326" width="14" height="14" fill="#21180F" stroke="#FB923C"/><text x="622" y="338" fill="#AAAAAA">E eden: new objects</text>
+    <rect x="780" y="326" width="14" height="14" fill="#2A2A2A" stroke="#AAAAAA"/><text x="802" y="338" fill="#AAAAAA">S survivor</text>
+    <rect x="900" y="326" width="14" height="14" fill="#132433" stroke="#60A5FA"/><text x="922" y="338" fill="#AAAAAA">O old: promoted</text>
+    <rect x="600" y="352" width="14" height="14" fill="#3A1F0B" stroke="#FDBA74"/><text x="622" y="364" fill="#AAAAAA">H humongous: at least half a region</text>
+    <rect x="900" y="352" width="14" height="14" fill="#1A1A1A" stroke="#333333"/><text x="922" y="364" fill="#AAAAAA">free</text>
+  </g>
+  <text x="600" y="400" fill="#888888" font-family="Arial, sans-serif" font-size="14">Young pause: copy live objects out of E and S, reuse whole regions.</text>
+  <text x="600" y="424" fill="#888888" font-family="Arial, sans-serif" font-size="14">Cost follows what survives, not what was allocated.</text>
+  <text x="600" y="448" fill="#888888" font-family="Arial, sans-serif" font-size="14">Region size: heap / ~2,048, 1 to 32 MB on JDK 21.</text>
+
+  <!-- bottom: G1 cycle -->
+  <text x="80" y="510" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="17">The G1 cycle, as it appears in -Xlog:gc</text>
+  <g font-family="Arial, sans-serif">
+    <rect x="80" y="530" width="180" height="96" rx="10" fill="#21180F" stroke="#FB923C" stroke-width="2"/>
+    <text x="96" y="558" fill="#FFFFFF" font-size="15">Young pauses</text>
+    <text x="96" y="582" fill="#C6A17A" font-size="13">eden full: evacuate</text>
+    <text x="96" y="602" fill="#C6A17A" font-size="13">E and S regions</text>
+
+    <rect x="300" y="530" width="180" height="96" rx="10" fill="#21180F" stroke="#FB923C" stroke-width="2"/>
+    <text x="316" y="558" fill="#FFFFFF" font-size="15">Concurrent Start</text>
+    <text x="316" y="582" fill="#C6A17A" font-size="13">old above IHOP (45%)</text>
+    <text x="316" y="602" fill="#C6A17A" font-size="13">or humongous alloc</text>
+
+    <rect x="520" y="530" width="180" height="96" rx="10" fill="#0F1A21" stroke="#60A5FA" stroke-width="2"/>
+    <text x="536" y="558" fill="#FFFFFF" font-size="15">Concurrent mark</text>
+    <text x="536" y="582" fill="#93B4D6" font-size="13">background threads,</text>
+    <text x="536" y="602" fill="#93B4D6" font-size="13">application keeps running</text>
+
+    <rect x="740" y="530" width="180" height="96" rx="10" fill="#21180F" stroke="#FB923C" stroke-width="2"/>
+    <text x="756" y="558" fill="#FFFFFF" font-size="15">Remark, Cleanup</text>
+    <text x="756" y="582" fill="#C6A17A" font-size="13">free empty regions,</text>
+    <text x="756" y="602" fill="#C6A17A" font-size="13">rank old by garbage</text>
+
+    <rect x="960" y="530" width="160" height="96" rx="10" fill="#21180F" stroke="#FB923C" stroke-width="2"/>
+    <text x="976" y="558" fill="#FFFFFF" font-size="15">Mixed pauses</text>
+    <text x="976" y="582" fill="#C6A17A" font-size="13">eden + old regions</text>
+    <text x="976" y="602" fill="#C6A17A" font-size="13">with most garbage</text>
+  </g>
+  <g stroke="#FB923C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M260 578H296"/><path d="M288 573L296 578L288 583"/>
+    <path d="M480 578H516"/><path d="M508 573L516 578L508 583"/>
+    <path d="M700 578H736"/><path d="M728 573L736 578L728 583"/>
+    <path d="M920 578H956"/><path d="M948 573L956 578L948 583"/>
+    <path d="M1040 626V650H170V630"/><path d="M165 638L170 630L175 638"/>
+  </g>
+  <text x="520" y="670" fill="#888888" font-family="Arial, sans-serif" font-size="13">back to young-only pauses</text>
+  <rect x="80" y="684" width="400" height="34" rx="8" fill="#151515" stroke="#777777" stroke-width="1.5" stroke-dasharray="6 4"/>
+  <text x="96" y="706" fill="#AAAAAA" font-family="Arial, sans-serif" font-size="13">Evacuation Failure, then Pause Full: only when out of headroom</text>
+  <text x="520" y="706" fill="#FB923C" font-family="Arial, sans-serif" font-size="15">Pauses stay short because each one only touches a set of regions.</text>
+</svg>

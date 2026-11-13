@@ -1,0 +1,91 @@
+<svg width="1200" height="700" viewBox="0 0 1200 700" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="700" rx="28" fill="#0D0D0D"/>
+  <path d="M80 130H1120" stroke="#2B2B2B" stroke-width="2"/>
+  <text x="80" y="82" fill="#FB923C" font-family="Arial, sans-serif" font-size="18" letter-spacing="4">ONE METHOD'S LIFE IN HOTSPOT'S TIERS</text>
+  <text x="80" y="112" fill="#777777" font-family="Arial, sans-serif" font-size="16">JDK 21 defaults, measured with -XX:+PrintCompilation and -Xlog:deoptimization=debug</text>
+
+  <!-- tier 0 -->
+  <rect x="80" y="170" width="280" height="190" rx="12" fill="#151515" stroke="#AAAAAA" stroke-width="2"/>
+  <text x="100" y="204" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="17">Tier 0: interpreter</text>
+  <g font-family="Arial, sans-serif" font-size="14" fill="#AAAAAA">
+    <text x="100" y="236">executes bytecode directly</text>
+    <text x="100" y="260">counts calls and loop back-edges</text>
+    <text x="100" y="284">records some receiver types</text>
+    <text x="100" y="320" fill="#FFFFFF">~1,500 µs per 2,000 quotes</text>
+  </g>
+
+  <!-- tier 3 -->
+  <rect x="460" y="170" width="280" height="190" rx="12" fill="#0F1A21" stroke="#60A5FA" stroke-width="2"/>
+  <text x="480" y="204" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="17">Tier 3: C1 + profiling</text>
+  <g font-family="Arial, sans-serif" font-size="14" fill="#93B4D6">
+    <text x="480" y="236">compiles fast, simple optimisations</text>
+    <text x="480" y="260">records branches, receiver types</text>
+    <text x="480" y="284">inlines callees up to 35 bytes</text>
+    <text x="480" y="320" fill="#FFFFFF">~640 µs per 2,000 quotes</text>
+  </g>
+
+  <!-- tier 4 -->
+  <rect x="840" y="170" width="280" height="190" rx="12" fill="#21180F" stroke="#FB923C" stroke-width="2"/>
+  <text x="860" y="204" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="17">Tier 4: C2</text>
+  <g font-family="Arial, sans-serif" font-size="14" fill="#C6A17A">
+    <text x="860" y="236">inlines hot callees up to 325 bytes</text>
+    <text x="860" y="260">escape analysis, unroll, vectorise</text>
+    <text x="860" y="284">speculates on what it has seen</text>
+    <text x="860" y="320" fill="#FFFFFF">~120 to 150 µs per 2,000 quotes</text>
+  </g>
+
+  <!-- forward arrows -->
+  <g stroke="#FB923C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M360 250H456"/><path d="M448 245L456 250L448 255"/>
+    <path d="M740 250H836"/><path d="M828 245L836 250L828 255"/>
+  </g>
+  <g font-family="Arial, sans-serif" font-size="13" fill="#FB923C">
+    <text x="366" y="236">256th call</text>
+    <text x="746" y="236">~5,400 calls</text>
+  </g>
+  <g font-family="Arial, sans-serif" font-size="12" fill="#888888">
+    <text x="366" y="276">200, checked</text>
+    <text x="366" y="292">every 128</text>
+    <text x="746" y="276">+5,000, checked</text>
+    <text x="746" y="292">every 1,024</text>
+  </g>
+
+  <!-- deopt arrow -->
+  <g stroke="#FDBA74" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="7 5">
+    <path d="M980 360V410H220V366"/>
+  </g>
+  <path d="M214 374L220 364L226 374" stroke="#FDBA74" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="300" y="440" fill="#FDBA74" font-family="Arial, sans-serif" font-size="15">Deoptimization: an uncommon trap fires (unstable_if, class_check, bimorphic)</text>
+  <text x="300" y="464" fill="#AAAAAA" font-family="Arial, sans-serif" font-size="14">frame rebuilt for the interpreter, old code "made not entrant", recompiled with the new profile</text>
+
+  <!-- bottom boxes -->
+  <rect x="80" y="500" width="320" height="120" rx="12" fill="#151515" stroke="#444444" stroke-width="2"/>
+  <text x="100" y="530" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="16">On-stack replacement</text>
+  <g font-family="Arial, sans-serif" font-size="13" fill="#AAAAAA">
+    <text x="100" y="556">a running loop switches to compiled code</text>
+    <text x="100" y="578">'%' in PrintCompilation, entered @ bci</text>
+  </g>
+  <text x="100" y="602" fill="#C6A17A" font-family="Courier New, monospace" font-size="13" xml:space="preserve">FareJit::main @ 4</text>
+
+  <rect x="430" y="500" width="300" height="120" rx="12" fill="#151515" stroke="#444444" stroke-width="2"/>
+  <text x="450" y="530" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="16">Tiers 1 and 2</text>
+  <g font-family="Arial, sans-serif" font-size="13" fill="#AAAAAA">
+    <text x="450" y="556">1: C1, no profiling (trivial methods,</text>
+    <text x="450" y="578">or -XX:TieredStopAtLevel=1)</text>
+    <text x="450" y="600">2: C1, counters only (C2 queue busy)</text>
+  </g>
+
+  <rect x="760" y="500" width="360" height="120" rx="12" fill="#151515" stroke="#444444" stroke-width="2"/>
+  <text x="780" y="530" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="16">Code cache, 240 MB reserved</text>
+  <g font-family="Arial, sans-serif" font-size="12">
+    <rect x="780" y="548" width="60" height="30" fill="#2A2A2A" stroke="#AAAAAA"/>
+    <text x="788" y="567" fill="#FFFFFF">stubs</text>
+    <rect x="840" y="548" width="130" height="30" fill="#0F1A21" stroke="#60A5FA"/>
+    <text x="850" y="567" fill="#93B4D6">profiled: 2, 3</text>
+    <rect x="970" y="548" width="130" height="30" fill="#21180F" stroke="#FB923C"/>
+    <text x="980" y="567" fill="#C6A17A">non-profiled: 1, 4</text>
+  </g>
+  <text x="780" y="602" fill="#888888" font-family="Arial, sans-serif" font-size="13">quote service used 4.4 MB of it</text>
+
+  <text x="80" y="664" fill="#FB923C" font-family="Arial, sans-serif" font-size="15">C2 compiles for what it has seen; deoptimization keeps that speculation safe.</text>
+</svg>
