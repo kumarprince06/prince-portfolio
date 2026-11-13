@@ -1,0 +1,61 @@
+<svg width="1200" height="620" viewBox="0 0 1200 620" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="620" rx="28" fill="#0D0D0D"/>
+  <path d="M80 130H1120" stroke="#2B2B2B" stroke-width="2"/>
+  <text x="80" y="82" fill="#FB923C" font-family="Arial, sans-serif" font-size="18" letter-spacing="4">ENUMSET IS A BIT VECTOR, ENUMMAP IS AN ARRAY</text>
+  <text x="80" y="112" fill="#777777" font-family="Arial, sans-serif" font-size="16">Both index by ordinal(). Fields read with reflection on JDK 21 (--add-opens java.base/java.util).</text>
+
+  <!-- Ordinals -->
+  <text x="80" y="170" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="16">enum Day { MON, TUE, WED, THU, FRI, SAT, SUN }</text>
+  <g font-family="Arial, sans-serif" font-size="14">
+    <text x="452" y="206" fill="#888888">ordinal</text>
+    <text x="1062" y="206" fill="#888888">0</text><text x="982" y="206" fill="#888888">1</text><text x="902" y="206" fill="#888888">2</text>
+    <text x="822" y="206" fill="#888888">3</text><text x="742" y="206" fill="#888888">4</text><text x="662" y="206" fill="#888888">5</text>
+    <text x="582" y="206" fill="#888888">6</text>
+  </g>
+
+  <!-- EnumSet bits -->
+  <text x="80" y="250" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="16">EnumSet.of(SAT, SUN)</text>
+  <text x="80" y="274" fill="#888888" font-family="Arial, sans-serif" font-size="14">RegularEnumSet: one long elements</text>
+  <g font-family="Courier New, monospace" font-size="15">
+    <rect x="550" y="226" width="80" height="48" fill="#21180F" stroke="#FB923C" stroke-width="2"/>
+    <text x="584" y="256" fill="#FB923C">1</text>
+    <rect x="630" y="226" width="80" height="48" fill="#21180F" stroke="#FB923C" stroke-width="2"/>
+    <text x="664" y="256" fill="#FB923C">1</text>
+    <rect x="710" y="226" width="80" height="48" fill="#132433" stroke="#60A5FA" stroke-width="1.5"/>
+    <text x="744" y="256" fill="#FFFFFF">0</text>
+    <rect x="790" y="226" width="80" height="48" fill="#132433" stroke="#60A5FA" stroke-width="1.5"/>
+    <text x="824" y="256" fill="#FFFFFF">0</text>
+    <rect x="870" y="226" width="80" height="48" fill="#132433" stroke="#60A5FA" stroke-width="1.5"/>
+    <text x="904" y="256" fill="#FFFFFF">0</text>
+    <rect x="950" y="226" width="80" height="48" fill="#132433" stroke="#60A5FA" stroke-width="1.5"/>
+    <text x="984" y="256" fill="#FFFFFF">0</text>
+    <rect x="1030" y="226" width="80" height="48" fill="#132433" stroke="#60A5FA" stroke-width="1.5"/>
+    <text x="1064" y="256" fill="#FFFFFF">0</text>
+  </g>
+  <g font-family="Arial, sans-serif" font-size="13" fill="#C6A17A">
+    <text x="574" y="296">SUN</text><text x="656" y="296">SAT</text><text x="738" y="296">FRI</text><text x="816" y="296">THU</text>
+    <text x="894" y="296">WED</text><text x="976" y="296">TUE</text><text x="1054" y="296">MON</text>
+  </g>
+  <text x="80" y="330" fill="#AAAAAA" font-family="Arial, sans-serif" font-size="15">elements = 0b1100000 = 96.  contains(d) = (elements &amp; (1L &lt;&lt; d.ordinal())) != 0</text>
+  <text x="80" y="356" fill="#777777" font-family="Arial, sans-serif" font-size="14">More than 64 constants: JumboEnumSet with a long[] (70 constants: long[2]).</text>
+
+  <!-- EnumMap -->
+  <text x="80" y="420" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="16">EnumMap&lt;VehicleType, Integer&gt;</text>
+  <text x="80" y="444" fill="#888888" font-family="Arial, sans-serif" font-size="14">vals: Object[] indexed by ordinal</text>
+  <g font-family="Arial, sans-serif" font-size="14">
+    <text x="420" y="410" fill="#888888">AUTO 0</text><text x="590" y="410" fill="#888888">MINI 1</text>
+    <text x="760" y="410" fill="#888888">SEDAN 2</text><text x="930" y="410" fill="#888888">SUV 3</text>
+    <rect x="410" y="420" width="170" height="52" fill="#21180F" stroke="#FB923C" stroke-width="2"/>
+    <text x="426" y="452" fill="#FFFFFF">15</text>
+    <rect x="580" y="420" width="170" height="52" fill="#132433" stroke="#60A5FA" stroke-width="1.5"/>
+    <text x="596" y="452" fill="#777777">null (absent)</text>
+    <rect x="750" y="420" width="170" height="52" fill="#21180F" stroke="#FB923C" stroke-width="2"/>
+    <text x="766" y="452" fill="#FFFFFF">EnumMap.NULL</text>
+    <rect x="920" y="420" width="170" height="52" fill="#21180F" stroke="#FB923C" stroke-width="2"/>
+    <text x="936" y="452" fill="#FFFFFF">2</text>
+  </g>
+  <text x="80" y="510" fill="#AAAAAA" font-family="Arial, sans-serif" font-size="15">get(k) = vals[k.ordinal()]: no hashCode, no equals, no buckets. A stored null becomes the NULL marker.</text>
+  <text x="80" y="540" fill="#777777" font-family="Arial, sans-serif" font-size="14">{AUTO=15, SEDAN=null, SUV=2}: iteration follows declaration order.</text>
+
+  <text x="80" y="590" fill="#FB923C" font-family="Arial, sans-serif" font-size="15">Measured: EnumSet 32 bytes vs HashSet 272 for 4 elements; contains about 2.6x faster.</text>
+</svg>

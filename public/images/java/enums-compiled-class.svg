@@ -1,0 +1,60 @@
+<svg width="1200" height="660" viewBox="0 0 1200 660" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="660" rx="28" fill="#0D0D0D"/>
+  <path d="M80 130H1120" stroke="#2B2B2B" stroke-width="2"/>
+  <text x="80" y="82" fill="#FB923C" font-family="Arial, sans-serif" font-size="18" letter-spacing="4">AN ENUM IS A FINAL CLASS WITH FIXED INSTANCES</text>
+  <text x="80" y="112" fill="#777777" font-family="Arial, sans-serif" font-size="16">What javac generated for VehicleType on JDK 21 (javap -p -c).</text>
+
+  <!-- Source -->
+  <rect x="80" y="160" width="340" height="300" rx="12" fill="#151515" stroke="#444444" stroke-width="2"/>
+  <text x="100" y="194" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="17">Source</text>
+  <g font-family="Courier New, monospace" font-size="14" xml:space="preserve">
+    <text x="100" y="236" fill="#C6A17A">enum VehicleType {</text>
+    <text x="100" y="260" fill="#FFFFFF">  AUTO("AT", 3, ...),</text>
+    <text x="100" y="284" fill="#FFFFFF">  MINI("MN", 4, ...),</text>
+    <text x="100" y="308" fill="#FFFFFF">  SEDAN("SD", 4, ...),</text>
+    <text x="100" y="332" fill="#FFFFFF">  SUV("SV", 6, ...);</text>
+    <text x="100" y="364" fill="#FFFFFF">  VehicleType(String code,</text>
+    <text x="100" y="388" fill="#FFFFFF">    int seats, ...) { ... }</text>
+    <text x="100" y="420" fill="#C6A17A">}</text>
+  </g>
+
+  <path d="M420 310H470" stroke="#FB923C" stroke-width="2"/>
+  <path d="M461 305L470 310L461 315" stroke="#FB923C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+
+  <!-- Compiled class -->
+  <rect x="470" y="160" width="650" height="300" rx="12" fill="#21180F" stroke="#FB923C" stroke-width="2"/>
+  <text x="490" y="194" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="17">public final class VehicleType extends Enum&lt;VehicleType&gt;</text>
+  <g font-family="Courier New, monospace" font-size="13" xml:space="preserve">
+    <text x="490" y="232" fill="#FFFFFF">public static final VehicleType AUTO, MINI, SEDAN, SUV;</text>
+    <text x="490" y="256" fill="#FFFFFF">private static final VehicleType[] $VALUES;</text>
+    <text x="490" y="290" fill="#C6A17A">public static VehicleType[] values()</text>
+    <text x="490" y="310" fill="#888888">    return $VALUES.clone();            // a new array per call</text>
+    <text x="490" y="338" fill="#C6A17A">public static VehicleType valueOf(String)</text>
+    <text x="490" y="358" fill="#888888">    return Enum.valueOf(VehicleType.class, name);</text>
+    <text x="490" y="386" fill="#C6A17A">private VehicleType(String name, int ordinal, String code, int seats, ...)</text>
+    <text x="490" y="406" fill="#888888">    super(name, ordinal);   // Enum stores name and ordinal</text>
+    <text x="490" y="434" fill="#C6A17A">static {}  // creates AUTO, MINI, SEDAN, SUV in order, then $VALUES</text>
+  </g>
+
+  <!-- Instances -->
+  <text x="80" y="508" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="17">On the heap after class initialisation: exactly four objects, forever</text>
+  <g font-family="Arial, sans-serif" font-size="14">
+    <rect x="80" y="528" width="245" height="84" rx="10" fill="#0F1A21" stroke="#60A5FA" stroke-width="2"/>
+    <text x="96" y="556" fill="#FFFFFF">AUTO</text>
+    <text x="96" y="580" fill="#93B4D6">name "AUTO" · ordinal 0</text>
+    <text x="96" y="600" fill="#93B4D6">code "AT" · seats 3</text>
+    <rect x="345" y="528" width="245" height="84" rx="10" fill="#0F1A21" stroke="#60A5FA" stroke-width="2"/>
+    <text x="361" y="556" fill="#FFFFFF">MINI</text>
+    <text x="361" y="580" fill="#93B4D6">name "MINI" · ordinal 1</text>
+    <text x="361" y="600" fill="#93B4D6">code "MN" · seats 4</text>
+    <rect x="610" y="528" width="245" height="84" rx="10" fill="#0F1A21" stroke="#60A5FA" stroke-width="2"/>
+    <text x="626" y="556" fill="#FFFFFF">SEDAN</text>
+    <text x="626" y="580" fill="#93B4D6">name "SEDAN" · ordinal 2</text>
+    <text x="626" y="600" fill="#93B4D6">code "SD" · seats 4</text>
+    <rect x="875" y="528" width="245" height="84" rx="10" fill="#0F1A21" stroke="#60A5FA" stroke-width="2"/>
+    <text x="891" y="556" fill="#FFFFFF">SUV</text>
+    <text x="891" y="580" fill="#93B4D6">name "SUV" · ordinal 3</text>
+    <text x="891" y="600" fill="#93B4D6">code "SV" · seats 6</text>
+  </g>
+  <text x="80" y="640" fill="#FB923C" font-family="Arial, sans-serif" font-size="15">One instance per constant, so == is the right comparison. The ordinal is just the declaration position.</text>
+</svg>

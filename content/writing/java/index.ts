@@ -12,6 +12,8 @@ import { controlStatements } from "./control-statements";
 import { customExceptions } from "./custom-exceptions";
 import { dataTypes } from "./data-types";
 import { encapsulation } from "./encapsulation";
+import { enums } from "./enums";
+import { enumSetEnumMapAndPatterns } from "./enumset-enummap-and-patterns";
 import { generics } from "./generics";
 import { genericsWildcardsAndErasure } from "./generics-wildcards-and-erasure";
 import { exceptionBestPractices } from "./exception-best-practices";
@@ -120,7 +122,7 @@ export const javaPhases: Phase[] = [
   {
     title: "Enums",
     description: "Fixed sets of constants that are full classes, with fields, methods and switch support.",
-    lessons: [],
+    lessons: [enums, enumSetEnumMapAndPatterns],
   },
   {
     title: "Wrapper Classes",
