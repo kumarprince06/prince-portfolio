@@ -1,0 +1,49 @@
+<svg width="1200" height="600" viewBox="0 0 1200 600" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="600" rx="28" fill="#0D0D0D"/>
+  <path d="M80 130H1120" stroke="#2B2B2B" stroke-width="2"/>
+  <text x="80" y="82" fill="#FB923C" font-family="Arial, sans-serif" font-size="18" letter-spacing="4">WHAT == AND equals ACTUALLY COMPARE</text>
+  <text x="80" y="112" fill="#777777" font-family="Arial, sans-serif" font-size="16">Results from CrossTypeEquals.java and Caches.java on JDK 21.</text>
+
+  <g font-family="Arial, sans-serif" font-size="15">
+    <text x="80" y="170" fill="#888888">Expression</text>
+    <text x="440" y="170" fill="#888888">What happens</text>
+    <text x="960" y="170" fill="#888888">Result</text>
+    <path d="M80 184H1120" stroke="#2B2B2B" stroke-width="1"/>
+  </g>
+
+  <g font-size="15">
+    <text x="80" y="220" fill="#FFFFFF" font-family="Courier New, monospace">Integer == Integer (127)</text>
+    <text x="440" y="220" fill="#AAAAAA" font-family="Arial, sans-serif">reference compare; both from the cache</text>
+    <text x="960" y="220" fill="#FB923C" font-family="Arial, sans-serif">true (by luck)</text>
+
+    <text x="80" y="262" fill="#FFFFFF" font-family="Courier New, monospace">Integer == Integer (128)</text>
+    <text x="440" y="262" fill="#AAAAAA" font-family="Arial, sans-serif">reference compare; two new objects</text>
+    <text x="960" y="262" fill="#FB923C" font-family="Arial, sans-serif">false</text>
+
+    <text x="80" y="304" fill="#FFFFFF" font-family="Courier New, monospace">Long == int  (7L, 7)</text>
+    <text x="440" y="304" fill="#AAAAAA" font-family="Arial, sans-serif">one side primitive: unbox, widen, compare numbers</text>
+    <text x="960" y="304" fill="#93B4D6" font-family="Arial, sans-serif">true</text>
+
+    <text x="80" y="346" fill="#FFFFFF" font-family="Courier New, monospace">Integer.equals(Integer)</text>
+    <text x="440" y="346" fill="#AAAAAA" font-family="Arial, sans-serif">same type: compare int values</text>
+    <text x="960" y="346" fill="#93B4D6" font-family="Arial, sans-serif">true</text>
+
+    <text x="80" y="388" fill="#FFFFFF" font-family="Courier New, monospace">Long(7).equals(7)</text>
+    <text x="440" y="388" fill="#AAAAAA" font-family="Arial, sans-serif">7 boxes to Integer; a Long never equals an Integer</text>
+    <text x="960" y="388" fill="#FB923C" font-family="Arial, sans-serif">false</text>
+
+    <text x="80" y="430" fill="#FFFFFF" font-family="Courier New, monospace">Map&lt;Long,V&gt;.get(int)</text>
+    <text x="440" y="430" fill="#AAAAAA" font-family="Arial, sans-serif">get(Object) compiles; Integer key never matches</text>
+    <text x="960" y="430" fill="#FB923C" font-family="Arial, sans-serif">null</text>
+
+    <text x="80" y="472" fill="#FFFFFF" font-family="Courier New, monospace">Double(0.0).equals(-0.0)</text>
+    <text x="440" y="472" fill="#AAAAAA" font-family="Arial, sans-serif">equals compares bits; 0.0 == -0.0 is true</text>
+    <text x="960" y="472" fill="#FB923C" font-family="Arial, sans-serif">false</text>
+
+    <text x="80" y="514" fill="#FFFFFF" font-family="Courier New, monospace">Double(NaN).equals(NaN)</text>
+    <text x="440" y="514" fill="#AAAAAA" font-family="Arial, sans-serif">equals compares bits; NaN == NaN is false</text>
+    <text x="960" y="514" fill="#93B4D6" font-family="Arial, sans-serif">true</text>
+  </g>
+
+  <text x="80" y="566" fill="#FB923C" font-family="Arial, sans-serif" font-size="15">Rule: equals for same-type wrappers, a primitive comparison for values, never == between two wrappers.</text>
+</svg>

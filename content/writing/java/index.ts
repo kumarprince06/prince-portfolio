@@ -44,6 +44,8 @@ import { typeCasting } from "./type-casting";
 import { variables } from "./variables";
 import { whatIsJava } from "./what-is-java";
 import { whenToUseWhat } from "./when-to-use-what";
+import { wrapperClasses } from "./wrapper-classes";
+import { wrapperTraps } from "./wrapper-traps";
 
 // Reading order — phases run in sequence, lessons are numbered straight through them.
 export const javaPhases: Phase[] = [
@@ -127,7 +129,7 @@ export const javaPhases: Phase[] = [
   {
     title: "Wrapper Classes",
     description: "The object versions of primitives, autoboxing, caching and the traps around them.",
-    lessons: [],
+    lessons: [wrapperClasses, wrapperTraps],
   },
   {
     title: "File Handling",

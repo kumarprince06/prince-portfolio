@@ -1,0 +1,69 @@
+<svg width="1200" height="640" viewBox="0 0 1200 640" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="640" rx="28" fill="#0D0D0D"/>
+  <path d="M80 130H1120" stroke="#2B2B2B" stroke-width="2"/>
+  <text x="80" y="82" fill="#FB923C" font-family="Arial, sans-serif" font-size="18" letter-spacing="4">AUTOBOXING GOES THROUGH Integer.valueOf AND ITS CACHE</text>
+  <text x="80" y="112" fill="#777777" font-family="Arial, sans-serif" font-size="16">JDK 21 defaults. Integer a = 127 compiles to Integer.valueOf(127) (javap -c).</text>
+
+  <!-- left: code -->
+  <rect x="80" y="160" width="330" height="270" rx="12" fill="#151515" stroke="#444444" stroke-width="2"/>
+  <text x="100" y="194" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="17">Source</text>
+  <g font-family="Courier New, monospace" font-size="14" xml:space="preserve">
+    <text x="100" y="236" fill="#FFFFFF">Integer a = 127, b = 127;</text>
+    <text x="100" y="262" fill="#FFFFFF">Integer c = 128, d = 128;</text>
+    <text x="100" y="304" fill="#C6A17A">a == b   // true</text>
+    <text x="100" y="330" fill="#C6A17A">c == d   // false</text>
+    <text x="100" y="356" fill="#C6A17A">c.equals(d)  // true</text>
+  </g>
+  <text x="100" y="404" fill="#888888" font-family="Arial, sans-serif" font-size="14">== on two wrappers compares references</text>
+
+  <!-- middle: valueOf -->
+  <path d="M410 295H460" stroke="#FB923C" stroke-width="2"/>
+  <path d="M451 290L460 295L451 300" stroke="#FB923C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="460" y="200" width="250" height="190" rx="12" fill="#21180F" stroke="#FB923C" stroke-width="2"/>
+  <text x="480" y="234" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="17">Integer.valueOf(i)</text>
+  <g font-family="Courier New, monospace" font-size="13" xml:space="preserve">
+    <text x="480" y="270" fill="#C6A17A">if (i &gt;= -128 &amp;&amp;</text>
+    <text x="480" y="290" fill="#C6A17A">    i &lt;= high)</text>
+    <text x="480" y="310" fill="#FFFFFF">  return cache[i + 128];</text>
+    <text x="480" y="342" fill="#C6A17A">return new Integer(i);</text>
+  </g>
+  <text x="480" y="374" fill="#888888" font-family="Arial, sans-serif" font-size="13">high = 127, or -XX:AutoBoxCacheMax</text>
+
+  <!-- right: heap -->
+  <rect x="760" y="160" width="360" height="270" rx="12" fill="#151515" stroke="#444444" stroke-width="2"/>
+  <text x="780" y="194" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="17">Heap</text>
+  <text x="780" y="222" fill="#888888" font-family="Arial, sans-serif" font-size="13">IntegerCache.cache: 256 shared Integers</text>
+  <g font-family="Arial, sans-serif" font-size="12">
+    <rect x="780" y="234" width="60" height="34" fill="#132433" stroke="#60A5FA" stroke-width="1.2"/><text x="788" y="256" fill="#FFFFFF">-128</text>
+    <rect x="840" y="234" width="60" height="34" fill="#132433" stroke="#60A5FA" stroke-width="1.2"/><text x="856" y="256" fill="#FFFFFF">...</text>
+    <rect x="900" y="234" width="60" height="34" fill="#132433" stroke="#60A5FA" stroke-width="1.2"/><text x="916" y="256" fill="#FFFFFF">126</text>
+    <rect x="960" y="234" width="60" height="34" fill="#21180F" stroke="#FB923C" stroke-width="2"/><text x="976" y="256" fill="#FB923C">127</text>
+  </g>
+  <path d="M990 268V286" stroke="#FB923C" stroke-width="2"/>
+  <text x="900" y="304" fill="#FB923C" font-family="Arial, sans-serif" font-size="13">a and b: the same object</text>
+
+  <g font-family="Arial, sans-serif" font-size="13">
+    <rect x="780" y="334" width="150" height="56" rx="8" fill="#0F1A21" stroke="#60A5FA" stroke-width="1.5"/>
+    <text x="794" y="358" fill="#FFFFFF">Integer 128</text><text x="794" y="378" fill="#93B4D6">c · new object</text>
+    <rect x="950" y="334" width="150" height="56" rx="8" fill="#0F1A21" stroke="#60A5FA" stroke-width="1.5"/>
+    <text x="964" y="358" fill="#FFFFFF">Integer 128</text><text x="964" y="378" fill="#93B4D6">d · new object</text>
+  </g>
+  <text x="780" y="414" fill="#888888" font-family="Arial, sans-serif" font-size="13">two objects, equal values, c != d</text>
+
+  <!-- bottom: layout and caches -->
+  <text x="80" y="480" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="16">One Integer object: 16 bytes for a 4-byte int</text>
+  <g font-family="Arial, sans-serif" font-size="13">
+    <rect x="80" y="496" width="200" height="52" fill="#21180F" stroke="#FB923C" stroke-width="1.5"/><text x="96" y="527" fill="#C6A17A">mark word · 8</text>
+    <rect x="280" y="496" width="100" height="52" fill="#21180F" stroke="#FB923C" stroke-width="1.5"/><text x="292" y="527" fill="#C6A17A">class · 4</text>
+    <rect x="380" y="496" width="110" height="52" fill="#132433" stroke="#60A5FA" stroke-width="1.5"/><text x="392" y="527" fill="#FFFFFF">int value · 4</text>
+  </g>
+  <text x="80" y="574" fill="#888888" font-family="Arial, sans-serif" font-size="13">Long and Double: 12 + 8 = 20, padded to 24 bytes</text>
+
+  <text x="560" y="480" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="16">Caches in valueOf</text>
+  <g font-family="Arial, sans-serif" font-size="14" fill="#AAAAAA">
+    <text x="560" y="510">Integer, Long, Short, Byte: -128 to 127</text>
+    <text x="560" y="534">Character: 0 to 127 · Boolean: TRUE and FALSE</text>
+    <text x="560" y="558">Float, Double: no cache, every box is new</text>
+  </g>
+  <text x="80" y="612" fill="#FB923C" font-family="Arial, sans-serif" font-size="15">Compare wrappers with equals or Objects.equals; == only happens to work inside the cache.</text>
+</svg>
