@@ -2,7 +2,7 @@ import type { Lesson } from "../types";
 
 export const tryWithResources: Lesson = {
   slug: "try-with-resources",
-  date: "2026-11-13",
+  date: "2026-11-12",
   title: "try-with-resources",
   description:
     "How Java's try-with-resources really closes things: the three bugs of closing by hand, AutoCloseable versus Closeable, reverse close order, closing before catch and finally, suppressed exceptions and the edge cases of addSuppressed, null and effectively final resources, writing my own resources such as a lock guard, the JDK types that became AutoCloseable in Java 19 and 21, the exact bytecode javac generates, and an export job that ran out of file descriptors.",

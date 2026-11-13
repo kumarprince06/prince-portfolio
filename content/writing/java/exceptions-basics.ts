@@ -2,7 +2,7 @@ import type { Lesson } from "../types";
 
 export const exceptionsBasics: Lesson = {
   slug: "exceptions-basics",
-  date: "2026-11-13",
+  date: "2026-11-09",
   title: "Exceptions and the Exception Hierarchy",
   description:
     "What a Java exception really is and why the language has them instead of error codes, the Throwable, Error, Exception and RuntimeException hierarchy printed by reflection, the compiler's checked-exception rule, a runnable trigger for every common exception and error, what an exception object carries and how to read a Caused by chain, what happens to an uncaught exception in main and in other threads, and the JVM side: new plus athrow, implicit exceptions, fillInStackTrace and its cost, helpful NullPointerException messages and HotSpot's OmitStackTraceInFastThrow, ending with a background worker thread killed by one malformed request.",

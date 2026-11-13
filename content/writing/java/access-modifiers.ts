@@ -2,7 +2,7 @@ import type { Lesson } from "../types";
 
 export const accessModifiers: Lesson = {
   slug: "access-modifiers",
-  date: "2026-11-12",
+  date: "2026-11-07",
   title: "Access Modifiers",
   description:
     "How Java's four access levels really work, private, package-private, protected and public on members, constructors and types, with every cell of the classic table proved by javac, the JLS 6.6.2 protected rule, access-aware overriding and the illegal modifier combinations, down to class-file access flags, the JVM's link-time and verifier checks, reflection on JDK 21, and a Spring cache that never hit because its method was private.",

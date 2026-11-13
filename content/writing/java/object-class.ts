@@ -2,7 +2,7 @@ import type { Lesson } from "../types";
 
 export const objectClass: Lesson = {
   slug: "object-class",
-  date: "2026-11-07",
+  date: "2026-11-03",
   title: "Object Class Methods",
   description:
     "Every method java.lang.Object gives every class and array: the equals and hashCode contracts and how breaking them loses entries in a HashSet, toString without leaking card numbers, getClass versus instanceof, why clone and finalize are best avoided, wait and notify, records' generated methods, and where the identity hash code really lives in the object header.",

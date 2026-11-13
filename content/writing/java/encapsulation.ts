@@ -2,7 +2,7 @@ import type { Lesson } from "../types";
 
 export const encapsulation: Lesson = {
   slug: "encapsulation",
-  date: "2026-10-31",
+  date: "2026-10-28",
   title: "Encapsulation",
   description:
     "What encapsulation really is in Java, an object's state kept together with its invariants and changed only through operations that enforce them, from access modifiers, JavaBeans getters and setters, immutability, defensive copies and records down to how javac, the JVM and nestmates enforce private, what reflection can still do on JDK 21, and a Jackson password leak and a wallet race fixed in code.",

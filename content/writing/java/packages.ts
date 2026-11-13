@@ -2,7 +2,7 @@ import type { Lesson } from "../types";
 
 export const packages: Lesson = {
   slug: "packages",
-  date: "2026-11-11",
+  date: "2026-11-06",
   title: "Packages",
   description:
     "How Java packages give classes a namespace, a folder on disk and a package-private boundary: package declarations and naming, javac -d and java -cp, every kind of import (and proof that imports never reach the class file), the unnamed package, subpackages, the classpath and JARs, package-info.java, runtime packages and sealing, JDK 25 module imports, package-by-feature design, and a Spring bean that component scanning never finds.",

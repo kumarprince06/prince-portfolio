@@ -2,7 +2,7 @@ import type { Lesson } from "../types";
 
 export const inheritance: Lesson = {
   slug: "inheritance",
-  date: "2026-11-01",
+  date: "2026-10-29",
   title: "Inheritance",
   description:
     "How one Java class extends another: what a subclass really inherits (private fields included, constructors not), super and constructor chaining, fields that hide instead of override, final and sealed hierarchies, the object layout and bytecode underneath, and why composition beats inheritance for code reuse, with the double-counting set and an LSP violation run for real.",

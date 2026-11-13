@@ -2,7 +2,7 @@ import type { Lesson } from "../types";
 
 export const tryCatchFinally: Lesson = {
   slug: "try-catch-finally",
-  date: "2026-11-13",
+  date: "2026-11-10",
   title: "try, catch and finally",
   description:
     "How Java's try, catch and finally really behave on the normal, caught and uncaught paths: catch order and the unreachable-catch errors, multi-catch and its implicitly final parameter, why catching Exception or Throwable hides bugs, when finally does and doesn't run, a return in finally that silently swallows an exception, nested try and rethrowing, down to the bytecode exception table, the copies of every finally block javac generates, frame-by-frame unwinding, and a payment marked paid although the charge was declined.",

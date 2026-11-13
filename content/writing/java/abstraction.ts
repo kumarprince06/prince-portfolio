@@ -2,7 +2,7 @@ import type { Lesson } from "../types";
 
 export const abstraction: Lesson = {
   slug: "abstraction",
-  date: "2026-11-04",
+  date: "2026-11-01",
   title: "Abstraction",
   description:
     "Exposing what a type does while hiding how: abstract classes and abstract methods down to ACC_ABSTRACT in the class file, why an abstract class has a constructor, the Template Method pattern proven on AbstractList and InputStream, AbstractMethodError from separate compilation, leaky abstractions, and a payment gateway built the way I'd build it.",

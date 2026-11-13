@@ -2,7 +2,7 @@ import type { Lesson } from "../types";
 
 export const nestedClasses: Lesson = {
   slug: "nested-classes",
-  date: "2026-11-08",
+  date: "2026-11-04",
   title: "Nested and Inner Classes",
   description:
     "The four kinds of nested classes in Java (static nested, inner, local and anonymous), what javac secretly adds to each one (this$0, val$ fields, nestmates), how anonymous classes differ from lambdas down to the hidden classes the JVM spins at run time, and how an inner-class listener leaks its whole outer object.",

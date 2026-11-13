@@ -2,7 +2,7 @@ import type { Lesson } from "../types";
 
 export const customExceptions: Lesson = {
   slug: "custom-exceptions",
-  date: "2026-11-13",
+  date: "2026-11-11",
   title: "throw, throws and Custom Exceptions",
   description:
     "How Java code raises and declares its own failures: throw versus throws, precise rethrow, exception chaining with causes and initCause, custom checked and unchecked exceptions with useful fields, an application exception hierarchy mapped to HTTP status, translation between layers, the sneaky-throw trick, and what the class file and the JVM actually do with a throws clause, ending with a booking service whose logs said only \"error\".",

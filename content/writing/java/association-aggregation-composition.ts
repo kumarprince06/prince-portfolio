@@ -2,7 +2,7 @@ import type { Lesson } from "../types";
 
 export const associationAggregationComposition: Lesson = {
   slug: "association-aggregation-composition",
-  date: "2026-11-02",
+  date: "2026-10-30",
   title: "Association, Aggregation and Composition",
   description:
     "The has-a side of Java OOP: dependency, association, aggregation and composition with real examples, multiplicity and UML notation, how ownership and lifecycle show up in code, in bytecode and on the heap, and the bidirectional, JSON-recursion and cascading-delete traps they cause in production.",

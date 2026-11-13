@@ -2,7 +2,7 @@ import type { Lesson } from "../types";
 
 export const constructors: Lesson = {
   slug: "constructors",
-  date: "2026-10-29",
+  date: "2026-10-26",
   title: "Constructors",
   description:
     "How a Java object gets from zeroed memory to a valid state: default, overloaded and chained constructors, the exact initialization order down to `<init>` bytecode, why calling an overridable method from a constructor sees nulls, Java 25's flexible constructor bodies, final fields, static factories, builders, records, and what Spring and Jackson need from a constructor.",

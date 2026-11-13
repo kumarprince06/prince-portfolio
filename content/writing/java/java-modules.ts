@@ -2,7 +2,7 @@ import type { Lesson } from "../types";
 
 export const javaModules: Lesson = {
   slug: "java-modules",
-  date: "2026-11-13",
+  date: "2026-11-08",
   title: "Java Modules (JPMS)",
   description:
     "What the Java Platform Module System adds on top of packages and access modifiers, from module-info directives (requires, transitive, static, exports, opens, uses and provides), readability and strong encapsulation, the module path versus the classpath and named, automatic and unnamed modules, down to the Module attribute in the class file, the boot layer, InaccessibleObjectException and the escape hatches, ServiceLoader plug-ins, jdeps and jlink, JDK 25's module imports, and a Jackson deserialisation failure fixed with a qualified opens.",
