@@ -30,6 +30,8 @@ import { packages } from "./packages";
 import { polymorphism } from "./polymorphism";
 import { stackVsHeap } from "./stack-vs-heap";
 import { staticKeyword } from "./static-keyword";
+import { stringBuilderAndStringBuffer } from "./stringbuilder-and-stringbuffer";
+import { stringsAndImmutability } from "./strings-and-immutability";
 import { tryCatchFinally } from "./try-catch-finally";
 import { tryWithResources } from "./try-with-resources";
 import { typeCasting } from "./type-casting";
@@ -99,7 +101,7 @@ export const javaPhases: Phase[] = [
   {
     title: "String, StringBuilder, StringBuffer",
     description: "Why strings are immutable, the string pool, and when to reach for a builder instead.",
-    lessons: [],
+    lessons: [stringsAndImmutability, stringBuilderAndStringBuffer],
   },
   {
     title: "Arrays",
