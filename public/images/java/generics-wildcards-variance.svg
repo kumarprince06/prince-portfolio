@@ -1,0 +1,50 @@
+<svg width="1200" height="660" viewBox="0 0 1200 660" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="660" rx="28" fill="#0D0D0D"/>
+  <path d="M80 130H1120" stroke="#2B2B2B" stroke-width="2"/>
+  <text x="80" y="82" fill="#FB923C" font-family="Arial, sans-serif" font-size="18" letter-spacing="4">WHICH LISTS A WILDCARD ACCEPTS: PECS</text>
+  <text x="80" y="112" fill="#777777" font-family="Arial, sans-serif" font-size="16">Producer Extends, Consumer Super. List&lt;Integer&gt; is never a List&lt;Number&gt;; a wildcard is how to accept both.</text>
+
+  <!-- extends -->
+  <rect x="80" y="160" width="500" height="430" rx="12" fill="#151515" stroke="#444444" stroke-width="2"/>
+  <text x="100" y="194" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="17">List&lt;? extends Number&gt;  ·  a producer</text>
+  <text x="100" y="218" fill="#888888" font-family="Arial, sans-serif" font-size="14">accepts Number and anything below it</text>
+
+  <rect x="130" y="248" width="170" height="44" rx="6" fill="#132433" stroke="#60A5FA" stroke-width="1.5"/>
+  <text x="146" y="275" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="14">List&lt;Object&gt;</text>
+  <text x="320" y="275" fill="#777777" font-family="Arial, sans-serif" font-size="14">rejected</text>
+  <rect x="130" y="312" width="170" height="44" rx="6" fill="#21180F" stroke="#FB923C" stroke-width="2"/>
+  <text x="146" y="339" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="14">List&lt;Number&gt;</text>
+  <text x="320" y="339" fill="#FB923C" font-family="Arial, sans-serif" font-size="14">accepted</text>
+  <rect x="130" y="376" width="170" height="44" rx="6" fill="#21180F" stroke="#FB923C" stroke-width="2"/>
+  <text x="146" y="403" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="14">List&lt;Integer&gt;</text>
+  <text x="320" y="403" fill="#FB923C" font-family="Arial, sans-serif" font-size="14">accepted</text>
+  <rect x="130" y="440" width="170" height="44" rx="6" fill="#21180F" stroke="#FB923C" stroke-width="2"/>
+  <text x="146" y="467" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="14">List&lt;Double&gt;</text>
+  <text x="320" y="467" fill="#FB923C" font-family="Arial, sans-serif" font-size="14">accepted</text>
+
+  <text x="100" y="530" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="15">read: Number n = list.get(0);   ✓</text>
+  <text x="100" y="560" fill="#777777" font-family="Arial, sans-serif" font-size="15">write: list.add(1);   ✗  (could be a List&lt;Double&gt;)</text>
+
+  <!-- super -->
+  <rect x="620" y="160" width="500" height="430" rx="12" fill="#151515" stroke="#444444" stroke-width="2"/>
+  <text x="640" y="194" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="17">List&lt;? super Integer&gt;  ·  a consumer</text>
+  <text x="640" y="218" fill="#888888" font-family="Arial, sans-serif" font-size="14">accepts Integer and anything above it</text>
+
+  <rect x="670" y="248" width="170" height="44" rx="6" fill="#21180F" stroke="#FB923C" stroke-width="2"/>
+  <text x="686" y="275" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="14">List&lt;Object&gt;</text>
+  <text x="860" y="275" fill="#FB923C" font-family="Arial, sans-serif" font-size="14">accepted</text>
+  <rect x="670" y="312" width="170" height="44" rx="6" fill="#21180F" stroke="#FB923C" stroke-width="2"/>
+  <text x="686" y="339" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="14">List&lt;Number&gt;</text>
+  <text x="860" y="339" fill="#FB923C" font-family="Arial, sans-serif" font-size="14">accepted</text>
+  <rect x="670" y="376" width="170" height="44" rx="6" fill="#21180F" stroke="#FB923C" stroke-width="2"/>
+  <text x="686" y="403" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="14">List&lt;Integer&gt;</text>
+  <text x="860" y="403" fill="#FB923C" font-family="Arial, sans-serif" font-size="14">accepted</text>
+  <rect x="670" y="440" width="170" height="44" rx="6" fill="#132433" stroke="#60A5FA" stroke-width="1.5"/>
+  <text x="686" y="467" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="14">List&lt;Double&gt;</text>
+  <text x="860" y="467" fill="#777777" font-family="Arial, sans-serif" font-size="14">rejected</text>
+
+  <text x="640" y="530" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="15">write: list.add(1);   ✓</text>
+  <text x="640" y="560" fill="#777777" font-family="Arial, sans-serif" font-size="15">read: Integer i = list.get(0);   ✗  (only Object)</text>
+
+  <text x="80" y="626" fill="#FB923C" font-family="Arial, sans-serif" font-size="15">Get values out: ? extends T.   Put values in: ? super T.   Both: plain T.   Neither: ?</text>
+</svg>

@@ -12,6 +12,8 @@ import { controlStatements } from "./control-statements";
 import { customExceptions } from "./custom-exceptions";
 import { dataTypes } from "./data-types";
 import { encapsulation } from "./encapsulation";
+import { generics } from "./generics";
+import { genericsWildcardsAndErasure } from "./generics-wildcards-and-erasure";
 import { exceptionBestPractices } from "./exception-best-practices";
 import { exceptionsBasics } from "./exceptions-basics";
 import { historyOfJava } from "./history-of-java";
@@ -113,7 +115,7 @@ export const javaPhases: Phase[] = [
   {
     title: "Generics",
     description: "Type-safe code with type parameters, bounded types, wildcards and type erasure.",
-    lessons: [],
+    lessons: [generics, genericsWildcardsAndErasure],
   },
   {
     title: "Enums",

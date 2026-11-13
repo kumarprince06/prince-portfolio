@@ -1,0 +1,57 @@
+<svg width="1200" height="640" viewBox="0 0 1200 640" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="640" rx="28" fill="#0D0D0D"/>
+  <path d="M80 130H1120" stroke="#2B2B2B" stroke-width="2"/>
+  <text x="80" y="82" fill="#FB923C" font-family="Arial, sans-serif" font-size="18" letter-spacing="4">TYPE ERASURE: CHECKED BY JAVAC, GONE AT RUN TIME</text>
+  <text x="80" y="112" fill="#777777" font-family="Arial, sans-serif" font-size="16">JDK 21 javac and javap. The type argument guides the compiler, then becomes Object plus a cast.</text>
+
+  <!-- Source -->
+  <rect x="80" y="160" width="300" height="400" rx="12" fill="#151515" stroke="#444444" stroke-width="2"/>
+  <text x="100" y="194" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="17">Source</text>
+  <g font-family="Courier New, monospace" font-size="14" xml:space="preserve">
+    <text x="100" y="236" fill="#C6A17A">class Box&lt;T&gt; {</text>
+    <text x="100" y="260" fill="#FFFFFF">  private T value;</text>
+    <text x="100" y="284" fill="#FFFFFF">  T get() {</text>
+    <text x="100" y="308" fill="#FFFFFF">    return value;</text>
+    <text x="100" y="332" fill="#FFFFFF">  }</text>
+    <text x="100" y="356" fill="#C6A17A">}</text>
+    <text x="100" y="412" fill="#C6A17A">Box&lt;String&gt; b =</text>
+    <text x="100" y="436" fill="#FFFFFF">  new Box&lt;&gt;("Asha");</text>
+    <text x="100" y="460" fill="#FFFFFF">String s = b.get();</text>
+  </g>
+  <text x="100" y="520" fill="#888888" font-family="Arial, sans-serif" font-size="14">the compiler knows T = String</text>
+
+  <!-- javac -->
+  <path d="M380 360H440" stroke="#FB923C" stroke-width="2"/>
+  <path d="M431 355L440 360L431 365" stroke="#FB923C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="440" y="230" width="300" height="260" rx="12" fill="#21180F" stroke="#FB923C" stroke-width="2"/>
+  <text x="460" y="264" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="17">javac</text>
+  <g font-family="Arial, sans-serif" font-size="14" fill="#C6A17A">
+    <text x="460" y="300">1. type-check every use</text>
+    <text x="478" y="322" fill="#888888">add(42) on List&lt;String&gt; = error</text>
+    <text x="460" y="356">2. erase T to its bound</text>
+    <text x="478" y="378" fill="#888888">Object, or the bound if it has one</text>
+    <text x="460" y="412">3. insert casts at use sites</text>
+    <text x="478" y="434" fill="#888888">checkcast String after get()</text>
+    <text x="460" y="468">4. keep a Signature attribute</text>
+  </g>
+  <path d="M740 360H800" stroke="#FB923C" stroke-width="2"/>
+  <path d="M791 355L800 360L791 365" stroke="#FB923C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+
+  <!-- Class file -->
+  <rect x="800" y="160" width="320" height="400" rx="12" fill="#151515" stroke="#444444" stroke-width="2"/>
+  <text x="820" y="194" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="17">Bytecode (javap -c)</text>
+  <g font-family="Courier New, monospace" font-size="13" xml:space="preserve">
+    <text x="820" y="236" fill="#93B4D6">Box.class</text>
+    <text x="820" y="260" fill="#FFFFFF">value: Ljava/lang/Object;</text>
+    <text x="820" y="284" fill="#FFFFFF">get: ()Ljava/lang/Object;</text>
+    <text x="820" y="308" fill="#777777">Signature: ()TT;</text>
+    <text x="820" y="364" fill="#93B4D6">caller</text>
+    <text x="820" y="388" fill="#FFFFFF">invokevirtual Box.get</text>
+    <text x="820" y="412" fill="#FFFFFF">  :()Ljava/lang/Object;</text>
+    <text x="820" y="436" fill="#FB923C">checkcast java/lang/String</text>
+  </g>
+  <text x="820" y="490" fill="#888888" font-family="Arial, sans-serif" font-size="14">List&lt;String&gt; and List&lt;Integer&gt; share</text>
+  <text x="820" y="512" fill="#888888" font-family="Arial, sans-serif" font-size="14">one class: java.util.ArrayList</text>
+
+  <text x="80" y="598" fill="#FB923C" font-family="Arial, sans-serif" font-size="15">Signature is for reflection and javac only; the JVM executes the erased Object version.</text>
+</svg>
