@@ -7,8 +7,11 @@ import { classesAndObjects } from "./classes-and-objects";
 import { compilationProcess } from "./compilation-process";
 import { constructors } from "./constructors";
 import { controlStatements } from "./control-statements";
+import { customExceptions } from "./custom-exceptions";
 import { dataTypes } from "./data-types";
 import { encapsulation } from "./encapsulation";
+import { exceptionBestPractices } from "./exception-best-practices";
+import { exceptionsBasics } from "./exceptions-basics";
 import { historyOfJava } from "./history-of-java";
 import { inheritance } from "./inheritance";
 import { interfaces } from "./interfaces";
@@ -27,6 +30,8 @@ import { packages } from "./packages";
 import { polymorphism } from "./polymorphism";
 import { stackVsHeap } from "./stack-vs-heap";
 import { staticKeyword } from "./static-keyword";
+import { tryCatchFinally } from "./try-catch-finally";
+import { tryWithResources } from "./try-with-resources";
 import { typeCasting } from "./type-casting";
 import { variables } from "./variables";
 import { whatIsJava } from "./what-is-java";
@@ -88,8 +93,8 @@ export const javaPhases: Phase[] = [
   },
   {
     title: "Exception Handling",
-    description: "Checked and unchecked exceptions, try-catch-finally, try-with-resources and how the JVM unwinds the stack.",
-    lessons: [],
+    description: "Checked and unchecked exceptions, try-catch-finally, custom exceptions, try-with-resources, how the JVM unwinds the stack, and the practices that keep failures diagnosable.",
+    lessons: [exceptionsBasics, tryCatchFinally, customExceptions, tryWithResources, exceptionBestPractices],
   },
   {
     title: "String, StringBuilder, StringBuffer",
