@@ -1735,6 +1735,45 @@ local   160,000 lines: 0 garbled, 0 threw`,
             },
           ],
         },
+        {
+          type: "heading",
+          text: "Scenario-Based",
+        },
+        {
+          type: "qa",
+          items: [
+            {
+              question: "An admin export that was instant at launch now times out after 30 seconds. Nothing in the code has changed, only the amount of data. What do you suspect?",
+              answer:
+                "Something quadratic, and the most common case in export code is building the output with `+=` on a `String` inside a loop. Each `+=` copies everything built so far, so doubling the rows roughly quadruples the time. My `TripCsvExport` rebuild took 53 ms for 5,000 trips and 2,686 ms for 40,000 with `+=`, against 2 to 7 ms with one `StringBuilder`, with byte-identical output.\n\nI'd confirm with a profiler or a thread dump (the hot frame is in string concatenation inside the loop), replace it with a presized `StringBuilder`, and for really large exports stream rows to the response `Writer` instead of building one string in memory.",
+            },
+            {
+              question: "Under load, log lines show one trip's ID next to another trip's driver. Single-threaded tests are all fine. What would you look for?",
+              answer:
+                "Shared mutable state in the formatting code, most likely a `static` or singleton-bean `StringBuilder` reused with `setLength(0)` to \"save allocations\". Concurrent requests reset and append to the same buffer, so lines mix. In my `LogFormatter` rebuild, 8 threads garbled 58% of 160,000 lines; a local builder garbled none.\n\nSwitching to `StringBuffer` isn't a fix: each call would be atomic, but `setLength(0)` plus six appends is a sequence that other threads can still interleave. The fix is a local builder per call, or the logging framework's own parameterised messages (`log.info(\"trip={} driver={}\", ...)`).",
+            },
+            {
+              question: "In code review, a teammate has replaced every return \"Hi \" + name + \"!\" in the codebase with explicit StringBuilder chains \"for performance\". How do you respond?",
+              answer:
+                "That on Java 9 and later it doesn't help and hurts readability. A single expression with `+` compiles to one `invokedynamic` call to `StringConcatFactory`, which computes the exact length and fills one array: no builder and no growth. `javap` showed 8 bytes of bytecode for it on Java 21 against 34 for the Java 8 `StringBuilder` chain. A hand-written chain with a default capacity of 16 can even be slower, because it may have to grow.\n\nThe place where a `StringBuilder` really matters is text built across loop iterations or several statements. I'd ask them to revert the single-expression cases and keep builders for loops.",
+            },
+            {
+              question: "A legacy codebase uses StringBuffer everywhere. Is it worth migrating to StringBuilder, and is it safe?",
+              answer:
+                "It's safe wherever the buffer is confined to one thread, which is almost always: a local variable built and turned into a `String` in one method. For those, the gain is small, because the JIT elides the locks of a non-escaping `StringBuffer` (115 ms against 90 ms in my test). The gain is large where the buffer escapes into a field, is passed around or is returned: there every call pays a real atomic lock, and it was 16 times slower than `StringBuilder` in my test.\n\nBefore changing a buffer that really is shared between threads, I'd check what it relies on: if it depends on single calls being atomic, it needs a different design (local builders, then a thread-safe collection of finished `String`s), not a plain swap to `StringBuilder`. IntelliJ's \"StringBuffer may be StringBuilder\" inspection finds the safe local cases automatically.",
+            },
+            {
+              question: "A report service builds a 400 MB JSON response in a StringBuilder and keeps failing with OutOfMemoryError on a 2 GB heap. The data itself is only 400 MB. Why?",
+              answer:
+                "Building it in memory needs several times the final size at the peak. When the builder grows, the full old array and the new one, about twice as big, exist together during the copy: roughly 3 times the content. `toString()` then copies the content into a new `String` while the builder (whose capacity can be up to twice the content) is still alive: another 3 times. So 400 MB of Latin-1 text can need about 1.2 GB at the peak, and twice that if any char is outside Latin-1, because the buffer is then UTF-16 at two bytes per char. On top of that come the objects the data was built from.\n\nThe real fix is not to build it in memory: stream the JSON straight to the response with a streaming writer (Jackson's `JsonGenerator` on the output stream). If a builder is unavoidable, presize it to avoid the growth copies.",
+            },
+            {
+              question: "Memory per request thread keeps creeping up in a service that reuses one StringBuilder per thread through a ThreadLocal. It's emptied with setLength(0) after each use. What's happening?",
+              answer:
+                "`setLength(0)` resets the length but keeps the array, as `EnsureTrim` showed: capacity stayed at 13 after `setLength(0)`. A builder that once held one huge message keeps that capacity for as long as its thread lives, and a `ThreadLocal` lives as long as the thread, which in a pool is the life of the application. With 200 pool threads that each once built a 10 MB message, that's 2 GB of mostly empty arrays.\n\nOptions: cap the reuse (throw the builder away, or call `trimToSize()`, when its capacity passes a limit), or simply allocate a local builder per call, which is cheap in the young generation. With Java 21 virtual threads, where there can be millions of threads, per-thread caches like this stop making sense at all.",
+            },
+          ],
+        },
       ],
     },
     {

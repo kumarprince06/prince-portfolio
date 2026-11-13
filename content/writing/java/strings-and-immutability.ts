@@ -1922,6 +1922,45 @@ prod, parsed, intern()  : 70`,
             },
           ],
         },
+        {
+          type: "heading",
+          text: "Scenario-Based",
+        },
+        {
+          type: "qa",
+          items: [
+            {
+              question: "Every unit test of the fare lookup passes, but in production every rider is charged the \"unknown zone\" fare. The code compares zone names. Where do you look?",
+              answer:
+                "At how the zone names are compared. If it's `==`, the tests pass because they use literals, which are pooled and therefore the same object as the configured constants. In production the zone is parsed out of a request with `split` or `substring`, which creates a new `String`, so `==` is always `false`. That's the `FareCache` bug: 70 rupees in the test, 100 in production.\n\nThe fix is `equals`, or better, parsing the zone into an `enum` at the boundary so an unknown zone is rejected immediately. I'd also add a test that builds the input the way production does, and turn on the SpotBugs or IntelliJ check for `==` on strings.",
+            },
+            {
+              question: "A heap dump of an order service shows 800 MB of String objects, and most of them are the same few values: \"COMPLETED\", \"CANCELLED\", city names. How would you reduce it?",
+              answer:
+                "Each row read from the database creates new `String` objects even when the text repeats, so a cache of a million orders holds a million copies of `\"COMPLETED\"`. Options, in the order I'd try them:\n\n1. **Model it properly**: a status is a fixed set, so map it to an `enum` when reading the row. One shared object per value, and `==` becomes correct.\n2. **Enable `-XX:+UseStringDeduplication`**: no code change; long-lived duplicates share one `byte[]`. In my test it freed 15.6 MB for 500,000 duplicates.\n3. **`intern()` or a `Map<String, String>` canonicalising cache** for a small, known set of values like city names, which also merges the `String` objects themselves.\n\nI wouldn't intern unbounded values like user names: the StringTable grows with them.",
+            },
+            {
+              question: "A service that lower-cases HTTP header names works everywhere except on one customer's server in Turkey, where some headers are never recognised. What's the cause?",
+              answer:
+                "`toLowerCase()` with no argument uses the JVM's default locale. In Turkish, upper-case `I` lowers to dotless `ı`, so `\"TITLE\".toLowerCase()` became `\"tıtle\"`, and any header containing an `I` no longer matched. `LocaleTrap.java` reproduces it by setting the default locale to `tr-TR`.\n\nThe fix is `toLowerCase(Locale.ROOT)` (or `equalsIgnoreCase`) for anything that isn't text shown to a person: headers, enum names, file extensions, config keys. I'd also add a test that runs with `Locale.setDefault(Locale.forLanguageTag(\"tr-TR\"))`.",
+            },
+            {
+              question: "A CSV import silently loses the last column on some rows, and a second import that splits on \"|\" produces one field per character. What's going on?",
+              answer:
+                "Two `split` traps. First, `split(\",\")` drops **trailing empty strings**, so a row ending in an empty column (`a,b,`) returns two fields instead of three; `split(\",\", -1)` keeps them. Second, `split` takes a **regex**, and `|` means \"or\", so `split(\"|\")` splits between every character; it needs `split(\"\\\\|\")` or `Pattern.quote(\"|\")`.\n\nFor real CSV, with quoted fields that contain commas, I'd use a CSV library rather than `split` at all.",
+            },
+            {
+              question: "A profile form limits names to 20 characters. Users with emoji in their names are rejected early, and names truncated for display sometimes show a broken character at the end. Why?",
+              answer:
+                "`length()` counts UTF-16 code units, not characters. An emoji like 👍 is outside the Basic Multilingual Plane and takes two `char`s (a surrogate pair), so `\"Ok👍\".length()` is 4 while there are 3 characters. The validation counted emoji double, and `substring(0, 20)` can cut a surrogate pair in half, leaving an invalid lone surrogate that renders as a broken symbol.\n\nThe fix is to count and cut by code points: `codePointCount(0, s.length())` for validation, and `s.offsetByCodePoints(0, 20)` to find a safe cut position. For combined emoji (flags, skin tones, families) even code points aren't enough; `java.text.BreakIterator.getCharacterInstance()` finds user-visible characters.",
+            },
+            {
+              question: "A security review finds customer passwords in a heap dump taken during an incident. The login code keeps the password in a String. What would you change?",
+              answer:
+                "A `String` is immutable, so the password can't be wiped after checking it. It stays in the heap until it's garbage-collected, which can take a long time, and any heap dump captures it. If it was ever interned or logged, it's worse.\n\nI'd accept and process the password as a `char[]` (as `JPasswordField.getPassword()` and `Console.readPassword()` already return), hash it with a password-hashing function straight away, and clear the array with `Arrays.fill(chars, '\\0')` in a `finally` block. I'd also make sure no `toString()`, log statement or exception message ever includes it, and restrict who can take and read heap dumps, since they contain all live data.",
+            },
+          ],
+        },
       ],
     },
     {

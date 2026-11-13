@@ -1,0 +1,74 @@
+<svg width="1200" height="640" viewBox="0 0 1200 640" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="640" rx="28" fill="#0D0D0D"/>
+  <path d="M80 130H1120" stroke="#2B2B2B" stroke-width="2"/>
+  <text x="80" y="82" fill="#FB923C" font-family="Arial, sans-serif" font-size="18" letter-spacing="4">SHALLOW COPY VS DEEP COPY OF int[][]</text>
+  <text x="80" y="112" fill="#777777" font-family="Arial, sans-serif" font-size="16">clone(), Arrays.copyOf and System.arraycopy copy one level: the references, not what they point to.</text>
+
+  <!-- Shallow -->
+  <rect x="80" y="150" width="500" height="440" rx="12" fill="#151515" stroke="#444444" stroke-width="2"/>
+  <text x="100" y="184" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="17">int[][] shallow = grid.clone();</text>
+  <text x="100" y="208" fill="#888888" font-family="Arial, sans-serif" font-size="14">two outer arrays, the same two rows</text>
+
+  <text x="100" y="250" fill="#C6A17A" font-family="Arial, sans-serif" font-size="14">grid</text>
+  <rect x="100" y="262" width="160" height="44" fill="#132433" stroke="#60A5FA" stroke-width="1.5"/>
+  <path d="M180 262V306" stroke="#60A5FA" stroke-width="1"/>
+  <text x="118" y="289" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="13">row 0</text>
+  <text x="198" y="289" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="13">row 1</text>
+
+  <text x="100" y="480" fill="#C6A17A" font-family="Arial, sans-serif" font-size="14">shallow</text>
+  <rect x="100" y="492" width="160" height="44" fill="#132433" stroke="#60A5FA" stroke-width="1.5"/>
+  <path d="M180 492V536" stroke="#60A5FA" stroke-width="1"/>
+  <text x="118" y="519" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="13">row 0</text>
+  <text x="198" y="519" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="13">row 1</text>
+
+  <rect x="380" y="320" width="170" height="44" rx="6" fill="#21180F" stroke="#FB923C" stroke-width="2"/>
+  <text x="396" y="347" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="14">int[] {1, 0}</text>
+  <rect x="380" y="410" width="170" height="44" rx="6" fill="#21180F" stroke="#FB923C" stroke-width="2"/>
+  <text x="396" y="437" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="14">int[] {0, 0}</text>
+
+  <path d="M140 306V330H370" stroke="#60A5FA" stroke-width="2"/>
+  <path d="M361 325L370 330L361 335" stroke="#60A5FA" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M220 306V420H370" stroke="#60A5FA" stroke-width="2"/>
+  <path d="M361 415L370 420L361 425" stroke="#60A5FA" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M140 492V354H370" stroke="#FB923C" stroke-width="2"/>
+  <path d="M361 349L370 354L361 359" stroke="#FB923C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M220 492V444H370" stroke="#FB923C" stroke-width="2"/>
+  <path d="M361 439L370 444L361 449" stroke="#FB923C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+
+  <text x="100" y="568" fill="#FB923C" font-family="Arial, sans-serif" font-size="15">shallow[0][0] = 1 also changes grid[0][0]</text>
+
+  <!-- Deep -->
+  <rect x="620" y="150" width="500" height="440" rx="12" fill="#151515" stroke="#444444" stroke-width="2"/>
+  <text x="640" y="184" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="17">deep[r] = grid[r].clone();  // every row</text>
+  <text x="640" y="208" fill="#888888" font-family="Arial, sans-serif" font-size="14">two outer arrays, four rows, nothing shared</text>
+
+  <text x="640" y="250" fill="#C6A17A" font-family="Arial, sans-serif" font-size="14">grid</text>
+  <rect x="640" y="262" width="160" height="44" fill="#132433" stroke="#60A5FA" stroke-width="1.5"/>
+  <path d="M720 262V306" stroke="#60A5FA" stroke-width="1"/>
+  <text x="658" y="289" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="13">row 0</text>
+  <text x="738" y="289" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="13">row 1</text>
+  <rect x="920" y="240" width="170" height="40" rx="6" fill="#0F1A21" stroke="#60A5FA" stroke-width="1.5"/>
+  <text x="936" y="265" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="14">int[] {1, 0}</text>
+  <rect x="920" y="296" width="170" height="40" rx="6" fill="#0F1A21" stroke="#60A5FA" stroke-width="1.5"/>
+  <text x="936" y="321" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="14">int[] {0, 0}</text>
+  <path d="M680 262V252H910" stroke="#60A5FA" stroke-width="2"/>
+  <path d="M901 247L910 252L901 257" stroke="#60A5FA" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M760 306V316H910" stroke="#60A5FA" stroke-width="2"/>
+  <path d="M901 311L910 316L901 321" stroke="#60A5FA" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+
+  <text x="640" y="430" fill="#C6A17A" font-family="Arial, sans-serif" font-size="14">deep</text>
+  <rect x="640" y="442" width="160" height="44" fill="#132433" stroke="#60A5FA" stroke-width="1.5"/>
+  <path d="M720 442V486" stroke="#60A5FA" stroke-width="1"/>
+  <text x="658" y="469" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="13">row 0</text>
+  <text x="738" y="469" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="13">row 1</text>
+  <rect x="920" y="420" width="170" height="40" rx="6" fill="#21180F" stroke="#FB923C" stroke-width="1.5"/>
+  <text x="936" y="445" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="14">int[] {1, 0}</text>
+  <rect x="920" y="476" width="170" height="40" rx="6" fill="#21180F" stroke="#FB923C" stroke-width="1.5"/>
+  <text x="936" y="501" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="14">int[] {0, 7}</text>
+  <path d="M680 442V432H910" stroke="#FB923C" stroke-width="2"/>
+  <path d="M901 427L910 432L901 437" stroke="#FB923C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M760 486V496H910" stroke="#FB923C" stroke-width="2"/>
+  <path d="M901 491L910 496L901 501" stroke="#FB923C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+
+  <text x="640" y="568" fill="#FB923C" font-family="Arial, sans-serif" font-size="15">deep[1][1] = 7 leaves grid untouched</text>
+</svg>

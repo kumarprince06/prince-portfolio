@@ -1,0 +1,96 @@
+<svg width="1200" height="720" viewBox="0 0 1200 720" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="720" rx="28" fill="#0D0D0D"/>
+  <path d="M80 130H1120" stroke="#2B2B2B" stroke-width="2"/>
+  <text x="80" y="82" fill="#FB923C" font-family="Arial, sans-serif" font-size="18" letter-spacing="4">AN ARRAY IS ONE OBJECT WITH A LENGTH</text>
+  <text x="80" y="112" fill="#777777" font-family="Arial, sans-serif" font-size="16">JDK 21 defaults. Offsets from ArrayLayout.java (Unsafe), sizes from ThreadMXBean.</text>
+
+  <!-- int[] layout -->
+  <text x="80" y="166" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="17">int[] fares = {60, 70, 80};</text>
+  <g font-family="Arial, sans-serif" font-size="14" fill="#888888">
+    <text x="80" y="196">0</text>
+    <text x="320" y="196">8</text>
+    <text x="460" y="196">12</text>
+    <text x="600" y="196">16</text>
+    <text x="720" y="196">20</text>
+    <text x="840" y="196">24</text>
+    <text x="960" y="196">28</text>
+    <text x="1060" y="196">32</text>
+  </g>
+  <rect x="80" y="206" width="240" height="84" rx="10" fill="#21180F" stroke="#FB923C" stroke-width="2"/>
+  <text x="98" y="242" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="17">mark word</text>
+  <text x="98" y="268" fill="#C6A17A" font-family="Arial, sans-serif" font-size="14">8 bytes</text>
+  <rect x="320" y="206" width="140" height="84" rx="10" fill="#21180F" stroke="#FB923C" stroke-width="2"/>
+  <text x="334" y="242" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="17">class pointer</text>
+  <text x="334" y="268" fill="#C6A17A" font-family="Arial, sans-serif" font-size="14">[I · 4 bytes</text>
+  <rect x="460" y="206" width="140" height="84" rx="10" fill="#21180F" stroke="#FB923C" stroke-width="2"/>
+  <text x="474" y="242" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="17">length = 3</text>
+  <text x="474" y="268" fill="#C6A17A" font-family="Arial, sans-serif" font-size="14">int · 4 bytes</text>
+  <rect x="600" y="206" width="120" height="84" rx="10" fill="#0F1A21" stroke="#60A5FA" stroke-width="2"/>
+  <text x="614" y="242" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="17">[0] 60</text>
+  <text x="614" y="268" fill="#93B4D6" font-family="Arial, sans-serif" font-size="14">4 bytes</text>
+  <rect x="720" y="206" width="120" height="84" rx="10" fill="#0F1A21" stroke="#60A5FA" stroke-width="2"/>
+  <text x="734" y="242" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="17">[1] 70</text>
+  <text x="734" y="268" fill="#93B4D6" font-family="Arial, sans-serif" font-size="14">4 bytes</text>
+  <rect x="840" y="206" width="120" height="84" rx="10" fill="#0F1A21" stroke="#60A5FA" stroke-width="2"/>
+  <text x="854" y="242" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="17">[2] 80</text>
+  <text x="854" y="268" fill="#93B4D6" font-family="Arial, sans-serif" font-size="14">4 bytes</text>
+  <rect x="960" y="206" width="100" height="84" rx="10" fill="#151515" stroke="#444444" stroke-width="2" stroke-dasharray="6 6"/>
+  <text x="976" y="254" fill="#777777" font-family="Arial, sans-serif" font-size="14">padding</text>
+  <text x="80" y="322" fill="#AAAAAA" font-family="Arial, sans-serif" font-size="15">address of fares[i] = start + 16 + i × 4   ·   16 + 3 × 4 = 28, padded to 32 bytes</text>
+
+  <!-- Integer[] -->
+  <rect x="80" y="352" width="500" height="330" rx="12" fill="#151515" stroke="#444444" stroke-width="2"/>
+  <text x="100" y="384" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="16">Integer[] boxed = {1000, 2000, 3000};</text>
+  <text x="100" y="408" fill="#888888" font-family="Arial, sans-serif" font-size="14">the array holds references; each value is its own object</text>
+  <rect x="100" y="428" width="96" height="44" rx="6" fill="#21180F" stroke="#FB923C" stroke-width="1.5"/>
+  <text x="112" y="455" fill="#C6A17A" font-family="Arial, sans-serif" font-size="13">header 16</text>
+  <rect x="196" y="428" width="270" height="44" fill="#132433" stroke="#60A5FA" stroke-width="1.5"/>
+  <path d="M286 428V472M376 428V472" stroke="#60A5FA" stroke-width="1"/>
+  <g font-family="Arial, sans-serif" font-size="13" fill="#FFFFFF">
+    <text x="214" y="455">ref</text><text x="304" y="455">ref</text><text x="394" y="455">ref</text>
+  </g>
+  <path d="M241 472V540" stroke="#60A5FA" stroke-width="2"/>
+  <path d="M236 531L241 540L246 531" stroke="#60A5FA" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M331 472V540" stroke="#60A5FA" stroke-width="2"/>
+  <path d="M326 531L331 540L336 531" stroke="#60A5FA" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M421 472V540" stroke="#60A5FA" stroke-width="2"/>
+  <path d="M416 531L421 540L426 531" stroke="#60A5FA" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <g font-family="Arial, sans-serif" font-size="13">
+    <rect x="196" y="540" width="84" height="52" rx="6" fill="#0F1A21" stroke="#60A5FA" stroke-width="1.5"/>
+    <text x="206" y="562" fill="#FFFFFF">Integer</text><text x="206" y="582" fill="#93B4D6">1000 · 16 B</text>
+    <rect x="290" y="540" width="84" height="52" rx="6" fill="#0F1A21" stroke="#60A5FA" stroke-width="1.5"/>
+    <text x="300" y="562" fill="#FFFFFF">Integer</text><text x="300" y="582" fill="#93B4D6">2000 · 16 B</text>
+    <rect x="384" y="540" width="84" height="52" rx="6" fill="#0F1A21" stroke="#60A5FA" stroke-width="1.5"/>
+    <text x="394" y="562" fill="#FFFFFF">Integer</text><text x="394" y="582" fill="#93B4D6">3000 · 16 B</text>
+  </g>
+  <text x="100" y="626" fill="#FB923C" font-family="Arial, sans-serif" font-size="16">1,000,000 values: int[] 4.0 MB, Integer[] 20.0 MB</text>
+  <text x="100" y="652" fill="#777777" font-family="Arial, sans-serif" font-size="14">4-byte reference + 16-byte Integer per element, 5× the memory</text>
+
+  <!-- int[][] -->
+  <rect x="620" y="352" width="500" height="330" rx="12" fill="#151515" stroke="#444444" stroke-width="2"/>
+  <text x="640" y="384" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="16">int[][] grid = new int[3][4];</text>
+  <text x="640" y="408" fill="#888888" font-family="Arial, sans-serif" font-size="14">an array of row arrays: 1 + 3 = 4 objects, rows anywhere in the heap</text>
+  <rect x="640" y="428" width="96" height="44" rx="6" fill="#21180F" stroke="#FB923C" stroke-width="1.5"/>
+  <text x="652" y="455" fill="#C6A17A" font-family="Arial, sans-serif" font-size="13">int[][] 16</text>
+  <rect x="736" y="428" width="180" height="44" fill="#132433" stroke="#60A5FA" stroke-width="1.5"/>
+  <path d="M796 428V472M856 428V472" stroke="#60A5FA" stroke-width="1"/>
+  <g font-family="Arial, sans-serif" font-size="13" fill="#FFFFFF">
+    <text x="746" y="455">row 0</text><text x="806" y="455">row 1</text><text x="866" y="455">row 2</text>
+  </g>
+  <path d="M766 472V500H950V512" stroke="#60A5FA" stroke-width="2"/>
+  <path d="M945 503L950 512L955 503" stroke="#60A5FA" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M826 472V560H950V572" stroke="#60A5FA" stroke-width="2"/>
+  <path d="M945 563L950 572L955 563" stroke="#60A5FA" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M886 472V490H930V620H950V632" stroke="#60A5FA" stroke-width="2"/>
+  <path d="M945 623L950 632L955 623" stroke="#60A5FA" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <g font-family="Arial, sans-serif" font-size="13">
+    <rect x="950" y="512" width="150" height="40" rx="6" fill="#0F1A21" stroke="#60A5FA" stroke-width="1.5"/>
+    <text x="962" y="537" fill="#FFFFFF">int[4]  0 0 0 0</text>
+    <rect x="950" y="572" width="150" height="40" rx="6" fill="#0F1A21" stroke="#60A5FA" stroke-width="1.5"/>
+    <text x="962" y="597" fill="#FFFFFF">int[4]  0 0 0 0</text>
+    <rect x="950" y="632" width="150" height="40" rx="6" fill="#0F1A21" stroke="#60A5FA" stroke-width="1.5"/>
+    <text x="962" y="657" fill="#FFFFFF">int[4]  0 0 0 0</text>
+  </g>
+  <text x="640" y="626" fill="#FB923C" font-family="Arial, sans-serif" font-size="15">walk a row: neighbours in memory</text>
+  <text x="640" y="652" fill="#777777" font-family="Arial, sans-serif" font-size="14">walk a column: a different array each step</text>
+</svg>

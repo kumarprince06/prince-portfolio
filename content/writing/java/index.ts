@@ -1,6 +1,8 @@
 import type { Phase } from "../types";
 import { abstraction } from "./abstraction";
 import { accessModifiers } from "./access-modifiers";
+import { arrays } from "./arrays";
+import { arraysClassAndCopying } from "./arrays-class-and-copying";
 import { associationAggregationComposition } from "./association-aggregation-composition";
 import { classLoading } from "./class-loading";
 import { classesAndObjects } from "./classes-and-objects";
@@ -106,7 +108,7 @@ export const javaPhases: Phase[] = [
   {
     title: "Arrays",
     description: "Fixed-size collections of values: declaring, iterating, copying and how arrays sit in memory.",
-    lessons: [],
+    lessons: [arrays, arraysClassAndCopying],
   },
   {
     title: "Generics",
