@@ -1,0 +1,87 @@
+<svg width="1200" height="740" viewBox="0 0 1200 740" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="740" rx="28" fill="#0D0D0D"/>
+  <path d="M80 130H1120" stroke="#2B2B2B" stroke-width="2"/>
+  <text x="80" y="82" fill="#FB923C" font-family="Arial, sans-serif" font-size="18" letter-spacing="4">THREAD.STATE: SIX STATES AND WHAT MOVES A THREAD</text>
+  <text x="80" y="112" fill="#777777" font-family="Arial, sans-serif" font-size="16">JDK 21. getState() values, with the text jcmd Thread.print shows next to them.</text>
+
+  <!-- NEW -->
+  <rect x="80" y="180" width="200" height="90" rx="12" fill="#151515" stroke="#444444" stroke-width="2"/>
+  <text x="100" y="214" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="18">NEW</text>
+  <text x="100" y="242" fill="#888888" font-family="Arial, sans-serif" font-size="13">constructed, not started</text>
+
+  <path d="M280 225H400" stroke="#FB923C" stroke-width="2"/>
+  <path d="M391 220L400 225L391 230" stroke="#FB923C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="306" y="214" fill="#FB923C" font-family="Courier New, monospace" font-size="14">start()</text>
+
+  <!-- RUNNABLE -->
+  <rect x="400" y="160" width="400" height="130" rx="12" fill="#21180F" stroke="#FB923C" stroke-width="2"/>
+  <text x="420" y="194" fill="#FB923C" font-family="Arial, sans-serif" font-size="18">RUNNABLE</text>
+  <g font-family="Arial, sans-serif" font-size="14">
+    <text x="420" y="222" fill="#FFFFFF">running on a CPU, or ready to run</text>
+    <text x="420" y="246" fill="#FFFFFF">ALSO: blocked in socket accept/read, file I/O</text>
+    <text x="420" y="270" fill="#888888">kernel says S (sleeping) in inet_csk_accept</text>
+  </g>
+
+  <path d="M800 225H920" stroke="#FB923C" stroke-width="2"/>
+  <path d="M911 220L920 225L911 230" stroke="#FB923C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="812" y="214" fill="#AAAAAA" font-family="Arial, sans-serif" font-size="13">run() returns</text>
+  <text x="812" y="250" fill="#AAAAAA" font-family="Arial, sans-serif" font-size="13">or throws</text>
+
+  <!-- TERMINATED -->
+  <rect x="920" y="180" width="200" height="90" rx="12" fill="#151515" stroke="#444444" stroke-width="2"/>
+  <text x="940" y="214" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="18">TERMINATED</text>
+  <text x="940" y="242" fill="#888888" font-family="Arial, sans-serif" font-size="13">start() again: exception</text>
+
+  <!-- arrows down from RUNNABLE -->
+  <g stroke="#60A5FA" stroke-width="2">
+    <path d="M470 290L230 370"/>
+    <path d="M600 290V370"/>
+    <path d="M730 290L970 370"/>
+  </g>
+  <g fill="#93B4D6" font-family="Arial, sans-serif" font-size="13">
+    <text x="236" y="322">monitor is held</text>
+    <text x="612" y="336">wait for a signal</text>
+    <text x="860" y="322">wait with a timeout</text>
+  </g>
+
+  <!-- BLOCKED / WAITING / TIMED_WAITING -->
+  <g font-family="Arial, sans-serif">
+    <rect x="80" y="370" width="320" height="200" rx="12" fill="#0F1A21" stroke="#60A5FA" stroke-width="2"/>
+    <text x="100" y="402" fill="#FFFFFF" font-size="18">BLOCKED</text>
+    <g font-family="Courier New, monospace" font-size="14" xml:space="preserve">
+      <text x="100" y="434" fill="#C6A17A">synchronized (lock) { }</text>
+      <text x="100" y="458" fill="#C6A17A">re-entry after wait()</text>
+    </g>
+    <text x="100" y="492" fill="#888888" font-size="13">dump: BLOCKED (on object monitor)</text>
+    <text x="100" y="512" fill="#888888" font-size="13">"waiting to lock &lt;0x...&gt;"</text>
+    <text x="100" y="546" fill="#FB923C" font-size="13">interrupt() does NOT wake it</text>
+
+    <rect x="440" y="370" width="320" height="200" rx="12" fill="#0F1A21" stroke="#60A5FA" stroke-width="2"/>
+    <text x="460" y="402" fill="#FFFFFF" font-size="18">WAITING</text>
+    <g font-family="Courier New, monospace" font-size="14" xml:space="preserve">
+      <text x="460" y="434" fill="#C6A17A">obj.wait()   t.join()</text>
+      <text x="460" y="458" fill="#C6A17A">LockSupport.park()</text>
+    </g>
+    <text x="460" y="492" fill="#888888" font-size="13">dump: WAITING (on object monitor)</text>
+    <text x="460" y="512" fill="#888888" font-size="13">or WAITING (parking)</text>
+    <text x="460" y="546" fill="#FB923C" font-size="13">interrupt() wakes it; park returns quietly</text>
+
+    <rect x="800" y="370" width="320" height="200" rx="12" fill="#0F1A21" stroke="#60A5FA" stroke-width="2"/>
+    <text x="820" y="402" fill="#FFFFFF" font-size="18">TIMED_WAITING</text>
+    <g font-family="Courier New, monospace" font-size="14" xml:space="preserve">
+      <text x="820" y="434" fill="#C6A17A">sleep(ms)  wait(ms)</text>
+      <text x="820" y="458" fill="#C6A17A">join(ms)   parkNanos(n)</text>
+    </g>
+    <text x="820" y="492" fill="#888888" font-size="13">dump: TIMED_WAITING (sleeping)</text>
+    <text x="820" y="512" fill="#888888" font-size="13">sleep keeps every lock it holds</text>
+    <text x="820" y="546" fill="#FB923C" font-size="13">interrupt() wakes it; sleep throws</text>
+  </g>
+
+  <!-- interrupt summary -->
+  <rect x="80" y="600" width="1040" height="104" rx="12" fill="#151515" stroke="#444444" stroke-width="2"/>
+  <text x="100" y="632" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="16">interrupt() = set a volatile flag + unpark the thread + close an InterruptibleChannel it is blocked on</text>
+  <g font-family="Arial, sans-serif" font-size="14" fill="#AAAAAA">
+    <text x="100" y="660">Throwing InterruptedException clears the flag: catch it, then restore it with Thread.currentThread().interrupt() or stop.</text>
+    <text x="100" y="684">Not woken: BLOCKED on synchronized, classic Socket read (close the socket), a loop that never checks the flag.</text>
+  </g>
+</svg>

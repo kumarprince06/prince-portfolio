@@ -1,0 +1,91 @@
+<svg width="1200" height="730" viewBox="0 0 1200 730" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="730" rx="28" fill="#0D0D0D"/>
+  <path d="M80 130H1120" stroke="#2B2B2B" stroke-width="2"/>
+  <text x="80" y="82" fill="#FB923C" font-family="Arial, sans-serif" font-size="18" letter-spacing="4">HOW ThreadPoolExecutor.execute() ADMITS A TASK</text>
+  <text x="80" y="112" fill="#777777" font-family="Arial, sans-serif" font-size="16">JDK 21, read from javap -c. Numbers from Admission.java: core 2, max 4, ArrayBlockingQueue(2), 7 tasks.</text>
+
+  <!-- decision chain -->
+  <g font-family="Arial, sans-serif">
+    <rect x="80" y="160" width="330" height="76" rx="12" fill="#21180F" stroke="#FB923C" stroke-width="2"/>
+    <text x="100" y="192" fill="#FFFFFF" font-size="16">1. workerCount &lt; corePoolSize?</text>
+    <text x="100" y="218" fill="#C6A17A" font-size="13">checked even if existing workers are idle</text>
+    <path d="M410 198H460" stroke="#FB923C" stroke-width="2"/>
+    <path d="M451 193L460 198L451 203" stroke="#FB923C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    <text x="420" y="188" fill="#FB923C" font-size="13">yes</text>
+    <rect x="460" y="160" width="250" height="76" rx="12" fill="#132433" stroke="#60A5FA" stroke-width="1.5"/>
+    <text x="478" y="192" fill="#FFFFFF" font-size="15">new core thread runs it</text>
+    <text x="478" y="218" fill="#93B4D6" font-size="13">tasks 1, 2 (poolSize 1, 2)</text>
+
+    <path d="M245 236V266" stroke="#777777" stroke-width="2"/>
+    <text x="255" y="257" fill="#777777" font-size="13">no</text>
+
+    <rect x="80" y="266" width="330" height="76" rx="12" fill="#21180F" stroke="#FB923C" stroke-width="2"/>
+    <text x="100" y="298" fill="#FFFFFF" font-size="16">2. workQueue.offer(task) succeeds?</text>
+    <text x="100" y="324" fill="#C6A17A" font-size="13">a non-blocking offer, never put()</text>
+    <path d="M410 304H460" stroke="#FB923C" stroke-width="2"/>
+    <path d="M451 299L460 304L451 309" stroke="#FB923C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    <text x="420" y="294" fill="#FB923C" font-size="13">yes</text>
+    <rect x="460" y="266" width="250" height="76" rx="12" fill="#132433" stroke="#60A5FA" stroke-width="1.5"/>
+    <text x="478" y="298" fill="#FFFFFF" font-size="15">waits in the queue</text>
+    <text x="478" y="324" fill="#93B4D6" font-size="13">tasks 3, 4 (queue 1, 2)</text>
+
+    <path d="M245 342V372" stroke="#777777" stroke-width="2"/>
+    <text x="255" y="363" fill="#777777" font-size="13">no (queue full)</text>
+
+    <rect x="80" y="372" width="330" height="76" rx="12" fill="#21180F" stroke="#FB923C" stroke-width="2"/>
+    <text x="100" y="404" fill="#FFFFFF" font-size="16">3. workerCount &lt; maximumPoolSize?</text>
+    <text x="100" y="430" fill="#C6A17A" font-size="13">addWorker(task, core = false)</text>
+    <path d="M410 410H460" stroke="#FB923C" stroke-width="2"/>
+    <path d="M451 405L460 410L451 415" stroke="#FB923C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    <text x="420" y="400" fill="#FB923C" font-size="13">yes</text>
+    <rect x="460" y="372" width="250" height="76" rx="12" fill="#132433" stroke="#60A5FA" stroke-width="1.5"/>
+    <text x="478" y="404" fill="#FFFFFF" font-size="15">extra thread runs it now</text>
+    <text x="478" y="430" fill="#93B4D6" font-size="13">tasks 5, 6 start before 3, 4</text>
+
+    <path d="M245 448V478" stroke="#777777" stroke-width="2"/>
+    <text x="255" y="469" fill="#777777" font-size="13">no</text>
+
+    <rect x="80" y="478" width="630" height="64" rx="12" fill="#151515" stroke="#FB923C" stroke-width="2"/>
+    <text x="100" y="508" fill="#FFFFFF" font-size="16">4. reject(task): RejectedExecutionHandler</text>
+    <text x="100" y="530" fill="#C6A17A" font-size="13">task 7. Abort throws, CallerRuns runs it on the caller, Discard / DiscardOldest drop one</text>
+  </g>
+
+  <!-- unbounded queue note -->
+  <rect x="80" y="566" width="630" height="84" rx="12" fill="#151515" stroke="#444444" stroke-width="2"/>
+  <text x="100" y="596" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="15">With an unbounded LinkedBlockingQueue (newFixedThreadPool)</text>
+  <text x="100" y="622" fill="#AAAAAA" font-family="Arial, sans-serif" font-size="14">step 2 always succeeds: steps 3 and 4 never happen, the pool</text>
+  <text x="100" y="640" fill="#AAAAAA" font-family="Arial, sans-serif" font-size="14">never grows past core, and the queue grows until the heap runs out.</text>
+
+  <!-- ctl layout -->
+  <text x="760" y="180" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="16">ctl: one AtomicInteger, two fields</text>
+  <g font-family="Courier New, monospace" font-size="14">
+    <rect x="760" y="196" width="90" height="44" fill="#21180F" stroke="#FB923C" stroke-width="1.5"/>
+    <text x="786" y="223" fill="#FB923C">111</text>
+    <rect x="850" y="196" width="270" height="44" fill="#132433" stroke="#60A5FA" stroke-width="1.5"/>
+    <text x="866" y="223" fill="#FFFFFF">0 0000 ... 0000 0011</text>
+  </g>
+  <g font-family="Arial, sans-serif" font-size="13">
+    <text x="760" y="262" fill="#C6A17A">top 3 bits: runState</text>
+    <text x="910" y="262" fill="#93B4D6">low 29 bits: workerCount</text>
+  </g>
+  <text x="760" y="294" fill="#888888" font-family="Arial, sans-serif" font-size="13">RUNNING, 3 workers (read by reflection in CtlPeek.java)</text>
+
+  <g font-family="Arial, sans-serif" font-size="14">
+    <text x="760" y="336" fill="#FFFFFF">State</text><text x="900" y="336" fill="#FFFFFF">Top bits</text><text x="990" y="336" fill="#FFFFFF">Entered by</text>
+    <path d="M760 346H1120" stroke="#2B2B2B" stroke-width="1.5"/>
+    <text x="760" y="372" fill="#C6A17A">RUNNING</text><text x="900" y="372" fill="#AAAAAA">111 (&lt; 0)</text><text x="990" y="372" fill="#AAAAAA">constructor</text>
+    <text x="760" y="400" fill="#C6A17A">SHUTDOWN</text><text x="900" y="400" fill="#AAAAAA">000</text><text x="990" y="400" fill="#AAAAAA">shutdown()</text>
+    <text x="760" y="428" fill="#C6A17A">STOP</text><text x="900" y="428" fill="#AAAAAA">001</text><text x="990" y="428" fill="#AAAAAA">shutdownNow()</text>
+    <text x="760" y="456" fill="#C6A17A">TIDYING</text><text x="900" y="456" fill="#AAAAAA">010</text><text x="990" y="456" fill="#AAAAAA">0 workers, empty</text>
+    <text x="760" y="484" fill="#C6A17A">TERMINATED</text><text x="900" y="484" fill="#AAAAAA">011</text><text x="990" y="484" fill="#AAAAAA">terminated() ran</text>
+  </g>
+  <text x="760" y="520" fill="#888888" font-family="Arial, sans-serif" font-size="13">States only increase, so "c &lt; SHUTDOWN" means running:</text>
+  <text x="760" y="540" fill="#888888" font-family="Arial, sans-serif" font-size="13">one compare-and-set updates state and count together.</text>
+
+  <rect x="760" y="566" width="360" height="84" rx="12" fill="#0F1A21" stroke="#60A5FA" stroke-width="2"/>
+  <text x="780" y="596" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="15">Worker extends AQS, implements Runnable</text>
+  <text x="780" y="620" fill="#93B4D6" font-family="Arial, sans-serif" font-size="13">locked while running a task, so shutdown()</text>
+  <text x="780" y="640" fill="#93B4D6" font-family="Arial, sans-serif" font-size="13">interrupts only workers it can tryLock (idle ones)</text>
+
+  <text x="80" y="696" fill="#FB923C" font-family="Arial, sans-serif" font-size="15">Order of growth: core threads, then the queue, then extra threads, then rejection. Not "threads up to max, then queue".</text>
+</svg>

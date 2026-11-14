@@ -1,0 +1,83 @@
+<svg width="1200" height="720" viewBox="0 0 1200 720" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="720" rx="28" fill="#0D0D0D"/>
+  <path d="M80 130H1120" stroke="#2B2B2B" stroke-width="2"/>
+  <text x="80" y="82" fill="#FB923C" font-family="Arial, sans-serif" font-size="18" letter-spacing="4">ONE PROCESS, MANY THREADS: WHAT IS SHARED AND WHAT IS NOT</text>
+  <text x="80" y="112" fill="#777777" font-family="Arial, sans-serif" font-size="16">JDK 21 on Linux x64. Every platform java.lang.Thread is one kernel task, created through pthread_create.</text>
+
+  <!-- process box -->
+  <rect x="80" y="160" width="660" height="440" rx="14" fill="#151515" stroke="#444444" stroke-width="2"/>
+  <text x="100" y="192" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="17">JVM process (one pid, one address space)</text>
+
+  <rect x="100" y="210" width="620" height="150" rx="10" fill="#0F1A21" stroke="#60A5FA" stroke-width="2"/>
+  <text x="120" y="240" fill="#93B4D6" font-family="Arial, sans-serif" font-size="15">SHARED by every thread</text>
+  <g font-family="Arial, sans-serif" font-size="14">
+    <rect x="120" y="256" width="186" height="84" rx="8" fill="#132433" stroke="#60A5FA" stroke-width="1.2"/>
+    <text x="134" y="282" fill="#FFFFFF">Heap</text>
+    <text x="134" y="304" fill="#AAAAAA">every object, array</text>
+    <text x="134" y="324" fill="#AAAAAA">and static field value</text>
+    <rect x="320" y="256" width="186" height="84" rx="8" fill="#132433" stroke="#60A5FA" stroke-width="1.2"/>
+    <text x="334" y="282" fill="#FFFFFF">Metaspace, code cache</text>
+    <text x="334" y="304" fill="#AAAAAA">classes, bytecode,</text>
+    <text x="334" y="324" fill="#AAAAAA">JIT-compiled code</text>
+    <rect x="520" y="256" width="186" height="84" rx="8" fill="#132433" stroke="#60A5FA" stroke-width="1.2"/>
+    <text x="534" y="282" fill="#FFFFFF">OS resources</text>
+    <text x="534" y="304" fill="#AAAAAA">file descriptors, sockets,</text>
+    <text x="534" y="324" fill="#AAAAAA">signal handlers, cwd</text>
+  </g>
+
+  <text x="120" y="392" fill="#C6A17A" font-family="Arial, sans-serif" font-size="15">PRIVATE to each thread</text>
+  <g font-family="Arial, sans-serif" font-size="13">
+    <rect x="100" y="404" width="200" height="176" rx="10" fill="#21180F" stroke="#FB923C" stroke-width="2"/>
+    <text x="116" y="430" fill="#FB923C" font-size="15">main</text>
+    <text x="116" y="456" fill="#FFFFFF">Java stack: frames, locals</text>
+    <text x="116" y="478" fill="#AAAAAA">1 MB reserved, 16 KB guard</text>
+    <text x="116" y="504" fill="#FFFFFF">PC and CPU registers</text>
+    <text x="116" y="530" fill="#FFFFFF">ThreadLocal map, TLAB</text>
+    <text x="116" y="556" fill="#AAAAAA">kernel TID (LWP)</text>
+
+    <rect x="320" y="404" width="200" height="176" rx="10" fill="#21180F" stroke="#FB923C" stroke-width="2"/>
+    <text x="336" y="430" fill="#FB923C" font-size="15">dispatcher-1</text>
+    <text x="336" y="456" fill="#FFFFFF">Java stack: frames, locals</text>
+    <text x="336" y="478" fill="#AAAAAA">1 MB reserved, 16 KB guard</text>
+    <text x="336" y="504" fill="#FFFFFF">PC and CPU registers</text>
+    <text x="336" y="530" fill="#FFFFFF">ThreadLocal map, TLAB</text>
+    <text x="336" y="556" fill="#AAAAAA">kernel TID (LWP)</text>
+
+    <rect x="540" y="404" width="180" height="176" rx="10" fill="#1A1A1A" stroke="#555555" stroke-width="1.5"/>
+    <text x="556" y="430" fill="#BBBBBB" font-size="15">+16 JVM threads</text>
+    <text x="556" y="456" fill="#AAAAAA">GC Thread#0, G1 Conc#0</text>
+    <text x="556" y="478" fill="#AAAAAA">C2 / C1 CompilerThread0</text>
+    <text x="556" y="500" fill="#AAAAAA">VM Thread</text>
+    <text x="556" y="522" fill="#AAAAAA">Reference Handler</text>
+    <text x="556" y="544" fill="#AAAAAA">Finalizer, Signal Disp.</text>
+    <text x="556" y="566" fill="#AAAAAA">Common-Cleaner ...</text>
+  </g>
+
+  <!-- start path -->
+  <text x="790" y="192" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="17">What t.start() does</text>
+  <g font-family="Courier New, monospace" font-size="14" xml:space="preserve">
+    <rect x="790" y="208" width="330" height="46" rx="8" fill="#21180F" stroke="#FB923C" stroke-width="1.5"/>
+    <text x="806" y="236" fill="#FFFFFF">Thread.start()</text>
+    <rect x="790" y="276" width="330" height="46" rx="8" fill="#21180F" stroke="#FB923C" stroke-width="1.5"/>
+    <text x="806" y="304" fill="#FFFFFF">start0() -> JVM_StartThread</text>
+    <rect x="790" y="344" width="330" height="46" rx="8" fill="#21180F" stroke="#FB923C" stroke-width="1.5"/>
+    <text x="806" y="372" fill="#FFFFFF">os::create_thread</text>
+    <rect x="790" y="412" width="330" height="46" rx="8" fill="#132433" stroke="#60A5FA" stroke-width="1.5"/>
+    <text x="806" y="440" fill="#FFFFFF">pthread_create</text>
+    <rect x="790" y="480" width="330" height="46" rx="8" fill="#132433" stroke="#60A5FA" stroke-width="1.5"/>
+    <text x="806" y="508" fill="#FFFFFF">clone3(CLONE_VM|CLONE_THREAD)</text>
+    <rect x="790" y="548" width="330" height="46" rx="8" fill="#0F1A21" stroke="#60A5FA" stroke-width="1.5"/>
+    <text x="806" y="576" fill="#FFFFFF">new kernel task -> run()</text>
+  </g>
+  <g stroke="#FB923C" stroke-width="2">
+    <path d="M955 254V276"/><path d="M955 322V344"/><path d="M955 390V412"/><path d="M955 458V480"/><path d="M955 526V548"/>
+  </g>
+  <g font-family="Arial, sans-serif" font-size="12" fill="#888888">
+    <text x="960" y="236">NEW? else throws</text>
+    <text x="960" y="372">waits for child init</text>
+    <text x="960" y="440">mmap 1 MB stack</text>
+  </g>
+
+  <text x="80" y="640" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="16">Measured here: ~100 KB resident per idle thread (80 KB shadow zone touched at start), 85 to 143 us per start + join</text>
+  <text x="80" y="672" fill="#FB923C" font-family="Arial, sans-serif" font-size="15">Shared heap means shared bugs: two threads doing counter++ on one field lost up to half the increments.</text>
+</svg>

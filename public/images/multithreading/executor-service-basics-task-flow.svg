@@ -1,0 +1,99 @@
+<svg width="1200" height="720" viewBox="0 0 1200 720" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="720" rx="28" fill="#0D0D0D"/>
+  <path d="M80 130H1120" stroke="#2B2B2B" stroke-width="2"/>
+  <text x="80" y="82" fill="#FB923C" font-family="Arial, sans-serif" font-size="18" letter-spacing="4">WHAT AN EXECUTOR DOES WITH YOUR TASK</text>
+  <text x="80" y="112" fill="#777777" font-family="Arial, sans-serif" font-size="16">JDK 21. submit() wraps the task in a FutureTask and calls execute() (javap -c AbstractExecutorService).</text>
+
+  <!-- top row: the pipeline -->
+  <g font-family="Arial, sans-serif">
+    <rect x="80" y="160" width="220" height="110" rx="12" fill="#151515" stroke="#444444" stroke-width="2"/>
+    <text x="100" y="194" fill="#FFFFFF" font-size="17">Caller thread</text>
+    <text x="100" y="224" fill="#C6A17A" font-family="Courier New, monospace" font-size="14">pool.submit(task)</text>
+    <text x="100" y="250" fill="#888888" font-size="13">returns a Future at once</text>
+
+    <path d="M300 215H340" stroke="#FB923C" stroke-width="2"/>
+    <path d="M331 210L340 215L331 220" stroke="#FB923C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+
+    <rect x="340" y="160" width="230" height="110" rx="12" fill="#21180F" stroke="#FB923C" stroke-width="2"/>
+    <text x="360" y="194" fill="#FFFFFF" font-size="17">FutureTask</text>
+    <text x="360" y="222" fill="#C6A17A" font-size="13">holds callable, outcome,</text>
+    <text x="360" y="242" fill="#C6A17A" font-size="13">runner thread, waiters</text>
+    <text x="360" y="262" fill="#888888" font-size="13">state starts at NEW (0)</text>
+
+    <path d="M570 215H610" stroke="#FB923C" stroke-width="2"/>
+    <path d="M601 210L610 215L601 220" stroke="#FB923C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+
+    <rect x="610" y="160" width="230" height="110" rx="12" fill="#0F1A21" stroke="#60A5FA" stroke-width="2"/>
+    <text x="630" y="194" fill="#FFFFFF" font-size="17">workQueue</text>
+    <text x="630" y="222" fill="#93B4D6" font-size="13">LinkedBlockingQueue for</text>
+    <text x="630" y="242" fill="#93B4D6" font-size="13">newFixedThreadPool</text>
+    <text x="630" y="262" fill="#888888" font-size="13">(or straight to a new worker)</text>
+
+    <path d="M840 215H880" stroke="#FB923C" stroke-width="2"/>
+    <path d="M871 210L880 215L871 220" stroke="#FB923C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+
+    <rect x="880" y="160" width="240" height="110" rx="12" fill="#0F1A21" stroke="#60A5FA" stroke-width="2"/>
+    <text x="900" y="194" fill="#FFFFFF" font-size="17">pool-1-thread-1</text>
+    <text x="900" y="222" fill="#93B4D6" font-size="13">runWorker: take() from the</text>
+    <text x="900" y="242" fill="#93B4D6" font-size="13">queue, then task.run()</text>
+    <text x="900" y="262" fill="#888888" font-size="13">parks in take() when idle</text>
+  </g>
+
+  <!-- middle: two exception paths -->
+  <g font-family="Arial, sans-serif">
+    <rect x="80" y="300" width="510" height="190" rx="12" fill="#151515" stroke="#444444" stroke-width="2"/>
+    <text x="100" y="334" fill="#FFFFFF" font-size="17">execute(runnable) and the task throws</text>
+    <text x="100" y="366" fill="#AAAAAA" font-size="14">1. the exception escapes runWorker</text>
+    <text x="100" y="392" fill="#AAAAAA" font-size="14">2. the worker thread dies; the uncaught-exception</text>
+    <text x="118" y="414" fill="#AAAAAA" font-size="14">handler prints the stack trace to stderr</text>
+    <text x="100" y="440" fill="#AAAAAA" font-size="14">3. the pool starts a replacement: pool-1-thread-2</text>
+    <text x="100" y="472" fill="#FB923C" font-size="14">Visible in the logs, costs a new thread</text>
+
+    <rect x="610" y="300" width="510" height="190" rx="12" fill="#151515" stroke="#444444" stroke-width="2"/>
+    <text x="630" y="334" fill="#FFFFFF" font-size="17">submit(task) and the task throws</text>
+    <text x="630" y="366" fill="#AAAAAA" font-size="14">1. FutureTask.run catches it: setException()</text>
+    <text x="630" y="392" fill="#AAAAAA" font-size="14">2. state becomes EXCEPTIONAL, the thread lives on</text>
+    <text x="630" y="418" fill="#AAAAAA" font-size="14">3. nothing is printed, anywhere</text>
+    <text x="630" y="444" fill="#AAAAAA" font-size="14">4. only get() reveals it, as ExecutionException</text>
+    <text x="630" y="472" fill="#FB923C" font-size="14">Never call get(), never see it. Periodic tasks just stop.</text>
+  </g>
+
+  <!-- bottom: FutureTask states -->
+  <text x="80" y="530" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="16">FutureTask.state (private volatile int, javap -constants)</text>
+  <g font-family="Arial, sans-serif" font-size="14">
+    <rect x="80" y="550" width="130" height="50" rx="8" fill="#21180F" stroke="#FB923C" stroke-width="1.5"/>
+    <text x="104" y="581" fill="#FFFFFF">NEW · 0</text>
+
+    <path d="M210 575H260" stroke="#FB923C" stroke-width="2"/>
+    <path d="M251 570L260 575L251 580" stroke="#FB923C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    <rect x="260" y="550" width="190" height="50" rx="8" fill="#21180F" stroke="#FB923C" stroke-width="1.5"/>
+    <text x="280" y="581" fill="#FFFFFF">COMPLETING · 1</text>
+
+    <path d="M450 575H500" stroke="#FB923C" stroke-width="2"/>
+    <path d="M491 570L500 575L491 580" stroke="#FB923C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    <rect x="500" y="550" width="150" height="50" rx="8" fill="#132433" stroke="#60A5FA" stroke-width="1.5"/>
+    <text x="518" y="581" fill="#FFFFFF">NORMAL · 2</text>
+    <text x="653" y="581" fill="#888888" font-size="13">or</text>
+    <rect x="670" y="550" width="190" height="50" rx="8" fill="#132433" stroke="#60A5FA" stroke-width="1.5"/>
+    <text x="688" y="581" fill="#FFFFFF">EXCEPTIONAL · 3</text>
+
+    <path d="M145 600V640H260" stroke="#FB923C" stroke-width="2"/>
+    <path d="M251 635L260 640L251 645" stroke="#FB923C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    <rect x="260" y="618" width="190" height="44" rx="8" fill="#132433" stroke="#60A5FA" stroke-width="1.5"/>
+    <text x="280" y="646" fill="#FFFFFF">CANCELLED · 4</text>
+    <text x="453" y="646" fill="#888888" font-size="13">or</text>
+    <rect x="470" y="618" width="210" height="44" rx="8" fill="#132433" stroke="#60A5FA" stroke-width="1.5"/>
+    <text x="488" y="646" fill="#FFFFFF">INTERRUPTING · 5</text>
+    <path d="M680 640H720" stroke="#60A5FA" stroke-width="2"/>
+    <path d="M711 635L720 640L711 645" stroke="#60A5FA" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    <rect x="720" y="618" width="190" height="44" rx="8" fill="#132433" stroke="#60A5FA" stroke-width="1.5"/>
+    <text x="738" y="646" fill="#FFFFFF">INTERRUPTED · 6</text>
+  </g>
+  <g font-family="Arial, sans-serif" font-size="13" fill="#888888">
+    <text x="890" y="570">run() finishes: set() or</text>
+    <text x="890" y="588">setException()</text>
+    <text x="930" y="634">cancel(false) or</text>
+    <text x="930" y="652">cancel(true)</text>
+  </g>
+  <text x="80" y="696" fill="#FB923C" font-family="Arial, sans-serif" font-size="15">NORMAL, EXCEPTIONAL, CANCELLED, INTERRUPTED are final: isDone() is true and get() returns or throws at once.</text>
+</svg>

@@ -1,0 +1,87 @@
+<svg width="1200" height="760" viewBox="0 0 1200 760" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="760" rx="28" fill="#0D0D0D"/>
+  <path d="M80 130H1120" stroke="#2B2B2B" stroke-width="2"/>
+  <text x="80" y="82" fill="#FB923C" font-family="Arial, sans-serif" font-size="18" letter-spacing="4">ONE LOCK OR TWO: INSIDE THE TWO MAIN BLOCKING QUEUES</text>
+  <text x="80" y="112" fill="#777777" font-family="Arial, sans-serif" font-size="16">Fields from javap -p on JDK 21. Parked threads from jcmd Thread.print.</text>
+
+  <!-- LEFT: ArrayBlockingQueue -->
+  <rect x="80" y="160" width="500" height="390" rx="12" fill="#151515" stroke="#444444" stroke-width="2"/>
+  <text x="100" y="194" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="18">ArrayBlockingQueue(4)</text>
+  <text x="100" y="218" fill="#888888" font-family="Arial, sans-serif" font-size="13">final Object[] items, used as a ring; int count</text>
+  <g font-family="Arial, sans-serif" font-size="14">
+    <rect x="120" y="240" width="90" height="46" fill="#132433" stroke="#60A5FA" stroke-width="1.5"/><text x="150" y="268" fill="#FFFFFF">T5</text>
+    <rect x="210" y="240" width="90" height="46" fill="#132433" stroke="#60A5FA" stroke-width="1.5"/><text x="240" y="268" fill="#FFFFFF">T6</text>
+    <rect x="300" y="240" width="90" height="46" fill="#1A1A1A" stroke="#444444" stroke-width="1.5"/><text x="326" y="268" fill="#666666">null</text>
+    <rect x="390" y="240" width="90" height="46" fill="#132433" stroke="#60A5FA" stroke-width="1.5"/><text x="420" y="268" fill="#FFFFFF">T4</text>
+    <text x="160" y="306" fill="#777777" font-size="12">0</text><text x="250" y="306" fill="#777777" font-size="12">1</text><text x="340" y="306" fill="#777777" font-size="12">2</text><text x="430" y="306" fill="#777777" font-size="12">3</text>
+  </g>
+  <path d="M345 334V314" stroke="#FB923C" stroke-width="2"/>
+  <path d="M340 322L345 312L350 322" stroke="#FB923C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="300" y="352" fill="#FB923C" font-family="Arial, sans-serif" font-size="13">putIndex 2</text>
+  <path d="M435 334V314" stroke="#60A5FA" stroke-width="2"/>
+  <path d="M430 322L435 312L440 322" stroke="#60A5FA" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="405" y="352" fill="#60A5FA" font-family="Arial, sans-serif" font-size="13">takeIndex 3</text>
+
+  <rect x="100" y="370" width="460" height="56" rx="10" fill="#21180F" stroke="#FB923C" stroke-width="2"/>
+  <text x="120" y="396" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="15">final ReentrantLock lock</text>
+  <text x="120" y="416" fill="#C6A17A" font-family="Arial, sans-serif" font-size="13">every put, take, offer, poll, size and drainTo takes this one lock</text>
+  <g font-family="Arial, sans-serif" font-size="13">
+    <rect x="100" y="440" width="222" height="90" rx="10" fill="#0F1A21" stroke="#60A5FA" stroke-width="1.5"/>
+    <text x="116" y="464" fill="#FFFFFF">Condition notEmpty</text>
+    <text x="116" y="486" fill="#93B4D6">take() waits here when count 0</text>
+    <text x="116" y="508" fill="#93B4D6">put() signals it</text>
+    <rect x="338" y="440" width="222" height="90" rx="10" fill="#0F1A21" stroke="#60A5FA" stroke-width="1.5"/>
+    <text x="354" y="464" fill="#FFFFFF">Condition notFull</text>
+    <text x="354" y="486" fill="#93B4D6">put() waits here when full</text>
+    <text x="354" y="508" fill="#93B4D6">take() signals it</text>
+  </g>
+
+  <!-- RIGHT: LinkedBlockingQueue -->
+  <rect x="620" y="160" width="500" height="390" rx="12" fill="#151515" stroke="#444444" stroke-width="2"/>
+  <text x="640" y="194" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="18">LinkedBlockingQueue(capacity)</text>
+  <text x="640" y="218" fill="#888888" font-family="Arial, sans-serif" font-size="13">Node(item, next) per element: 24 bytes; AtomicInteger count</text>
+  <g font-family="Arial, sans-serif" font-size="13">
+    <rect x="640" y="240" width="96" height="46" rx="8" fill="#1A1A1A" stroke="#444444" stroke-width="1.5"/><text x="652" y="268" fill="#888888">dummy</text>
+    <rect x="760" y="240" width="96" height="46" rx="8" fill="#132433" stroke="#60A5FA" stroke-width="1.5"/><text x="774" y="268" fill="#FFFFFF">ping-1</text>
+    <rect x="880" y="240" width="96" height="46" rx="8" fill="#132433" stroke="#60A5FA" stroke-width="1.5"/><text x="894" y="268" fill="#FFFFFF">ping-2</text>
+    <rect x="1000" y="240" width="96" height="46" rx="8" fill="#132433" stroke="#60A5FA" stroke-width="1.5"/><text x="1014" y="268" fill="#FFFFFF">ping-3</text>
+  </g>
+  <g stroke="#777777" stroke-width="1.5">
+    <path d="M736 263H760"/><path d="M856 263H880"/><path d="M976 263H1000"/>
+  </g>
+  <text x="664" y="310" fill="#60A5FA" font-family="Arial, sans-serif" font-size="13">head</text>
+  <text x="1030" y="310" fill="#FB923C" font-family="Arial, sans-serif" font-size="13">last</text>
+
+  <g font-family="Arial, sans-serif" font-size="13">
+    <rect x="640" y="340" width="222" height="96" rx="10" fill="#0F1A21" stroke="#60A5FA" stroke-width="1.5"/>
+    <text x="656" y="364" fill="#FFFFFF">ReentrantLock takeLock</text>
+    <text x="656" y="386" fill="#93B4D6">+ Condition notEmpty</text>
+    <text x="656" y="408" fill="#93B4D6">take, poll, drainTo: head side</text>
+    <rect x="878" y="340" width="222" height="96" rx="10" fill="#21180F" stroke="#FB923C" stroke-width="2"/>
+    <text x="894" y="364" fill="#FFFFFF">ReentrantLock putLock</text>
+    <text x="894" y="386" fill="#C6A17A">+ Condition notFull</text>
+    <text x="894" y="408" fill="#C6A17A">put, offer: tail side</text>
+  </g>
+  <text x="640" y="470" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="14">Producers and consumers use different locks.</text>
+  <text x="640" y="494" fill="#888888" font-family="Arial, sans-serif" font-size="13">They share the AtomicInteger count; a put into an empty queue</text>
+  <text x="640" y="518" fill="#888888" font-family="Arial, sans-serif" font-size="13">briefly takes takeLock to signal. No-arg capacity: Integer.MAX_VALUE.</text>
+
+  <!-- BOTTOM: parked thread and matrix -->
+  <text x="80" y="592" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="16">A consumer blocked in take(), from the thread dump</text>
+  <g font-family="Courier New, monospace" font-size="13" xml:space="preserve">
+    <text x="80" y="620" fill="#C6A17A">"db-writer-1"  WAITING (parking)</text>
+    <text x="80" y="642" fill="#AAAAAA">  - parking to wait for &lt;0x...14b48&gt;</text>
+    <text x="80" y="664" fill="#AAAAAA">    (a ...AbstractQueuedSynchronizer$ConditionObject)</text>
+    <text x="80" y="686" fill="#AAAAAA">  at ...ArrayBlockingQueue.take(ArrayBlockingQueue.java:420)</text>
+  </g>
+  <text x="80" y="714" fill="#888888" font-family="Arial, sans-serif" font-size="13">Both writers park on the same notEmpty object and hold no lock while they wait.</text>
+
+  <text x="700" y="592" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="16">When the queue can't do it right now</text>
+  <g font-family="Arial, sans-serif" font-size="13">
+    <text x="700" y="622" fill="#777777">insert</text><text x="790" y="622" fill="#777777">remove</text><text x="900" y="622" fill="#777777">behaviour</text>
+    <text x="700" y="646" fill="#FFFFFF">add</text><text x="790" y="646" fill="#FFFFFF">remove</text><text x="900" y="646" fill="#93B4D6">throws an exception</text>
+    <text x="700" y="670" fill="#FFFFFF">offer</text><text x="790" y="670" fill="#FFFFFF">poll</text><text x="900" y="670" fill="#93B4D6">returns false or null</text>
+    <text x="700" y="694" fill="#FB923C">put</text><text x="790" y="694" fill="#FB923C">take</text><text x="900" y="694" fill="#C6A17A">blocks until it can</text>
+    <text x="700" y="718" fill="#FFFFFF">offer(e,t,u)</text><text x="790" y="718" fill="#FFFFFF">poll(t,u)</text><text x="900" y="718" fill="#93B4D6">waits, then false or null</text>
+  </g>
+</svg>

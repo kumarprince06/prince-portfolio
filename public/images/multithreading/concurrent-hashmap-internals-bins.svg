@@ -1,0 +1,89 @@
+<svg width="1200" height="760" viewBox="0 0 1200 760" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="760" rx="28" fill="#0D0D0D"/>
+  <path d="M80 130H1120" stroke="#2B2B2B" stroke-width="2"/>
+  <text x="80" y="82" fill="#FB923C" font-family="Arial, sans-serif" font-size="18" letter-spacing="4">ONE TABLE, FIVE KINDS OF BIN</text>
+  <text x="80" y="112" fill="#777777" font-family="Arial, sans-serif" font-size="16">JDK 21 ConcurrentHashMap, read with javap -p and reflection. A write locks one bin at most; get() never locks.</text>
+
+  <!-- table column -->
+  <text x="80" y="170" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="17">volatile Node[] table</text>
+  <g font-family="Courier New, monospace" font-size="14" xml:space="preserve">
+    <rect x="80" y="186" width="70" height="70" fill="#151515" stroke="#444444" stroke-width="2"/><text x="96" y="226" fill="#888888">[0]</text>
+    <rect x="80" y="276" width="70" height="70" fill="#151515" stroke="#444444" stroke-width="2"/><text x="96" y="316" fill="#888888">[1]</text>
+    <rect x="80" y="366" width="70" height="70" fill="#151515" stroke="#444444" stroke-width="2"/><text x="96" y="406" fill="#888888">[2]</text>
+    <rect x="80" y="456" width="70" height="70" fill="#151515" stroke="#444444" stroke-width="2"/><text x="96" y="496" fill="#888888">[3]</text>
+    <rect x="80" y="546" width="70" height="70" fill="#151515" stroke="#444444" stroke-width="2"/><text x="96" y="586" fill="#888888">[4]</text>
+  </g>
+
+  <!-- row 0: empty -->
+  <path d="M150 221H190" stroke="#444444" stroke-width="2" stroke-dasharray="5 5"/>
+  <rect x="190" y="192" width="190" height="58" rx="10" fill="#151515" stroke="#444444" stroke-width="2"/>
+  <text x="206" y="227" fill="#AAAAAA" font-family="Arial, sans-serif" font-size="15">null (empty bin)</text>
+  <text x="400" y="216" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="15">put: casTabAt(tab, i, null, new Node)</text>
+  <text x="400" y="238" fill="#888888" font-family="Arial, sans-serif" font-size="13">one compare-and-set, no lock; if it fails, loop and look again</text>
+
+  <!-- row 1: chain -->
+  <path d="M150 311H190" stroke="#FB923C" stroke-width="2"/>
+  <rect x="190" y="282" width="92" height="58" rx="10" fill="#21180F" stroke="#FB923C" stroke-width="2"/>
+  <text x="204" y="307" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="14">Node</text>
+  <text x="204" y="327" fill="#C6A17A" font-family="Arial, sans-serif" font-size="12">hash &gt;= 0</text>
+  <path d="M282 311H300" stroke="#FB923C" stroke-width="2"/>
+  <rect x="300" y="282" width="80" height="58" rx="10" fill="#21180F" stroke="#FB923C" stroke-width="2"/>
+  <text x="314" y="316" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="14">Node</text>
+  <text x="400" y="306" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="15">put: synchronized (first node) { replace or append }</text>
+  <text x="400" y="328" fill="#888888" font-family="Arial, sans-serif" font-size="13">jstack: "locked (a java.util.concurrent.ConcurrentHashMap$Node)"</text>
+
+  <!-- row 2: treebin -->
+  <path d="M150 401H190" stroke="#60A5FA" stroke-width="2"/>
+  <rect x="190" y="372" width="190" height="58" rx="10" fill="#132433" stroke="#60A5FA" stroke-width="2"/>
+  <text x="206" y="397" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="14">TreeBin</text>
+  <text x="206" y="417" fill="#93B4D6" font-family="Arial, sans-serif" font-size="12">hash -2 (TREEBIN)</text>
+  <text x="400" y="396" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="15">a 9th node in a bin of a table of 64+: red-black tree</text>
+  <text x="400" y="418" fill="#888888" font-family="Arial, sans-serif" font-size="13">writers lock the TreeBin; readers use lockState or walk the plain next list</text>
+
+  <!-- row 3: forwarding -->
+  <path d="M150 491H190" stroke="#60A5FA" stroke-width="2"/>
+  <rect x="190" y="462" width="190" height="58" rx="10" fill="#132433" stroke="#60A5FA" stroke-width="2"/>
+  <text x="206" y="487" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="14">ForwardingNode</text>
+  <text x="206" y="507" fill="#93B4D6" font-family="Arial, sans-serif" font-size="12">hash -1 (MOVED)</text>
+  <text x="400" y="486" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="15">bin already copied to nextTable during a resize</text>
+  <text x="400" y="508" fill="#888888" font-family="Arial, sans-serif" font-size="13">get follows it to nextTable; put calls helpTransfer and copies bins too</text>
+
+  <!-- row 4: reservation -->
+  <path d="M150 581H190" stroke="#FB923C" stroke-width="2"/>
+  <rect x="190" y="552" width="190" height="58" rx="10" fill="#21180F" stroke="#FB923C" stroke-width="2"/>
+  <text x="206" y="577" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="14">ReservationNode</text>
+  <text x="206" y="597" fill="#C6A17A" font-family="Arial, sans-serif" font-size="12">hash -3 (RESERVED)</text>
+  <text x="400" y="576" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="15">placeholder while computeIfAbsent's function runs</text>
+  <text x="400" y="598" fill="#888888" font-family="Arial, sans-serif" font-size="13">the thread holds its monitor; get() sees no value yet</text>
+
+  <!-- right column: counters and sizeCtl -->
+  <rect x="860" y="160" width="260" height="214" rx="12" fill="#151515" stroke="#444444" stroke-width="2"/>
+  <text x="880" y="192" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="17">Counting entries</text>
+  <rect x="880" y="208" width="220" height="36" rx="6" fill="#21180F" stroke="#FB923C" stroke-width="1.5"/>
+  <text x="894" y="231" fill="#C6A17A" font-family="Courier New, monospace" font-size="14">long baseCount</text>
+  <g font-family="Courier New, monospace" font-size="13">
+    <rect x="880" y="256" width="52" height="34" fill="#132433" stroke="#60A5FA" stroke-width="1.2"/><text x="896" y="278" fill="#FFFFFF">+4</text>
+    <rect x="936" y="256" width="52" height="34" fill="#132433" stroke="#60A5FA" stroke-width="1.2"/><text x="952" y="278" fill="#FFFFFF">-5</text>
+    <rect x="992" y="256" width="52" height="34" fill="#132433" stroke="#60A5FA" stroke-width="1.2"/><text x="1008" y="278" fill="#FFFFFF">+3</text>
+    <rect x="1048" y="256" width="52" height="34" fill="#132433" stroke="#60A5FA" stroke-width="1.2"/><text x="1062" y="278" fill="#FFFFFF">...</text>
+  </g>
+  <text x="880" y="314" fill="#93B4D6" font-family="Arial, sans-serif" font-size="13">CounterCell[] under contention</text>
+  <text x="880" y="338" fill="#AAAAAA" font-family="Arial, sans-serif" font-size="13">size() = baseCount + every cell,</text>
+  <text x="880" y="358" fill="#AAAAAA" font-family="Arial, sans-serif" font-size="13">read one by one: an estimate</text>
+
+  <rect x="860" y="394" width="260" height="216" rx="12" fill="#151515" stroke="#444444" stroke-width="2"/>
+  <text x="880" y="426" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="17">int sizeCtl</text>
+  <g font-family="Arial, sans-serif" font-size="13">
+    <text x="880" y="456" fill="#C6A17A">0</text><text x="930" y="456" fill="#AAAAAA">no table yet, default size</text>
+    <text x="880" y="482" fill="#C6A17A">&gt; 0</text><text x="930" y="482" fill="#AAAAAA">initial size, then resize count</text>
+    <text x="880" y="508" fill="#C6A17A">-1</text><text x="930" y="508" fill="#AAAAAA">a thread is creating it</text>
+    <text x="880" y="534" fill="#C6A17A">&lt; -1</text><text x="930" y="534" fill="#AAAAAA">resizing: high 16 bits stamp,</text>
+    <text x="930" y="554" fill="#AAAAAA">low 16 bits 1 + resizers</text>
+    <text x="880" y="586" fill="#93B4D6">transferIndex hands out</text>
+    <text x="880" y="602" fill="#93B4D6">stripes of 16+ bins per thread</text>
+  </g>
+
+  <text x="80" y="668" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="16">get(key): spread(hashCode) = (h ^ h &gt;&gt;&gt; 16) &amp; 0x7fffffff, then tabAt (an acquire read), then volatile next and val.</text>
+  <text x="80" y="696" fill="#888888" font-family="Arial, sans-serif" font-size="14">Negative hashes are reserved for the special nodes above, which is why spread() clears the sign bit.</text>
+  <text x="80" y="728" fill="#FB923C" font-family="Arial, sans-serif" font-size="15">Hashtable: one lock for every call. ConcurrentHashMap: CAS for empty bins, one monitor per bin, no lock for reads.</text>
+</svg>

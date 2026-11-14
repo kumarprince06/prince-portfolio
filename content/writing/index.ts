@@ -4,6 +4,7 @@ import { collectionsPhases } from "./collections";
 import { interviewPhases } from "./interview-questions";
 import { javaPhases } from "./java";
 import { java8Phases } from "./java-8";
+import { multithreadingPhases } from "./multithreading";
 import * as roadmap from "./roadmap";
 import { systemDesignPhases } from "./system-design";
 
@@ -36,7 +37,7 @@ export const categories: Category[] = [
   ),
   track(
     { slug: "multithreading", title: "Multithreading and Concurrency", unit: "Lesson", description: "Threads, locks, the memory model, thread pools, ConcurrentHashMap, BlockingQueue, virtual threads and concurrency across servers." },
-    roadmap.concurrencyPhases,
+    multithreadingPhases,
   ),
   track(
     { slug: "mysql", title: "MySQL", unit: "Lesson", description: "Queries, indexes, transactions, isolation levels and how the database works underneath." },

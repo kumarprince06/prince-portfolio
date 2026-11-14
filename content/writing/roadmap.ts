@@ -6,21 +6,6 @@ import type { Phase } from "./types";
 
 const soon = (title: string, description: string): Phase => ({ title, description, lessons: [] });
 
-export const concurrencyPhases: Phase[] = [
-  soon("Threads Basics", "Process vs thread, creating threads, Runnable vs Callable, thread states, start vs run, join and daemon threads."),
-  soon("synchronized, volatile and the Java Memory Model", "Monitors, visibility vs atomicity, happens-before, and why count++ is not thread-safe."),
-  soon("Locks and Atomics", "ReentrantLock, ReadWriteLock, StampedLock, AQS underneath, CAS, AtomicInteger and LongAdder."),
-  soon("Executors and Thread Pools", "ExecutorService, ThreadPoolExecutor parameters, bounded queues, rejection policies and sizing pools."),
-  soon("ConcurrentHashMap", "CAS on empty bins, per-bin locking, why null keys are banned, and atomic methods like computeIfAbsent and merge."),
-  soon("BlockingQueue and Producer-Consumer", "ArrayBlockingQueue, LinkedBlockingQueue, SynchronousQueue, DelayQueue, backpressure and clean shutdown."),
-  soon("Other Concurrent Collections", "CopyOnWriteArrayList, ConcurrentLinkedQueue, ConcurrentSkipListMap and when each fits."),
-  soon("Coordination Utilities", "CountDownLatch, CyclicBarrier, Semaphore, Phaser and Exchanger with everyday examples."),
-  soon("Asynchronous Programming", "Future and CompletableFuture patterns, timeouts and fallbacks, and choosing executors."),
-  soon("ThreadLocal and Virtual Threads", "Per-thread data and its leak in pools, Java 21 virtual threads, pinning and structured concurrency."),
-  soon("Deadlocks, Race Conditions and Testing", "Spotting and preventing deadlock, livelock and starvation, thread dumps, and testing concurrent code."),
-  soon("Concurrency Across Servers", "Why synchronized fails with many instances, database locks, conditional updates, SKIP LOCKED and idempotency."),
-];
-
 export const java8NextPhase: Phase = soon(
   "Java 9 to 21 Features",
   "What came after Java 8: modules, var, records, text blocks, switch expressions, sealed classes, pattern matching and virtual threads.",

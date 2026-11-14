@@ -1,0 +1,83 @@
+<svg width="1200" height="760" viewBox="0 0 1200 760" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="760" rx="28" fill="#0D0D0D"/>
+  <path d="M80 130H1120" stroke="#2B2B2B" stroke-width="2"/>
+  <text x="80" y="82" fill="#FB923C" font-family="Arial, sans-serif" font-size="18" letter-spacing="4">AN INTRINSIC LOCK LIVES IN THE OBJECT'S MARK WORD</text>
+  <text x="80" y="112" fill="#777777" font-family="Arial, sans-serif" font-size="16">JDK 21, default LockingMode=1. Values read with Unsafe.getLong(object, 0) in MarkWord.java.</text>
+
+  <!-- left column: mark word states -->
+  <text x="80" y="168" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="17">The first 8 bytes of one object, over time</text>
+
+  <rect x="80" y="186" width="560" height="96" rx="12" fill="#0F1A21" stroke="#60A5FA" stroke-width="2"/>
+  <text x="100" y="214" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="16">Unlocked (identity hash stored)</text>
+  <g font-family="Courier New, monospace" font-size="15" xml:space="preserve">
+    <text x="100" y="244" fill="#93B4D6">0x000000610455d6<tspan fill="#FB923C">01</tspan>   low bits 01</text>
+  </g>
+  <text x="100" y="268" fill="#888888" font-family="Arial, sans-serif" font-size="13">hash 0x610455d6 sits in bits 8 to 38, age bits, lock bits 01</text>
+
+  <path d="M200 282V318" stroke="#FB923C" stroke-width="2"/>
+  <path d="M195 309L200 318L205 309" stroke="#FB923C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="216" y="306" fill="#C6A17A" font-family="Arial, sans-serif" font-size="13">monitorenter, nobody else holds it: one CAS</text>
+
+  <rect x="80" y="318" width="560" height="96" rx="12" fill="#21180F" stroke="#FB923C" stroke-width="2"/>
+  <text x="100" y="346" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="16">Thin-locked (stack lock)</text>
+  <g font-family="Courier New, monospace" font-size="15" xml:space="preserve">
+    <text x="100" y="376" fill="#C6A17A">0x000070a93c9fe9<tspan fill="#FB923C">20</tspan>   low bits 00</text>
+  </g>
+  <text x="100" y="400" fill="#888888" font-family="Arial, sans-serif" font-size="13">points to a BasicLock in the owner's frame, which keeps the old header</text>
+
+  <path d="M200 414V450" stroke="#FB923C" stroke-width="2"/>
+  <path d="M195 441L200 450L205 441" stroke="#FB923C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="216" y="438" fill="#C6A17A" font-family="Arial, sans-serif" font-size="13">a second thread arrives, or wait() is called: inflate</text>
+
+  <rect x="80" y="450" width="560" height="96" rx="12" fill="#21180F" stroke="#FB923C" stroke-width="2"/>
+  <text x="100" y="478" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="16">Inflated (heavyweight monitor)</text>
+  <g font-family="Courier New, monospace" font-size="15" xml:space="preserve">
+    <text x="100" y="508" fill="#C6A17A">0x000070a890000f<tspan fill="#FB923C">e2</tspan>   low bits 10</text>
+  </g>
+  <text x="100" y="532" fill="#888888" font-family="Arial, sans-serif" font-size="13">points to a native ObjectMonitor; stays inflated after the lock is released</text>
+
+  <path d="M200 546V582" stroke="#60A5FA" stroke-width="2"/>
+  <path d="M195 573L200 582L205 573" stroke="#60A5FA" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="216" y="570" fill="#93B4D6" font-family="Arial, sans-serif" font-size="13">idle monitor deflated by the service thread (async deflation)</text>
+
+  <rect x="80" y="582" width="560" height="64" rx="12" fill="#0F1A21" stroke="#60A5FA" stroke-width="2"/>
+  <g font-family="Courier New, monospace" font-size="15" xml:space="preserve">
+    <text x="100" y="620" fill="#93B4D6">0x000000610455d6<tspan fill="#FB923C">01</tspan>   unlocked again, same hash</text>
+  </g>
+
+  <!-- right column: ObjectMonitor -->
+  <path d="M640 498H700" stroke="#FB923C" stroke-width="2"/>
+  <path d="M691 493L700 498L691 503" stroke="#FB923C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="700" y="186" width="420" height="460" rx="12" fill="#151515" stroke="#444444" stroke-width="2"/>
+  <text x="720" y="218" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="17">ObjectMonitor (C++, outside the heap)</text>
+
+  <rect x="720" y="236" width="380" height="78" rx="10" fill="#21180F" stroke="#FB923C" stroke-width="2"/>
+  <g font-family="Courier New, monospace" font-size="14" xml:space="preserve">
+    <text x="736" y="262" fill="#FFFFFF">_owner      = assigner-1</text>
+    <text x="736" y="286" fill="#C6A17A">_recursions = 0   (reentry count)</text>
+  </g>
+  <text x="736" y="306" fill="#888888" font-family="Arial, sans-serif" font-size="12">dump: "- locked &lt;0x...&gt;"</text>
+
+  <rect x="720" y="332" width="380" height="110" rx="10" fill="#0F1A21" stroke="#60A5FA" stroke-width="2"/>
+  <text x="736" y="358" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="15">cxq + EntryList: want the lock</text>
+  <g font-family="Courier New, monospace" font-size="14" xml:space="preserve">
+    <text x="736" y="386" fill="#93B4D6">assigner-2   BLOCKED</text>
+  </g>
+  <text x="736" y="412" fill="#888888" font-family="Arial, sans-serif" font-size="12">dump: "waiting to lock &lt;0x...&gt;"</text>
+  <text x="736" y="430" fill="#888888" font-family="Arial, sans-serif" font-size="12">spin briefly, then park; woken on exit</text>
+
+  <rect x="720" y="460" width="380" height="110" rx="10" fill="#0F1A21" stroke="#60A5FA" stroke-width="2"/>
+  <text x="736" y="486" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="15">WaitSet: called wait(), lock released</text>
+  <g font-family="Courier New, monospace" font-size="14" xml:space="preserve">
+    <text x="736" y="514" fill="#93B4D6">dispatcher   WAITING</text>
+  </g>
+  <text x="736" y="540" fill="#888888" font-family="Arial, sans-serif" font-size="12">dump: "waiting on &lt;0x...&gt;"</text>
+  <text x="736" y="558" fill="#888888" font-family="Arial, sans-serif" font-size="12">notify moves one waiter to the entry queue</text>
+
+  <text x="720" y="604" fill="#C6A17A" font-family="Arial, sans-serif" font-size="13">A woken waiter must re-acquire the lock</text>
+  <text x="720" y="624" fill="#C6A17A" font-family="Arial, sans-serif" font-size="13">and re-check its condition: always a while loop.</text>
+
+  <!-- bottom -->
+  <text x="80" y="690" fill="#AAAAAA" font-family="Arial, sans-serif" font-size="14">Biased locking: off by default in JDK 15, removed in JDK 18 (-XX:+UseBiasedLocking is unrecognised on 21).</text>
+  <text x="80" y="716" fill="#FB923C" font-family="Arial, sans-serif" font-size="15">-XX:LockingMode=2 (experimental on 21) keeps the header and tracks owners on a per-thread lock stack.</text>
+</svg>

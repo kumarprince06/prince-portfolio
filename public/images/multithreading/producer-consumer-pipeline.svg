@@ -1,0 +1,80 @@
+<svg width="1200" height="780" viewBox="0 0 1200 780" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="780" rx="28" fill="#0D0D0D"/>
+  <path d="M80 130H1120" stroke="#2B2B2B" stroke-width="2"/>
+  <text x="80" y="82" fill="#FB923C" font-family="Arial, sans-serif" font-size="18" letter-spacing="4">A PIPELINE THAT PUSHES BACK AND DRAINS ON EXIT</text>
+  <text x="80" y="112" fill="#777777" font-family="Arial, sans-serif" font-size="16">GPS pings to the database. Numbers from the TripPipeline rebuild on JDK 21 with -Xmx64m.</text>
+
+  <!-- flow -->
+  <g font-family="Arial, sans-serif">
+    <rect x="80" y="170" width="150" height="120" rx="12" fill="#151515" stroke="#444444" stroke-width="2"/>
+    <text x="98" y="202" fill="#FFFFFF" font-size="16">Driver apps</text>
+    <text x="98" y="228" fill="#888888" font-size="13">8,000 pings/s</text>
+    <text x="98" y="250" fill="#888888" font-size="13">keep and retry</text>
+    <text x="98" y="270" fill="#888888" font-size="13">anything shed</text>
+
+    <rect x="280" y="170" width="190" height="120" rx="12" fill="#21180F" stroke="#FB923C" stroke-width="2"/>
+    <text x="298" y="202" fill="#FFFFFF" font-size="16">gps-ingest threads</text>
+    <text x="298" y="228" fill="#C6A17A" font-size="13">offer(e, 5 ms budget left)</text>
+    <text x="298" y="250" fill="#C6A17A" font-size="13">route: hash(driverId) % N</text>
+    <text x="298" y="270" fill="#C6A17A" font-size="13">false: answer 503</text>
+
+    <rect x="520" y="160" width="240" height="60" rx="10" fill="#0F1A21" stroke="#60A5FA" stroke-width="1.5"/>
+    <text x="536" y="185" fill="#FFFFFF" font-size="14">ArrayBlockingQueue(5,000)</text>
+    <text x="536" y="206" fill="#93B4D6" font-size="12">partition 0: drivers 0, 2, 4 ...</text>
+    <rect x="520" y="240" width="240" height="60" rx="10" fill="#0F1A21" stroke="#60A5FA" stroke-width="1.5"/>
+    <text x="536" y="265" fill="#FFFFFF" font-size="14">ArrayBlockingQueue(5,000)</text>
+    <text x="536" y="286" fill="#93B4D6" font-size="12">partition 1: drivers 1, 3, 5 ...</text>
+
+    <rect x="810" y="160" width="150" height="60" rx="10" fill="#21180F" stroke="#FB923C" stroke-width="2"/>
+    <text x="826" y="185" fill="#FFFFFF" font-size="14">db-writer-0</text>
+    <text x="826" y="206" fill="#C6A17A" font-size="12">take + drainTo(499)</text>
+    <rect x="810" y="240" width="150" height="60" rx="10" fill="#21180F" stroke="#FB923C" stroke-width="2"/>
+    <text x="826" y="265" fill="#FFFFFF" font-size="14">db-writer-1</text>
+    <text x="826" y="286" fill="#C6A17A" font-size="12">take + drainTo(499)</text>
+
+    <rect x="1010" y="170" width="110" height="120" rx="12" fill="#151515" stroke="#444444" stroke-width="2"/>
+    <text x="1026" y="202" fill="#FFFFFF" font-size="16">Database</text>
+    <text x="1026" y="228" fill="#888888" font-size="12">one INSERT</text>
+    <text x="1026" y="248" fill="#888888" font-size="12">per batch</text>
+  </g>
+  <g stroke="#FB923C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M230 230H274"/><path d="M266 225L274 230L266 235"/>
+    <path d="M470 210L514 190"/><path d="M504 189L514 190L508 199"/><path d="M470 250L514 270"/><path d="M508 261L514 270L504 271"/>
+    <path d="M760 190H804"/><path d="M796 185L804 190L796 195"/>
+    <path d="M760 270H804"/><path d="M796 265L804 270L796 275"/>
+    <path d="M960 190L1004 215"/><path d="M994 214L1004 215L999 206"/><path d="M960 270L1004 245"/><path d="M999 254L1004 245L994 246"/>
+  </g>
+  <path d="M375 290V330H155V296" stroke="#777777" stroke-width="1.5" stroke-dasharray="5 5"/>
+  <path d="M150 304L155 294L160 304" stroke="#777777" stroke-width="1.5"/>
+  <text x="190" y="350" fill="#888888" font-family="Arial, sans-serif" font-size="13">queue full past the budget: shed, the app retries later (backpressure)</text>
+  <text x="520" y="330" fill="#888888" font-family="Arial, sans-serif" font-size="13">one writer per partition: a driver's events stay in order</text>
+
+  <!-- before -->
+  <rect x="80" y="390" width="500" height="240" rx="12" fill="#151515" stroke="#444444" stroke-width="2"/>
+  <text x="100" y="424" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="17">Before: new LinkedBlockingQueue&lt;&gt;()</text>
+  <text x="100" y="448" fill="#888888" font-family="Arial, sans-serif" font-size="13">one INSERT per event; database slows down at 1 s</text>
+  <g font-family="Courier New, monospace" font-size="13" xml:space="preserve">
+    <text x="100" y="482" fill="#AAAAAA">  1s  queued  6,749  heap 13 MB</text>
+    <text x="100" y="504" fill="#AAAAAA">  4s  queued 29,589  heap 36 MB</text>
+    <text x="100" y="526" fill="#AAAAAA">  7s  queued 52,357  heap 59 MB</text>
+    <text x="100" y="548" fill="#C6A17A">Terminating due to OutOfMemoryError</text>
+  </g>
+  <text x="100" y="582" fill="#FB923C" font-family="Arial, sans-serif" font-size="14">Deploy at 3.5 s: shutdownNow(), 24,970 queued events LOST</text>
+  <text x="100" y="606" fill="#888888" font-family="Arial, sans-serif" font-size="13">The queue absorbed the slowdown into the heap instead of pushing back.</text>
+
+  <!-- after -->
+  <rect x="620" y="390" width="500" height="240" rx="12" fill="#151515" stroke="#444444" stroke-width="2"/>
+  <text x="640" y="424" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="17">After: SIGTERM shutdown hook, in order</text>
+  <g font-family="Arial, sans-serif" font-size="14">
+    <text x="640" y="458" fill="#FB923C">1</text><text x="664" y="458" fill="#FFFFFF">stop intake, join the ingest threads</text>
+    <text x="640" y="486" fill="#FB923C">2</text><text x="664" y="486" fill="#FFFFFF">one pill per consumer, with offer(pill, 20 s)</text>
+    <text x="640" y="514" fill="#FB923C">3</text><text x="664" y="514" fill="#FFFFFF">writers drain the queue, pill last</text>
+    <text x="640" y="542" fill="#FB923C">4</text><text x="664" y="542" fill="#FFFFFF">awaitTermination inside the grace period</text>
+  </g>
+  <text x="640" y="582" fill="#60A5FA" font-family="Arial, sans-serif" font-size="14">4,637 queued at SIGTERM, drained in 1.0 s, LOST 0</text>
+  <text x="640" y="606" fill="#888888" font-family="Arial, sans-serif" font-size="13">Heap stayed between 12 and 43 MB for 30 s, no full GC.</text>
+
+  <text x="80" y="680" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="16">Bound = memory and worst-case wait</text>
+  <text x="80" y="706" fill="#AAAAAA" font-family="Arial, sans-serif" font-size="14">5,000 events x ~1.1 KB = about 5.5 MB; 5,000 / 5,000 per second = 1 s to drain on deploy</text>
+  <text x="80" y="740" fill="#FB923C" font-family="Arial, sans-serif" font-size="15">A bounded queue turns a slow consumer into a visible, local decision instead of a heap that grows until it dies.</text>
+</svg>

@@ -1,0 +1,95 @@
+<svg width="1200" height="760" viewBox="0 0 1200 760" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="760" rx="28" fill="#0D0D0D"/>
+  <path d="M80 130H1120" stroke="#2B2B2B" stroke-width="2"/>
+  <text x="80" y="82" fill="#FB923C" font-family="Arial, sans-serif" font-size="18" letter-spacing="4">AQS: ONE INT, ONE QUEUE, PARK AND UNPARK</text>
+  <text x="80" y="112" fill="#777777" font-family="Arial, sans-serif" font-size="16">JDK 21. Field names from javap -p; the queue as captured with jcmd Thread.print while main held the lock.</text>
+
+  <!-- left: the AQS object -->
+  <rect x="80" y="160" width="380" height="250" rx="12" fill="#21180F" stroke="#FB923C" stroke-width="2"/>
+  <text x="100" y="194" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="17">ReentrantLock$NonfairSync (an AQS)</text>
+  <g font-family="Courier New, monospace" font-size="14" xml:space="preserve">
+    <text x="100" y="232" fill="#C6A17A">volatile int  state</text>
+    <text x="330" y="232" fill="#FFFFFF">= 1</text>
+    <text x="100" y="262" fill="#C6A17A">Thread exclusiveOwnerThread</text>
+    <text x="100" y="284" fill="#FFFFFF">                = main</text>
+    <text x="100" y="314" fill="#C6A17A">volatile Node head</text>
+    <text x="100" y="340" fill="#C6A17A">volatile Node tail</text>
+  </g>
+  <text x="100" y="378" fill="#888888" font-family="Arial, sans-serif" font-size="13">Every change to state is getState, setState</text>
+  <text x="100" y="396" fill="#888888" font-family="Arial, sans-serif" font-size="13">or compareAndSetState (a CAS on one int).</text>
+
+  <!-- right: wait queue -->
+  <text x="520" y="170" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="17">Wait queue (CLH variant, linked by prev and next)</text>
+  <g font-family="Arial, sans-serif" font-size="13">
+    <rect x="520" y="190" width="160" height="96" rx="10" fill="#151515" stroke="#444444" stroke-width="2"/>
+    <text x="536" y="218" fill="#FFFFFF">head</text>
+    <text x="536" y="242" fill="#888888">dummy node,</text>
+    <text x="536" y="262" fill="#888888">waiter = null</text>
+
+    <rect x="730" y="190" width="170" height="96" rx="10" fill="#0F1A21" stroke="#60A5FA" stroke-width="2"/>
+    <text x="746" y="218" fill="#FFFFFF">ExclusiveNode</text>
+    <text x="746" y="242" fill="#93B4D6">waiter = asha-lock</text>
+    <text x="746" y="262" fill="#93B4D6">status = WAITING (1)</text>
+
+    <rect x="950" y="190" width="170" height="96" rx="10" fill="#0F1A21" stroke="#60A5FA" stroke-width="2"/>
+    <text x="966" y="218" fill="#FFFFFF">ExclusiveNode</text>
+    <text x="966" y="242" fill="#93B4D6">waiter = ravi-lock</text>
+    <text x="966" y="262" fill="#93B4D6">status = WAITING (1)</text>
+  </g>
+  <path d="M680 230H730" stroke="#60A5FA" stroke-width="2"/>
+  <path d="M721 225L730 230L721 235" stroke="#60A5FA" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M900 230H950" stroke="#60A5FA" stroke-width="2"/>
+  <path d="M941 225L950 230L941 235" stroke="#60A5FA" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M730 252H680" stroke="#777777" stroke-width="1.5" stroke-dasharray="4 4"/>
+  <path d="M950 252H900" stroke="#777777" stroke-width="1.5" stroke-dasharray="4 4"/>
+  <text x="684" y="276" fill="#777777" font-family="Arial, sans-serif" font-size="12">prev</text>
+  <text x="904" y="276" fill="#777777" font-family="Arial, sans-serif" font-size="12">prev</text>
+  <text x="1035" y="310" fill="#FB923C" font-family="Arial, sans-serif" font-size="13">tail</text>
+  <path d="M1035 298V288" stroke="#FB923C" stroke-width="2"/>
+  <text x="520" y="330" fill="#AAAAAA" font-family="Arial, sans-serif" font-size="13">Both threads: WAITING (parking), "parking to wait for &lt;0x...&gt;</text>
+  <text x="520" y="350" fill="#AAAAAA" font-family="Arial, sans-serif" font-size="13">(a java.util.concurrent.locks.ReentrantLock$NonfairSync)"</text>
+  <text x="520" y="384" fill="#888888" font-family="Arial, sans-serif" font-size="13">A Condition keeps its own list of ConditionNodes; signal() moves one here.</text>
+
+  <!-- middle: lock and unlock paths -->
+  <text x="80" y="456" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="16">lock()</text>
+  <g font-family="Arial, sans-serif" font-size="13">
+    <rect x="80" y="470" width="200" height="56" rx="8" fill="#21180F" stroke="#FB923C" stroke-width="1.5"/>
+    <text x="94" y="494" fill="#FFFFFF">CAS state 0 to 1</text>
+    <text x="94" y="514" fill="#C6A17A">success: owner = me</text>
+    <rect x="310" y="470" width="200" height="56" rx="8" fill="#151515" stroke="#444444" stroke-width="1.5"/>
+    <text x="324" y="494" fill="#FFFFFF">owner == me?</text>
+    <text x="324" y="514" fill="#AAAAAA">yes: state + 1 (reentry)</text>
+    <rect x="540" y="470" width="200" height="56" rx="8" fill="#151515" stroke="#444444" stroke-width="1.5"/>
+    <text x="554" y="494" fill="#FFFFFF">enqueue: CAS tail</text>
+    <text x="554" y="514" fill="#AAAAAA">if first: spin, retry</text>
+    <rect x="770" y="470" width="350" height="56" rx="8" fill="#0F1A21" stroke="#60A5FA" stroke-width="1.5"/>
+    <text x="784" y="494" fill="#FFFFFF">status = WAITING, recheck, then</text>
+    <text x="784" y="514" fill="#93B4D6">LockSupport.park(this): the thread sleeps</text>
+  </g>
+  <path d="M280 498H310" stroke="#FB923C" stroke-width="2"/>
+  <path d="M510 498H540" stroke="#FB923C" stroke-width="2"/>
+  <path d="M740 498H770" stroke="#FB923C" stroke-width="2"/>
+
+  <text x="80" y="566" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="16">unlock()</text>
+  <g font-family="Arial, sans-serif" font-size="13">
+    <rect x="80" y="580" width="300" height="56" rx="8" fill="#21180F" stroke="#FB923C" stroke-width="1.5"/>
+    <text x="94" y="604" fill="#FFFFFF">tryRelease: state - 1</text>
+    <text x="94" y="624" fill="#C6A17A">reaches 0: owner = null, volatile write</text>
+    <rect x="410" y="580" width="330" height="56" rx="8" fill="#0F1A21" stroke="#60A5FA" stroke-width="1.5"/>
+    <text x="424" y="604" fill="#FFFFFF">signalNext(head)</text>
+    <text x="424" y="624" fill="#93B4D6">LockSupport.unpark(first waiter)</text>
+    <rect x="770" y="580" width="350" height="56" rx="8" fill="#151515" stroke="#444444" stroke-width="1.5"/>
+    <text x="784" y="604" fill="#FFFFFF">woken thread retries tryAcquire;</text>
+    <text x="784" y="624" fill="#AAAAAA">nonfair: a newcomer may barge in first</text>
+  </g>
+  <path d="M380 608H410" stroke="#FB923C" stroke-width="2"/>
+  <path d="M740 608H770" stroke="#FB923C" stroke-width="2"/>
+
+  <!-- bottom: what state means -->
+  <text x="80" y="680" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="15">What the int means (measured):</text>
+  <g font-family="Arial, sans-serif" font-size="14" fill="#AAAAAA">
+    <text x="320" y="680">ReentrantLock: hold count (locked twice = 2)</text>
+    <text x="320" y="704">ReentrantReadWriteLock: readers &lt;&lt; 16 | writer holds (3 readers = 0x00030000)</text>
+    <text x="320" y="728">CountDownLatch: count left · Semaphore: permits left</text>
+  </g>
+</svg>

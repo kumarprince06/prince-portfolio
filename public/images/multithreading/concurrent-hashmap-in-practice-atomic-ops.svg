@@ -1,0 +1,60 @@
+<svg width="1200" height="790" viewBox="0 0 1200 790" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="790" rx="28" fill="#0D0D0D"/>
+  <path d="M80 130H1120" stroke="#2B2B2B" stroke-width="2"/>
+  <text x="80" y="82" fill="#FB923C" font-family="Arial, sans-serif" font-size="18" letter-spacing="4">TWO CALLS ARE TWO OPERATIONS</text>
+  <text x="80" y="112" fill="#777777" font-family="Arial, sans-serif" font-size="16">Each ConcurrentHashMap call is atomic. A sequence of calls is not. merge and compute do the whole step under one bin lock.</text>
+
+  <!-- left: get then put -->
+  <rect x="80" y="160" width="500" height="320" rx="12" fill="#151515" stroke="#444444" stroke-width="2"/>
+  <text x="100" y="194" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="17">get then put: a lost trip</text>
+  <text x="100" y="222" fill="#888888" font-family="Arial, sans-serif" font-size="13">trips.get("ravi") is 7. Two trip-completed events arrive together.</text>
+  <text x="120" y="256" fill="#93B4D6" font-family="Arial, sans-serif" font-size="14">consumer-1</text>
+  <text x="380" y="256" fill="#C6A17A" font-family="Arial, sans-serif" font-size="14">consumer-2</text>
+  <g font-family="Courier New, monospace" font-size="14" xml:space="preserve">
+    <rect x="110" y="270" width="230" height="34" rx="6" fill="#132433" stroke="#60A5FA" stroke-width="1.5"/><text x="122" y="292" fill="#FFFFFF">n = get("ravi")  // 7</text>
+    <rect x="330" y="312" width="230" height="34" rx="6" fill="#21180F" stroke="#FB923C" stroke-width="1.5"/><text x="342" y="334" fill="#FFFFFF">n = get("ravi")  // 7</text>
+    <rect x="110" y="354" width="230" height="34" rx="6" fill="#132433" stroke="#60A5FA" stroke-width="1.5"/><text x="122" y="376" fill="#FFFFFF">put("ravi", n + 1) // 8</text>
+    <rect x="330" y="396" width="230" height="34" rx="6" fill="#21180F" stroke="#FB923C" stroke-width="1.5"/><text x="342" y="418" fill="#FFFFFF">put("ravi", n + 1) // 8</text>
+  </g>
+  <text x="100" y="468" fill="#FB923C" font-family="Arial, sans-serif" font-size="14">Two trips, one increment. Measured: 0.6 to 1.1 million lost of 8 million.</text>
+
+  <!-- right: merge -->
+  <rect x="620" y="160" width="500" height="320" rx="12" fill="#151515" stroke="#444444" stroke-width="2"/>
+  <text x="640" y="194" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="17">merge("ravi", 1, Integer::sum)</text>
+  <text x="640" y="222" fill="#888888" font-family="Arial, sans-serif" font-size="13">The read, the function and the write happen inside one lock.</text>
+  <g font-family="Courier New, monospace" font-size="14" xml:space="preserve">
+    <rect x="650" y="244" width="440" height="88" rx="8" fill="#132433" stroke="#60A5FA" stroke-width="1.5"/>
+    <text x="664" y="268" fill="#93B4D6">consumer-1: synchronized (first node of bin)</text>
+    <text x="664" y="292" fill="#FFFFFF">  old = 7, new = sum(7, 1) = 8, store 8</text>
+    <text x="664" y="316" fill="#93B4D6">unlock</text>
+    <rect x="650" y="344" width="440" height="88" rx="8" fill="#21180F" stroke="#FB923C" stroke-width="1.5"/>
+    <text x="664" y="368" fill="#C6A17A">consumer-2: BLOCKED until unlock, then lock</text>
+    <text x="664" y="392" fill="#FFFFFF">  old = 8, new = sum(8, 1) = 9, store 9</text>
+    <text x="664" y="416" fill="#C6A17A">unlock</text>
+  </g>
+  <text x="640" y="468" fill="#60A5FA" font-family="Arial, sans-serif" font-size="14">Same for compute, computeIfAbsent, putIfAbsent, replace(k, old, new).</text>
+
+  <!-- bottom: what the lock means -->
+  <text x="80" y="534" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="17">While a compute / merge / computeIfAbsent function runs, it holds that bin's monitor</text>
+  <g font-family="Arial, sans-serif" font-size="14">
+    <rect x="80" y="554" width="250" height="110" rx="10" fill="#21180F" stroke="#FB923C" stroke-width="2"/>
+    <text x="96" y="580" fill="#FFFFFF">Waits for the function</text>
+    <text x="96" y="606" fill="#C6A17A">writes to the same key</text>
+    <text x="96" y="628" fill="#C6A17A">writes to other keys in the bin</text>
+    <text x="96" y="650" fill="#C6A17A">the resize copying that bin</text>
+
+    <rect x="350" y="554" width="250" height="110" rx="10" fill="#132433" stroke="#60A5FA" stroke-width="2"/>
+    <text x="366" y="580" fill="#FFFFFF">Does not wait</text>
+    <text x="366" y="606" fill="#93B4D6">get() on any key</text>
+    <text x="366" y="628" fill="#93B4D6">writes to other bins</text>
+    <text x="366" y="650" fill="#93B4D6">computeIfAbsent on a 1st node</text>
+
+    <rect x="620" y="554" width="500" height="110" rx="10" fill="#151515" stroke="#444444" stroke-width="2"/>
+    <text x="636" y="580" fill="#FFFFFF">So the function must be short and must not touch the map</text>
+    <text x="636" y="606" fill="#AAAAAA">same bin again: IllegalStateException "Recursive update"</text>
+    <text x="636" y="628" fill="#AAAAAA">two threads, two keys, nested compute: deadlock</text>
+    <text x="636" y="650" fill="#AAAAAA">a 50 ms remote call: 50 ms stalls for unlucky keys</text>
+  </g>
+  <text x="80" y="710" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="16">The map protects its own entries, not the objects stored in them.</text>
+  <text x="80" y="738" fill="#FB923C" font-family="Arial, sans-serif" font-size="15">computeIfAbsent(z, k -&gt; new ArrayList&lt;&gt;()).add(x) from 8 threads lost up to a third of the adds. Use a concurrent value.</text>
+</svg>

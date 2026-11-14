@@ -1,0 +1,63 @@
+<svg width="1200" height="780" viewBox="0 0 1200 780" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="780" rx="28" fill="#0D0D0D"/>
+  <path d="M80 130H1120" stroke="#2B2B2B" stroke-width="2"/>
+  <text x="80" y="82" fill="#FB923C" font-family="Arial, sans-serif" font-size="18" letter-spacing="4">HOW BOTH THREADS CAN READ 0: THE STORE BUFFER</text>
+  <text x="80" y="112" fill="#777777" font-family="Arial, sans-serif" font-size="16">x = y = 0. Thread 1: x = 1; r1 = y.  Thread 2: y = 1; r2 = x.  Measured on an 8-core x86 machine, JDK 21.</text>
+
+  <!-- core 1 -->
+  <rect x="80" y="160" width="400" height="230" rx="12" fill="#151515" stroke="#444444" stroke-width="2"/>
+  <text x="100" y="192" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="17">Core 1 (thread 1)</text>
+  <g font-family="Courier New, monospace" font-size="15" xml:space="preserve">
+    <text x="100" y="226" fill="#C6A17A">1. x = 1;    // into the store buffer</text>
+    <text x="100" y="252" fill="#C6A17A">3. r1 = y;   // reads memory: 0</text>
+  </g>
+  <rect x="100" y="280" width="360" height="86" rx="10" fill="#21180F" stroke="#FB923C" stroke-width="2"/>
+  <text x="116" y="306" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="14">Store buffer (private to the core)</text>
+  <g font-family="Courier New, monospace" font-size="15" xml:space="preserve">
+    <text x="116" y="340" fill="#FB923C">x = 1   not yet visible</text>
+  </g>
+
+  <!-- core 2 -->
+  <rect x="720" y="160" width="400" height="230" rx="12" fill="#151515" stroke="#444444" stroke-width="2"/>
+  <text x="740" y="192" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="17">Core 2 (thread 2)</text>
+  <g font-family="Courier New, monospace" font-size="15" xml:space="preserve">
+    <text x="740" y="226" fill="#C6A17A">2. y = 1;    // into the store buffer</text>
+    <text x="740" y="252" fill="#C6A17A">4. r2 = x;   // reads memory: 0</text>
+  </g>
+  <rect x="740" y="280" width="360" height="86" rx="10" fill="#21180F" stroke="#FB923C" stroke-width="2"/>
+  <text x="756" y="306" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="14">Store buffer (private to the core)</text>
+  <g font-family="Courier New, monospace" font-size="15" xml:space="preserve">
+    <text x="756" y="340" fill="#FB923C">y = 1   not yet visible</text>
+  </g>
+
+  <!-- shared memory -->
+  <rect x="400" y="440" width="400" height="100" rx="12" fill="#0F1A21" stroke="#60A5FA" stroke-width="2"/>
+  <text x="420" y="472" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="17">Coherent caches and memory</text>
+  <g font-family="Courier New, monospace" font-size="16" xml:space="preserve">
+    <text x="420" y="510" fill="#93B4D6">x = 0      y = 0</text>
+  </g>
+
+  <path d="M280 390V490H400" stroke="#60A5FA" stroke-width="2"/>
+  <path d="M391 485L400 490L391 495" stroke="#60A5FA" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="140" y="430" fill="#93B4D6" font-family="Arial, sans-serif" font-size="13">step 3: load y = 0</text>
+  <path d="M920 390V490H800" stroke="#60A5FA" stroke-width="2"/>
+  <path d="M809 485L800 490L809 495" stroke="#60A5FA" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="936" y="430" fill="#93B4D6" font-family="Arial, sans-serif" font-size="13">step 4: load x = 0</text>
+  <text x="420" y="566" fill="#888888" font-family="Arial, sans-serif" font-size="13">Both stores drain later. Result: r1 == 0 and r2 == 0.</text>
+
+  <!-- results -->
+  <text x="80" y="612" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="16">r1 == 0 &amp;&amp; r2 == 0, per 20,480,000 trials (StoreLoad.java)</text>
+  <g font-family="Arial, sans-serif" font-size="14">
+    <rect x="80" y="628" width="330" height="58" rx="8" fill="#21180F" stroke="#FB923C" stroke-width="1.5"/>
+    <text x="96" y="652" fill="#FFFFFF">plain fields, C2-compiled</text>
+    <text x="96" y="674" fill="#FB923C">3.7 to 7.0 million (18% to 34%)</text>
+    <rect x="435" y="628" width="330" height="58" rx="8" fill="#21180F" stroke="#FB923C" stroke-width="1.5"/>
+    <text x="451" y="652" fill="#FFFFFF">plain fields, -Xint (hardware only)</text>
+    <text x="451" y="674" fill="#FB923C">16,650 to 27,516</text>
+    <rect x="790" y="628" width="330" height="58" rx="8" fill="#0F1A21" stroke="#60A5FA" stroke-width="1.5"/>
+    <text x="806" y="652" fill="#FFFFFF">volatile fields</text>
+    <text x="806" y="674" fill="#93B4D6">0, every run</text>
+  </g>
+  <text x="80" y="724" fill="#AAAAAA" font-family="Arial, sans-serif" font-size="14">A volatile store compiles to mov + lock add [rsp-0x40], 0: the locked instruction drains the store buffer</text>
+  <text x="80" y="748" fill="#AAAAAA" font-family="Arial, sans-serif" font-size="14">before the next load. A volatile load on x86 is a plain mov; the JIT just may not move or cache it.</text>
+</svg>
