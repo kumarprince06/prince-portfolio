@@ -13,7 +13,7 @@ export const mysqlJoins: Lesson = {
       blocks: [
         {
           type: "paragraph",
-          text: "The previous lesson, SELECT, WHERE, ORDER BY, INSERT, UPDATE and DELETE, worked on one table at a time. Real questions never stay inside one table. \"Which driver did this trip?\" needs `trips` and `drivers`. \"How much did we actually collect for it?\" needs `payments` too. \"Which drivers had no trips this week?\" needs a row that **isn't** there. A **join** combines rows from two or more tables into one result, row by row, using a condition that says which rows belong together.",
+          text: "The previous lesson, SELECT, WHERE, ORDER BY, INSERT, UPDATE and DELETE, mostly worked on one table at a time (its multi-table UPDATE and DELETE borrowed a join without explaining it). Real questions rarely stay inside one table. \"Which driver did this trip?\" needs `trips` and `drivers`. \"How much did we actually collect for it?\" needs `payments` too. \"Which drivers had no trips this week?\" needs a row that **isn't** there. A **join** combines rows from two or more tables into one result, row by row, using a condition that says which rows belong together.",
         },
         {
           type: "paragraph",

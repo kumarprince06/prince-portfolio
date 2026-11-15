@@ -1,0 +1,98 @@
+<svg width="1200" height="780" viewBox="0 0 1200 780" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="780" rx="28" fill="#0D0D0D"/>
+  <path d="M80 130H1120" stroke="#2B2B2B" stroke-width="2"/>
+  <text x="80" y="82" fill="#FB923C" font-family="Arial, sans-serif" font-size="18" letter-spacing="4">A SELECT RUNS IN A DIFFERENT ORDER THAN IT IS WRITTEN</text>
+  <text x="80" y="112" fill="#777777" font-family="Arial, sans-serif" font-size="16">EXPLAIN ANALYZE on trip_history (500,000 rows), MySQL 8.0.45: the rows that flowed through each step</text>
+
+  <!-- pipeline -->
+  <g font-family="Arial, sans-serif">
+    <rect x="80" y="166" width="132" height="104" rx="12" fill="#0F1A21" stroke="#60A5FA" stroke-width="2"/>
+    <text x="96" y="192" fill="#FFFFFF" font-size="16">1. FROM</text>
+    <text x="96" y="222" fill="#93B4D6" font-family="Courier New, monospace" font-size="14">500,000</text>
+    <text x="96" y="244" fill="#888888" font-size="12">rows read by</text>
+    <text x="96" y="260" fill="#888888" font-size="12">a table scan</text>
+
+    <rect x="232" y="166" width="132" height="104" rx="12" fill="#0F1A21" stroke="#60A5FA" stroke-width="2"/>
+    <text x="248" y="192" fill="#FFFFFF" font-size="16">2. WHERE</text>
+    <text x="248" y="222" fill="#93B4D6" font-family="Courier New, monospace" font-size="14">450,000</text>
+    <text x="248" y="244" fill="#888888" font-size="12">kept: status =</text>
+    <text x="248" y="260" fill="#888888" font-size="12">'COMPLETED'</text>
+
+    <rect x="384" y="166" width="132" height="104" rx="12" fill="#0F1A21" stroke="#60A5FA" stroke-width="2"/>
+    <text x="400" y="192" fill="#FFFFFF" font-size="16">3. GROUP BY</text>
+    <text x="400" y="222" fill="#93B4D6" font-family="Courier New, monospace" font-size="14">4 groups</text>
+    <text x="400" y="244" fill="#888888" font-size="12">one per city, in a</text>
+    <text x="400" y="260" fill="#888888" font-size="12">temporary table</text>
+
+    <rect x="536" y="166" width="132" height="104" rx="12" fill="#0F1A21" stroke="#60A5FA" stroke-width="2"/>
+    <text x="552" y="192" fill="#FFFFFF" font-size="16">4. HAVING</text>
+    <text x="552" y="222" fill="#93B4D6" font-family="Courier New, monospace" font-size="14">2 groups</text>
+    <text x="552" y="244" fill="#888888" font-size="12">trips &gt; 120000</text>
+    <text x="552" y="260" fill="#888888" font-size="12">filters groups</text>
+
+    <rect x="688" y="166" width="132" height="104" rx="12" fill="#21180F" stroke="#FB923C" stroke-width="2"/>
+    <text x="704" y="192" fill="#FFFFFF" font-size="16">5. SELECT</text>
+    <text x="704" y="222" fill="#C6A17A" font-family="Courier New, monospace" font-size="14">aliases</text>
+    <text x="704" y="244" fill="#888888" font-size="12">revenue_rupees</text>
+    <text x="704" y="260" fill="#888888" font-size="12">is born here</text>
+
+    <rect x="840" y="166" width="132" height="104" rx="12" fill="#0F1A21" stroke="#60A5FA" stroke-width="2"/>
+    <text x="856" y="192" fill="#FFFFFF" font-size="16">6. ORDER BY</text>
+    <text x="856" y="222" fill="#93B4D6" font-family="Courier New, monospace" font-size="14">top-1 sort</text>
+    <text x="856" y="244" fill="#888888" font-size="12">can use the</text>
+    <text x="856" y="260" fill="#888888" font-size="12">SELECT aliases</text>
+
+    <rect x="992" y="166" width="128" height="104" rx="12" fill="#0F1A21" stroke="#60A5FA" stroke-width="2"/>
+    <text x="1008" y="192" fill="#FFFFFF" font-size="16">7. LIMIT</text>
+    <text x="1008" y="222" fill="#93B4D6" font-family="Courier New, monospace" font-size="14">1 sent</text>
+    <text x="1008" y="244" fill="#888888" font-size="12">OFFSET rows are</text>
+    <text x="1008" y="260" fill="#888888" font-size="12">read, then dropped</text>
+  </g>
+  <g stroke="#60A5FA" stroke-width="2">
+    <path d="M212 218H232"/><path d="M364 218H384"/><path d="M516 218H536"/><path d="M668 218H688"/><path d="M820 218H840"/><path d="M972 218H992"/>
+  </g>
+
+  <!-- alias visibility -->
+  <rect x="80" y="292" width="1040" height="62" rx="12" fill="#151515" stroke="#444444" stroke-width="2"/>
+  <g font-family="Courier New, monospace" font-size="14" xml:space="preserve">
+    <text x="100" y="318" fill="#F87171">WHERE fare_rupees &gt; 300    → ERROR 1054 Unknown column 'fare_rupees' in 'where clause'</text>
+    <text x="100" y="340" fill="#86EFAC">ORDER BY fare_rupees DESC   → works (runs after SELECT); MySQL also allows aliases in HAVING</text>
+  </g>
+
+  <!-- offset panel -->
+  <rect x="80" y="378" width="510" height="232" rx="12" fill="#151515" stroke="#444444" stroke-width="2"/>
+  <text x="100" y="408" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="16">Deep OFFSET reads every skipped row</text>
+  <g font-family="Courier New, monospace" font-size="13">
+    <text x="100" y="438" fill="#AAAAAA">ORDER BY id LIMIT 20 OFFSET n</text><text x="480" y="438" fill="#AAAAAA" text-anchor="end">examined</text><text x="565" y="438" fill="#AAAAAA" text-anchor="end">sent</text>
+    <text x="100" y="462" fill="#93B4D6">OFFSET 0</text><text x="480" y="462" fill="#93B4D6" text-anchor="end">20</text><text x="565" y="462" fill="#93B4D6" text-anchor="end">20</text>
+    <text x="100" y="484" fill="#93B4D6">OFFSET 100,000</text><text x="480" y="484" fill="#93B4D6" text-anchor="end">100,020</text><text x="565" y="484" fill="#93B4D6" text-anchor="end">20</text>
+    <text x="100" y="506" fill="#93B4D6">OFFSET 499,980</text><text x="480" y="506" fill="#93B4D6" text-anchor="end">500,000</text><text x="565" y="506" fill="#93B4D6" text-anchor="end">20</text>
+    <text x="100" y="528" fill="#86EFAC">WHERE id &gt; 499980 (keyset)</text><text x="480" y="528" fill="#86EFAC" text-anchor="end">20</text><text x="565" y="528" fill="#86EFAC" text-anchor="end">20</text>
+  </g>
+  <rect x="100" y="546" width="470" height="12" rx="4" fill="#3A2A1A"/>
+  <rect x="100" y="546" width="470" height="12" rx="4" fill="#FB923C"/>
+  <rect x="100" y="566" width="2" height="12" fill="#86EFAC"/>
+  <text x="100" y="598" fill="#888888" font-family="Arial, sans-serif" font-size="12">orange: 240 ms to throw away 499,980 rows; green: 0.17 ms for the same page by keyset</text>
+
+  <!-- writes panel -->
+  <rect x="610" y="378" width="510" height="232" rx="12" fill="#21180F" stroke="#FB923C" stroke-width="2"/>
+  <text x="630" y="408" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="16">What the writes really did</text>
+  <g font-family="Courier New, monospace" font-size="13" xml:space="preserve">
+    <text x="630" y="438" fill="#C6A17A">ON DUPLICATE KEY UPDATE   affected rows:</text>
+    <text x="630" y="458" fill="#C6A17A">  1 inserted, 2 updated, 0 unchanged</text>
+    <text x="630" y="484" fill="#C6A17A">REPLACE = DELETE + INSERT</text>
+    <text x="630" y="504" fill="#C6A17A">  id 7 became 11, devices cascaded away</text>
+    <text x="630" y="530" fill="#C6A17A">INSERT IGNORE: 3 errors became warnings</text>
+    <text x="630" y="556" fill="#C6A17A">DELETE without index or LIMIT:</text>
+    <text x="630" y="576" fill="#C6A17A">  501,719 rows locked, 16,991 deleted</text>
+  </g>
+  <text x="630" y="598" fill="#888888" font-family="Arial, sans-serif" font-size="12">Connector/J returns "found" rows unless useAffectedRows=true</text>
+
+  <!-- rules -->
+  <rect x="80" y="634" width="1040" height="110" rx="12" fill="#151515" stroke="#444444" stroke-width="2"/>
+  <g font-family="Courier New, monospace" font-size="14" xml:space="preserve">
+    <text x="100" y="664" fill="#FFFFFF">NULL  → = NULL is never true; NOT IN (..., NULL) returns nothing; use IS NULL / NOT EXISTS</text>
+    <text x="100" y="690" fill="#FFFFFF">sort  → ORDER BY must end in a unique column, or LIMIT pages repeat and skip rows</text>
+    <text x="100" y="716" fill="#FFFFFF">batch → rewriteBatchedStatements=true: 100,000 rows in 100 INSERTs, not 100,000</text>
+  </g>
+</svg>

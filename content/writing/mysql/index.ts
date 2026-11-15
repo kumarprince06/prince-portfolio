@@ -1,12 +1,14 @@
 import type { Phase } from "../types";
+import { mysqlCrudQueries } from "./mysql-crud-queries";
 import { mysqlGroupByAndAggregates } from "./mysql-group-by-and-aggregates";
 import { mysqlJoins } from "./mysql-joins";
+import { mysqlSetupTablesAndDataTypes } from "./mysql-setup-tables-and-data-types";
 
 export const mysqlPhases: Phase[] = [
   {
     title: "SQL Basics",
     description: "SELECT, WHERE, ORDER BY, INSERT, UPDATE, DELETE and data types.",
-    lessons: [],
+    lessons: [mysqlSetupTablesAndDataTypes, mysqlCrudQueries],
   },
   {
     title: "Joins and Aggregation",
