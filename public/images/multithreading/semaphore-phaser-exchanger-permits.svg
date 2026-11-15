@@ -1,0 +1,102 @@
+<svg width="1200" height="860" viewBox="0 0 1200 860" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="860" rx="28" fill="#0D0D0D"/>
+  <path d="M80 130H1120" stroke="#2B2B2B" stroke-width="2"/>
+  <text x="80" y="82" fill="#FB923C" font-family="Arial, sans-serif" font-size="18" letter-spacing="4">PERMITS, PHASES AND SWAPS</text>
+  <text x="80" y="112" fill="#777777" font-family="Arial, sans-serif" font-size="16">JDK 21. Fields and constants from javap -p -constants; state words read with reflection in this lesson.</text>
+
+  <!-- Semaphore -->
+  <text x="80" y="172" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="18">Semaphore(4)</text>
+  <rect x="80" y="190" width="320" height="250" rx="12" fill="#21180F" stroke="#FB923C" stroke-width="2"/>
+  <text x="100" y="220" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="15">Semaphore$Sync (AQS, shared)</text>
+  <g font-family="Courier New, monospace" font-size="13" xml:space="preserve">
+    <text x="100" y="250" fill="#C6A17A">state = free permits</text>
+    <text x="100" y="278" fill="#C6A17A">acquire(n):</text>
+    <text x="100" y="298" fill="#FFFFFF">  CAS state to state-n</text>
+    <text x="100" y="318" fill="#FFFFFF">  if result &lt; 0: queue, park</text>
+    <text x="100" y="346" fill="#C6A17A">release(n):</text>
+    <text x="100" y="366" fill="#FFFFFF">  CAS state to state+n</text>
+    <text x="100" y="386" fill="#FFFFFF">  no owner, no upper limit</text>
+  </g>
+  <text x="100" y="420" fill="#888888" font-family="Arial, sans-serif" font-size="13">Fair: hasQueuedPredecessors() first.</text>
+
+  <!-- Phaser -->
+  <text x="440" y="172" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="18">Phaser</text>
+  <rect x="440" y="190" width="340" height="250" rx="12" fill="#0F1A21" stroke="#60A5FA" stroke-width="2"/>
+  <text x="460" y="220" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="15">volatile long state (one CAS word)</text>
+  <g font-family="Arial, sans-serif" font-size="12">
+    <rect x="460" y="236" width="40" height="40" rx="4" fill="#211010" stroke="#F87171" stroke-width="1.5"/>
+    <text x="471" y="261" fill="#F0B0B0">63</text>
+    <rect x="500" y="236" width="110" height="40" rx="4" fill="#132433" stroke="#60A5FA" stroke-width="1.5"/>
+    <text x="514" y="261" fill="#FFFFFF">phase 62..32</text>
+    <rect x="610" y="236" width="76" height="40" rx="4" fill="#132433" stroke="#60A5FA" stroke-width="1.5"/>
+    <text x="618" y="261" fill="#FFFFFF">parties</text>
+    <rect x="686" y="236" width="76" height="40" rx="4" fill="#132433" stroke="#60A5FA" stroke-width="1.5"/>
+    <text x="692" y="261" fill="#FFFFFF">unarrived</text>
+  </g>
+  <g font-family="Arial, sans-serif" font-size="12" fill="#888888">
+    <text x="462" y="294">term</text>
+    <text x="514" y="294">31 bits</text>
+    <text x="626" y="294">31..16</text>
+    <text x="704" y="294">15..0</text>
+  </g>
+  <g font-family="Courier New, monospace" font-size="12" xml:space="preserve">
+    <text x="460" y="322" fill="#93B4D6">3 parties, 1 arrived 0x0000000000030002</text>
+    <text x="460" y="344" fill="#93B4D6">phase 1, all reset   0x0000000100030003</text>
+    <text x="460" y="366" fill="#93B4D6">terminated, phase 2  0x8000000200030003</text>
+  </g>
+  <text x="460" y="396" fill="#888888" font-family="Arial, sans-serif" font-size="13">Waiters spin 256 times, then park on a QNode</text>
+  <text x="460" y="416" fill="#888888" font-family="Arial, sans-serif" font-size="13">in evenQ or oddQ. Children register with a parent.</text>
+
+  <!-- Exchanger -->
+  <text x="820" y="172" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="18">Exchanger</text>
+  <rect x="820" y="190" width="300" height="250" rx="12" fill="#21180F" stroke="#FB923C" stroke-width="2"/>
+  <text x="840" y="220" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="15">slot, then arena</text>
+  <g font-family="Arial, sans-serif" font-size="13">
+    <rect x="840" y="236" width="120" height="50" rx="8" fill="#151515" stroke="#444444" stroke-width="1.5"/>
+    <text x="852" y="258" fill="#FFFFFF">slot: Node</text>
+    <text x="852" y="276" fill="#AAAAAA">item A waits</text>
+    <rect x="980" y="236" width="120" height="50" rx="8" fill="#151515" stroke="#444444" stroke-width="1.5"/>
+    <text x="992" y="258" fill="#FFFFFF">partner</text>
+    <text x="992" y="276" fill="#AAAAAA">takes A, gives B</text>
+  </g>
+  <path d="M960 261H980" stroke="#FB923C" stroke-width="2"/>
+  <g font-family="Courier New, monospace" font-size="13" xml:space="preserve">
+    <text x="840" y="316" fill="#C6A17A">2 threads: arena = null</text>
+    <text x="840" y="338" fill="#C6A17A">8 threads: Node[192]</text>
+    <text x="840" y="360" fill="#C6A17A">  (FULL+2) &lt;&lt; ASHIFT</text>
+  </g>
+  <text x="840" y="392" fill="#888888" font-family="Arial, sans-serif" font-size="13">Used slots 32 apart, Node is</text>
+  <text x="840" y="412" fill="#888888" font-family="Arial, sans-serif" font-size="13">@Contended: no false sharing.</text>
+
+  <!-- Bulkhead -->
+  <path d="M80 476H1120" stroke="#2B2B2B" stroke-width="2"/>
+  <text x="80" y="512" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="17">A Semaphore as a bulkhead: 8 request threads, maps API stuck at 1 s per call, 2 s of traffic</text>
+  <g font-family="Arial, sans-serif" font-size="14">
+    <rect x="80" y="532" width="320" height="120" rx="12" fill="#211010" stroke="#F87171" stroke-width="1.5"/>
+    <text x="100" y="562" fill="#FFFFFF">No bulkhead</text>
+    <text x="100" y="590" fill="#E0A0A0">all 8 threads wait on maps</text>
+    <text x="100" y="614" fill="#E0A0A0">trip-status p50 1,063 ms</text>
+    <text x="100" y="638" fill="#E0A0A0">max 2,157 ms, quote p50 2,060 ms</text>
+
+    <rect x="440" y="532" width="340" height="120" rx="12" fill="#0F1A21" stroke="#60A5FA" stroke-width="1.5"/>
+    <text x="460" y="562" fill="#FFFFFF">Semaphore(3), tryAcquire(20 ms)</text>
+    <text x="460" y="590" fill="#93B4D6">at most 3 threads on maps, rest use cache</text>
+    <text x="460" y="614" fill="#93B4D6">trip-status p50 5 ms, max 5 ms</text>
+    <text x="460" y="638" fill="#93B4D6">a permitted quote still waits 1,000 ms</text>
+
+    <rect x="820" y="532" width="300" height="120" rx="12" fill="#21180F" stroke="#FB923C" stroke-width="1.5"/>
+    <text x="840" y="562" fill="#FFFFFF">3-thread pool + get(300 ms)</text>
+    <text x="840" y="590" fill="#C6A17A">callers also time out the call</text>
+    <text x="840" y="614" fill="#C6A17A">trip-status p50 5 ms, max 5 ms</text>
+    <text x="840" y="638" fill="#C6A17A">quote max 301 ms, all cached</text>
+  </g>
+
+  <!-- leak -->
+  <text x="80" y="696" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="17">The permit leak: release() without a successful acquire</text>
+  <g font-family="Courier New, monospace" font-size="14" xml:space="preserve">
+    <text x="80" y="730" fill="#E0A0A0">boolean got = s.tryAcquire(50, MILLISECONDS);</text>
+    <text x="80" y="752" fill="#E0A0A0">try { if (got) call(); } finally { s.release(); }   // permits 4 -&gt; 16</text>
+    <text x="80" y="790" fill="#93B4D6">if (!s.tryAcquire(50, MILLISECONDS)) return fallback();</text>
+    <text x="80" y="812" fill="#93B4D6">try { return call(); } finally { s.release(); }      // permits stay 4</text>
+  </g>
+</svg>

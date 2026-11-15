@@ -7,9 +7,11 @@ import { concurrentHashMapInPractice } from "./concurrent-hashmap-in-practice";
 import { concurrentHashMapInternals } from "./concurrent-hashmap-internals";
 import { concurrentQueuesAndSkipLists } from "./concurrent-queues-and-skiplists";
 import { copyOnWriteCollections } from "./copy-on-write-collections";
+import { countDownLatchAndCyclicBarrier } from "./countdownlatch-and-cyclicbarrier";
 import { executorServiceBasics } from "./executor-service-basics";
 import { producerConsumer } from "./producer-consumer";
 import { reentrantAndReadWriteLocks } from "./reentrant-and-read-write-locks";
+import { semaphorePhaserExchanger } from "./semaphore-phaser-exchanger";
 import { synchronizedAndMonitors } from "./synchronized-and-monitors";
 import { threadLifecycleAndControl } from "./thread-lifecycle-and-control";
 import { threadLocalLesson } from "./threadlocal";
@@ -57,7 +59,7 @@ export const multithreadingPhases: Phase[] = [
   {
     title: "Coordination Utilities",
     description: "CountDownLatch, CyclicBarrier, Semaphore, Phaser and Exchanger with everyday examples.",
-    lessons: [],
+    lessons: [countDownLatchAndCyclicBarrier, semaphorePhaserExchanger],
   },
   {
     title: "Asynchronous Programming",

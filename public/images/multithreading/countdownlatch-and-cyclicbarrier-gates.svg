@@ -1,0 +1,103 @@
+<svg width="1200" height="816" viewBox="0 0 1200 816" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="816" rx="28" fill="#0D0D0D"/>
+  <path d="M80 130H1120" stroke="#2B2B2B" stroke-width="2"/>
+  <text x="80" y="82" fill="#FB923C" font-family="Arial, sans-serif" font-size="18" letter-spacing="4">TWO GATES: A LATCH THAT OPENS ONCE, A BARRIER THAT CYCLES</text>
+  <text x="80" y="112" fill="#777777" font-family="Arial, sans-serif" font-size="16">JDK 21. Fields from javap -p; wake-up times and arrival indexes measured in this lesson.</text>
+
+  <!-- LEFT: CountDownLatch -->
+  <text x="80" y="170" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="18">CountDownLatch(3)</text>
+  <text x="80" y="194" fill="#888888" font-family="Arial, sans-serif" font-size="13">waiters wait for events; the events do not wait</text>
+
+  <rect x="80" y="212" width="500" height="118" rx="12" fill="#21180F" stroke="#FB923C" stroke-width="2"/>
+  <text x="100" y="242" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="15">CountDownLatch$Sync (an AQS, shared mode)</text>
+  <g font-family="Courier New, monospace" font-size="14" xml:space="preserve">
+    <text x="100" y="272" fill="#C6A17A">volatile int state = count</text>
+    <text x="100" y="296" fill="#C6A17A">await()     -> acquireSharedInterruptibly(1)</text>
+    <text x="100" y="318" fill="#C6A17A">countDown() -> releaseShared(1): CAS state-1</text>
+  </g>
+
+  <!-- count steps -->
+  <g font-family="Arial, sans-serif" font-size="14">
+    <rect x="80" y="352" width="92" height="44" rx="8" fill="#151515" stroke="#444444" stroke-width="1.5"/>
+    <text x="104" y="379" fill="#FFFFFF">state 3</text>
+    <rect x="216" y="352" width="92" height="44" rx="8" fill="#151515" stroke="#444444" stroke-width="1.5"/>
+    <text x="240" y="379" fill="#FFFFFF">state 2</text>
+    <rect x="352" y="352" width="92" height="44" rx="8" fill="#151515" stroke="#444444" stroke-width="1.5"/>
+    <text x="376" y="379" fill="#FFFFFF">state 1</text>
+    <rect x="488" y="352" width="92" height="44" rx="8" fill="#21180F" stroke="#FB923C" stroke-width="2"/>
+    <text x="512" y="379" fill="#FB923C">state 0</text>
+  </g>
+  <path d="M172 374H216" stroke="#FB923C" stroke-width="2"/>
+  <path d="M308 374H352" stroke="#FB923C" stroke-width="2"/>
+  <path d="M444 374H488" stroke="#FB923C" stroke-width="2"/>
+  <text x="166" y="418" fill="#777777" font-family="Arial, sans-serif" font-size="12">countDown</text>
+  <text x="302" y="418" fill="#777777" font-family="Arial, sans-serif" font-size="12">countDown</text>
+  <text x="438" y="418" fill="#777777" font-family="Arial, sans-serif" font-size="12">countDown</text>
+
+  <!-- queue of waiters -->
+  <text x="80" y="456" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="15">Parked in the AQS queue, woken in order at 0:</text>
+  <g font-family="Arial, sans-serif" font-size="13">
+    <rect x="80" y="470" width="110" height="56" rx="8" fill="#0F1A21" stroke="#60A5FA" stroke-width="1.5"/>
+    <text x="94" y="493" fill="#FFFFFF">waiter-0</text>
+    <text x="94" y="513" fill="#93B4D6">+64 us</text>
+    <rect x="210" y="470" width="110" height="56" rx="8" fill="#0F1A21" stroke="#60A5FA" stroke-width="1.5"/>
+    <text x="224" y="493" fill="#FFFFFF">waiter-1</text>
+    <text x="224" y="513" fill="#93B4D6">+113 us</text>
+    <rect x="340" y="470" width="110" height="56" rx="8" fill="#0F1A21" stroke="#60A5FA" stroke-width="1.5"/>
+    <text x="354" y="493" fill="#FFFFFF">waiter-2</text>
+    <text x="354" y="513" fill="#93B4D6">+134 us</text>
+    <rect x="470" y="470" width="110" height="56" rx="8" fill="#0F1A21" stroke="#60A5FA" stroke-width="1.5"/>
+    <text x="484" y="493" fill="#FFFFFF">waiter-3</text>
+    <text x="484" y="513" fill="#93B4D6">+143 us</text>
+  </g>
+  <path d="M190 498H210" stroke="#60A5FA" stroke-width="2"/>
+  <path d="M320 498H340" stroke="#60A5FA" stroke-width="2"/>
+  <path d="M450 498H470" stroke="#60A5FA" stroke-width="2"/>
+  <text x="80" y="552" fill="#888888" font-family="Arial, sans-serif" font-size="13">Each woken waiter unparks the next one (shared-mode propagation).</text>
+  <text x="80" y="574" fill="#888888" font-family="Arial, sans-serif" font-size="13">One-shot: at 0 it stays open; countDown at 0 does nothing; no reset.</text>
+
+  <!-- RIGHT: CyclicBarrier -->
+  <text x="640" y="170" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="18">CyclicBarrier(3, action)</text>
+  <text x="640" y="194" fill="#888888" font-family="Arial, sans-serif" font-size="13">the parties wait for each other, then it resets itself</text>
+
+  <rect x="640" y="212" width="480" height="118" rx="12" fill="#21180F" stroke="#FB923C" stroke-width="2"/>
+  <text x="660" y="242" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="15">Not AQS directly: a lock, a condition, a counter</text>
+  <g font-family="Courier New, monospace" font-size="14" xml:space="preserve">
+    <text x="660" y="272" fill="#C6A17A">ReentrantLock lock;  Condition trip;</text>
+    <text x="660" y="296" fill="#C6A17A">int parties, count;  Runnable barrierCommand;</text>
+    <text x="660" y="318" fill="#C6A17A">Generation generation { boolean broken; }</text>
+  </g>
+
+  <g font-family="Arial, sans-serif" font-size="13">
+    <rect x="640" y="352" width="140" height="64" rx="8" fill="#0F1A21" stroke="#60A5FA" stroke-width="1.5"/>
+    <text x="654" y="376" fill="#FFFFFF">1st arrives</text>
+    <text x="654" y="398" fill="#93B4D6">count 2, returns 2</text>
+    <rect x="800" y="352" width="140" height="64" rx="8" fill="#0F1A21" stroke="#60A5FA" stroke-width="1.5"/>
+    <text x="814" y="376" fill="#FFFFFF">2nd arrives</text>
+    <text x="814" y="398" fill="#93B4D6">count 1, returns 1</text>
+    <rect x="960" y="352" width="160" height="64" rx="8" fill="#21180F" stroke="#FB923C" stroke-width="2"/>
+    <text x="974" y="376" fill="#FFFFFF">last arrives</text>
+    <text x="974" y="398" fill="#C6A17A">count 0, returns 0</text>
+  </g>
+  <path d="M780 384H800" stroke="#60A5FA" stroke-width="2"/>
+  <path d="M940 384H960" stroke="#60A5FA" stroke-width="2"/>
+  <text x="640" y="440" fill="#888888" font-family="Arial, sans-serif" font-size="13">Earlier arrivals: trip.await() releases the lock and parks on the Condition.</text>
+
+  <rect x="640" y="456" width="480" height="70" rx="10" fill="#151515" stroke="#444444" stroke-width="1.5"/>
+  <text x="656" y="482" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="14">Last thread: runs barrierCommand, then nextGeneration():</text>
+  <text x="656" y="506" fill="#AAAAAA" font-family="Arial, sans-serif" font-size="13">trip.signalAll(); count = parties; generation = new Generation()</text>
+
+  <rect x="640" y="542" width="480" height="70" rx="10" fill="#211010" stroke="#F87171" stroke-width="1.5"/>
+  <text x="656" y="568" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="14">Timeout, interrupt, reset() or a throwing action: breakBarrier()</text>
+  <text x="656" y="592" fill="#E0A0A0" font-family="Arial, sans-serif" font-size="13">broken = true; signalAll: everyone else gets BrokenBarrierException</text>
+
+  <!-- bottom: thread dumps -->
+  <path d="M80 640H1120" stroke="#2B2B2B" stroke-width="2"/>
+  <text x="80" y="672" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="15">In a thread dump, both are WAITING (parking), never BLOCKED:</text>
+  <g font-family="Courier New, monospace" font-size="13" xml:space="preserve">
+    <text x="80" y="702" fill="#93B4D6">latch:   parking to wait for &lt;...&gt; (a java.util.concurrent.CountDownLatch$Sync)</text>
+    <text x="80" y="724" fill="#888888">         ... AbstractQueuedSynchronizer.acquireSharedInterruptibly  CountDownLatch.await</text>
+    <text x="80" y="752" fill="#93B4D6">barrier: parking to wait for &lt;...&gt; (a ...AbstractQueuedSynchronizer$ConditionObject)</text>
+    <text x="80" y="774" fill="#888888">         ... ConditionObject.await  CyclicBarrier.dowait  CyclicBarrier.await</text>
+  </g>
+</svg>
