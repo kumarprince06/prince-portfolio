@@ -12,8 +12,10 @@ import { producerConsumer } from "./producer-consumer";
 import { reentrantAndReadWriteLocks } from "./reentrant-and-read-write-locks";
 import { synchronizedAndMonitors } from "./synchronized-and-monitors";
 import { threadLifecycleAndControl } from "./thread-lifecycle-and-control";
+import { threadLocalLesson } from "./threadlocal";
 import { threadPoolExecutorInternals } from "./thread-pool-executor-internals";
 import { threadsAndProcesses } from "./threads-and-processes";
+import { virtualThreads } from "./virtual-threads";
 import { volatileAndJavaMemoryModel } from "./volatile-and-java-memory-model";
 
 export const multithreadingPhases: Phase[] = [
@@ -65,7 +67,7 @@ export const multithreadingPhases: Phase[] = [
   {
     title: "ThreadLocal and Virtual Threads",
     description: "Per-thread data and its leak in pools, Java 21 virtual threads, pinning and structured concurrency.",
-    lessons: [],
+    lessons: [threadLocalLesson, virtualThreads],
   },
   {
     title: "Deadlocks, Race Conditions and Testing",

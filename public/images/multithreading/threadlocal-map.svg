@@ -1,0 +1,103 @@
+<svg width="1200" height="760" viewBox="0 0 1200 760" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="760" rx="28" fill="#0D0D0D"/>
+  <path d="M80 130H1120" stroke="#2B2B2B" stroke-width="2"/>
+  <text x="80" y="82" fill="#FB923C" font-family="Arial, sans-serif" font-size="18" letter-spacing="4">EACH THREAD OWNS THE MAP; A THREADLOCAL IS ONLY A KEY</text>
+  <text x="80" y="112" fill="#777777" font-family="Arial, sans-serif" font-size="16">JDK 21 ThreadLocal.ThreadLocalMap, read by reflection in ThreadLocalMapPeek.java (--add-opens java.base/java.lang)</text>
+
+  <!-- thread -->
+  <rect x="80" y="170" width="300" height="150" rx="12" fill="#0F1A21" stroke="#60A5FA" stroke-width="2"/>
+  <text x="100" y="200" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="16">Thread pool-1-thread-1</text>
+  <g font-family="Courier New, monospace" font-size="14" xml:space="preserve">
+    <text x="100" y="232" fill="#93B4D6">threadLocals  ──────►</text>
+    <text x="100" y="258" fill="#93B4D6">inheritableThreadLocals</text>
+    <text x="100" y="278" fill="#93B4D6">  = null</text>
+  </g>
+  <text x="100" y="306" fill="#888888" font-family="Arial, sans-serif" font-size="13">a pool thread lives as long as the pool</text>
+
+  <path d="M380 228H440" stroke="#60A5FA" stroke-width="2"/>
+  <path d="M431 223L440 228L431 233" stroke="#60A5FA" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+
+  <!-- map -->
+  <rect x="440" y="170" width="680" height="150" rx="12" fill="#151515" stroke="#444444" stroke-width="2"/>
+  <text x="456" y="198" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="16">ThreadLocalMap: Entry[16] table, open addressing, threshold = 2/3 of length</text>
+  <g font-family="Arial, sans-serif" font-size="11" fill="#777777">
+    <text x="469" y="228">0</text><text x="510" y="228">1</text><text x="551" y="228">2</text><text x="592" y="228">3</text>
+    <text x="633" y="228">4</text><text x="674" y="228">5</text><text x="715" y="228">6</text><text x="756" y="228">7</text>
+    <text x="797" y="228">8</text><text x="838" y="228">9</text><text x="876" y="228">10</text><text x="917" y="228">11</text>
+    <text x="958" y="228">12</text><text x="999" y="228">13</text><text x="1040" y="228">14</text><text x="1081" y="228">15</text>
+  </g>
+  <g stroke-width="2">
+    <rect x="456" y="236" width="37" height="38" rx="6" fill="#21180F" stroke="#FB923C"/>
+    <rect x="497" y="236" width="37" height="38" rx="6" fill="#111111" stroke="#2B2B2B"/>
+    <rect x="538" y="236" width="37" height="38" rx="6" fill="#111111" stroke="#2B2B2B"/>
+    <rect x="579" y="236" width="37" height="38" rx="6" fill="#111111" stroke="#2B2B2B"/>
+    <rect x="620" y="236" width="37" height="38" rx="6" fill="#111111" stroke="#2B2B2B"/>
+    <rect x="661" y="236" width="37" height="38" rx="6" fill="#111111" stroke="#2B2B2B"/>
+    <rect x="702" y="236" width="37" height="38" rx="6" fill="#1A1A1A" stroke="#777777" stroke-dasharray="4 3"/>
+    <rect x="743" y="236" width="37" height="38" rx="6" fill="#21180F" stroke="#FB923C"/>
+    <rect x="784" y="236" width="37" height="38" rx="6" fill="#111111" stroke="#2B2B2B"/>
+    <rect x="825" y="236" width="37" height="38" rx="6" fill="#111111" stroke="#2B2B2B"/>
+    <rect x="866" y="236" width="37" height="38" rx="6" fill="#111111" stroke="#2B2B2B"/>
+    <rect x="907" y="236" width="37" height="38" rx="6" fill="#111111" stroke="#2B2B2B"/>
+    <rect x="948" y="236" width="37" height="38" rx="6" fill="#111111" stroke="#2B2B2B"/>
+    <rect x="989" y="236" width="37" height="38" rx="6" fill="#111111" stroke="#2B2B2B"/>
+    <rect x="1030" y="236" width="37" height="38" rx="6" fill="#21180F" stroke="#FB923C"/>
+    <rect x="1071" y="236" width="37" height="38" rx="6" fill="#111111" stroke="#2B2B2B"/>
+  </g>
+  <g font-family="Arial, sans-serif" font-size="13" text-anchor="middle">
+    <text x="474" y="260" fill="#FB923C">L</text>
+    <text x="720" y="260" fill="#AAAAAA">S</text>
+    <text x="761" y="260" fill="#FB923C">L</text>
+    <text x="1048" y="260" fill="#FB923C">L</text>
+  </g>
+  <text x="490" y="302" fill="#888888" font-family="Arial, sans-serif" font-size="13">L live, S stale (key collected). Hash 0x00000000 → slot 0, 0x61c88647 → 7, 0xc3910c8e → 14</text>
+
+  <!-- arrows from slots to cards -->
+  <path d="M474 274V340H245V368" stroke="#FB923C" stroke-width="2"/>
+  <path d="M240 359L245 368L250 359" stroke="#FB923C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M720 274V340H600V368" stroke="#777777" stroke-width="2" stroke-dasharray="5 4"/>
+  <path d="M595 359L600 368L605 359" stroke="#777777" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+
+  <!-- entry cards -->
+  <rect x="80" y="368" width="330" height="200" rx="12" fill="#21180F" stroke="#FB923C" stroke-width="2"/>
+  <text x="100" y="398" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="16">Entry in slot 0: live</text>
+  <g font-family="Courier New, monospace" font-size="14" xml:space="preserve">
+    <text x="100" y="430" fill="#93B4D6">key   → RIDER     (weak)</text>
+    <text x="100" y="456" fill="#C6A17A">value → "asha"    (strong)</text>
+  </g>
+  <text x="100" y="490" fill="#888888" font-family="Arial, sans-serif" font-size="13">RIDER is a static final field, so the key</text>
+  <text x="100" y="510" fill="#888888" font-family="Arial, sans-serif" font-size="13">never becomes unreachable. Only remove()</text>
+  <text x="100" y="530" fill="#888888" font-family="Arial, sans-serif" font-size="13">clears this entry: forget it, and the next</text>
+  <text x="100" y="550" fill="#888888" font-family="Arial, sans-serif" font-size="13">request on this thread reads "asha".</text>
+
+  <rect x="435" y="368" width="330" height="200" rx="12" fill="#1A1A1A" stroke="#777777" stroke-width="2" stroke-dasharray="6 4"/>
+  <text x="455" y="398" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="16">Entry in slot 6: stale</text>
+  <g font-family="Courier New, monospace" font-size="14" xml:space="preserve">
+    <text x="455" y="430" fill="#93B4D6">key   → null      (cleared)</text>
+    <text x="455" y="456" fill="#C6A17A">value → byte[1 MB] (strong)</text>
+  </g>
+  <text x="455" y="490" fill="#888888" font-family="Arial, sans-serif" font-size="13">The ThreadLocal object was collected, but</text>
+  <text x="455" y="510" fill="#888888" font-family="Arial, sans-serif" font-size="13">the map still holds the value strongly until</text>
+  <text x="455" y="530" fill="#888888" font-family="Arial, sans-serif" font-size="13">expungeStaleEntry runs. get() hits never</text>
+  <text x="455" y="550" fill="#888888" font-family="Arial, sans-serif" font-size="13">run it; my 4th set() nearby did.</text>
+
+  <rect x="790" y="368" width="330" height="200" rx="12" fill="#0F1A21" stroke="#60A5FA" stroke-width="2"/>
+  <text x="810" y="398" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="16">The reference chain that leaks</text>
+  <g font-family="Courier New, monospace" font-size="14" xml:space="preserve">
+    <text x="810" y="430" fill="#93B4D6">pool Thread</text>
+    <text x="810" y="452" fill="#93B4D6"> → threadLocals → table</text>
+    <text x="810" y="474" fill="#93B4D6"> → Entry → value</text>
+    <text x="810" y="496" fill="#C6A17A"> → value.getClass()</text>
+    <text x="810" y="518" fill="#C6A17A"> → its ClassLoader → every class</text>
+  </g>
+  <text x="810" y="554" fill="#888888" font-family="Arial, sans-serif" font-size="13">weak key, strong value: GC alone can't help</text>
+
+  <!-- rules -->
+  <rect x="80" y="596" width="1040" height="130" rx="12" fill="#151515" stroke="#444444" stroke-width="2"/>
+  <g font-family="Courier New, monospace" font-size="14" xml:space="preserve">
+    <text x="100" y="626" fill="#FFFFFF">slot  = threadLocalHashCode &amp; (table.length - 1)     <tspan fill="#888888">// 16 slots: 0, 7, 14, 5, 12, 3, 10, 1, 8 ...</tspan></text>
+    <text x="100" y="652" fill="#FFFFFF">hash  = nextHashCode.getAndAdd(0x61c88647)            <tspan fill="#888888">// 2^32 / golden ratio: Fibonacci hashing</tspan></text>
+    <text x="100" y="678" fill="#FFFFFF">clash → linear probe to slot + 1;  size reaches 2/3 → purge stale, then double</text>
+    <text x="100" y="704" fill="#FFFFFF">stale → expungeStaleEntry on get() miss, set(), remove(), rehash; never on a get() hit</text>
+  </g>
+</svg>

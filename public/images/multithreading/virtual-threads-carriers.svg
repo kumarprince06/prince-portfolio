@@ -1,0 +1,109 @@
+<svg width="1200" height="800" viewBox="0 0 1200 800" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="800" rx="28" fill="#0D0D0D"/>
+  <path d="M80 130H1120" stroke="#2B2B2B" stroke-width="2"/>
+  <text x="80" y="82" fill="#FB923C" font-family="Arial, sans-serif" font-size="18" letter-spacing="4">VIRTUAL THREADS RUN ON A FEW CARRIERS AND WAIT ON THE HEAP</text>
+  <text x="80" y="112" fill="#777777" font-family="Arial, sans-serif" font-size="16">JDK 21 default scheduler: a FIFO ForkJoinPool, parallelism = cores (8 here), up to 256 carriers. Measured in VirtualThreadPeek and StackChunks.</text>
+
+  <!-- scheduler -->
+  <rect x="80" y="156" width="1040" height="200" rx="12" fill="#151515" stroke="#444444" stroke-width="2"/>
+  <text x="100" y="186" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="16">ForkJoinPool-1: carrier platform threads (one OS thread each)</text>
+
+  <g font-family="Arial, sans-serif">
+    <rect x="100" y="204" width="112" height="132" rx="10" fill="#0F1A21" stroke="#60A5FA" stroke-width="2"/>
+    <text x="112" y="228" fill="#FFFFFF" font-size="13">worker-1</text>
+    <rect x="110" y="242" width="92" height="76" rx="8" fill="#21180F" stroke="#FB923C" stroke-width="2"/>
+    <text x="120" y="266" fill="#FB923C" font-size="13">#20 asha</text>
+    <text x="120" y="288" fill="#C6A17A" font-size="12">RUNNING</text>
+    <text x="120" y="306" fill="#888888" font-size="11">mounted</text>
+
+    <rect x="224" y="204" width="112" height="132" rx="10" fill="#0F1A21" stroke="#60A5FA" stroke-width="2"/>
+    <text x="236" y="228" fill="#FFFFFF" font-size="13">worker-2</text>
+    <rect x="234" y="242" width="92" height="76" rx="8" fill="#21180F" stroke="#FB923C" stroke-width="2"/>
+    <text x="244" y="266" fill="#FB923C" font-size="13">#4107</text>
+    <text x="244" y="288" fill="#C6A17A" font-size="12">RUNNING</text>
+    <text x="244" y="306" fill="#888888" font-size="11">mounted</text>
+
+    <rect x="348" y="204" width="112" height="132" rx="10" fill="#0F1A21" stroke="#60A5FA" stroke-width="2"/>
+    <text x="360" y="228" fill="#FFFFFF" font-size="13">worker-3</text>
+    <rect x="358" y="242" width="92" height="76" rx="8" fill="#2A1414" stroke="#F87171" stroke-width="2"/>
+    <text x="368" y="266" fill="#F87171" font-size="13">#57 PINNED</text>
+    <text x="368" y="288" fill="#E8A0A0" font-size="11">sleep() inside</text>
+    <text x="368" y="306" fill="#E8A0A0" font-size="11">synchronized</text>
+
+    <rect x="472" y="204" width="112" height="132" rx="10" fill="#0F1A21" stroke="#60A5FA" stroke-width="2"/>
+    <text x="484" y="228" fill="#FFFFFF" font-size="13">worker-4</text>
+    <rect x="482" y="242" width="92" height="76" rx="8" fill="#21180F" stroke="#FB923C" stroke-width="2"/>
+    <text x="492" y="266" fill="#FB923C" font-size="13">#9012</text>
+    <text x="492" y="288" fill="#C6A17A" font-size="12">RUNNING</text>
+    <text x="492" y="306" fill="#888888" font-size="11">mounted</text>
+
+    <rect x="596" y="204" width="112" height="132" rx="10" fill="#0F1A21" stroke="#60A5FA" stroke-width="2"/>
+    <text x="608" y="228" fill="#FFFFFF" font-size="13">worker-5</text>
+    <rect x="606" y="242" width="92" height="76" rx="8" fill="#21180F" stroke="#FB923C" stroke-width="2"/>
+    <text x="616" y="266" fill="#FB923C" font-size="13">#311</text>
+    <text x="616" y="288" fill="#C6A17A" font-size="12">RUNNING</text>
+    <text x="616" y="306" fill="#888888" font-size="11">mounted</text>
+
+    <rect x="720" y="204" width="112" height="132" rx="10" fill="#0F1A21" stroke="#60A5FA" stroke-width="2"/>
+    <text x="732" y="228" fill="#FFFFFF" font-size="13">worker-6</text>
+    <rect x="730" y="242" width="92" height="76" rx="8" fill="#21180F" stroke="#FB923C" stroke-width="2"/>
+    <text x="740" y="266" fill="#FB923C" font-size="13">#7730</text>
+    <text x="740" y="288" fill="#C6A17A" font-size="12">RUNNING</text>
+    <text x="740" y="306" fill="#888888" font-size="11">mounted</text>
+
+    <rect x="844" y="204" width="112" height="132" rx="10" fill="#0F1A21" stroke="#60A5FA" stroke-width="2"/>
+    <text x="856" y="228" fill="#FFFFFF" font-size="13">worker-7</text>
+    <rect x="854" y="242" width="92" height="76" rx="8" fill="#21180F" stroke="#FB923C" stroke-width="2"/>
+    <text x="864" y="266" fill="#FB923C" font-size="13">#152</text>
+    <text x="864" y="288" fill="#C6A17A" font-size="12">RUNNING</text>
+    <text x="864" y="306" fill="#888888" font-size="11">mounted</text>
+
+    <rect x="968" y="204" width="132" height="132" rx="10" fill="#0F1A21" stroke="#60A5FA" stroke-width="2"/>
+    <text x="980" y="228" fill="#FFFFFF" font-size="13">worker-8</text>
+    <rect x="978" y="242" width="112" height="76" rx="8" fill="#111111" stroke="#2B2B2B" stroke-width="2"/>
+    <text x="988" y="266" fill="#93B4D6" font-size="13">idle: takes the</text>
+    <text x="988" y="286" fill="#93B4D6" font-size="13">next runnable</text>
+    <text x="988" y="306" fill="#888888" font-size="11">continuation</text>
+  </g>
+
+  <!-- mount / unmount arrows -->
+  <path d="M300 356V430" stroke="#60A5FA" stroke-width="2"/>
+  <path d="M295 421L300 430L305 421" stroke="#60A5FA" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="316" y="384" fill="#93B4D6" font-family="Arial, sans-serif" font-size="13">unmount: blocks in park/sleep/queue/socket,</text>
+  <text x="316" y="402" fill="#93B4D6" font-family="Arial, sans-serif" font-size="13">frames copied into a StackChunk, carrier freed</text>
+
+  <path d="M700 430V356" stroke="#FB923C" stroke-width="2"/>
+  <path d="M695 365L700 356L705 365" stroke="#FB923C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="716" y="384" fill="#C6A17A" font-family="Arial, sans-serif" font-size="13">mount: unpark submits runContinuation to the pool;</text>
+  <text x="716" y="402" fill="#C6A17A" font-family="Arial, sans-serif" font-size="13">any free carrier copies frames back and resumes</text>
+
+  <!-- heap -->
+  <rect x="80" y="430" width="680" height="250" rx="12" fill="#21180F" stroke="#FB923C" stroke-width="2"/>
+  <text x="100" y="460" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="16">Java heap: parked virtual threads are just objects</text>
+  <g font-family="Courier New, monospace" font-size="14" xml:space="preserve">
+    <text x="100" y="494" fill="#C6A17A">VirtualThread #21  PARKED       → Continuation → StackChunk</text>
+    <text x="100" y="518" fill="#C6A17A">VirtualThread #22  TIMED_PARKED → Continuation → StackChunk</text>
+    <text x="100" y="542" fill="#C6A17A">VirtualThread #23  UNPARKED     → queued for a carrier</text>
+    <text x="100" y="566" fill="#C6A17A">... 9,997 more</text>
+  </g>
+  <text x="100" y="602" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="14">10,000 parked threads (GC.class_histogram):</text>
+  <text x="100" y="626" fill="#C6A17A" font-family="Arial, sans-serif" font-size="14">VirtualThread objects 1.4 MB (144 bytes each); chunks 2.1 to 2.7 KB at depth 10</text>
+  <text x="100" y="648" fill="#C6A17A" font-family="Arial, sans-serif" font-size="14">StackChunks: 21 to 27 MB at call depth 10, 39 to 76 MB at depth 200</text>
+
+  <!-- rules -->
+  <rect x="790" y="430" width="330" height="250" rx="12" fill="#0F1A21" stroke="#60A5FA" stroke-width="2"/>
+  <text x="810" y="460" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="16">What blocking does on JDK 21</text>
+  <text x="810" y="490" fill="#93B4D6" font-family="Arial, sans-serif" font-size="13">Unmounts (cheap):</text>
+  <text x="810" y="510" fill="#888888" font-family="Arial, sans-serif" font-size="13">sleep, LockSupport.park, ReentrantLock,</text>
+  <text x="810" y="528" fill="#888888" font-family="Arial, sans-serif" font-size="13">BlockingQueue, Semaphore, socket I/O</text>
+  <text x="810" y="560" fill="#F87171" font-family="Arial, sans-serif" font-size="13">Pins the carrier:</text>
+  <text x="810" y="580" fill="#888888" font-family="Arial, sans-serif" font-size="13">blocking inside synchronized (MONITOR),</text>
+  <text x="810" y="598" fill="#888888" font-family="Arial, sans-serif" font-size="13">class init and native frames (NATIVE)</text>
+  <text x="810" y="630" fill="#C6A17A" font-family="Arial, sans-serif" font-size="13">Object.wait() pins but the pool adds a</text>
+  <text x="810" y="648" fill="#C6A17A" font-family="Arial, sans-serif" font-size="13">carrier, up to 256. JDK 24 (JEP 491):</text>
+  <text x="810" y="666" fill="#C6A17A" font-family="Arial, sans-serif" font-size="13">synchronized stops pinning.</text>
+
+  <!-- footer -->
+  <rect x="80" y="704" width="1040" height="60" rx="12" fill="#151515" stroke="#444444" stroke-width="2"/>
+  <text x="100" y="740" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="14">100,000 tasks sleeping 100 ms each: 1,000 platform threads 10.2 to 11.7 s; a virtual thread per task 0.26 to 6.3 s on 15 platform threads.</text>
+</svg>
