@@ -1,0 +1,96 @@
+<svg width="1200" height="820" viewBox="0 0 1200 820" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="820" rx="28" fill="#0D0D0D"/>
+  <path d="M80 130H1120" stroke="#2B2B2B" stroke-width="2"/>
+  <text x="80" y="82" fill="#FB923C" font-family="Arial, sans-serif" font-size="18" letter-spacing="4">A DEADLOCK IS A CYCLE IN THE WAIT-FOR GRAPH</text>
+  <text x="80" y="112" fill="#777777" font-family="Arial, sans-serif" font-size="16">WalletDeadlock.java on JDK 21, from jcmd Thread.print -l; the JVM can only follow edges that have an owner</text>
+
+  <!-- panel 1: the measured cycle -->
+  <rect x="80" y="160" width="500" height="360" rx="12" fill="#151515" stroke="#444444" stroke-width="2"/>
+  <text x="100" y="190" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="16">Two settlements, opposite directions, synchronized</text>
+
+  <rect x="100" y="215" width="200" height="64" rx="10" fill="#0F1A21" stroke="#60A5FA" stroke-width="2"/>
+  <text x="114" y="242" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="14">settle-asha-to-ravi</text>
+  <text x="114" y="264" fill="#93B4D6" font-family="Courier New, monospace" font-size="13">BLOCKED</text>
+
+  <rect x="360" y="215" width="200" height="64" rx="10" fill="#0F1A21" stroke="#60A5FA" stroke-width="2"/>
+  <text x="374" y="242" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="14">settle-ravi-to-asha</text>
+  <text x="374" y="264" fill="#93B4D6" font-family="Courier New, monospace" font-size="13">BLOCKED</text>
+
+  <rect x="100" y="380" width="200" height="64" rx="10" fill="#21180F" stroke="#FB923C" stroke-width="2"/>
+  <text x="114" y="407" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="14">Wallet asha</text>
+  <text x="114" y="429" fill="#C6A17A" font-family="Courier New, monospace" font-size="13">&lt;0x...ff916a90&gt;</text>
+
+  <rect x="360" y="380" width="200" height="64" rx="10" fill="#21180F" stroke="#FB923C" stroke-width="2"/>
+  <text x="374" y="407" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="14">Wallet ravi</text>
+  <text x="374" y="429" fill="#C6A17A" font-family="Courier New, monospace" font-size="13">&lt;0x...ff916ad8&gt;</text>
+
+  <!-- holds: lock -> owner thread (green) -->
+  <path d="M170 380V279" stroke="#4ADE80" stroke-width="2"/>
+  <path d="M165 288L170 279L175 288" stroke="#4ADE80" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="112" y="335" fill="#4ADE80" font-family="Arial, sans-serif" font-size="12">held by</text>
+  <path d="M490 380V279" stroke="#4ADE80" stroke-width="2"/>
+  <path d="M485 288L490 279L495 288" stroke="#4ADE80" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="500" y="335" fill="#4ADE80" font-family="Arial, sans-serif" font-size="12">held by</text>
+
+  <!-- waits: thread -> lock (red), crossing -->
+  <path d="M240 279L420 380" stroke="#F87171" stroke-width="2"/>
+  <path d="M409 379L420 380L414 370" stroke="#F87171" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M420 279L240 380" stroke="#F87171" stroke-width="2"/>
+  <path d="M246 370L240 380L251 379" stroke="#F87171" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="252" y="304" width="96" height="20" rx="4" fill="#161616"/>
+  <text x="300" y="318" fill="#F87171" font-family="Arial, sans-serif" font-size="12" text-anchor="middle">waiting to lock</text>
+
+  <text x="100" y="476" fill="#888888" font-family="Arial, sans-serif" font-size="13">Each thread holds its source wallet and waits for the other's.</text>
+  <text x="100" y="498" fill="#888888" font-family="Arial, sans-serif" font-size="13">jcmd: "Found one Java-level deadlock" ... "Found 1 deadlock."</text>
+
+  <!-- panel 2: what the detector can follow -->
+  <rect x="620" y="160" width="500" height="360" rx="12" fill="#151515" stroke="#444444" stroke-width="2"/>
+  <text x="640" y="190" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="16">What findDeadlockedThreads can see</text>
+  <g font-family="Courier New, monospace" font-size="13" xml:space="preserve">
+    <text x="640" y="226" fill="#4ADE80">synchronized       monitor owner        → found</text>
+    <text x="640" y="252" fill="#4ADE80">ReentrantLock      exclusiveOwnerThread → found</text>
+    <text x="640" y="278" fill="#4ADE80">RRWL write lock    exclusiveOwnerThread → found</text>
+    <text x="640" y="314" fill="#F87171">Semaphore(1)       owner = null         → missed</text>
+    <text x="640" y="340" fill="#F87171">CountDownLatch     owner = null         → missed</text>
+    <text x="640" y="366" fill="#F87171">Future.get()       no owner at all      → missed</text>
+  </g>
+  <text x="640" y="404" fill="#888888" font-family="Arial, sans-serif" font-size="13">Wait-for edge = "blocked on X, X is owned by thread T".</text>
+  <text x="640" y="426" fill="#888888" font-family="Arial, sans-serif" font-size="13">No owner, no edge, no cycle: Semaphore and pool deadlocks</text>
+  <text x="640" y="448" fill="#888888" font-family="Arial, sans-serif" font-size="13">are invisible to jstack and to ThreadMXBean.</text>
+  <text x="640" y="484" fill="#888888" font-family="Arial, sans-serif" font-size="13">findMonitorDeadlockedThreads: monitors only (null for</text>
+  <text x="640" y="506" fill="#888888" font-family="Arial, sans-serif" font-size="13">ReentrantLock cycles in my run).</text>
+
+  <!-- panel 3: pool starvation -->
+  <rect x="80" y="550" width="500" height="230" rx="12" fill="#1A1A1A" stroke="#777777" stroke-width="2" stroke-dasharray="6 4"/>
+  <text x="100" y="580" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="16">Thread-starvation deadlock (no locks at all)</text>
+  <g stroke-width="2">
+    <rect x="100" y="600" width="44" height="34" rx="6" fill="#0F1A21" stroke="#60A5FA"/>
+    <rect x="152" y="600" width="44" height="34" rx="6" fill="#0F1A21" stroke="#60A5FA"/>
+    <rect x="204" y="600" width="44" height="34" rx="6" fill="#0F1A21" stroke="#60A5FA"/>
+    <rect x="256" y="600" width="44" height="34" rx="6" fill="#0F1A21" stroke="#60A5FA"/>
+    <rect x="308" y="600" width="44" height="34" rx="6" fill="#0F1A21" stroke="#60A5FA"/>
+    <rect x="360" y="600" width="44" height="34" rx="6" fill="#0F1A21" stroke="#60A5FA"/>
+    <rect x="412" y="600" width="44" height="34" rx="6" fill="#0F1A21" stroke="#60A5FA"/>
+    <rect x="464" y="600" width="44" height="34" rx="6" fill="#0F1A21" stroke="#60A5FA"/>
+  </g>
+  <text x="520" y="622" fill="#93B4D6" font-family="Arial, sans-serif" font-size="12">8 of 8</text>
+  <text x="100" y="656" fill="#93B4D6" font-family="Courier New, monospace" font-size="13">every pool thread: settle() → FutureTask.get()</text>
+  <path d="M300 666V690" stroke="#F87171" stroke-width="2"/>
+  <path d="M295 681L300 690L305 681" stroke="#F87171" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="100" y="694" width="460" height="34" rx="6" fill="#111111" stroke="#2B2B2B" stroke-width="2"/>
+  <text x="114" y="716" fill="#C6A17A" font-family="Courier New, monospace" font-size="13">queue: promo(), tip(), promo(), tip() ... (45 queued)</text>
+  <text x="100" y="756" fill="#888888" font-family="Arial, sans-serif" font-size="13">The subtasks they wait for can never get a thread. findDeadlockedThreads: null.</text>
+
+  <!-- panel 4: prevention -->
+  <rect x="620" y="550" width="500" height="230" rx="12" fill="#0F1A21" stroke="#60A5FA" stroke-width="2"/>
+  <text x="640" y="580" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="16">Break one Coffman condition</text>
+  <g font-family="Courier New, monospace" font-size="13" xml:space="preserve">
+    <text x="640" y="614" fill="#FFFFFF">circular wait  → lock by id: min(from,to) first</text>
+    <text x="640" y="640" fill="#FFFFFF">hold and wait  → tryLock(timeout), release all,</text>
+    <text x="640" y="662" fill="#FFFFFF">                 back off with random jitter</text>
+    <text x="640" y="688" fill="#FFFFFF">mutual excl.   → one lock, or CAS on one state</text>
+    <text x="640" y="714" fill="#FFFFFF">no preemption  → lockInterruptibly, DB victim</text>
+  </g>
+  <text x="640" y="750" fill="#888888" font-family="Arial, sans-serif" font-size="13">2,000,000 transfers, 4 threads: every fix finished;</text>
+  <text x="640" y="770" fill="#888888" font-family="Arial, sans-serif" font-size="13">the naive order deadlocked after 516 to 21,990.</text>
+</svg>

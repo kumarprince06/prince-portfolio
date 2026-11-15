@@ -1,0 +1,73 @@
+<svg width="1200" height="800" viewBox="0 0 1200 800" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="800" rx="28" fill="#0D0D0D"/>
+  <path d="M80 130H1120" stroke="#2B2B2B" stroke-width="2"/>
+  <text x="80" y="82" fill="#FB923C" font-family="Arial, sans-serif" font-size="18" letter-spacing="4">TWO SAFE CALLS ARE NOT ONE SAFE STEP</text>
+  <text x="80" y="112" fill="#777777" font-family="Arial, sans-serif" font-size="16">Check-then-act on a ConcurrentHashMap: no data race, still a race condition (CheckThenAct.java, JDK 21)</text>
+
+  <!-- time axis -->
+  <text x="80" y="168" fill="#888888" font-family="Arial, sans-serif" font-size="13">time →</text>
+  <path d="M140 164H1110" stroke="#444444" stroke-width="2"/>
+  <path d="M1101 159L1110 164L1101 169" stroke="#444444" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+
+  <!-- lane labels -->
+  <text x="80" y="222" fill="#60A5FA" font-family="Arial, sans-serif" font-size="15">rider-0</text>
+  <text x="80" y="302" fill="#C084FC" font-family="Arial, sans-serif" font-size="15">rider-1</text>
+  <text x="80" y="382" fill="#888888" font-family="Arial, sans-serif" font-size="15">map</text>
+
+  <!-- rider-0 steps -->
+  <rect x="150" y="196" width="230" height="44" rx="10" fill="#0F1A21" stroke="#60A5FA" stroke-width="2"/>
+  <text x="164" y="224" fill="#93B4D6" font-family="Courier New, monospace" font-size="13">containsKey(D-17) → false</text>
+  <rect x="630" y="196" width="230" height="44" rx="10" fill="#0F1A21" stroke="#60A5FA" stroke-width="2"/>
+  <text x="644" y="224" fill="#93B4D6" font-family="Courier New, monospace" font-size="13">put(D-17, rider-0) → true</text>
+
+  <!-- rider-1 steps -->
+  <rect x="390" y="276" width="230" height="44" rx="10" fill="#1B1224" stroke="#C084FC" stroke-width="2"/>
+  <text x="404" y="304" fill="#D8B4FE" font-family="Courier New, monospace" font-size="13">containsKey(D-17) → false</text>
+  <rect x="870" y="276" width="230" height="44" rx="10" fill="#1B1224" stroke="#C084FC" stroke-width="2"/>
+  <text x="884" y="304" fill="#D8B4FE" font-family="Courier New, monospace" font-size="13">put(D-17, rider-1) → true</text>
+
+  <!-- race window -->
+  <rect x="380" y="186" width="250" height="144" rx="8" fill="#2A1508" fill-opacity="0.35" stroke="#FB923C" stroke-width="1.5" stroke-dasharray="6 4"/>
+  <text x="394" y="348" fill="#FB923C" font-family="Arial, sans-serif" font-size="13">race window: rider-0 has checked, not yet acted</text>
+
+  <!-- map states -->
+  <g font-family="Courier New, monospace" font-size="14">
+    <rect x="150" y="362" width="230" height="34" rx="8" fill="#151515" stroke="#444444" stroke-width="2"/>
+    <text x="164" y="384" fill="#AAAAAA">{ }</text>
+    <rect x="390" y="362" width="230" height="34" rx="8" fill="#151515" stroke="#444444" stroke-width="2"/>
+    <text x="404" y="384" fill="#AAAAAA">{ }</text>
+    <rect x="630" y="362" width="230" height="34" rx="8" fill="#151515" stroke="#444444" stroke-width="2"/>
+    <text x="644" y="384" fill="#AAAAAA">{D-17=rider-0}</text>
+    <rect x="870" y="362" width="230" height="34" rx="8" fill="#21180F" stroke="#FB923C" stroke-width="2"/>
+    <text x="885" y="384" fill="#FB923C">{D-17=rider-1}</text>
+  </g>
+  <text x="160" y="426" fill="#888888" font-family="Arial, sans-serif" font-size="13">Every call is atomic and every write happens-before the next read, so there is no data race. Both riders were told</text>
+  <text x="160" y="446" fill="#888888" font-family="Arial, sans-serif" font-size="13">"D-17 is yours"; rider-0's assignment was silently overwritten. Correctness depends on timing: a race condition.</text>
+
+  <!-- measured panel -->
+  <rect x="80" y="476" width="510" height="150" rx="12" fill="#151515" stroke="#444444" stroke-width="2"/>
+  <text x="100" y="506" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="16">Measured: two riders, one driver, a start gate</text>
+  <g font-family="Courier New, monospace" font-size="14" xml:space="preserve">
+    <text x="100" y="538" fill="#FB923C">containsKey → put    248 to 583 / 20,000</text>
+    <text x="100" y="562" fill="#FB923C">... with ETA between 254 to 680 / 20,000</text>
+    <text x="100" y="586" fill="#4ADE80">putIfAbsent          0 / 20,000 (3 runs)</text>
+  </g>
+  <text x="100" y="612" fill="#888888" font-family="Arial, sans-serif" font-size="13">trials where both riders got D-17, in three runs</text>
+
+  <rect x="610" y="476" width="510" height="150" rx="12" fill="#0F1A21" stroke="#60A5FA" stroke-width="2"/>
+  <text x="630" y="506" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="16">The fix moves the decision inside the map</text>
+  <g font-family="Courier New, monospace" font-size="14" xml:space="preserve">
+    <text x="630" y="538" fill="#93B4D6">putIfAbsent(D-17, rider)  == null</text>
+    <text x="630" y="562" fill="#93B4D6">replace(D-17, AVAILABLE, ON_TRIP)</text>
+    <text x="630" y="586" fill="#93B4D6">compute(D-17, (k, v) -> ...)</text>
+  </g>
+  <text x="630" y="612" fill="#888888" font-family="Arial, sans-serif" font-size="13">check and act under the same bin lock: one winner</text>
+
+  <!-- three shapes -->
+  <rect x="80" y="648" width="1040" height="120" rx="12" fill="#151515" stroke="#444444" stroke-width="2"/>
+  <g font-family="Courier New, monospace" font-size="14" xml:space="preserve">
+    <text x="100" y="680" fill="#FFFFFF">read-modify-write  trips++ = getfield, iadd, putfield     <tspan fill="#888888">// two threads read 0, both write 1</tspan></text>
+    <text x="100" y="708" fill="#FFFFFF">check-then-act     if (!m.containsKey(k)) m.put(k, v)      <tspan fill="#888888">// both checks pass before either act</tspan></text>
+    <text x="100" y="736" fill="#FFFFFF">publication        latest = new Quote(1500)                 <tspan fill="#888888">// reference seen before the fields</tspan></text>
+  </g>
+</svg>

@@ -8,8 +8,10 @@ import { concurrentHashMapInternals } from "./concurrent-hashmap-internals";
 import { concurrentQueuesAndSkipLists } from "./concurrent-queues-and-skiplists";
 import { copyOnWriteCollections } from "./copy-on-write-collections";
 import { countDownLatchAndCyclicBarrier } from "./countdownlatch-and-cyclicbarrier";
+import { deadlockLivelockStarvation } from "./deadlock-livelock-starvation";
 import { executorServiceBasics } from "./executor-service-basics";
 import { producerConsumer } from "./producer-consumer";
+import { raceConditionsAndTesting } from "./race-conditions-and-testing";
 import { reentrantAndReadWriteLocks } from "./reentrant-and-read-write-locks";
 import { semaphorePhaserExchanger } from "./semaphore-phaser-exchanger";
 import { synchronizedAndMonitors } from "./synchronized-and-monitors";
@@ -74,7 +76,7 @@ export const multithreadingPhases: Phase[] = [
   {
     title: "Deadlocks, Race Conditions and Testing",
     description: "Spotting and preventing deadlock, livelock and starvation, thread dumps, and testing concurrent code.",
-    lessons: [],
+    lessons: [deadlockLivelockStarvation, raceConditionsAndTesting],
   },
   {
     title: "Concurrency Across Servers",
