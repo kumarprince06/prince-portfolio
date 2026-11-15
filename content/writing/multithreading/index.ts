@@ -3,6 +3,8 @@ import { atomicsAndCas } from "./atomics-and-cas";
 import { blockingQueues } from "./blocking-queues";
 import { concurrentHashMapInPractice } from "./concurrent-hashmap-in-practice";
 import { concurrentHashMapInternals } from "./concurrent-hashmap-internals";
+import { concurrentQueuesAndSkipLists } from "./concurrent-queues-and-skiplists";
+import { copyOnWriteCollections } from "./copy-on-write-collections";
 import { executorServiceBasics } from "./executor-service-basics";
 import { producerConsumer } from "./producer-consumer";
 import { reentrantAndReadWriteLocks } from "./reentrant-and-read-write-locks";
@@ -46,7 +48,7 @@ export const multithreadingPhases: Phase[] = [
   {
     title: "Other Concurrent Collections",
     description: "CopyOnWriteArrayList, ConcurrentLinkedQueue, ConcurrentSkipListMap and when each fits.",
-    lessons: [],
+    lessons: [copyOnWriteCollections, concurrentQueuesAndSkipLists],
   },
   {
     title: "Coordination Utilities",
