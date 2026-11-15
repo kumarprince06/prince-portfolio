@@ -10,10 +10,12 @@ import { copyOnWriteCollections } from "./copy-on-write-collections";
 import { countDownLatchAndCyclicBarrier } from "./countdownlatch-and-cyclicbarrier";
 import { deadlockLivelockStarvation } from "./deadlock-livelock-starvation";
 import { executorServiceBasics } from "./executor-service-basics";
+import { locksAcrossServers } from "./locks-across-servers";
 import { producerConsumer } from "./producer-consumer";
 import { raceConditionsAndTesting } from "./race-conditions-and-testing";
 import { reentrantAndReadWriteLocks } from "./reentrant-and-read-write-locks";
 import { semaphorePhaserExchanger } from "./semaphore-phaser-exchanger";
+import { skipLockedAndIdempotency } from "./skip-locked-and-idempotency";
 import { synchronizedAndMonitors } from "./synchronized-and-monitors";
 import { threadLifecycleAndControl } from "./thread-lifecycle-and-control";
 import { threadLocalLesson } from "./threadlocal";
@@ -81,6 +83,6 @@ export const multithreadingPhases: Phase[] = [
   {
     title: "Concurrency Across Servers",
     description: "Why synchronized fails with many instances, database locks, conditional updates, SKIP LOCKED and idempotency.",
-    lessons: [],
+    lessons: [locksAcrossServers, skipLockedAndIdempotency],
   },
 ];

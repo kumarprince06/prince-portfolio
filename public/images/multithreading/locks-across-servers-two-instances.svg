@@ -1,0 +1,91 @@
+<svg width="1200" height="820" viewBox="0 0 1200 820" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="820" rx="28" fill="#0D0D0D"/>
+  <path d="M80 130H1120" stroke="#2B2B2B" stroke-width="2"/>
+  <text x="80" y="82" fill="#FB923C" font-family="Arial, sans-serif" font-size="18" letter-spacing="4">TWO JVMS, TWO MONITORS, ONE DRIVER ROW</text>
+  <text x="80" y="112" fill="#777777" font-family="Arial, sans-serif" font-size="16">DispatchService run as two processes against PostgreSQL 16, 300 drivers, 150 trips per instance, 4 threads each</text>
+
+  <!-- instance A -->
+  <rect x="80" y="160" width="300" height="190" rx="12" fill="#0F1A21" stroke="#60A5FA" stroke-width="2"/>
+  <text x="100" y="190" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="16">JVM process: instance A</text>
+  <rect x="100" y="206" width="260" height="40" rx="8" fill="#111111" stroke="#2B2B2B" stroke-width="2"/>
+  <text x="114" y="232" fill="#93B4D6" font-family="Courier New, monospace" font-size="14">monitor of DispatchService A</text>
+  <g font-family="Courier New, monospace" font-size="14" xml:space="preserve">
+    <text x="100" y="274" fill="#C6A17A">1 SELECT ... AVAILABLE → 7</text>
+    <text x="100" y="298" fill="#C6A17A">3 UPDATE id=7 trip 1007</text>
+    <text x="100" y="322" fill="#C6A17A">  INSERT trip 1007, COMMIT</text>
+  </g>
+  <text x="100" y="342" fill="#888888" font-family="Arial, sans-serif" font-size="12">synchronized only orders A's own threads</text>
+
+  <!-- instance B -->
+  <rect x="80" y="380" width="300" height="190" rx="12" fill="#0F1A21" stroke="#60A5FA" stroke-width="2"/>
+  <text x="100" y="410" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="16">JVM process: instance B</text>
+  <rect x="100" y="426" width="260" height="40" rx="8" fill="#111111" stroke="#2B2B2B" stroke-width="2"/>
+  <text x="114" y="452" fill="#93B4D6" font-family="Courier New, monospace" font-size="14">monitor of DispatchService B</text>
+  <g font-family="Courier New, monospace" font-size="14" xml:space="preserve">
+    <text x="100" y="494" fill="#C6A17A">2 SELECT ... AVAILABLE → 7</text>
+    <text x="100" y="518" fill="#C6A17A">4 UPDATE id=7 trip 2007</text>
+    <text x="100" y="542" fill="#C6A17A">  INSERT trip 2007, COMMIT</text>
+  </g>
+  <text x="100" y="562" fill="#888888" font-family="Arial, sans-serif" font-size="12">a different heap, a different monitor</text>
+
+  <!-- arrows to db -->
+  <path d="M380 270H450" stroke="#60A5FA" stroke-width="2"/>
+  <path d="M441 265L450 270L441 275" stroke="#60A5FA" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M380 490H420V300H450" stroke="#60A5FA" stroke-width="2"/>
+  <path d="M441 295L450 300L441 305" stroke="#60A5FA" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+
+  <!-- database -->
+  <rect x="450" y="160" width="330" height="410" rx="12" fill="#151515" stroke="#444444" stroke-width="2"/>
+  <text x="470" y="190" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="16">PostgreSQL: the only shared thing</text>
+  <rect x="470" y="210" width="290" height="96" rx="8" fill="#21180F" stroke="#FB923C" stroke-width="2"/>
+  <g font-family="Courier New, monospace" font-size="14" xml:space="preserve">
+    <text x="484" y="236" fill="#FB923C">drivers id=7</text>
+    <text x="484" y="260" fill="#C6A17A">status  ON_TRIP</text>
+    <text x="484" y="284" fill="#C6A17A">trip_id 2007   (B wrote last)</text>
+  </g>
+  <rect x="470" y="322" width="290" height="96" rx="8" fill="#2A1212" stroke="#F87171" stroke-width="2"/>
+  <g font-family="Courier New, monospace" font-size="14" xml:space="preserve">
+    <text x="484" y="348" fill="#F87171">trips</text>
+    <text x="484" y="372" fill="#E5B4B4">1007  driver 7  instance A</text>
+    <text x="484" y="396" fill="#E5B4B4">2007  driver 7  instance B</text>
+  </g>
+  <text x="470" y="446" fill="#AAAAAA" font-family="Arial, sans-serif" font-size="14">Both checks ran before either write.</text>
+  <text x="470" y="468" fill="#AAAAAA" font-family="Arial, sans-serif" font-size="14">Both writes succeeded. Nothing failed.</text>
+  <text x="470" y="500" fill="#F87171" font-family="Arial, sans-serif" font-size="15">Measured: 71 to 139 of 300 trips</text>
+  <text x="470" y="522" fill="#F87171" font-family="Arial, sans-serif" font-size="15">shared a driver, across 8 runs</text>
+  <text x="470" y="550" fill="#888888" font-family="Arial, sans-serif" font-size="12">one instance with 8 threads: 0 of 300</text>
+
+  <!-- fixes -->
+  <rect x="810" y="160" width="310" height="410" rx="12" fill="#0F1A14" stroke="#4ADE80" stroke-width="2"/>
+  <text x="830" y="190" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="16">Move the decision into the database</text>
+  <g font-family="Arial, sans-serif" font-size="13">
+    <text x="830" y="222" fill="#4ADE80">Conditional UPDATE</text>
+    <text x="830" y="240" fill="#A7D7B5">... WHERE id=7 AND status='AVAILABLE'</text>
+    <text x="830" y="256" fill="#888888">1 row = won, 0 = lost (652 to 958 retries)</text>
+    <text x="830" y="284" fill="#4ADE80">SELECT ... FOR UPDATE</text>
+    <text x="830" y="302" fill="#A7D7B5">B waits: transactionid ShareLock granted=f</text>
+    <text x="830" y="318" fill="#888888">0 retries, waiters re-read the new row</text>
+    <text x="830" y="346" fill="#4ADE80">Version column</text>
+    <text x="830" y="364" fill="#A7D7B5">... WHERE id=7 AND version=0</text>
+    <text x="830" y="380" fill="#888888">576 to 950 retries per instance</text>
+    <text x="830" y="408" fill="#4ADE80">Partial unique index on trips</text>
+    <text x="830" y="426" fill="#A7D7B5">(driver_id) WHERE status='ASSIGNED'</text>
+    <text x="830" y="442" fill="#888888">SQLState 23505 on the loser, 107 to 147</text>
+    <text x="830" y="470" fill="#4ADE80">REPEATABLE READ / SERIALIZABLE</text>
+    <text x="830" y="488" fill="#A7D7B5">could not serialize access</text>
+    <text x="830" y="504" fill="#888888">SQLState 40001, retry the transaction</text>
+    <text x="830" y="538" fill="#FFFFFF">Every fix: 300 trips, 300 drivers,</text>
+    <text x="830" y="556" fill="#FFFFFF">0 double assignments</text>
+  </g>
+
+  <!-- bottom -->
+  <rect x="80" y="600" width="1040" height="180" rx="12" fill="#151515" stroke="#444444" stroke-width="2"/>
+  <text x="100" y="630" fill="#FB923C" font-family="Arial, sans-serif" font-size="15" letter-spacing="2">WHAT A WAITING SESSION LOOKS LIKE</text>
+  <g font-family="Courier New, monospace" font-size="13" xml:space="preserve">
+    <text x="100" y="660" fill="#93B4D6">tuple header of (0,7): xmax = A's xid, HEAP_XMAX_EXCL_LOCK | HEAP_XMAX_LOCK_ONLY | HEAP_KEYS_UPDATED</text>
+    <text x="100" y="684" fill="#93B4D6">pg_locks A: transactionid 38472 ExclusiveLock granted   (the row lock itself is not in pg_locks)</text>
+    <text x="100" y="708" fill="#93B4D6">pg_locks B: tuple drivers (0,7) granted, transactionid 38472 ShareLock NOT granted</text>
+    <text x="100" y="732" fill="#93B4D6">pg_stat_activity B: wait_event Lock/transactionid, pg_blocking_pids = {A}</text>
+  </g>
+  <text x="100" y="764" fill="#888888" font-family="Arial, sans-serif" font-size="13">FOR UPDATE blocks a foreign-key INSERT into trips (FOR KEY SHARE); FOR NO KEY UPDATE and a plain UPDATE of status do not.</text>
+</svg>

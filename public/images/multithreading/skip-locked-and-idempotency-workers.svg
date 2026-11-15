@@ -1,0 +1,91 @@
+<svg width="1200" height="900" viewBox="0 0 1200 900" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="900" rx="28" fill="#0D0D0D"/>
+  <path d="M80 130H1120" stroke="#2B2B2B" stroke-width="2"/>
+  <text x="80" y="82" fill="#FB923C" font-family="Arial, sans-serif" font-size="18" letter-spacing="4">ONE QUEUE TABLE, MANY WORKERS, MANY INSTANCES</text>
+  <text x="80" y="112" fill="#777777" font-family="Arial, sans-serif" font-size="16">PostgreSQL 16 payout_jobs polled by 8 JDBC workers; idempotency keys and locks across instances (measured in this lesson)</text>
+
+  <!-- the jobs table -->
+  <rect x="80" y="160" width="330" height="330" rx="12" fill="#151515" stroke="#444444" stroke-width="2"/>
+  <text x="100" y="190" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="16">payout_jobs (ORDER BY id)</text>
+  <g font-family="Courier New, monospace" font-size="14" xml:space="preserve">
+    <rect x="100" y="206" width="290" height="30" rx="6" fill="#21180F" stroke="#FB923C" stroke-width="2"/>
+    <text x="112" y="226" fill="#FB923C">id 1  locked by w1  (xmax)</text>
+    <rect x="100" y="242" width="290" height="30" rx="6" fill="#21180F" stroke="#FB923C" stroke-width="2"/>
+    <text x="112" y="262" fill="#FB923C">id 2  locked by w2</text>
+    <rect x="100" y="278" width="290" height="30" rx="6" fill="#21180F" stroke="#FB923C" stroke-width="2"/>
+    <text x="112" y="298" fill="#FB923C">id 3  locked by w3</text>
+    <rect x="100" y="314" width="290" height="30" rx="6" fill="#0F1A12" stroke="#4ADE80" stroke-width="2"/>
+    <text x="112" y="334" fill="#86EFAC">id 4  pending  ← w4 SKIP LOCKED</text>
+    <rect x="100" y="350" width="290" height="30" rx="6" fill="#111111" stroke="#2B2B2B" stroke-width="2"/>
+    <text x="112" y="370" fill="#AAAAAA">id 5  pending</text>
+    <rect x="100" y="386" width="290" height="30" rx="6" fill="#111111" stroke="#2B2B2B" stroke-width="2"/>
+    <text x="112" y="406" fill="#AAAAAA">id 6  pending</text>
+  </g>
+  <text x="100" y="446" fill="#888888" font-family="Arial, sans-serif" font-size="13">A row lock is the locker's xid in the tuple's xmax,</text>
+  <text x="100" y="466" fill="#888888" font-family="Arial, sans-serif" font-size="13">not an entry in pg_locks (pgrowlocks shows it).</text>
+
+  <!-- arrows to the comparison -->
+  <path d="M410 221H460" stroke="#F87171" stroke-width="2" stroke-dasharray="5 4"/>
+  <path d="M451 216L460 221L451 226" stroke="#F87171" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M410 329H460" stroke="#4ADE80" stroke-width="2"/>
+  <path d="M451 324L460 329L451 334" stroke="#4ADE80" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+
+  <!-- FOR UPDATE vs SKIP LOCKED -->
+  <rect x="460" y="160" width="660" height="120" rx="12" fill="#1F1010" stroke="#F87171" stroke-width="2"/>
+  <text x="480" y="190" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="16">... LIMIT 1 FOR UPDATE: w4 waits for w1's transaction (wait_event transactionid)</text>
+  <g font-family="Courier New, monospace" font-size="14" xml:space="preserve">
+    <text x="480" y="220" fill="#FCA5A5">8 workers, 400 jobs of 10 ms:  59 to 66 jobs/s  (1 worker: 68)</text>
+    <text x="480" y="244" fill="#FCA5A5">42 to 46 s of the workers' time spent waiting in the claim query</text>
+  </g>
+  <text x="480" y="268" fill="#888888" font-family="Arial, sans-serif" font-size="13">Workers line up behind the oldest row: correct but serial. No lock: 2,290 to 2,577 duplicates.</text>
+
+  <rect x="460" y="296" width="660" height="110" rx="12" fill="#0F1A12" stroke="#4ADE80" stroke-width="2"/>
+  <text x="480" y="326" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="16">... LIMIT 1 FOR UPDATE SKIP LOCKED: w4 takes the next free row</text>
+  <g font-family="Courier New, monospace" font-size="14" xml:space="preserve">
+    <text x="480" y="356" fill="#86EFAC">8 workers: 399 to 569 jobs/s, 400 payments, 400 distinct, 0 dup</text>
+  </g>
+  <text x="480" y="384" fill="#888888" font-family="Arial, sans-serif" font-size="13">Cost: no global order. 32 same-driver events ran out of order unless workers own a key range.</text>
+
+  <!-- lease -->
+  <rect x="460" y="422" width="660" height="68" rx="12" fill="#0F1A21" stroke="#60A5FA" stroke-width="2"/>
+  <g font-family="Courier New, monospace" font-size="13" xml:space="preserve">
+    <text x="480" y="448" fill="#93B4D6">claim: UPDATE status='running', lease, attempts+1 ... SKIP LOCKED</text>
+    <text x="480" y="472" fill="#93B4D6">COMMIT, then work; complete only WHERE attempts = mine</text>
+  </g>
+
+  <!-- idempotency -->
+  <rect x="80" y="510" width="510" height="230" rx="12" fill="#151515" stroke="#444444" stroke-width="2"/>
+  <text x="100" y="540" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="16">POST /payouts with Idempotency-Key: payout-7f3c...</text>
+  <g font-family="Courier New, monospace" font-size="13" xml:space="preserve">
+    <text x="100" y="570" fill="#C6A17A">INSERT INTO idempotency_keys (idem_key, request_hash)</text>
+    <text x="100" y="590" fill="#C6A17A">ON CONFLICT (idem_key) DO NOTHING RETURNING idem_key</text>
+    <text x="100" y="618" fill="#86EFAC">row back  → this request owns the key: pay, store 201 + body</text>
+    <text x="100" y="640" fill="#AAAAAA">no row    → hash differs?  422</text>
+    <text x="100" y="660" fill="#AAAAAA">            in_progress?    409, retry later</text>
+    <text x="100" y="680" fill="#AAAAAA">            completed?      replay the stored response</text>
+  </g>
+  <text x="100" y="712" fill="#888888" font-family="Arial, sans-serif" font-size="13">200 requests sent 3 times at once + 1 late retry: 200 payouts.</text>
+  <text x="100" y="730" fill="#888888" font-family="Arial, sans-serif" font-size="13">No key: 800. Check-then-insert without a unique constraint: 398.</text>
+
+  <!-- across instances -->
+  <rect x="610" y="510" width="510" height="230" rx="12" fill="#21180F" stroke="#FB923C" stroke-width="2"/>
+  <text x="630" y="540" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="16">One scheduled job, many instances</text>
+  <g font-family="Courier New, monospace" font-size="13" xml:space="preserve">
+    <text x="630" y="570" fill="#FDBA74">pg_try_advisory_xact_lock(20261115)</text>
+    <text x="630" y="590" fill="#888888">  one winner; released by COMMIT/ROLLBACK</text>
+    <text x="630" y="614" fill="#FDBA74">SET lock tokenA NX PX 500   + INCR fence</text>
+    <text x="630" y="634" fill="#888888">  release: Lua GET == token ? DEL : 0</text>
+    <text x="630" y="658" fill="#FDBA74">A pauses 800 ms → lease gone → B (fence 7)</text>
+    <text x="630" y="678" fill="#FDBA74">A writes with fence 6 → WHERE fence &lt; 6 → 0 rows</text>
+  </g>
+  <text x="630" y="712" fill="#888888" font-family="Arial, sans-serif" font-size="13">A real 200 ms full GC outlived a 100 ms Redis lease.</text>
+  <text x="630" y="730" fill="#888888" font-family="Arial, sans-serif" font-size="13">A lock narrows the window; the unique row closes it.</text>
+
+  <!-- rules -->
+  <rect x="80" y="760" width="1040" height="110" rx="12" fill="#151515" stroke="#444444" stroke-width="2"/>
+  <g font-family="Courier New, monospace" font-size="14" xml:space="preserve">
+    <text x="100" y="790" fill="#FFFFFF">queue      → FOR UPDATE SKIP LOCKED, short claim transaction, lease + attempts as a token</text>
+    <text x="100" y="816" fill="#FFFFFF">retries    → a unique key in the database decides "first"; store and replay the response</text>
+    <text x="100" y="842" fill="#FFFFFF">one leader → advisory / ShedLock / Redis lock for efficiency; a unique row or fence for correctness</text>
+  </g>
+</svg>
