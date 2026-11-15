@@ -5,6 +5,7 @@ import { interviewPhases } from "./interview-questions";
 import { javaPhases } from "./java";
 import { java8Phases } from "./java-8";
 import { multithreadingPhases } from "./multithreading";
+import { mysqlPhases } from "./mysql";
 import * as roadmap from "./roadmap";
 import { systemDesignPhases } from "./system-design";
 
@@ -41,7 +42,7 @@ export const categories: Category[] = [
   ),
   track(
     { slug: "mysql", title: "MySQL", unit: "Lesson", description: "Queries, indexes, transactions, isolation levels and how the database works underneath." },
-    roadmap.mysqlPhases,
+    mysqlPhases,
   ),
   track(
     { slug: "postgresql", title: "PostgreSQL", unit: "Lesson", description: "Postgres data types, indexes, MVCC and VACUUM, locking with SKIP LOCKED, query plans, partitioning and using it from Spring Boot." },

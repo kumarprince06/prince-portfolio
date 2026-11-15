@@ -25,17 +25,6 @@ export const dsaPhases: Phase[] = [
   soon("Graphs", "BFS, DFS, topological sort and shortest paths."),
 ];
 
-export const mysqlPhases: Phase[] = [
-  soon("SQL Basics", "SELECT, WHERE, ORDER BY, INSERT, UPDATE, DELETE and data types."),
-  soon("Joins and Aggregation", "Inner and outer joins, GROUP BY, HAVING and common mistakes."),
-  soon("Subqueries, CTEs and Window Functions", "Correlated subqueries, WITH, ROW_NUMBER, RANK, LAG and running totals."),
-  soon("Indexes", "B-tree indexes, the clustered primary key in InnoDB, composite indexes and the leftmost prefix rule."),
-  soon("Transactions and Isolation Levels", "ACID, REPEATABLE READ by default, anomalies and MVCC with undo logs."),
-  soon("Locking in InnoDB", "Row locks, gap and next-key locks, deadlocks and how to read them."),
-  soon("Query Optimisation", "EXPLAIN, the slow query log and rewriting slow queries."),
-  soon("Replication, Backups and Scaling", "Binlog replication, read replicas, backups and partitioning."),
-];
-
 export const postgresqlPhases: Phase[] = [
   soon("Getting Started with PostgreSQL", "Installing with Docker, psql basics, databases, schemas and roles."),
   soon("Data Types That Matter", "TIMESTAMPTZ, NUMERIC for money, UUID, arrays, ENUM and JSONB."),

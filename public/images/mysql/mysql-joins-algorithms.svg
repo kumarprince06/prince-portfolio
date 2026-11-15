@@ -1,0 +1,90 @@
+<svg width="1200" height="820" viewBox="0 0 1200 820" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="820" rx="28" fill="#0D0D0D"/>
+  <path d="M80 130H1120" stroke="#2B2B2B" stroke-width="2"/>
+  <text x="80" y="82" fill="#FB923C" font-family="Arial, sans-serif" font-size="18" letter-spacing="4">THREE WAYS MYSQL 8.0 EXECUTES THE SAME JOIN</text>
+  <text x="80" y="112" fill="#777777" font-family="Arial, sans-serif" font-size="16">drivers (20,000 rows) JOIN trips (500,000 rows) for the 1,667 Pune sedan drivers, MySQL 8.0.45, EXPLAIN ANALYZE</text>
+
+  <!-- column 1: nested loop with index lookup -->
+  <rect x="80" y="160" width="320" height="380" rx="12" fill="#0F1A21" stroke="#60A5FA" stroke-width="2"/>
+  <text x="100" y="192" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="16">1. Nested loop + index lookup</text>
+  <text x="100" y="214" fill="#888888" font-family="Arial, sans-serif" font-size="13">index on trips.driver_id (idx_driver)</text>
+  <rect x="100" y="234" width="120" height="44" rx="8" fill="#111111" stroke="#60A5FA"/>
+  <text x="112" y="261" fill="#93B4D6" font-family="Courier New, monospace" font-size="14">drivers d</text>
+  <text x="232" y="252" fill="#888888" font-family="Arial, sans-serif" font-size="12">scan, filter</text>
+  <text x="232" y="268" fill="#888888" font-family="Arial, sans-serif" font-size="12">1,667 rows</text>
+  <path d="M160 278V318" stroke="#60A5FA" stroke-width="2"/>
+  <path d="M155 309L160 318L165 309" stroke="#60A5FA" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="100" y="318" width="280" height="44" rx="8" fill="#111111" stroke="#60A5FA"/>
+  <text x="112" y="345" fill="#93B4D6" font-family="Courier New, monospace" font-size="14">idx_driver (driver_id=d.id)</text>
+  <text x="100" y="388" fill="#AAAAAA" font-family="Arial, sans-serif" font-size="13">1,667 B-tree dives, ~25 trips each</text>
+  <g font-family="Courier New, monospace" font-size="13" fill="#93B4D6">
+    <text x="100" y="420">EXPLAIN type: ref</text>
+    <text x="100" y="440">TREE: Index lookup on t</text>
+    <text x="100" y="460">      using idx_driver</text>
+  </g>
+  <text x="100" y="508" fill="#FB923C" font-family="Arial, sans-serif" font-size="22">78 - 255 ms</text>
+
+  <!-- column 2: nested loop, no index -->
+  <rect x="440" y="160" width="320" height="380" rx="12" fill="#1A1111" stroke="#F87171" stroke-width="2"/>
+  <text x="460" y="192" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="16">2. Nested loop, no trips index</text>
+  <text x="460" y="214" fill="#888888" font-family="Arial, sans-serif" font-size="13">the optimizer drives from trips instead</text>
+  <rect x="460" y="234" width="120" height="44" rx="8" fill="#111111" stroke="#F87171"/>
+  <text x="472" y="261" fill="#E8A0A0" font-family="Courier New, monospace" font-size="14">trips t</text>
+  <text x="592" y="252" fill="#888888" font-family="Arial, sans-serif" font-size="12">full scan</text>
+  <text x="592" y="268" fill="#888888" font-family="Arial, sans-serif" font-size="12">490,000 rows</text>
+  <path d="M520 278V318" stroke="#F87171" stroke-width="2"/>
+  <path d="M515 309L520 318L525 309" stroke="#F87171" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="460" y="318" width="280" height="44" rx="8" fill="#111111" stroke="#F87171"/>
+  <text x="472" y="345" fill="#E8A0A0" font-family="Courier New, monospace" font-size="14">PRIMARY (id=t.driver_id)</text>
+  <text x="460" y="388" fill="#AAAAAA" font-family="Arial, sans-serif" font-size="13">490,000 lookups; 91.5% then filtered away</text>
+  <g font-family="Courier New, monospace" font-size="13" fill="#E8A0A0">
+    <text x="460" y="420">EXPLAIN type: eq_ref</text>
+    <text x="460" y="440">TREE: Single-row index</text>
+    <text x="460" y="460">      lookup on d</text>
+  </g>
+  <text x="460" y="508" fill="#FB923C" font-family="Arial, sans-serif" font-size="22">790 - 1,124 ms</text>
+
+  <!-- column 3: hash join -->
+  <rect x="800" y="160" width="320" height="380" rx="12" fill="#13190F" stroke="#4ADE80" stroke-width="2"/>
+  <text x="820" y="192" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="16">3. Hash join (8.0.18+)</text>
+  <text x="820" y="214" fill="#888888" font-family="Arial, sans-serif" font-size="13">no usable index on either side</text>
+  <rect x="820" y="234" width="130" height="44" rx="8" fill="#111111" stroke="#4ADE80"/>
+  <text x="832" y="261" fill="#A3D9A5" font-family="Courier New, monospace" font-size="14">build: d</text>
+  <text x="962" y="252" fill="#888888" font-family="Arial, sans-serif" font-size="12">1,667 rows into</text>
+  <text x="962" y="268" fill="#888888" font-family="Arial, sans-serif" font-size="12">a hash table</text>
+  <path d="M885 278V318" stroke="#4ADE80" stroke-width="2"/>
+  <path d="M880 309L885 318L890 309" stroke="#4ADE80" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="820" y="318" width="280" height="44" rx="8" fill="#111111" stroke="#4ADE80"/>
+  <text x="832" y="345" fill="#A3D9A5" font-family="Courier New, monospace" font-size="14">probe: trips, one scan</text>
+  <text x="820" y="388" fill="#AAAAAA" font-family="Arial, sans-serif" font-size="13">500,000 hash probes, no B-tree dives</text>
+  <g font-family="Courier New, monospace" font-size="13" fill="#A3D9A5">
+    <text x="820" y="420">Extra: Using join buffer</text>
+    <text x="820" y="440">       (hash join)</text>
+    <text x="820" y="460">TREE: Inner hash join</text>
+  </g>
+  <text x="820" y="508" fill="#FB923C" font-family="Arial, sans-serif" font-size="22">173 - 284 ms</text>
+
+  <!-- bottom: correctness rules -->
+  <text x="80" y="590" fill="#FB923C" font-family="Arial, sans-serif" font-size="15" letter-spacing="3">WHAT CHANGES THE ANSWER, NOT JUST THE SPEED (5 drivers, 8 trips, 7 payments)</text>
+  <rect x="80" y="610" width="330" height="170" rx="12" fill="#151515" stroke="#444444" stroke-width="2"/>
+  <text x="100" y="640" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="15">Right-table filter in WHERE</text>
+  <text x="100" y="666" fill="#AAAAAA" font-family="Courier New, monospace" font-size="13">LEFT JOIN t ... WHERE t.status=</text>
+  <text x="100" y="694" fill="#F87171" font-family="Arial, sans-serif" font-size="14">3 drivers: Neha and Imran vanish</text>
+  <text x="100" y="720" fill="#AAAAAA" font-family="Courier New, monospace" font-size="13">LEFT JOIN t ON ... AND t.status=</text>
+  <text x="100" y="748" fill="#4ADE80" font-family="Arial, sans-serif" font-size="14">5 drivers, two with 0 trips</text>
+
+  <rect x="435" y="610" width="330" height="170" rx="12" fill="#151515" stroke="#444444" stroke-width="2"/>
+  <text x="455" y="640" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="15">Join fan-out (trips x payments)</text>
+  <text x="455" y="666" fill="#AAAAAA" font-family="Courier New, monospace" font-size="13">SUM(fare) from trips</text>
+  <text x="455" y="690" fill="#4ADE80" font-family="Arial, sans-serif" font-size="14">100,000 paise</text>
+  <text x="455" y="720" fill="#AAAAAA" font-family="Courier New, monospace" font-size="13">SUM(t.fare) after JOIN payments</text>
+  <text x="455" y="744" fill="#F87171" font-family="Arial, sans-serif" font-size="14">149,000 paise (split + retried trips)</text>
+
+  <rect x="790" y="610" width="330" height="170" rx="12" fill="#151515" stroke="#444444" stroke-width="2"/>
+  <text x="810" y="640" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="15">Drivers with no trips (anti join)</text>
+  <text x="810" y="666" fill="#AAAAAA" font-family="Courier New, monospace" font-size="13">LEFT JOIN ... IS NULL</text>
+  <text x="810" y="686" fill="#AAAAAA" font-family="Courier New, monospace" font-size="13">NOT EXISTS (...)</text>
+  <text x="810" y="710" fill="#4ADE80" font-family="Arial, sans-serif" font-size="14">Neha, both ways</text>
+  <text x="810" y="738" fill="#AAAAAA" font-family="Courier New, monospace" font-size="13">NOT IN (SELECT driver_id ...)</text>
+  <text x="810" y="762" fill="#F87171" font-family="Arial, sans-serif" font-size="14">empty set: one trip has NULL driver</text>
+</svg>

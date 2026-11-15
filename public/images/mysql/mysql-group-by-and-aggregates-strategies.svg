@@ -1,0 +1,89 @@
+<svg width="1200" height="780" viewBox="0 0 1200 780" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="780" rx="28" fill="#0D0D0D"/>
+  <path d="M80 130H1120" stroke="#2B2B2B" stroke-width="2"/>
+  <text x="80" y="82" fill="#FB923C" font-family="Arial, sans-serif" font-size="18" letter-spacing="4">ONE GROUP BY, THREE WAYS TO EXECUTE IT</text>
+  <text x="80" y="112" fill="#777777" font-family="Arial, sans-serif" font-size="16">MySQL 8.0.45, 1,000,000 rows in big_trips, times from EXPLAIN ANALYZE in this lesson</text>
+
+  <!-- logical order -->
+  <text x="80" y="166" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="16">Logical order of a grouped query</text>
+  <g font-family="Courier New, monospace" font-size="14" text-anchor="middle">
+    <rect x="80" y="182" width="120" height="40" rx="8" fill="#151515" stroke="#444444" stroke-width="2"/>
+    <text x="140" y="207" fill="#FFFFFF">FROM/JOIN</text>
+    <rect x="230" y="182" width="110" height="40" rx="8" fill="#0F1A21" stroke="#60A5FA" stroke-width="2"/>
+    <text x="285" y="207" fill="#93B4D6">WHERE</text>
+    <rect x="370" y="182" width="120" height="40" rx="8" fill="#21180F" stroke="#FB923C" stroke-width="2"/>
+    <text x="430" y="207" fill="#FB923C">GROUP BY</text>
+    <rect x="520" y="182" width="110" height="40" rx="8" fill="#0F1A21" stroke="#60A5FA" stroke-width="2"/>
+    <text x="575" y="207" fill="#93B4D6">HAVING</text>
+    <rect x="660" y="182" width="110" height="40" rx="8" fill="#151515" stroke="#444444" stroke-width="2"/>
+    <text x="715" y="207" fill="#FFFFFF">SELECT</text>
+    <rect x="800" y="182" width="120" height="40" rx="8" fill="#151515" stroke="#444444" stroke-width="2"/>
+    <text x="860" y="207" fill="#FFFFFF">ORDER BY</text>
+    <rect x="950" y="182" width="90" height="40" rx="8" fill="#151515" stroke="#444444" stroke-width="2"/>
+    <text x="995" y="207" fill="#FFFFFF">LIMIT</text>
+  </g>
+  <g stroke="#555555" stroke-width="2">
+    <path d="M200 202H228"/><path d="M340 202H368"/><path d="M490 202H518"/><path d="M630 202H658"/><path d="M770 202H798"/><path d="M920 202H948"/>
+  </g>
+  <text x="230" y="248" fill="#888888" font-family="Arial, sans-serif" font-size="13">WHERE drops rows before any group exists; HAVING drops whole groups after every row was aggregated.</text>
+  <text x="230" y="268" fill="#888888" font-family="Arial, sans-serif" font-size="13">driver 42: WHERE driver_id = 42 took 0.5 ms (222 index rows); HAVING driver_id = 42 took 2,169 ms (1,000,000 rows).</text>
+
+  <!-- card 1: temporary table -->
+  <rect x="80" y="296" width="330" height="300" rx="12" fill="#21180F" stroke="#FB923C" stroke-width="2"/>
+  <text x="100" y="326" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="16">1. Temporary table</text>
+  <text x="100" y="348" fill="#FB923C" font-family="Arial, sans-serif" font-size="13">EXPLAIN: Using temporary</text>
+  <g font-family="Courier New, monospace" font-size="13" xml:space="preserve">
+    <text x="100" y="378" fill="#C6A17A">scan rows in any order</text>
+    <text x="100" y="398" fill="#C6A17A">look up group key in hash</text>
+    <text x="100" y="418" fill="#C6A17A">  new  → Handler_write</text>
+    <text x="100" y="438" fill="#C6A17A">  seen → Handler_update</text>
+  </g>
+  <text x="100" y="470" fill="#888888" font-family="Arial, sans-serif" font-size="13">GROUP BY city: 5 writes, 999,995</text>
+  <text x="100" y="490" fill="#888888" font-family="Arial, sans-serif" font-size="13">updates, 0.79 s, all in TempTable RAM.</text>
+  <text x="100" y="516" fill="#888888" font-family="Arial, sans-serif" font-size="13">GROUP BY rider_id (198,712 groups):</text>
+  <text x="100" y="536" fill="#888888" font-family="Arial, sans-serif" font-size="13">tmp_table_size 64 MB → 0.87 s in RAM</text>
+  <text x="100" y="556" fill="#888888" font-family="Arial, sans-serif" font-size="13">16 MB default → spilled to InnoDB, 3.85 s</text>
+  <text x="100" y="576" fill="#888888" font-family="Arial, sans-serif" font-size="13">(Created_tmp_disk_tables = 1)</text>
+
+  <!-- card 2: tight index scan -->
+  <rect x="435" y="296" width="330" height="300" rx="12" fill="#0F1A21" stroke="#60A5FA" stroke-width="2"/>
+  <text x="455" y="326" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="16">2. Tight index scan</text>
+  <text x="455" y="348" fill="#60A5FA" font-family="Arial, sans-serif" font-size="13">TREE: Group aggregate over Index scan</text>
+  <g font-family="Courier New, monospace" font-size="13" xml:space="preserve">
+    <text x="455" y="378" fill="#93B4D6">read (driver_id, created_at)</text>
+    <text x="455" y="398" fill="#93B4D6">in key order: 1,1,1,2,2,...</text>
+    <text x="455" y="418" fill="#93B4D6">key changes → emit group</text>
+    <text x="455" y="438" fill="#93B4D6">no temp table, no sort</text>
+  </g>
+  <text x="455" y="470" fill="#888888" font-family="Arial, sans-serif" font-size="13">COUNT(*) per driver, covering: 0.20 s</text>
+  <text x="455" y="496" fill="#888888" font-family="Arial, sans-serif" font-size="13">SUM(fare_paise), NOT covering: 3.2 s,</text>
+  <text x="455" y="516" fill="#888888" font-family="Arial, sans-serif" font-size="13">a clustered-index lookup per row, slower</text>
+  <text x="455" y="536" fill="#888888" font-family="Arial, sans-serif" font-size="13">than the temp table (0.92 to 1.50 s).</text>
+  <text x="455" y="562" fill="#888888" font-family="Arial, sans-serif" font-size="13">Index (driver_id, fare_paise): 0.26 s.</text>
+
+  <!-- card 3: loose index scan -->
+  <rect x="790" y="296" width="330" height="300" rx="12" fill="#0F1F14" stroke="#4ADE80" stroke-width="2"/>
+  <text x="810" y="326" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="16">3. Loose index scan</text>
+  <text x="810" y="348" fill="#4ADE80" font-family="Arial, sans-serif" font-size="13">EXPLAIN: Using index for group-by</text>
+  <g font-family="Courier New, monospace" font-size="13" xml:space="preserve">
+    <text x="810" y="378" fill="#9FD8B0">for each driver_id in index:</text>
+    <text x="810" y="398" fill="#9FD8B0">  jump to its last entry</text>
+    <text x="810" y="418" fill="#9FD8B0">  read MAX(created_at)</text>
+    <text x="810" y="438" fill="#9FD8B0">  skip to next driver_id</text>
+  </g>
+  <text x="810" y="470" fill="#888888" font-family="Arial, sans-serif" font-size="13">MAX(created_at) per driver:</text>
+  <text x="810" y="490" fill="#888888" font-family="Arial, sans-serif" font-size="13">5,000 groups, Handler_read_key 10,002,</text>
+  <text x="810" y="510" fill="#888888" font-family="Arial, sans-serif" font-size="13">0.05 s instead of 0.67 s.</text>
+  <text x="810" y="536" fill="#888888" font-family="Arial, sans-serif" font-size="13">Only MIN/MAX (or DISTINCT) of the key</text>
+  <text x="810" y="556" fill="#888888" font-family="Arial, sans-serif" font-size="13">part right after the group columns;</text>
+  <text x="810" y="576" fill="#888888" font-family="Arial, sans-serif" font-size="13">SUM gets not_applicable_aggregate_function.</text>
+
+  <!-- rules -->
+  <rect x="80" y="620" width="1040" height="130" rx="12" fill="#151515" stroke="#444444" stroke-width="2"/>
+  <g font-family="Courier New, monospace" font-size="14" xml:space="preserve">
+    <text x="100" y="650" fill="#FFFFFF">NULLs  → COUNT(col), SUM, AVG, MIN, MAX skip them; COUNT(*) counts rows; no rows → SUM is NULL</text>
+    <text x="100" y="676" fill="#FFFFFF">8.0    → ONLY_FULL_GROUP_BY on; GROUP BY no longer sorts (ORDER BY adds "Using filesort")</text>
+    <text x="100" y="702" fill="#FFFFFF">spill  → in-memory TempTable bigger than tmp_table_size → InnoDB temp table on disk</text>
+    <text x="100" y="728" fill="#FFFFFF">concat → GROUP_CONCAT stops at group_concat_max_len (1024 bytes) with only warning 1260</text>
+  </g>
+</svg>
