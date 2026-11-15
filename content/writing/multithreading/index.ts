@@ -1,6 +1,8 @@
 import type { Phase } from "../types";
+import { asyncTimeoutsAndExecutors } from "./async-timeouts-and-executors";
 import { atomicsAndCas } from "./atomics-and-cas";
 import { blockingQueues } from "./blocking-queues";
+import { completableFutureInDepth } from "./completablefuture-in-depth";
 import { concurrentHashMapInPractice } from "./concurrent-hashmap-in-practice";
 import { concurrentHashMapInternals } from "./concurrent-hashmap-internals";
 import { concurrentQueuesAndSkipLists } from "./concurrent-queues-and-skiplists";
@@ -58,7 +60,7 @@ export const multithreadingPhases: Phase[] = [
   {
     title: "Asynchronous Programming",
     description: "Future and CompletableFuture patterns, timeouts and fallbacks, and choosing executors.",
-    lessons: [],
+    lessons: [completableFutureInDepth, asyncTimeoutsAndExecutors],
   },
   {
     title: "ThreadLocal and Virtual Threads",

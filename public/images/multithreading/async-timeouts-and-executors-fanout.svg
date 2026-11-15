@@ -1,0 +1,95 @@
+<svg width="1200" height="820" viewBox="0 0 1200 820" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="820" rx="28" fill="#0D0D0D"/>
+  <path d="M80 130H1120" stroke="#2B2B2B" stroke-width="2"/>
+  <text x="80" y="82" fill="#FB923C" font-family="Arial, sans-serif" font-size="18" letter-spacing="4">ONE QUOTE, THREE DEPENDENCIES, THREE BULKHEADS</text>
+  <text x="80" y="112" fill="#777777" font-family="Arial, sans-serif" font-size="16">RideQuoteApi on JDK 21. Each call gets its own bounded pool, its own time budget and its own fallback.</text>
+
+  <!-- request -->
+  <rect x="80" y="250" width="190" height="120" rx="12" fill="#151515" stroke="#444444" stroke-width="2"/>
+  <text x="100" y="284" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="17">Quote request</text>
+  <text x="100" y="314" fill="#C6A17A" font-family="Courier New, monospace" font-size="13">SALT-LAKE to</text>
+  <text x="100" y="334" fill="#C6A17A" font-family="Courier New, monospace" font-size="13">NEW-TOWN</text>
+  <text x="100" y="356" fill="#888888" font-family="Arial, sans-serif" font-size="13">starts all three at once</text>
+
+  <!-- fan-out arrows -->
+  <g stroke="#FB923C" stroke-width="2">
+    <path d="M270 300C290 300 290 205 320 205"/>
+    <path d="M270 310H320"/>
+    <path d="M270 320C290 320 290 415 320 415"/>
+  </g>
+  <g stroke="#FB923C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M311 200L320 205L311 210"/>
+    <path d="M311 305L320 310L311 315"/>
+    <path d="M311 410L320 415L311 420"/>
+  </g>
+
+  <!-- lanes -->
+  <g font-family="Arial, sans-serif">
+    <rect x="320" y="160" width="250" height="90" rx="10" fill="#0F1A21" stroke="#60A5FA" stroke-width="2"/>
+    <text x="338" y="190" fill="#FFFFFF" font-size="16">fare-io</text>
+    <text x="338" y="214" fill="#93B4D6" font-size="13">8 threads, queue 16, Abort</text>
+    <text x="338" y="236" fill="#888888" font-size="13">call takes ~80 ms</text>
+
+    <rect x="320" y="265" width="250" height="90" rx="10" fill="#0F1A21" stroke="#60A5FA" stroke-width="2"/>
+    <text x="338" y="295" fill="#FFFFFF" font-size="16">eta-io</text>
+    <text x="338" y="319" fill="#93B4D6" font-size="13">8 threads, queue 16, Abort</text>
+    <text x="338" y="341" fill="#888888" font-size="13">call takes ~120 ms</text>
+
+    <rect x="320" y="370" width="250" height="90" rx="10" fill="#21180F" stroke="#FB923C" stroke-width="2"/>
+    <text x="338" y="400" fill="#FFFFFF" font-size="16">surge-io</text>
+    <text x="338" y="424" fill="#C6A17A" font-size="13">4 threads, queue 4, Abort</text>
+    <text x="338" y="446" fill="#FB923C" font-size="13">incident: call takes 1,500 ms</text>
+
+    <path d="M570 205H610" stroke="#60A5FA" stroke-width="2"/>
+    <path d="M570 310H610" stroke="#60A5FA" stroke-width="2"/>
+    <path d="M570 415H610" stroke="#FB923C" stroke-width="2"/>
+
+    <rect x="610" y="160" width="250" height="90" rx="10" fill="#151515" stroke="#444444" stroke-width="2"/>
+    <text x="628" y="190" fill="#FFFFFF" font-size="15">orTimeout(300 ms)</text>
+    <text x="628" y="214" fill="#AAAAAA" font-size="13">essential: no fare, no quote</text>
+    <text x="628" y="236" fill="#888888" font-size="13">failure becomes HTTP 503</text>
+
+    <rect x="610" y="265" width="250" height="90" rx="10" fill="#151515" stroke="#444444" stroke-width="2"/>
+    <text x="628" y="295" fill="#FFFFFF" font-size="15">orTimeout(250 ms)</text>
+    <text x="628" y="319" fill="#AAAAAA" font-size="13">exceptionally: "ETA unavailable"</text>
+    <text x="628" y="341" fill="#888888" font-size="13">quote marked degraded</text>
+
+    <rect x="610" y="370" width="250" height="90" rx="10" fill="#151515" stroke="#444444" stroke-width="2"/>
+    <text x="628" y="400" fill="#FFFFFF" font-size="15">orTimeout(150 ms)</text>
+    <text x="628" y="424" fill="#AAAAAA" font-size="13">exceptionally: quote without surge</text>
+    <text x="628" y="446" fill="#FB923C" font-size="13">+ cancel(true) frees the thread</text>
+
+    <path d="M860 205C890 205 890 300 920 300" stroke="#FB923C" stroke-width="2"/>
+    <path d="M860 310H920" stroke="#FB923C" stroke-width="2"/>
+    <path d="M860 415C890 415 890 320 920 320" stroke="#FB923C" stroke-width="2"/>
+    <path d="M911 305L920 310L911 315" stroke="#FB923C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+
+    <rect x="920" y="250" width="200" height="120" rx="12" fill="#21180F" stroke="#FB923C" stroke-width="2"/>
+    <text x="938" y="282" fill="#FFFFFF" font-size="16">allOf, then Quote</text>
+    <text x="938" y="308" fill="#C6A17A" font-size="13">paise, etaMin,</text>
+    <text x="938" y="328" fill="#C6A17A" font-size="13">surgePct, degraded</text>
+    <text x="938" y="352" fill="#888888" font-size="13">never waits past 300 ms</text>
+  </g>
+
+  <!-- timer thread -->
+  <rect x="80" y="490" width="1040" height="96" rx="12" fill="#151515" stroke="#444444" stroke-width="2"/>
+  <text x="100" y="522" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="16">Every orTimeout is fired by one JVM-wide daemon thread: CompletableFutureDelayScheduler</text>
+  <text x="100" y="548" fill="#AAAAAA" font-family="Arial, sans-serif" font-size="14">It completes the future, and then runs every non-async callback on that future itself. A 1 s fallback in exceptionally()</text>
+  <text x="100" y="570" fill="#FB923C" font-family="Arial, sans-serif" font-size="14">made an unrelated 200 ms timeout fire at 1,103 to 1,106 ms. Keep callbacks after a timeout cheap, or use the Async variants.</text>
+
+  <!-- measured -->
+  <text x="80" y="628" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="17">Measured: 40 quotes a second for 1 second, 8-core machine</text>
+  <g font-family="Arial, sans-serif" font-size="14">
+    <rect x="80" y="646" width="510" height="130" rx="12" fill="#151515" stroke="#444444" stroke-width="2"/>
+    <text x="100" y="676" fill="#FFFFFF" font-size="15">Before: common pool, no timeouts</text>
+    <text x="100" y="704" fill="#AAAAAA">healthy: p50 301 to 318 ms (7 threads, 120 blocking calls)</text>
+    <text x="100" y="730" fill="#AAAAAA">surge at 1.5 s: p50 5,175 to 5,187 ms, p99 9,455 to 9,462 ms</text>
+    <text x="100" y="756" fill="#FB923C">every quote waited for surge</text>
+
+    <rect x="610" y="646" width="510" height="130" rx="12" fill="#0F1A21" stroke="#60A5FA" stroke-width="2"/>
+    <text x="630" y="676" fill="#FFFFFF" font-size="15">After: bulkheads, budgets, fallbacks, cancel</text>
+    <text x="630" y="704" fill="#93B4D6">healthy: p50 120 to 122 ms, p99 120 to 130 ms</text>
+    <text x="630" y="730" fill="#93B4D6">surge at 1.5 s: p50 150 ms, p99 150 to 154 ms</text>
+    <text x="630" y="756" fill="#93B4D6">40 of 40 quotes served, all marked degraded</text>
+  </g>
+</svg>

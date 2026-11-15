@@ -1,0 +1,78 @@
+<svg width="1200" height="800" viewBox="0 0 1200 800" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="800" rx="28" fill="#0D0D0D"/>
+  <path d="M80 130H1120" stroke="#2B2B2B" stroke-width="2"/>
+  <text x="80" y="82" fill="#FB923C" font-family="Arial, sans-serif" font-size="18" letter-spacing="4">INSIDE A COMPLETABLEFUTURE: ONE RESULT, ONE STACK</text>
+  <text x="80" y="112" fill="#777777" font-family="Arial, sans-serif" font-size="16">JDK 21, read with javap -p and reflection (StackPeek). Every then...() call pushes one Completion with a CAS.</text>
+
+  <!-- left: the future object -->
+  <rect x="80" y="160" width="300" height="150" rx="12" fill="#21180F" stroke="#FB923C" stroke-width="2"/>
+  <text x="100" y="194" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="17">CompletableFuture fare</text>
+  <g font-family="Courier New, monospace" font-size="14" xml:space="preserve">
+    <text x="100" y="228" fill="#C6A17A">volatile Object result</text>
+    <text x="100" y="252" fill="#888888">  null | 18000 | AltResult</text>
+    <text x="100" y="284" fill="#C6A17A">volatile Completion stack</text>
+  </g>
+  <path d="M330 280H420" stroke="#FB923C" stroke-width="2"/>
+  <path d="M411 275L420 280L411 285" stroke="#FB923C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+
+  <!-- stack nodes -->
+  <g font-family="Arial, sans-serif" font-size="14">
+    <rect x="420" y="160" width="220" height="44" rx="8" fill="#132433" stroke="#60A5FA" stroke-width="1.5"/>
+    <text x="436" y="187" fill="#FFFFFF">UniWhenComplete</text><text x="588" y="187" fill="#93B4D6">top</text>
+    <path d="M530 204V222" stroke="#60A5FA" stroke-width="1.5"/>
+    <rect x="420" y="222" width="220" height="44" rx="8" fill="#132433" stroke="#60A5FA" stroke-width="1.5"/>
+    <text x="436" y="249" fill="#FFFFFF">BiApply</text><text x="540" y="249" fill="#93B4D6">thenCombine</text>
+    <path d="M530 266V284" stroke="#60A5FA" stroke-width="1.5"/>
+    <rect x="420" y="284" width="220" height="44" rx="8" fill="#132433" stroke="#60A5FA" stroke-width="1.5"/>
+    <text x="436" y="311" fill="#FFFFFF">UniExceptionally</text>
+    <path d="M530 328V346" stroke="#60A5FA" stroke-width="1.5"/>
+    <rect x="420" y="346" width="220" height="44" rx="8" fill="#132433" stroke="#60A5FA" stroke-width="1.5"/>
+    <text x="436" y="373" fill="#FFFFFF">UniAccept</text>
+    <path d="M530 390V408" stroke="#60A5FA" stroke-width="1.5"/>
+    <rect x="420" y="408" width="220" height="44" rx="8" fill="#132433" stroke="#60A5FA" stroke-width="1.5"/>
+    <text x="436" y="435" fill="#FFFFFF">UniApply</text><text x="550" y="435" fill="#93B4D6">oldest</text>
+    <text x="436" y="474" fill="#888888">next = null</text>
+  </g>
+
+  <!-- push explanation -->
+  <rect x="80" y="330" width="300" height="122" rx="12" fill="#151515" stroke="#444444" stroke-width="2"/>
+  <text x="100" y="360" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="16">Push (tryPushStack)</text>
+  <g font-family="Courier New, monospace" font-size="13" xml:space="preserve">
+    <text x="100" y="390" fill="#C6A17A">c.next = stack;</text>
+    <text x="100" y="412" fill="#C6A17A">STACK.compareAndSet(this,</text>
+    <text x="100" y="432" fill="#C6A17A">    old, c);   // retry on fail</text>
+  </g>
+  <text x="80" y="490" fill="#888888" font-family="Arial, sans-serif" font-size="13">A Treiber stack: lock-free, LIFO. eta's own stack holds a</text>
+  <text x="80" y="510" fill="#888888" font-family="Arial, sans-serif" font-size="13">CoCompletion pointing at the same BiApply.</text>
+
+  <!-- right: completion -->
+  <rect x="690" y="160" width="430" height="292" rx="12" fill="#151515" stroke="#444444" stroke-width="2"/>
+  <text x="710" y="194" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="17">complete(18000) on thread T</text>
+  <g font-family="Arial, sans-serif" font-size="14">
+    <text x="710" y="228" fill="#AAAAAA">1. CAS result: null to 18000. Only the first wins;</text>
+    <text x="728" y="250" fill="#AAAAAA">a second complete() returns false.</text>
+    <text x="710" y="282" fill="#AAAAAA">2. postComplete(): pop the top node with a CAS</text>
+    <text x="728" y="304" fill="#AAAAAA">and call tryFire(NESTED).</text>
+    <text x="710" y="336" fill="#AAAAAA">3. Sync node: run fn right here, on T.</text>
+    <text x="728" y="358" fill="#AAAAAA">Async node: executor.execute(node).</text>
+    <text x="710" y="390" fill="#AAAAAA">4. If that completed a dependent with waiters,</text>
+    <text x="728" y="412" fill="#AAAAAA">loop over its stack too. No recursion:</text>
+    <text x="728" y="434" fill="#FB923C">1,000,000 chained stages, no StackOverflowError.</text>
+  </g>
+
+  <!-- bottom: who runs fn -->
+  <text x="80" y="560" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="17">Which thread runs fn? (measured with fixed thread names)</text>
+  <g font-family="Arial, sans-serif" font-size="14">
+    <rect x="80" y="578" width="1040" height="168" rx="12" fill="#151515" stroke="#444444" stroke-width="2"/>
+    <text x="100" y="610" fill="#C6A17A" font-family="Courier New, monospace">thenApply, source still pending</text>
+    <text x="470" y="610" fill="#AAAAAA">the thread that completes the source (complete() took 306 ms for 3 callbacks)</text>
+    <text x="100" y="638" fill="#C6A17A" font-family="Courier New, monospace">thenApply, source already done</text>
+    <text x="470" y="638" fill="#AAAAAA">the caller (attached right after supplyAsync: main won 0.3% to 55% of attempts)</text>
+    <text x="100" y="666" fill="#C6A17A" font-family="Courier New, monospace">thenApplyAsync(fn)</text>
+    <text x="470" y="666" fill="#AAAAAA">commonPool (7 threads on 8 cores); a new thread per task if parallelism &lt; 2</text>
+    <text x="100" y="694" fill="#C6A17A" font-family="Courier New, monospace">thenApplyAsync(fn, ex)</text>
+    <text x="470" y="694" fill="#AAAAAA">always ex (a hop costs about 29 us p50 to an idle thread)</text>
+    <text x="100" y="722" fill="#C6A17A" font-family="Courier New, monospace">thenCombine / orTimeout fires</text>
+    <text x="470" y="722" fill="#AAAAAA">the thread completing the second input / CompletableFutureDelayScheduler</text>
+  </g>
+</svg>
